@@ -1,0 +1,97 @@
+
+/**
+ * Centralized Audio Processing Utilities
+ * Implementation follows standard Web Audio API patterns for raw PCM streams.
+ */
+
+export function encode(bytes: Uint8Array): string {
+  let binary = '';
+  const len = bytes.byteLength;
+  for (let i = 0; i < len; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return btoa(binary);
+}
+
+export function decode(base64: string): Uint8Array {
+  const binaryString = atob(base64);
+  const len = binaryString.length;
+  const bytes = new Uint8Array(len);
+  for (let i = 0; i < len; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+  return bytes;
+}
+
+export async function decodeAudioData(
+  data: Uint8Array,
+  ctx: AudioContext,
+  sampleRate: number = 24000,
+  numChannels: number = 1,
+): Promise<AudioBuffer> {
+  const dataInt16 = new Int16Array(data.buffer);
+  const frameCount = dataInt16.length / numChannels;
+  const buffer = ctx.createBuffer(numChannels, frameCount, sampleRate);
+
+  for (let channel = 0; channel < numChannels; channel++) {
+    const channelData = buffer.getChannelData(channel);
+    for (let i = 0; i < frameCount; i++) {
+      channelData[i] = dataInt16[i * numChannels + channel] / 32768.0;
+    }
+  }
+  return buffer;
+}
+
+/**
+ * createBlob strictly clamps Float32 to Int16 for raw PCM streaming.
+ */
+export function createBlob(data: Float32Array): { data: string; mimeType: string } {
+  const l = data.length;
+  const int16 = new Int16Array(l);
+  for (let i = 0; i < l; i++) {
+    // Clamp values to prevent integer overflow clipping
+    const s = Math.max(-1, Math.min(1, data[i]));
+    int16[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+  }
+  return {
+    data: encode(new Uint8Array(int16.buffer)),
+    mimeType: 'audio/pcm;rate=16000',
+  };
+}
+
+/**
+ * Signal Squeezer v1.0.40 - Opus Loopback
+ * Decodes input audio (MP3/WAV) and re-records it via a silent destination to 24kbps Opus.
+ */
+export async function squeezeAudio(file: File): Promise<Blob> {
+  const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+  const arrayBuffer = await file.arrayBuffer();
+  const decodedBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+
+  const destination = audioCtx.createMediaStreamDestination();
+  const source = audioCtx.createBufferSource();
+  source.buffer = decodedBuffer;
+  source.connect(destination);
+
+  return new Promise((resolve, reject) => {
+    const recorder = new MediaRecorder(destination.stream, {
+      mimeType: 'audio/webm;codecs=opus',
+      audioBitsPerSecond: 24000
+    });
+
+    const chunks: Blob[] = [];
+    recorder.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
+    recorder.onstop = () => {
+      audioCtx.close();
+      resolve(new Blob(chunks, { type: 'audio/webm' }));
+    };
+    recorder.onerror = reject;
+
+    recorder.start();
+    source.start(0);
+    
+    source.onended = () => {
+      recorder.stop();
+    };
+  });
+}

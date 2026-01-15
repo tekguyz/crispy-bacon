@@ -1,0 +1,8 @@
+{
+  "name": "Crispy Bacon",
+  "description": "High-density research library for high-performance teams. Premium, low-strain design for clear thinking.",
+  "version": "2.5.1",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

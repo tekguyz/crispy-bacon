@@ -1,0 +1,115 @@
+
+import React from 'react';
+import { Menu, X } from 'lucide-react';
+import { PrimaryNavList } from './sidebar/PrimaryNavList';
+import { CollectionVault } from './sidebar/CollectionVault';
+import { UpgradeCard } from './sidebar/UpgradeCard';
+import { useAppStore } from '../../store/useAppStore';
+import { triggerHaptic } from '../../services/hapticService';
+
+interface SidebarProps {
+  isExpanded: boolean;
+  onToggleExpansion: () => void;
+  isMobileOpen: boolean;
+  onCloseMobile: () => void;
+  onResetFilters: () => void;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ 
+  isExpanded, 
+  onToggleExpansion, 
+  isMobileOpen, 
+  onCloseMobile, 
+  onResetFilters 
+}) => {
+  const handleToggle = () => {
+    triggerHaptic('light');
+    onToggleExpansion();
+  };
+
+  const SidebarContent = (isMobile: boolean) => (
+    <div className={`flex flex-col h-full ${isMobile ? 'py-4' : 'pt-8 pb-4'} items-stretch`}>
+      {/* Brand Anchor */}
+      {!isMobile && (
+        <div className={`mb-8 flex shrink-0 items-center ${!isExpanded ? 'justify-center' : 'pl-6 pr-4 justify-between'}`}>
+          {isExpanded && (
+            <div className="sidebar-label-fade flex-1">
+              <span className="font-black text-lg tracking-tighter uppercase leading-none truncate block text-on-surface">
+                Crispy <span className="text-primary">Bacon</span>
+              </span>
+            </div>
+          )}
+          <button 
+            onClick={handleToggle}
+            className={`flex items-center justify-center rounded-xl hover:bg-on-surface/10 text-on-surface transition-colors interactive ${!isExpanded ? 'w-10 h-10' : 'w-8 h-8'}`}
+            aria-label={isExpanded ? "Collapse menu" : "Expand menu"}
+          >
+            <Menu size={18} />
+          </button>
+        </div>
+      )}
+
+      {/* Navigation Stack */}
+      <nav className={`flex-1 flex flex-col gap-2 overflow-y-auto no-scrollbar ${isMobile ? 'px-4' : ''}`}>
+        <PrimaryNavList 
+          isExpanded={isExpanded || isMobile} 
+          onCloseMobile={onCloseMobile} 
+          onResetFilters={onResetFilters} 
+        />
+        
+        <div className={`h-px bg-outline-variant/10 my-2 ${isExpanded ? 'mx-6' : 'mx-4'}`} />
+
+        <CollectionVault 
+          isExpanded={isExpanded || isMobile} 
+          onCloseMobile={onCloseMobile} 
+        />
+      </nav>
+
+      {/* Action Stack */}
+      {!isMobile && (
+        <div className={`mt-auto flex flex-col gap-4 pt-4 pb-0 ${!isExpanded ? 'items-center' : ''}`}>
+          <UpgradeCard isExpanded={isExpanded} />
+        </div>
+      )}
+      
+      {isMobile && (
+         <div className="mt-auto px-4 pt-4">
+            <UpgradeCard isExpanded={true} />
+         </div>
+      )}
+    </div>
+  );
+
+  return (
+    <>
+      <aside 
+        className={`
+          hidden md:flex flex-col nav-rail transition-all duration-500 ease-spring shrink-0 h-screen sticky top-0 z-50
+          ${isExpanded ? 'w-64' : 'w-20'}
+        `}
+      >
+        {SidebarContent(false)}
+      </aside>
+
+      {isMobileOpen && (
+        <div className="fixed inset-0 z-[200] md:hidden">
+          <div className="absolute inset-0 bg-black/80" onClick={onCloseMobile} />
+          <div className="absolute inset-x-0 bottom-0 max-h-[85dvh] mobile-nav-drawer animate-sheet-up overflow-hidden flex flex-col shadow-2xl">
+            <div className="flex justify-center pt-3 pb-2 shrink-0">
+               <div className="h-1 w-12 bg-on-surface/20 rounded-full" />
+            </div>
+            
+            <div className="flex items-center justify-between px-6 py-2">
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 text-on-surface">Menu</span>
+              <button onClick={onCloseMobile} className="p-2 rounded-full hover:bg-on-surface/10 text-on-surface transition-colors"><X size={20} /></button>
+            </div>
+            
+            {SidebarContent(true)}
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default Sidebar;

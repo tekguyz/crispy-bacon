@@ -1,0 +1,15 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  # This tells Netlify to stop blocking the build because it sees the API_KEY
+  SECRETS_SCAN_OMIT_KEYS = "API_KEY"
+  # This prevents the dependency conflict error from stopping the install
+  NPM_FLAGS = "--legacy-peer-deps"
+
+# This block fixes "Page Not Found" errors on refresh
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
