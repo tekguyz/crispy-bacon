@@ -8,7 +8,6 @@ import { WorkflowSection } from './settings/WorkflowSection';
 import { IntegrationsSection } from './settings/IntegrationsSection';
 import { DataManagementSection } from './settings/DataManagementSection';
 import { SystemLogViewer } from './settings/SystemLogViewer';
-import { BridgeDiagnostics } from './settings/BridgeDiagnostics';
 import { Brain, Sliders, Shield, User } from 'lucide-react';
 
 const SettingsScreen: React.FC = () => {
@@ -20,31 +19,6 @@ const SettingsScreen: React.FC = () => {
       </header>
 
       <div className="space-y-16">
-        {/* SECTION: INFRASTRUCTURE (THE PULSE) */}
-        <div className="space-y-6">
-          <div className="flex items-center gap-3 px-1">
-            <Shield size={14} strokeWidth={3} className="text-primary" />
-            <h2 className="text-[10px] font-black uppercase tracking-[0.3em]">Infrastructure Pulse</h2>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-             <BridgeDiagnostics />
-             <div className="bg-surface-container-low border border-outline-variant/10 rounded-[2rem] p-8 flex flex-col justify-center gap-6 shadow-sm overflow-hidden relative group">
-                <div className="absolute inset-0 ledger-grid opacity-[0.02] pointer-events-none" />
-                <p className="text-[11px] font-bold text-on-surface-variant opacity-60 leading-relaxed uppercase tracking-widest relative z-10">
-                  Verify your Netlify Environment Variables. All keys must be scoped to <span className="text-on-surface font-black">Builds, Functions, and Runtime</span> to reach the assistant logic.
-                </p>
-                <a 
-                  href="https://app.netlify.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-primary font-black uppercase tracking-widest text-[10px] hover:underline flex items-center gap-2 relative z-10"
-                >
-                  Open Netlify Dashboard →
-                </a>
-             </div>
-          </div>
-        </div>
-
         {/* SECTION: IDENTITY & CONNECTIONS */}
         <div className="space-y-6">
            <div className="flex items-center gap-3 px-1 opacity-40">
