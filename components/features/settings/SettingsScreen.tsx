@@ -8,7 +8,8 @@ import { WorkflowSection } from './WorkflowSection';
 import { IntegrationsSection } from './IntegrationsSection';
 import { DataManagementSection } from './DataManagementSection';
 import { SystemLogViewer } from './SystemLogViewer';
-import { Brain, Sliders, Globe, Shield, User, Link2 } from 'lucide-react';
+import { BridgeDiagnostics } from './BridgeDiagnostics';
+import { Brain, Sliders, Shield, User } from 'lucide-react';
 
 const SettingsScreen: React.FC = () => {
   return (
@@ -29,6 +30,23 @@ const SettingsScreen: React.FC = () => {
               <IdentitySection />
               <IntegrationsSection />
            </div>
+        </div>
+
+        {/* SECTION: INFRASTRUCTURE (DIAGNOSTICS) */}
+        <div className="space-y-6">
+          <div className="flex items-center gap-3 px-1 opacity-40">
+            <Shield size={14} strokeWidth={3} />
+            <h2 className="text-[10px] font-black uppercase tracking-[0.3em]">Bridge Health</h2>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+             <BridgeDiagnostics />
+             <div className="bg-surface-container-low border border-outline-variant/10 rounded-[2rem] p-6 flex flex-col justify-center gap-4">
+                <p className="text-[10px] font-bold text-on-surface-variant opacity-60 leading-relaxed uppercase tracking-widest">
+                  Ensure all variables in your Netlify dashboard are scoped to "Builds, Functions, and Runtime".
+                </p>
+                <a href="https://app.netlify.com" target="_blank" className="text-primary font-black uppercase tracking-widest text-[9px] hover:underline">Open Netlify Console →</a>
+             </div>
+          </div>
         </div>
 
         {/* SECTION: INTELLIGENCE ENGINE */}
@@ -64,7 +82,6 @@ const SettingsScreen: React.FC = () => {
           </div>
         </div>
 
-        {/* Footer */}
         <footer className="pt-24 flex flex-col items-center gap-6 text-center opacity-20">
            <div className="h-px w-24 bg-surface-container-highest rounded-full" />
            <p className="text-[9px] font-black tracking-[0.5em] uppercase text-on-surface">
