@@ -1,4 +1,3 @@
-
 import { supabase } from './supabaseClient';
 import { analyzeContent } from './geminiService';
 import { ContentType, ProcessingStatus, InsightTemplate, InsightContent } from '../types';
@@ -7,6 +6,7 @@ import { cleanPayload } from '../utils/signalUtils';
 /**
  * SIGNAL PROCESSING SERVICE
  * Orchestrates the transition from Raw Input to Refined Recap.
+ * Includes v2.0 Auto-Tagging Protocol.
  */
 
 export const archiveRefinement = async (
@@ -15,8 +15,7 @@ export const archiveRefinement = async (
   recap: Partial<InsightContent>,
   existingMetadata: any
 ) => {
-  // Merge existing metadata with new analysis metadata
-  // New recap metadata takes precedence
+  // 1. Merge Metadata
   const mergedMetadata = {
     ...(existingMetadata || {}),
     ...(recap.metadata || {})
@@ -28,6 +27,7 @@ export const archiveRefinement = async (
     safeProcessedText = JSON.stringify(safeProcessedText);
   }
 
+  // 2. Update Primary Insight Record
   const updatePayload = cleanPayload({
     title: recap.title,
     processing_status: ProcessingStatus.COMPLETED,
@@ -41,11 +41,9 @@ export const archiveRefinement = async (
     .update(updatePayload)
     .eq('id', itemId);
 
-  if (itemError) {
-    console.error("Archive Refinement Error (Insights):", itemError);
-    throw new Error(`Vault Sync Failed: ${itemError.message}`);
-  }
+  if (itemError) throw new Error(`Vault Sync Failed: ${itemError.message}`);
 
+  // 3. Insert Intelligence Summary
   const { error: summaryError } = await supabase.from('summaries').insert([{
     insight_id: itemId,
     user_id: userId,
@@ -59,9 +57,43 @@ export const archiveRefinement = async (
     is_deep_strategist: recap.metadata?.isDeepStrategist
   }]);
 
-  if (summaryError) {
-    console.error("Archive Refinement Error (Summaries):", summaryError);
-    throw new Error(`Recap Archival Failed: ${summaryError.message}`);
+  if (summaryError) throw new Error(`Recap Archival Failed: ${summaryError.message}`);
+
+  // 4. AUTO-TAGGING PROTOCOL
+  // Convert AI generated topics into filterable system tags
+  if (recap.topics && recap.topics.length > 0) {
+    try {
+      for (const topicName of recap.topics.slice(0, 5)) {
+        const cleanName = topicName.toLowerCase().trim().replace(/#/g, '');
+        if (!cleanName) continue;
+
+        // Find or Create Tag
+        let { data: tag, error: findError } = await supabase
+          .from('tags')
+          .select('id')
+          .eq('user_id', userId)
+          .eq('name', cleanName)
+          .maybeSingle();
+
+        if (!tag && !findError) {
+          const { data: newTag, error: createError } = await supabase
+            .from('tags')
+            .insert({ user_id: userId, name: cleanName })
+            .select('id')
+            .single();
+          if (!createError) tag = newTag;
+        }
+
+        // Link Tag to Insight
+        if (tag) {
+          await supabase
+            .from('insight_tags')
+            .upsert({ insight_id: itemId, tag_id: tag.id });
+        }
+      }
+    } catch (tagErr) {
+      console.warn("[AutoTag] Handshake deferred:", tagErr);
+    }
   }
 };
 

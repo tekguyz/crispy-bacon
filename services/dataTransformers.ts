@@ -94,18 +94,20 @@ export const formatTranscript = (text: any): string => {
 };
 
 /**
- * Generates a clean Markdown report from an insight for export.
- * Supports specific tailoring for Notion vs Obsidian.
+ * Generates a tailored Markdown report.
+ * Targets:
+ * 'notion': High-density, block-clean markdown without YAML.
+ * 'obsidian': Multi-modal markdown with YAML Properties for vault indexing.
  */
 export const generateInsightMarkdownReport = (insight: InsightContent, target: 'notion' | 'obsidian' = 'notion'): string => {
-  const date = new Date(insight.created_at).toISOString().split('T')[0];
+  const dateStr = new Date(insight.created_at).toISOString().split('T')[0];
   let md = '';
 
   if (target === 'obsidian') {
-    // Add YAML Frontmatter for Obsidian properties
+    // Add YAML Frontmatter for indexing
     md += `---\n`;
     md += `title: "${insight.title.replace(/"/g, '\\"')}"\n`;
-    md += `date: ${date}\n`;
+    md += `date: ${dateStr}\n`;
     if (insight.site_name) md += `source: "${insight.site_name}"\n`;
     if (insight.type) md += `type: ${insight.type.toLowerCase()}\n`;
     if (insight.tags?.length) {
@@ -115,26 +117,28 @@ export const generateInsightMarkdownReport = (insight: InsightContent, target: '
   }
 
   md += `# ${insight.title}\n\n`;
-  if (target === 'notion' && insight.site_name) md += `**Source:** ${insight.site_name}\n`;
-  if (target === 'notion') md += `**Date:** ${new Date(insight.created_at).toLocaleDateString()}\n`;
   
-  md += `\n---\n\n`;
+  if (target === 'notion') {
+    if (insight.site_name) md += `**Source:** ${insight.site_name}\n`;
+    md += `**Date:** ${new Date(insight.created_at).toLocaleDateString()}\n\n`;
+  }
+
   md += `## Summary\n${insight.summary}\n\n`;
   
   if (insight.highlights?.length) {
-    md += `## Key Takeaways\n`;
+    md += `### Key Takeaways\n`;
     insight.highlights.forEach(h => md += `- ${h}\n`);
     md += `\n`;
   }
   
   if (insight.action_items?.length) {
-    md += `## Next Steps\n`;
+    md += `### Next Steps\n`;
     insight.action_items.forEach((item, i) => md += `${i + 1}. ${item}\n`);
     md += `\n`;
   }
 
   if (insight.processed_text) {
-    md += `---\n\n## Raw Signal Trace\n\n`;
+    md += `---\n\n### Raw Signal Trace\n\n`;
     md += formatTranscript(insight.processed_text);
   }
   
