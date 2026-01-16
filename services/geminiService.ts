@@ -1,4 +1,3 @@
-
 import { GoogleGenAI, Type } from "@google/genai";
 import { InsightContent, ContentType, Sentiment, InsightTemplate, PersonaStyle } from "../types";
 import { getEffectiveMimeType } from "../utils/signalUtils";
@@ -79,15 +78,18 @@ export const analyzeContent = async (
     discussionPoints = JSON.stringify(discussionPoints);
   }
 
-  // Extract token usage from the SDK response
-  const usage = response.usageMetadata ? {
-    inputTokens: response.usageMetadata.promptTokenCount,
-    outputTokens: response.usageMetadata.candidatesTokenCount,
-    totalTokens: response.usageMetadata.totalTokenCount,
+  // Extract token usage safely from the SDK response
+  const usageMetadata = response.usageMetadata;
+  const usage = usageMetadata ? {
+    inputTokens: usageMetadata.promptTokenCount || 0,
+    outputTokens: usageMetadata.candidatesTokenCount || 0,
+    totalTokens: usageMetadata.totalTokenCount || 0,
     model: modelName,
-    estimatedCost: modelName.includes('pro') 
-      ? (response.usageMetadata.totalTokenCount / 1_000_000) * 1.25
-      : (response.usageMetadata.totalTokenCount / 1_000_000) * 0.075
+    estimatedCost: usageMetadata.totalTokenCount 
+      ? (modelName.includes('pro') 
+          ? (usageMetadata.totalTokenCount / 1_000_000) * 1.25
+          : (usageMetadata.totalTokenCount / 1_000_000) * 0.075)
+      : 0
   } : undefined;
 
   return {
