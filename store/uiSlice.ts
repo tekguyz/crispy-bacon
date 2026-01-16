@@ -21,6 +21,8 @@ export const createUISlice: StateCreator<AppState, [], [], UISlice> = (set, get)
   syncOnWifiOnly: localStorage.getItem('syncOnWifiOnly') === 'true',
   personaStyle: (localStorage.getItem('personaStyle') as PersonaStyle) || PersonaStyle.CONCISE,
   storageUsage: 0,
+  voiceSpeed: parseFloat(localStorage.getItem('voiceSpeed') || '1.0'),
+  hapticIntensity: parseFloat(localStorage.getItem('hapticIntensity') || '1.0'),
 
   // Selection Management
   selectedItemIds: [],
@@ -101,6 +103,17 @@ export const createUISlice: StateCreator<AppState, [], [], UISlice> = (set, get)
     triggerHaptic('light');
     set({ personaStyle }); 
     localStorage.setItem('personaStyle', personaStyle); 
+  },
+
+  setVoiceSpeed: (speed) => {
+    set({ voiceSpeed: speed });
+    localStorage.setItem('voiceSpeed', String(speed));
+  },
+
+  setHapticIntensity: (intensity) => {
+    set({ hapticIntensity: intensity });
+    localStorage.setItem('hapticIntensity', String(intensity));
+    triggerHaptic('medium');
   },
 
   updateStorageUsage: async () => {

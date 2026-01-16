@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Brain, Zap, CheckCircle2, Target, HelpCircle, Archive, ShieldCheck, Clock } from 'lucide-react';
+import { Brain, Zap, CheckCircle2, Target, HelpCircle, Archive, ShieldCheck, Clock, Gauge } from 'lucide-react';
 import { useAppStore } from '../../../store/useAppStore';
 import { InsightTemplate, PersonaStyle } from '../../../types';
 
@@ -9,6 +9,7 @@ export const SmartConfigSection: React.FC = () => {
     preferredVoice, setPreferredVoice, 
     preferredTemplate, setPreferredTemplate, 
     personaStyle, setPersonaStyle,
+    voiceSpeed, setVoiceSpeed,
     userProfile, addToast
   } = useAppStore();
 
@@ -29,7 +30,7 @@ export const SmartConfigSection: React.FC = () => {
         {/* ROW 1: VOICE & FRAMEWORK */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Assistant Voice */}
-          <div className="space-y-4">
+          <div className="space-y-6">
               <div className="flex items-center justify-between mb-1 px-1">
                  <label className="text-[10px] font-black uppercase tracking-[0.3em] text-on-surface-variant opacity-60">Assistant Voice</label>
                  <span className="text-[8px] font-mono font-bold text-primary">24kHz PCM</span>
@@ -44,6 +45,26 @@ export const SmartConfigSection: React.FC = () => {
                         {v}
                     </button>
                   ))}
+              </div>
+
+              <div className="space-y-3 pt-2">
+                 <div className="flex items-center gap-2 px-1">
+                    <Gauge size={12} className="text-on-surface-variant/40" />
+                    <label className="text-[9px] font-black uppercase tracking-[0.3em] text-on-surface-variant opacity-60">Speaking Rate: {voiceSpeed}x</label>
+                 </div>
+                 <input 
+                    type="range" 
+                    min="0.8" 
+                    max="1.5" 
+                    step="0.1" 
+                    value={voiceSpeed} 
+                    onChange={(e) => setVoiceSpeed(parseFloat(e.target.value))}
+                    className="w-full accent-primary h-1.5 bg-surface-container-high rounded-full appearance-none cursor-pointer"
+                 />
+                 <div className="flex justify-between px-1 text-[8px] font-black text-on-surface-variant/30 uppercase tracking-widest">
+                    <span>Relaxed</span>
+                    <span>Rapid</span>
+                 </div>
               </div>
           </div>
 

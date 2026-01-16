@@ -8,6 +8,9 @@ const LIMITS = {
   PRO: 60 * 60,   // 60 Minutes (Hard Cap)
 };
 
+const SILENCE_THRESHOLD = 0.01; // Very low amplitude
+const SILENCE_DURATION_MS = 10000; // 10 seconds warning
+
 export const useMicrophone = (onComplete?: (blob: Blob, duration: number) => void) => {
   const { 
     isRecording, setIsRecording, 
@@ -24,6 +27,11 @@ export const useMicrophone = (onComplete?: (blob: Blob, duration: number) => voi
   const startTimeRef = useRef<number>(0);
   const finalDurationRef = useRef<number>(0);
   const wakeLockRef = useRef<any>(null);
+  
+  // Silence Detection
+  const analyserRef = useRef<AnalyserNode | null>(null);
+  const silenceTimerRef = useRef<any>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
 
   const sessionLimit = userProfile?.is_pro ? LIMITS.PRO : LIMITS.FREE;
 
@@ -53,6 +61,14 @@ export const useMicrophone = (onComplete?: (blob: Blob, duration: number) => voi
       clearInterval(timerRef.current);
       timerRef.current = null;
     }
+    if (silenceTimerRef.current) {
+      clearInterval(silenceTimerRef.current);
+      silenceTimerRef.current = null;
+    }
+    if (audioContextRef.current) {
+      audioContextRef.current.close().catch(() => {});
+      audioContextRef.current = null;
+    }
   }, []);
 
   const stop = useCallback(() => {
@@ -79,6 +95,39 @@ export const useMicrophone = (onComplete?: (blob: Blob, duration: number) => voi
     }
   }, [recorder, setIsRecording, setIsPaused, releaseWakeLock, stopTimer]);
 
+  const monitorSilence = (mediaStream: MediaStream) => {
+    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+    const ctx = new AudioContextClass();
+    audioContextRef.current = ctx;
+    const source = ctx.createMediaStreamSource(mediaStream);
+    const analyser = ctx.createAnalyser();
+    analyser.fftSize = 256;
+    source.connect(analyser);
+    analyserRef.current = analyser;
+
+    const dataArray = new Uint8Array(analyser.frequencyBinCount);
+    let silenceStart = Date.now();
+    let hasWarned = false;
+
+    silenceTimerRef.current = setInterval(() => {
+      analyser.getByteFrequencyData(dataArray);
+      let sum = 0;
+      for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
+      const average = sum / dataArray.length;
+      const volume = average / 255;
+
+      if (volume > SILENCE_THRESHOLD) {
+        silenceStart = Date.now();
+        hasWarned = false;
+      } else {
+        if (!hasWarned && Date.now() - silenceStart > SILENCE_DURATION_MS) {
+          addToast("Signal flatline detected. Still recording?", "warn");
+          hasWarned = true;
+        }
+      }
+    }, 1000);
+  };
+
   const start = async (includeSystemAudio: boolean = false) => {
     try {
       setError(null);
@@ -97,11 +146,13 @@ export const useMicrophone = (onComplete?: (blob: Blob, duration: number) => voi
       setIsRecording(true);
       startTimeRef.current = Date.now();
       
+      // Start Silence Monitor
+      monitorSilence(mediaStream);
+      
       timerRef.current = setInterval(() => {
         const currentElapsed = Math.floor((Date.now() - startTimeRef.current) / 1000);
         setElapsedTime(currentElapsed);
 
-        // IRON-CLAD LIMIT GUARD: Auto-finalize at tier cap
         if (currentElapsed >= sessionLimit) {
             addToast(`Limit reached (${sessionLimit / 60}m). Auto-finalizing recap.`, "info");
             stop();
@@ -121,33 +172,25 @@ export const useMicrophone = (onComplete?: (blob: Blob, duration: number) => voi
     if (recorder && recorder.state === 'recording') {
       recorder.pause();
       setIsPaused(true);
-      stopTimer();
+      // Don't stop silence timer, but logic will ignore silence anyway since no new audio comes
     }
-  }, [recorder, setIsPaused, stopTimer]);
+  }, [recorder, setIsPaused]);
 
   const resume = useCallback(() => {
     if (recorder && recorder.state === 'paused') {
       recorder.resume();
       setIsPaused(false);
       startTimeRef.current = Date.now() - (elapsedTime * 1000);
-      timerRef.current = setInterval(() => {
-        const currentElapsed = Math.floor((Date.now() - startTimeRef.current) / 1000);
-        setElapsedTime(currentElapsed);
-        
-        if (currentElapsed >= sessionLimit) {
-            stop();
-        }
-      }, 1000);
     }
-  }, [recorder, setIsPaused, elapsedTime, sessionLimit, stop]);
+  }, [recorder, setIsPaused, elapsedTime]);
 
   useEffect(() => {
     return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
+      stopTimer();
       releaseWakeLock();
       stopAudioCapture();
     };
-  }, [releaseWakeLock]);
+  }, [releaseWakeLock, stopTimer]);
 
   return {
     stream,

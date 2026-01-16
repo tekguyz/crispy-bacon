@@ -2,6 +2,7 @@
 import { GoogleGenAI, LiveServerMessage, Modality } from '@google/genai';
 import { createBlob, decodeAudioData, decode } from './audioProcessing';
 import { startAudioCapture, stopAudioCapture } from './audioService';
+import { useAppStore } from '../store/useAppStore';
 
 const PCM_WORKLET_CODE = `
 class PCMProcessor extends AudioWorkletProcessor {
@@ -161,11 +162,18 @@ export class LiveEngine {
       const source = this.audioContext.createBufferSource();
       source.buffer = buffer;
       source.connect(this.outputNode);
+      
+      // Apply voice speed from store
+      const speed = useAppStore.getState().voiceSpeed || 1.0;
+      source.playbackRate.value = speed;
+
       this.activeSources.add(source);
 
       this.nextStartTime = Math.max(this.nextStartTime, this.audioContext.currentTime);
       source.start(this.nextStartTime);
-      this.nextStartTime += buffer.duration;
+      
+      // Adjust duration calculation based on speed
+      this.nextStartTime += buffer.duration / speed;
 
       source.addEventListener('ended', () => {
         this.activeSources.delete(source);
@@ -184,7 +192,6 @@ export class LiveEngine {
   }
 
   public disconnect() {
-    // Guard: Prevent redundant calls if already idle to stop recursive loops
     if (this.status === 'idle') return;
 
     this.stopAllAudio();
@@ -199,13 +206,11 @@ export class LiveEngine {
         this.outputNode = null;
     }
     
-    // Guard: Check state before closing to prevent InvalidStateError
     if (this.audioContext && this.audioContext.state !== 'closed') {
         this.audioContext.close().catch(() => {});
     }
     this.audioContext = null;
 
-    // Guard: Nullify session first to prevent loop if onclose fires synchronously
     if (this.session) {
         const s = this.session;
         this.session = null; 

@@ -4,7 +4,6 @@ import { Loader2 } from 'lucide-react';
 import { InsightContent } from '../../../types';
 import { ExportActions } from './ExportActions';
 import { FolderSelection } from './FolderSelection';
-import { TagSelection } from './TagSelection';
 import { TaxonomySection } from './TaxonomySection';
 import { ContextGrounding } from './ContextGrounding';
 import { QuickActions } from './QuickActions';
@@ -35,16 +34,15 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
 
          <div className="h-px bg-outline-variant/10 w-full" />
 
-         {/* 2. Taxonomy Data */}
-         <TaxonomySection topics={insight.topics} entities={insight.entities} />
+         {/* 2. Taxonomy Data (Smart Tags only, no manual) */}
+         <TaxonomySection topics={insight.topics} entities={[]} />
 
          <div className="h-px bg-outline-variant/10 w-full" />
 
-         {/* 3. Filing System */}
+         {/* 3. Filing System (Folders only) */}
          <div className="space-y-6">
             <h3 className="text-[9px] font-black uppercase tracking-[0.4em] text-on-surface-variant/40">Filing System</h3>
             <FolderSelection insight={insight} />
-            <TagSelection insight={insight} />
          </div>
 
          <div className="h-px bg-outline-variant/10 w-full" />

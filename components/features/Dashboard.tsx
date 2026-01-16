@@ -5,9 +5,11 @@ import { useDashboardStats } from '../../hooks/useDashboardStats';
 import { DashboardHistory } from './dashboard/DashboardHistory';
 import { DashboardTasks } from './dashboard/DashboardTasks';
 import { SideSheet } from '../ui/SideSheet';
+import { GlobalChatSheet } from './dashboard/GlobalChatSheet';
 import { InsightContent } from '../../types';
-import { LayoutGrid, Zap, Mic, Globe, Loader2 } from 'lucide-react';
+import { LayoutGrid, Zap, Mic, Globe, Loader2, Sparkles } from 'lucide-react';
 import { triggerHaptic } from '../../services/hapticService';
+import { Tooltip } from '../ui/Tooltip';
 
 // Fix: Use lazy import to match App.tsx and resolve Vite optimization warnings
 const InsightDetailView = lazy(() => import('./InsightDetailView'));
@@ -23,6 +25,7 @@ const Dashboard: React.FC = () => {
   const hasCalendarAccess = !!(session as any)?.provider_token;
   
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const [isGlobalChatOpen, setIsGlobalChatOpen] = useState(false);
   const [previewInsight, setPreviewInsight] = useState<InsightContent | null>(null);
 
   useEffect(() => {
@@ -53,7 +56,6 @@ const Dashboard: React.FC = () => {
     return 'Good evening';
   }, []);
 
-  // Fix: Check session metadata to ensure names from Google OAuth (like "Alejandro") appear immediately
   const displayName = useMemo(() => {
     const metadata = session?.user?.user_metadata || {};
     const fullName = userProfile?.full_name || metadata.full_name || metadata.name;
@@ -140,6 +142,20 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Global Ask FAB */}
+      <div className="fixed bottom-10 right-28 z-40 hidden md:block">
+         <Tooltip content="Ask Library">
+            <button 
+               onClick={() => { triggerHaptic('medium'); setIsGlobalChatOpen(true); }}
+               className="w-14 h-14 bg-surface-container-high border-2 border-outline-variant/10 rounded-3xl flex items-center justify-center shadow-2xl hover:scale-105 active:scale-95 transition-all group"
+            >
+               <Sparkles size={20} className="text-primary group-hover:rotate-12 transition-transform" fill="currentColor" />
+            </button>
+         </Tooltip>
+      </div>
+
+      <GlobalChatSheet isOpen={isGlobalChatOpen} onClose={() => setIsGlobalChatOpen(false)} />
 
       <SideSheet 
         isOpen={isPreviewOpen} 

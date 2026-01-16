@@ -20,7 +20,7 @@ export const InsightContentBody: React.FC<InsightContentBodyProps> = ({
   const hasAudio = !!insight.metadata?.audioUrl;
 
   return (
-    <div className="max-w-4xl mx-auto pb-40 px-1">
+    <div className="max-w-4xl mx-auto pb-40 px-4 md:px-0">
       {hasAudio && (
         <AudioSource 
             variant="slim"
@@ -32,18 +32,20 @@ export const InsightContentBody: React.FC<InsightContentBodyProps> = ({
       {/* METADATA RIBBON */}
       <SummaryStats insight={insight} />
 
-      {/* PRIMARY SIGNAL (HERO) */}
-      <SummarySection 
-          summary={insight.summary} 
-          isDeepStrategist={insight.metadata?.isDeepStrategist} 
-          onRetry={() => retryProcessing(insight)}
-      />
-      
-      {/* SECONDARY SIGNAL (DENSE LIST) */}
-      <TakeawayGrid highlights={insight.highlights} />
+      <div className="space-y-24">
+        {/* PRIMARY SIGNAL (HERO) */}
+        <SummarySection 
+            summary={insight.summary} 
+            isDeepStrategist={insight.metadata?.isDeepStrategist} 
+            onRetry={() => retryProcessing(insight)}
+        />
+        
+        {/* SECONDARY SIGNAL (DENSE LIST) */}
+        <TakeawayGrid highlights={insight.highlights} />
 
-      {/* TERTIARY SIGNAL (TASKS) */}
-      <TaskList insightId={insight.id} activeTasks={activeTasks} completedTasks={completedTasks} />
+        {/* TERTIARY SIGNAL (TASKS) */}
+        <TaskList insightId={insight.id} activeTasks={activeTasks} completedTasks={completedTasks} />
+      </div>
     </div>
   );
 };

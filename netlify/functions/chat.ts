@@ -7,33 +7,50 @@ export const handler = async (event: any) => {
   }
 
   try {
-    const { message, transcript, rawContent, analysis, history } = JSON.parse(event.body);
+    const { message, transcript, rawContent, analysis, history, contextType, globalContext } = JSON.parse(event.body);
     
     if (!process.env.API_KEY) {
       throw new Error("Missing API configuration.");
     }
 
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-    
-    // RAG SYSTEM MODEL: Gemini 3 Flash (Fastest and Most Efficient)
     const modelName = 'gemini-3-flash-preview';
 
-    const primaryContext = rawContent && rawContent.length > 10 ? rawContent : transcript;
-    
-    const systemInstructionText = `
-      ROLE: Professional Research Partner.
-      CONTEXT: ${analysis?.title || 'Untitled Research'}
-      
-      SOURCE MATERIAL:
-      """
-      ${primaryContext}
-      """
-      
-      INSTRUCTIONS:
-      - Use the 'SOURCE MATERIAL' to provide precise, evidence-based answers.
-      - If the detail is not in the material, be honest.
-      - Be direct and efficient.
-    `;
+    let systemInstructionText = "";
+
+    if (contextType === 'global') {
+        systemInstructionText = `
+          ROLE: Executive Research Librarian.
+          CONTEXT: You have access to the summaries of the user's recent 20 research notes.
+          
+          LIBRARY DATA:
+          """
+          ${globalContext}
+          """
+          
+          INSTRUCTIONS:
+          - Answer questions based ONLY on the provided Library Data.
+          - Synthesize connections across different notes if relevant.
+          - If the information is not in the library, state it clearly.
+          - Be concise and professional.
+        `;
+    } else {
+        const primaryContext = rawContent && rawContent.length > 10 ? rawContent : transcript;
+        systemInstructionText = `
+          ROLE: Professional Research Partner.
+          CONTEXT: ${analysis?.title || 'Untitled Research'}
+          
+          SOURCE MATERIAL:
+          """
+          ${primaryContext}
+          """
+          
+          INSTRUCTIONS:
+          - Use the 'SOURCE MATERIAL' to provide precise, evidence-based answers.
+          - If the detail is not in the material, be honest.
+          - Be direct and efficient.
+        `;
+    }
 
     const turnHistory = (history || []).map((m: any) => ({
       role: m.role === 'user' ? 'user' : 'model',
@@ -48,7 +65,6 @@ export const handler = async (event: any) => {
       config: {
         systemInstruction: systemInstructionText,
         temperature: 0.2,
-        // Removed googleSearch tool to prevent latency timeouts (504s) and ensure strict RAG adherence.
       },
     });
 

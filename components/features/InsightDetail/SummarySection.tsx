@@ -43,10 +43,10 @@ const SummarySection: React.FC<SummarySectionProps> = ({ summary, isDeepStrategi
 
       <div className="bg-surface-container-low/50 border-2 border-on-surface/5 p-8 md:p-12 rounded-[2.5rem] shadow-m3-1 relative overflow-hidden">
         <div className="absolute inset-0 ledger-grid opacity-[0.02] pointer-events-none" />
-        <div className="prose-summary relative z-10">
+        <div className="relative z-10">
           <MarkdownRenderer 
             content={summary} 
-            className="text-xl md:text-2xl font-serif text-on-surface font-medium leading-[1.5] selection:bg-primary/20 selection:text-primary" 
+            className="prose-summary font-serif" 
           />
         </div>
       </div>

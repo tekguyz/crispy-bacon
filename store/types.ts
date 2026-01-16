@@ -1,3 +1,4 @@
+
 import { 
   UserProfile, InsightContent, Collection, Tag, SharedLink, 
   CalendarEvent, AppView, ThemeOption, AccentColor, TextSize, 
@@ -105,6 +106,8 @@ export interface UISlice {
   syncOnWifiOnly: boolean;
   personaStyle: PersonaStyle;
   storageUsage: number; 
+  voiceSpeed: number;
+  hapticIntensity: number;
 
   // Selection state
   selectedItemIds: string[];
@@ -149,6 +152,8 @@ export interface UISlice {
   setSearchQuery: (query: string) => void;
   setSyncOnWifiOnly: (val: boolean) => void;
   setPersonaStyle: (style: PersonaStyle) => void;
+  setVoiceSpeed: (speed: number) => void;
+  setHapticIntensity: (intensity: number) => void;
   updateStorageUsage: () => Promise<void>;
   setRealtimeStatus: (status: RealtimeStatus) => void;
   setActiveSourceTypeFilter: (type: ContentType | 'all') => void;
@@ -228,6 +233,7 @@ export interface IntelligenceSlice {
   stopLiveAssistant: () => void;
   setLiveSession: (session: any | null) => void;
   sendChatMessage: (message: string, insight: InsightContent) => Promise<void>;
+  sendGlobalChatMessage: (message: string, insights: InsightContent[]) => Promise<void>;
   clearChat: () => void;
   addContextAttachment: (attachment: ContextAttachment) => void;
   removeContextAttachment: (id: string) => void;
