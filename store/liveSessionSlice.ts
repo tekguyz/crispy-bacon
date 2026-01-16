@@ -25,6 +25,8 @@ export const createLiveSessionSlice: StateCreator<AppState, [], [], Partial<Inte
 
   setLiveSession: (session) => set({ liveSession: session }),
 
+  clearChat: () => set({ chatHistory: [] }),
+
   sendChatMessage: async (message: string, insight: InsightContent) => {
     const currentHistory = get().chatHistory;
     const newHistory: ChatMessage[] = [...currentHistory, { role: 'user', text: message }];
