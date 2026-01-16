@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Globe, ShieldCheck, CheckCircle2, AlertCircle, ExternalLink } from 'lucide-react';
 import { useAppStore } from '../../../store/useAppStore';
@@ -15,7 +14,7 @@ export const IntegrationsSection: React.FC = () => {
       addToast("Connecting to Google...", "info");
       await signInWithGoogle();
     } catch (e: any) {
-      addToast("Workspace link failed.", "error");
+      addToast("Connection failed.", "error");
     }
   };
 

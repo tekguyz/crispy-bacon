@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { Trash2, HardDrive, ZapOff } from 'lucide-react';
 import { useAppStore } from '../../../store/useAppStore';
@@ -32,10 +31,10 @@ export const DataManagementSection: React.FC = () => {
 
   const handleClearCacheOnly = () => {
     openConfirmation({
-      title: 'Cleanup Workspace?',
+      title: 'Clear Cache?',
       message: 'This removes temporary files and resets your local memory.',
       variant: 'neutral',
-      confirmLabel: 'Cleanup',
+      confirmLabel: 'Clear',
       onConfirm: async () => { await clearLocalCache(); }
     });
   };
@@ -48,7 +47,7 @@ export const DataManagementSection: React.FC = () => {
               <div className="p-2 bg-primary/10 text-primary rounded-xl">
                 <HardDrive size={16} strokeWidth={2.5} />
               </div>
-              <span className="text-[10px] font-black uppercase tracking-widest text-on-surface">Vault Size</span>
+              <span className="text-[10px] font-black uppercase tracking-widest text-on-surface">Storage Used</span>
             </div>
             <span className="text-xs font-mono font-black text-on-surface">{formatSize(storageUsage)}</span>
         </div>
@@ -61,7 +60,7 @@ export const DataManagementSection: React.FC = () => {
           onClick={handleClearCacheOnly}
           className="w-full flex items-center justify-center gap-2 py-3 bg-surface-container-high border border-outline-variant/10 rounded-xl text-[9px] font-black uppercase tracking-widest text-on-surface-variant hover:text-primary transition-all active:scale-[0.98]"
         >
-          <Trash2 size={12} /> Tidy Cache
+          <Trash2 size={12} /> Clear Temp Files
         </button>
       </div>
 

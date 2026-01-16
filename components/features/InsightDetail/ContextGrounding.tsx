@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Paperclip, Link as LinkIcon, FileText, Sparkles, Globe, ExternalLink } from 'lucide-react';
 import { ContextAttachment } from '../../../types';
@@ -15,7 +14,7 @@ export const ContextGrounding: React.FC<ContextGroundingProps> = ({ attachments 
     <section className="space-y-4">
       <div className="flex items-center gap-2">
          <div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
-         <h3 className="text-[9px] font-black uppercase tracking-[0.4em] text-on-surface-variant/60">Source Evidence</h3>
+         <h3 className="text-[9px] font-black uppercase tracking-[0.4em] text-on-surface-variant/60">Sources</h3>
       </div>
 
       <div className="space-y-2">
@@ -25,7 +24,7 @@ export const ContextGrounding: React.FC<ContextGroundingProps> = ({ attachments 
                 <Globe size={14} />
              </div>
              <div className="min-w-0 flex-1">
-                <span className="text-[8px] font-black text-on-surface-variant/40 uppercase tracking-widest block mb-0.5">Primary Source</span>
+                <span className="text-[8px] font-black text-on-surface-variant/40 uppercase tracking-widest block mb-0.5">Original Link</span>
                 <p className="text-[10px] font-bold text-on-surface truncate group-hover:text-primary transition-colors">{sourceUrl}</p>
              </div>
              <ExternalLink size={10} className="text-on-surface-variant/20 group-hover:text-primary" />

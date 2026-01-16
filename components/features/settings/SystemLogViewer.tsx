@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Terminal, Copy, Check, AlertCircle, Info, AlertTriangle, ChevronDown, Trash2, ZapOff } from 'lucide-react';
 import { useAppStore } from '../../../store/useAppStore';

@@ -9,7 +9,7 @@
 4.  **Vault:** Artifacts are encrypted and uploaded to Supabase Storage; metadata is indexed in Postgres.
 
 ## 2. Reasoning Engine
-The system utilizes a "Dual-Signal" routing logic based on user tier and task complexity.
+The system utilizes a "Dual-Engine" routing logic based on user tier and task complexity.
 
 | Tier | Capability | Engine |
 | :--- | :--- | :--- |
@@ -18,7 +18,7 @@ The system utilizes a "Dual-Signal" routing logic based on user tier and task co
 | **Live** | Ask Voice | **Gemini 2.5 Flash Native Audio** (Low Latency) |
 
 ## 3. Database Schema (Supabase)
-### `insights` (The Research Node)
+### `insights` (The Note)
 - `id`: Unique UUID.
 - `processing_status`: State machine (`local` -> `uploading` -> `reasoning` -> `completed`).
 - `metadata`: Stores `velocityScore`, `friction`, `contextAttachments`, and `isDeepStrategist`.
@@ -31,5 +31,5 @@ The system utilizes a "Dual-Signal" routing logic based on user tier and task co
 ## 4. State Management
 **Hybrid Architecture:**
 - **Client State (Zustand):** Manages ephemeral UI state (Modals, Toasts, Recorder, Live Buffers).
-- **Server State (TanStack Query):** Handles hydration, caching, and invalidation for Insights and Collections.
+- **Server State (TanStack Query):** Handles hydration, caching, and invalidation for Notes and Collections.
 - **Synchronization:** The `<DataSynchronizer />` component injects Query data into the Zustand store, ensuring reactive UI updates.

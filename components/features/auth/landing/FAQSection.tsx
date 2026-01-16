@@ -1,36 +1,35 @@
-
 import React from 'react';
-import { ChevronRight, Terminal, Cpu, ShieldCheck, Radio, Globe, Database, Zap } from 'lucide-react';
+import { ChevronRight, Terminal, Cpu, ShieldCheck, Radio, Globe, Database, Zap, BookOpen } from 'lucide-react';
 
 const MANUAL_DATA = [
   {
-    q: "Direct Loopback Technology",
-    a: "Bacon utilizes the OS-level system audio loop. Unlike meeting bots, we capture the raw audio buffer directly from your output device. This ensures 100% privacy and zero 'extra participant' friction in professional calls.",
+    q: "Direct Audio Capture",
+    a: "Bacon records audio directly from your computer's system output. Unlike meeting bots, we don't join the call or display an avatar. It's just you and your notes.",
     icon: Radio
   },
   {
-    q: "Neural Grounding (Strategic Trace)",
-    a: "Every highlight generated is traced back to the original signal buffer. The reasoning engine is prohibited from creative interpolation. If a decision wasn't made, it reports a 'Logic Gap' rather than a guess.",
+    q: "Fact-Based Summaries",
+    a: "Every highlight generated is checked against the original recording. The assistant is instructed not to guess. If a decision wasn't made, it won't invent one.",
     icon: ShieldCheck
   },
   {
-    q: "The Google Workspace Bridge",
-    a: "Our Bridge protocol uses read-only OAuth scopes to sync your Calendar and Drive. It pulls context—not files—to ground the reasoning engine in your current project trajectory.",
+    q: "Google Workspace Sync",
+    a: "Connect your Calendar and Drive to let the assistant understand your schedule and import existing documents for analysis.",
     icon: Zap
   },
   {
-    q: "Hardware Thresholds",
-    a: "Standard Modules are optimized for 15m rapid-capture. Executive Modules utilize high-memory Gemini 3.0 Pro models to process 60m sessions with deep strategic nuance.",
+    q: "Model Intelligence",
+    a: "Standard accounts use fast models for quick 15-minute recaps. Executive accounts use advanced reasoning models capable of handling hour-long strategy sessions.",
     icon: Cpu
   },
   {
-    q: "Air-Gapped Privacy Standard",
-    a: "Data is strictly partitioned at the Row Level (RLS). We do not train general models on user nodes. Your research vault is encrypted with AES-256 and isolated from the public web.",
+    q: "Private & Secure",
+    a: "Your data is isolated. We do not train general AI models on your private notes. Your research is encrypted and stored securely.",
     icon: Database
   },
   {
-    q: "Signal Export Protocol",
-    a: "All recaps are exported as standard Markdown (.md). We prioritize structural compatibility with Obsidian, Notion, and specialized research dossiers.",
+    q: "Export Options",
+    a: "All recaps can be exported as standard Markdown (.md) or copied directly to Notion and Obsidian.",
     icon: Globe
   }
 ];
@@ -44,12 +43,12 @@ export const FAQSection: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 md:gap-24">
           <div className="lg:col-span-4 space-y-8">
              <div className="inline-flex items-center gap-3 px-4 py-1.5 bg-primary/5 border border-primary/10 text-primary rounded-full">
-                <Terminal size={14} strokeWidth={3} />
-                <span className="text-[9px] font-mono font-black uppercase tracking-[0.3em]">System Manual v2.5</span>
+                <BookOpen size={14} strokeWidth={3} />
+                <span className="text-[9px] font-mono font-black uppercase tracking-[0.3em]">Documentation</span>
              </div>
-             <h2 className="text-4xl md:text-7xl font-display font-bold tracking-tighter text-on-surface uppercase leading-none italic">Technical <br/><span className="text-primary not-italic">Specs.</span></h2>
+             <h2 className="text-4xl md:text-7xl font-display font-bold tracking-tighter text-on-surface uppercase leading-none italic">How it <br/><span className="text-primary not-italic">Works.</span></h2>
              <p className="text-lg font-medium text-on-surface-variant opacity-60 leading-tight max-w-sm font-serif">
-                Operational parameters and the architectural constraints of the Crispy Bacon instrument.
+                Common questions about privacy, security, and how the assistant processes your data.
              </p>
           </div>
 
@@ -60,7 +59,7 @@ export const FAQSection: React.FC = () => {
                   <div className="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary shrink-0 shadow-inner border border-outline-variant/10 group-hover:scale-110 transition-transform">
                     <item.icon size={16} strokeWidth={2.5} />
                   </div>
-                  <span className="text-[8px] font-mono font-black text-on-surface-variant/30 uppercase tracking-[0.4em]">Section 0{i+1}</span>
+                  <span className="text-[8px] font-mono font-black text-on-surface-variant/30 uppercase tracking-[0.4em]">0{i+1}</span>
                 </div>
                 <div className="space-y-3">
                    <h3 className="text-xl font-black uppercase tracking-tight text-on-surface leading-tight">{item.q}</h3>

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Settings, LogOut, ArrowRight, Menu, X, Globe, Cpu, Database, Zap, ShieldCheck } from 'lucide-react';
 import { BaconBrand } from '../../../ui/Logo';

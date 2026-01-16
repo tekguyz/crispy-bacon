@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Globe, Radio, Cpu, ChevronDown, ChevronUp, Lock, FileText, Share2, Activity } from 'lucide-react';
 import { FeatureCard } from './FeatureCard';
@@ -47,7 +46,7 @@ export const FeatureGrid: React.FC = () => {
           <FeatureCard 
             icon={Globe} 
             domain="WEB"
-            signal="HIGH SIGNAL"
+            signal="HIGH DENSITY"
             title="Web Reasoning" 
             desc="Strip away ads and fluff. Paste any link to extract core research points and organized takeaways."
             specs={["LINK EXTRACTION", "SMART TAGS", "QUICK SCAN"]}

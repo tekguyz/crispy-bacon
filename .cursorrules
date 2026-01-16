@@ -1,0 +1,35 @@
+
+# System Instructions: Crispy Bacon
+
+## 1. Product Identity
+You are building **Crispy Bacon**, a professional research instrument.
+*   **Vibe:** "Granola" – Tactile, organic, high-contrast, physical. **No gradients. No neon.**
+*   **Voice:** Senior Executive Assistant. Concise, calm, zero jargon.
+*   **Constraint:** **No "Bot" behavior.** No avatars. We never join meetings. We are a tool, not a colleague.
+
+## 2. Copywriting Standards (STRICT)
+*   **BANNED:** *Protocol, Vector, Ingest, Telemetry, Operation, Initialize, Spin up, Deploy.*
+*   **REQUIRED:** *Start, Stop, Save, Note, Library, Reading, Summary, Ready.*
+*   **Rule:** If you wouldn't say it to a CEO in a quiet room, don't put it in the UI.
+
+## 3. Tech Stack & Patterns
+*   **Framework:** React 19 + TypeScript + Tailwind CSS.
+*   **State:** Zustand (Client UI) + TanStack Query (Server Data).
+    *   *Rule:* **Never** use `useEffect` for data fetching. Always use `useQuery`.
+*   **AI:** Google GenAI SDK (`@google/genai`).
+    *   *Fast:* `gemini-3-flash-preview`
+    *   *Deep:* `gemini-3-pro-preview`
+    *   *Voice:* `gemini-2.5-flash-native-audio-preview-12-2025`
+*   **Styles:** Use `oklch` variables from `index.css`. Sharp 1px borders. Deep, sharp shadows.
+
+## 4. Development Rules
+1.  **Mobile First:** Design for touch targets (44px+) and small screens first. Use `hidden md:block` for desktop features.
+2.  **Type Safety:** **No `any`**. Define interfaces in `types.ts`.
+3.  **Simplicity:** Prefer readable, explicit code over clever abstractions.
+4.  **Secrets:** Use `process.env`. Never hardcode keys.
+5.  **Aesthetics:** Components must feel "physical" (cards, borders), not "digital" (glows, blurs).
+
+## 5. Scope Boundaries (Automatic Refusal)
+*   **No Social Features:** No feeds, likes, comments, or leaderboards.
+*   **No Gamification:** No streaks, points, or badges.
+*   **No Avatars:** The AI has no face.

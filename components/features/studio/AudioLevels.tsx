@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { Activity, AlertTriangle } from 'lucide-react';
 
@@ -76,7 +75,7 @@ export const AudioLevels: React.FC<AudioLevelsProps> = ({
         <div className="flex items-center gap-2">
            <Activity size={12} className={isDangerZone ? 'text-error animate-pulse' : 'text-primary'} />
            <span className={`text-[9px] font-black uppercase tracking-widest ${isDangerZone ? 'text-error' : 'text-on-surface-variant'}`}>
-             {isDangerZone ? 'Finalizing Signal' : 'Live Signal'}
+             {isDangerZone ? 'Ending' : 'Recording'}
            </span>
         </div>
         
@@ -96,7 +95,7 @@ export const AudioLevels: React.FC<AudioLevelsProps> = ({
         <canvas ref={canvasRef} width={240} height={40} className="w-full h-full opacity-60" />
         {isPaused && (
           <div className="absolute inset-0 flex items-center justify-center bg-surface-container-high/40 backdrop-blur-[1px]">
-            <span className="text-[7px] font-black uppercase tracking-[0.4em] text-on-surface-variant">Signal Holding</span>
+            <span className="text-[7px] font-black uppercase tracking-[0.4em] text-on-surface-variant">Paused</span>
           </div>
         )}
       </div>

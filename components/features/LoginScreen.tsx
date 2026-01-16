@@ -1,8 +1,8 @@
-
 import React, { useState } from 'react';
 import { useAppStore } from '../../store/useAppStore';
 import LandingPage from './auth/landing/LandingPage';
-import AuthPortal from './auth/AuthPortal';
+// Fix: AuthPortal is exported as a named constant in AuthPortal.tsx, so it must be imported using named import syntax
+import { AuthPortal } from './auth/AuthPortal';
 import { AppView } from '../../types';
 
 type AuthMode = 'landing' | 'signin' | 'signup';

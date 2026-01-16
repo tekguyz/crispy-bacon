@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ArrowRight, Layers, ShieldCheck, Mic, Monitor } from 'lucide-react';
 import { triggerHaptic } from '../../../services/hapticService';
@@ -25,7 +24,7 @@ export const MethodSelector: React.FC<MethodSelectorProps> = ({ onSelect }) => {
                 <Layers size={20} strokeWidth={2.5} />
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] font-black uppercase tracking-widest text-on-surface">System Status</span>
+                <span className="text-[10px] font-black uppercase tracking-widest text-on-surface">Ready to Capture</span>
                 <span className="text-[8px] font-mono font-black uppercase tracking-widest text-success">Online</span>
               </div>
            </div>
@@ -33,11 +32,11 @@ export const MethodSelector: React.FC<MethodSelectorProps> = ({ onSelect }) => {
            <div className="space-y-1.5 p-4 bg-background/50 rounded-2xl border border-outline-variant/10 shadow-sm">
               <div className="flex justify-between items-center">
                  <span className="text-[8px] font-mono font-black text-on-surface-variant/40 uppercase">Privacy</span>
-                 <span className="text-[8px] font-mono font-black text-success uppercase">Active</span>
+                 <span className="text-[8px] font-mono font-black text-success uppercase">Secure</span>
               </div>
               <div className="flex justify-between items-center">
                  <span className="text-[8px] font-mono font-black text-on-surface-variant/40 uppercase">Storage</span>
-                 <span className="text-[8px] font-mono font-black text-on-surface uppercase">Encrypted</span>
+                 <span className="text-[8px] font-mono font-black text-on-surface uppercase">Vault Locked</span>
               </div>
            </div>
         </div>

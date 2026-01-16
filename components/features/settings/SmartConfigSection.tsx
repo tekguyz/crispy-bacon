@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Brain, Zap, CheckCircle2, Target, HelpCircle, Archive, ShieldCheck, Clock, Gauge } from 'lucide-react';
 import { useAppStore } from '../../../store/useAppStore';
@@ -33,7 +32,6 @@ export const SmartConfigSection: React.FC = () => {
           <div className="space-y-6">
               <div className="flex items-center justify-between mb-1 px-1">
                  <label className="text-[10px] font-black uppercase tracking-[0.3em] text-on-surface-variant opacity-60">Assistant Voice</label>
-                 <span className="text-[8px] font-mono font-bold text-primary">24kHz PCM</span>
               </div>
               <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
                   {voices.map(v => (
@@ -70,7 +68,7 @@ export const SmartConfigSection: React.FC = () => {
 
           {/* Analysis Framework */}
           <div className="space-y-4">
-              <label className="text-[10px] font-black uppercase tracking-[0.3em] text-on-surface-variant opacity-60 px-1">Default Framework</label>
+              <label className="text-[10px] font-black uppercase tracking-[0.3em] text-on-surface-variant opacity-60 px-1">Default Focus</label>
               <div className="grid grid-cols-1 gap-2">
               {Object.values(InsightTemplate).map(t => (
                   <button 
@@ -90,7 +88,7 @@ export const SmartConfigSection: React.FC = () => {
         <div className="pt-10 border-t border-outline-variant/10 space-y-6">
             <div className="flex items-center gap-3 px-1">
               <Archive size={14} className="text-primary" strokeWidth={3} />
-              <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-on-surface">Retention Policies</h3>
+              <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-on-surface">Data Retention</h3>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -122,7 +120,7 @@ export const SmartConfigSection: React.FC = () => {
                         <ShieldCheck size={18} />
                      </div>
                      <div className="flex flex-col text-left">
-                        <span className="text-[10px] font-black uppercase tracking-widest text-on-surface">Data Immunity</span>
+                        <span className="text-[10px] font-black uppercase tracking-widest text-on-surface">Keep Forever</span>
                         <span className="text-[8px] font-bold text-on-surface-variant/40 uppercase tracking-widest">Never Purge</span>
                      </div>
                   </div>
@@ -137,7 +135,7 @@ export const SmartConfigSection: React.FC = () => {
         <div className="pt-10 border-t border-outline-variant/10 space-y-6">
             <div className="flex items-center gap-3 px-1">
               <Brain size={14} className="text-primary" strokeWidth={3} />
-              <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-on-surface">Analysis Depth</h3>
+              <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-on-surface">Detail Level</h3>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -146,7 +144,7 @@ export const SmartConfigSection: React.FC = () => {
                   className={`flex flex-col p-6 rounded-[2rem] border-2 transition-all text-left relative group ${personaStyle === PersonaStyle.CONCISE ? 'bg-surface-container-high border-primary shadow-lg ring-4 ring-primary/5' : 'bg-surface-container border-outline opacity-60 hover:opacity-100'}`}
               >
                   <div className="flex justify-between items-start mb-4">
-                    <span className={`text-[11px] font-black uppercase tracking-widest ${personaStyle === PersonaStyle.CONCISE ? 'text-primary' : 'text-on-surface-variant'}`}>Recap Protocol</span>
+                    <span className={`text-[11px] font-black uppercase tracking-widest ${personaStyle === PersonaStyle.CONCISE ? 'text-primary' : 'text-on-surface-variant'}`}>Standard Recap</span>
                     {personaStyle === PersonaStyle.CONCISE && <CheckCircle2 size={18} className="text-primary" strokeWidth={3} />}
                   </div>
                   <p className="text-[11px] font-bold text-on-surface-variant leading-relaxed mb-3 uppercase tracking-widest">Optimized for speed. Immediate decisions and next steps.</p>
@@ -159,7 +157,7 @@ export const SmartConfigSection: React.FC = () => {
               >
                   <div className="flex justify-between items-start mb-4">
                     <div className="flex items-center gap-2">
-                       <span className={`text-[11px] font-black uppercase tracking-widest ${personaStyle === PersonaStyle.DEEP_RESEARCH ? 'text-primary' : 'text-on-surface-variant'}`}>Strategist Protocol</span>
+                       <span className={`text-[11px] font-black uppercase tracking-widest ${personaStyle === PersonaStyle.DEEP_RESEARCH ? 'text-primary' : 'text-on-surface-variant'}`}>Deep Analysis</span>
                        <Zap size={12} fill="currentColor" className="text-primary animate-pulse" />
                     </div>
                     {personaStyle === PersonaStyle.DEEP_RESEARCH && <CheckCircle2 size={18} className="text-primary" strokeWidth={3} />}

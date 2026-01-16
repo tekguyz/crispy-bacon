@@ -9,7 +9,7 @@ export const WorkflowSection: React.FC = () => {
     <div className="bg-surface-container-low border border-outline-variant/10 rounded-[2rem] p-6 space-y-4 h-full">
       <div className="flex items-center gap-3 mb-2">
         <Download size={14} className="text-primary" strokeWidth={3} />
-        <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface-variant opacity-60">Export Signal</h2>
+        <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface-variant opacity-60">Export Format</h2>
       </div>
 
       <div className="space-y-4">

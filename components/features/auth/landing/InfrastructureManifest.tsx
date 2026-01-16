@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ShieldCheck, Cpu, Database, Globe, Lock, HardDrive } from 'lucide-react';
 
@@ -30,7 +29,6 @@ export const InfrastructureManifest: React.FC = () => {
                  <div className="p-3 bg-surface-container-high rounded-2xl text-primary group-hover:bg-primary group-hover:text-on-primary transition-all duration-500 shadow-inner">
                     {i === 0 ? <Cpu size={20} /> : i === 1 ? <HardDrive size={20} /> : i === 2 ? <Database size={20} /> : i === 3 ? <ShieldCheck size={20} /> : i === 4 ? <Globe size={20} /> : <Lock size={20} />}
                  </div>
-                 <span className="text-[9px] font-mono font-black text-on-surface/10 uppercase tracking-[0.3em]">SECURE_ENTRY_0{i+1}</span>
               </div>
               <div className="space-y-3">
                  <h4 className="text-2xl font-slab font-bold text-on-surface uppercase tracking-tight leading-none group-hover:text-primary transition-colors">{spec.value}</h4>

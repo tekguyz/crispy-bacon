@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Loader2, LogIn, CornerDownLeft } from 'lucide-react';
 import { triggerHaptic } from '../../../services/hapticService';
@@ -24,7 +23,7 @@ export const ImportFooter: React.FC<ImportFooterProps> = ({
           className="w-full h-14 md:h-12 bg-primary text-on-primary rounded-xl md:rounded-2xl font-black text-[11px] md:text-xs uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:scale-[1.01] transition-all flex items-center justify-center gap-3 disabled:opacity-30 disabled:grayscale disabled:cursor-not-allowed focus:outline-none"
        >
           {isProcessing ? <Loader2 size={16} className="animate-spin shrink-0" /> : (isGuest ? <LogIn size={16} strokeWidth={3} className="shrink-0" /> : <CornerDownLeft size={16} strokeWidth={3} className="shrink-0" />)}
-          {isProcessing ? 'Refining...' : (isGuest ? 'Unlock Full Notes' : 'Create Note')}
+          {isProcessing ? 'Working...' : (isGuest ? 'Unlock Full Notes' : 'Create Note')}
        </button>
     </div>
   );

@@ -18,7 +18,7 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
     return (
       <div className="flex flex-col items-center justify-center h-full p-8 opacity-40 space-y-4">
         <Loader2 size={24} className="animate-spin text-primary" />
-        <p className="text-[10px] font-black uppercase tracking-[0.3em]">Mapping Logic...</p>
+        <p className="text-[10px] font-black uppercase tracking-[0.3em]">Working...</p>
       </div>
     );
   }
@@ -41,7 +41,7 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
 
         {/* 3. PROVENANCE: Source & Grounding */}
         <div className="space-y-4 pt-4 border-t border-outline-variant/10">
-          <h3 className="text-[9px] font-black uppercase tracking-[0.4em] text-on-surface-variant/40">Provenance</h3>
+          <h3 className="text-[9px] font-black uppercase tracking-[0.4em] text-on-surface-variant/40">Sources</h3>
           <ContextGrounding 
             attachments={insight.metadata?.contextAttachments} 
             sourceUrl={insight.metadata?.sourceDomain || (insight.type === 'URL' ? insight.original_content : undefined)} 
@@ -51,37 +51,32 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
         {/* 4. DOWNSTREAM: Export Logic */}
         {!isFailed && (
           <div className="space-y-4 pt-4 border-t border-outline-variant/10">
-            <h3 className="text-[9px] font-black uppercase tracking-[0.4em] text-on-surface-variant/40">Tool Bridge</h3>
+            <h3 className="text-[9px] font-black uppercase tracking-[0.4em] text-on-surface-variant/40">Export</h3>
             <ExportActions insight={insight} />
           </div>
         )}
 
-        {/* 5. GHOST TELEMETRY: System Stats at bottom */}
-        <div className="pt-24 pb-8 opacity-20 group/system transition-opacity hover:opacity-50">
+        {/* 5. USAGE STATS: Clean System Stats at bottom */}
+        <div className="pt-24 pb-8 opacity-30 group/system transition-opacity hover:opacity-70">
           <div className="flex items-center gap-2 mb-3">
              <Terminal size={10} className="text-on-surface-variant" />
-             <span className="text-[8px] font-mono font-black uppercase tracking-[0.3em]">Sys_Telemetry</span>
+             <span className="text-[8px] font-mono font-black uppercase tracking-[0.3em]">System Info</span>
           </div>
           
           {usage ? (
-            <div className="font-mono text-[8px] space-y-1.5">
-              <div className="flex justify-between border-b border-outline-variant/5 pb-1">
-                <span className="opacity-40">MODEL_ID</span>
-                <span className="font-black uppercase tracking-tighter">{usage.model.replace('gemini-', '')}</span>
+            <div className="font-mono text-[9px] space-y-1.5 font-bold">
+              <div className="flex justify-between border-b border-outline-variant/10 pb-1">
+                <span className="opacity-50">Model</span>
+                <span className="uppercase tracking-tight">{usage.model.replace('gemini-', '')}</span>
               </div>
               <div className="flex justify-between">
-                <span className="opacity-40">IO_PAIR</span>
-                <span>{usage.inputTokens} / {usage.outputTokens}</span>
-              </div>
-              <div className="flex justify-between font-black text-primary">
-                <span>BURN_WEIGHT</span>
-                <span>{usage.totalTokens}t</span>
+                <span className="opacity-50">Tokens</span>
+                <span>{usage.totalTokens.toLocaleString()}</span>
               </div>
             </div>
           ) : (
             <div className="flex items-center gap-2 text-[8px] font-mono italic opacity-40">
-              <ShieldAlert size={10} />
-              <span>Link_Terminated</span>
+              <span>Usage data unavailable</span>
             </div>
           )}
         </div>

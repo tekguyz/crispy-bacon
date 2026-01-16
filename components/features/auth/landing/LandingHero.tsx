@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { ArrowRight, Sparkles, Activity, ShieldCheck, Terminal } from 'lucide-react';
+import { ArrowRight, Sparkles, Activity, ShieldCheck } from 'lucide-react';
 import { HeroStat } from './HeroStat';
 import { triggerHaptic } from '../../../../services/hapticService';
 
@@ -18,17 +17,9 @@ export const LandingHero: React.FC<any> = ({ onSignIn }) => {
         
         {/* COPY COLUMN */}
         <div className="lg:col-span-7 space-y-10 animate-fade-in text-center lg:text-left">
-          <div className="flex flex-col lg:flex-row items-center gap-4">
-            <div className="inline-flex items-center gap-3 px-4 py-1.5 bg-primary/5 border border-primary/10 text-primary rounded-full">
-              <Sparkles size={12} strokeWidth={3} />
-              <span className="text-[9px] font-mono font-black uppercase tracking-[0.3em]">Powered by Gemini 3.0 Pro</span>
-            </div>
-            <div className="hidden lg:flex items-center gap-3 text-[8px] font-mono font-black text-on-surface-variant/30 uppercase tracking-widest">
-               <Terminal size={10} />
-               <span>BUILD_HASH: 0x2A5F1</span>
-               <div className="w-1 h-1 rounded-full bg-success animate-pulse" />
-               <span className="text-success">System Stable</span>
-            </div>
+          <div className="inline-flex items-center gap-3 px-4 py-1.5 bg-primary/5 border border-primary/10 text-primary rounded-full">
+            <Sparkles size={12} strokeWidth={3} />
+            <span className="text-[9px] font-black uppercase tracking-[0.3em]">Clear thinking from every meeting</span>
           </div>
 
           <div className="space-y-6">
@@ -37,30 +28,27 @@ export const LandingHero: React.FC<any> = ({ onSignIn }) => {
               <span className="text-primary not-italic">from noise.</span>
             </h1>
             <p className="text-lg md:text-xl text-on-background font-medium font-serif leading-relaxed max-w-xl opacity-60 mx-auto lg:mx-0">
-              A mechanical instrument for professional reasoning. Capture system audio directly and recover facts without intrusive meeting bots.
+              High-density recaps for professionals. Capture meetings privately and recover facts without intrusive bots or cluttered notes.
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row items-center gap-6 justify-center lg:justify-start pt-2">
             <button 
               onClick={handleSignIn} 
-              className="w-full sm:w-auto px-10 h-16 bg-primary text-on-primary rounded-xl font-black text-[12px] uppercase tracking-[0.3em] shadow-m3-3 hover:translate-y-[-2px] active:scale-95 transition-all flex items-center justify-center gap-4 group"
+              className="w-full sm:w-auto px-10 h-16 bg-primary text-on-primary rounded-xl font-black text-[12px] uppercase tracking-[0.3em] shadow-lg hover:translate-y-[-2px] active:scale-95 transition-all flex items-center justify-center gap-4 group"
             >
-              Initialize Library <ArrowRight size={16} strokeWidth={3} className="group-hover:translate-x-1 transition-transform" />
+              Get Started <ArrowRight size={16} strokeWidth={3} className="group-hover:translate-x-1 transition-transform" />
             </button>
-            <div className="flex items-center gap-4 px-4 py-2 bg-surface-container-low border border-outline-variant/10 rounded-xl">
-               <Activity size={18} className="text-success animate-pulse" />
-               <div className="flex flex-col">
-                  <span className="text-[9px] font-mono font-black uppercase tracking-widest text-on-surface">Telemetry Active</span>
-                  <span className="text-[7px] font-bold text-on-surface-variant opacity-40 uppercase tracking-widest">Latency: 42ms</span>
-               </div>
+            <div className="flex items-center gap-3 px-4 py-2">
+               <ShieldCheck size={18} className="text-success" />
+               <span className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-60">Private by Default</span>
             </div>
           </div>
           
           <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-16 gap-y-8 pt-10 border-t border-outline-variant/10">
-            <HeroStat value="Direct" label="Audio Loop" />
+            <HeroStat value="Direct" label="Audio Capture" />
             <HeroStat value="Zero" label="Meeting Bots" />
-            <HeroStat value="Private" label="Vaulting" />
+            <HeroStat value="Private" label="Personal Vault" />
           </div>
         </div>
 
@@ -69,13 +57,6 @@ export const LandingHero: React.FC<any> = ({ onSignIn }) => {
           <div className="absolute inset-0 bg-primary/5 blur-[100px] rounded-full pointer-events-none" />
           <div className="relative w-full aspect-square flex items-center justify-center scale-110">
              
-             {/* 1. The Noise (Left Inputs) */}
-             <div className="absolute left-4 top-1/2 -translate-y-1/2 -translate-x-4 space-y-6 opacity-40">
-                <div className="w-32 h-2 bg-on-surface-variant/30 rounded-full animate-pulse [animation-duration:2s]" />
-                <div className="w-20 h-2 bg-on-surface-variant/30 rounded-full animate-pulse [animation-duration:3s]" />
-                <div className="w-40 h-2 bg-on-surface-variant/30 rounded-full animate-pulse [animation-duration:1.5s]" />
-             </div>
-
              {/* 2. The Prism (Processing Core) */}
              <div className="relative z-20 w-56 h-80 bg-surface-container-low border-2 border-on-surface rounded-3xl shadow-2xl flex flex-col items-center justify-center gap-8 transform -rotate-3 transition-transform hover:rotate-0 duration-700 group">
                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none rounded-3xl" />
@@ -86,9 +67,9 @@ export const LandingHero: React.FC<any> = ({ onSignIn }) => {
                    <div className="h-1.5 w-full bg-primary/20 rounded-full overflow-hidden">
                       <div className="h-full bg-primary w-1/2 animate-[shimmer_2s_infinite]" />
                    </div>
-                   <div className="flex justify-between items-center text-[9px] font-mono font-black uppercase tracking-widest text-on-surface">
-                      <span>Reasoning</span>
-                      <span className="text-primary animate-pulse">Online</span>
+                   <div className="flex justify-between items-center text-[9px] font-black uppercase tracking-widest text-on-surface">
+                      <span>Summarizing</span>
+                      <span className="text-primary">Live</span>
                    </div>
                 </div>
              </div>
@@ -100,14 +81,14 @@ export const LandingHero: React.FC<any> = ({ onSignIn }) => {
                       <div className="w-8 h-8 bg-success text-on-primary rounded-lg flex items-center justify-center">
                          <ShieldCheck size={16} strokeWidth={3} />
                       </div>
-                      <span className="text-[10px] font-black uppercase tracking-widest text-on-surface">Insight Node</span>
+                      <span className="text-[10px] font-black uppercase tracking-widest text-on-surface">Note Saved</span>
                    </div>
                    <div className="space-y-3">
                       <div className="h-2.5 w-full bg-surface-container-highest rounded-full" />
                       <div className="h-2.5 w-3/4 bg-surface-container-highest rounded-full" />
                    </div>
                    <div className="pt-3 border-t border-outline-variant/10">
-                      <span className="text-[8px] font-mono font-bold text-primary uppercase tracking-widest">Decision Detected</span>
+                      <span className="text-[8px] font-bold text-primary uppercase tracking-widest">Summary Ready</span>
                    </div>
                 </div>
              </div>

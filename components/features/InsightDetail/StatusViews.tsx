@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { RefreshCw, WifiOff, Download, ShieldCheck, AlertCircle } from 'lucide-react';
 import { InsightContent, ProcessingStatus, ContentType } from '../../../types';
@@ -36,7 +35,7 @@ export const FailedState: React.FC<StatusProps> = ({ insight }) => {
       window.URL.revokeObjectURL(url);
       addToast("Raw signal rescued to device.", "success");
     } catch (e) {
-      addToast("Rescue failed. Check heartbeat history.", "error");
+      addToast("Rescue failed. Check Activity Log.", "error");
     } finally {
       setIsRescuing(false);
     }
@@ -55,12 +54,12 @@ export const FailedState: React.FC<StatusProps> = ({ insight }) => {
 
       <div className="space-y-3 px-4">
         <h3 className="text-2xl font-black uppercase tracking-tight text-on-surface">
-          {isOversized ? "Signal Overflow" : "Refinement Paused"}
+          {isOversized ? "Limit Reached" : "Analysis Stopped"}
         </h3>
         <p className="text-xs font-bold text-on-surface-variant opacity-60 leading-relaxed uppercase tracking-widest">
           {isOversized 
-            ? "This session exceeds the refinement limit, but the raw data is secured in your vault."
-            : "We couldn't finish refining this note. The original capture is safe."}
+            ? "This session exceeds the limit, but the raw data is secured in your vault."
+            : "We couldn't finish this note. The original capture is safe."}
         </p>
       </div>
 
@@ -86,7 +85,7 @@ export const FailedState: React.FC<StatusProps> = ({ insight }) => {
                 disabled={isRescuing || !insight.metadata?.audioUrl}
                 className="flex items-center justify-center gap-3 px-6 h-14 bg-surface-container-highest text-on-surface rounded-2xl font-black text-[10px] uppercase tracking-widest border border-outline-variant/20 hover:bg-background active:scale-[0.98] transition-all disabled:opacity-30"
             >
-                <Download size={14} strokeWidth={3} /> Rescue Signal
+                <Download size={14} strokeWidth={3} /> Download Original
             </button>
         </div>
       </div>
@@ -112,7 +111,7 @@ export const ProcessingState: React.FC<StatusProps> = ({ insight }) => {
   return (
     <div className="relative h-full w-full min-h-[400px]">
       <SummaryOverlay 
-        message="Refining Signal..." 
+        message="Analyzing..." 
         isBackgroundable={true} 
         onClose={handleForceReset}
       />

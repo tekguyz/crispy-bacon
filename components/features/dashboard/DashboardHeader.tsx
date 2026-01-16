@@ -21,7 +21,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({ totalNotes, pe
       
       <div className="bg-surface-container-high/40 border border-outline-variant/10 rounded-xl px-4 py-2 flex items-center gap-5 shadow-sm shrink-0 mb-1">
          <div className="flex flex-col">
-            <span className="text-[7px] font-extrabold uppercase tracking-widest text-on-surface-variant opacity-40 leading-none mb-0.5">Vault Status</span>
+            <span className="text-[7px] font-extrabold uppercase tracking-widest text-on-surface-variant opacity-40 leading-none mb-0.5">Library Stats</span>
             <span className="text-xs font-extrabold text-on-surface tracking-tight uppercase whitespace-nowrap">
                 {totalNotes} ITEMS • {pendingTasks} OPEN
             </span>

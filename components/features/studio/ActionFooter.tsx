@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Play, Pause } from 'lucide-react';
 import { triggerHaptic } from '../../../services/hapticService';
@@ -27,7 +26,7 @@ export const ActionFooter: React.FC<ActionFooterProps> = ({
         onClick={() => { triggerHaptic('heavy'); onStop(); }} 
         className="flex-1 h-full bg-primary text-on-primary rounded-xl font-extrabold uppercase text-[11px] md:text-xs tracking-[0.25em] transition-all shadow-m3-2 hover:brightness-110 active:scale-95 flex items-center justify-center gap-2.5"
       >
-        {isGuest ? 'STASH SIGNAL' : 'FINISH & RECAP'}
+        {isGuest ? 'SAVE DRAFT' : 'FINISH'}
       </button>
     </div>
   </footer>

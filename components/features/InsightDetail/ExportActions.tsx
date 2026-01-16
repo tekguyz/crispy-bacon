@@ -19,10 +19,10 @@ export const ExportActions: React.FC<ExportActionsProps> = ({ insight }) => {
     try {
       await navigator.clipboard.writeText(text);
       setCopyState(type);
-      addToast(`${type === 'notion' ? 'Notion' : 'Obsidian'} signal ready.`, 'success');
+      addToast(`${type === 'notion' ? 'Notion' : 'Obsidian'} note copied.`, 'success');
       setTimeout(() => setCopyState(null), 2000);
     } catch (err) {
-      addToast('Handshake failed.', 'error');
+      addToast('Export failed.', 'error');
     }
   };
 

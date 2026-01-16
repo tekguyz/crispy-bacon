@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect, useState, useMemo } from 'react';
 import { Send, Loader2, MessageSquare, ChevronRight, Activity, Sparkles, Zap, ArrowRight, ShieldCheck, FileText, AlignLeft } from 'lucide-react';
 import { InsightContent, ProcessingStatus, ContentType } from '../../../types';
@@ -45,7 +44,7 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ insight, isFailed }) => {
         icon = FileText;
     } else if (processedCount > summaryCount) {
         wordCount = processedCount;
-        label = 'Deep Analysis Layer';
+        label = 'Detailed Notes';
         icon = Activity;
     } else {
         wordCount = summaryCount;
@@ -89,7 +88,7 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ insight, isFailed }) => {
             </div>
             <div className="flex flex-col">
               <span className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface leading-none">Assistant</span>
-              <span className="text-[7px] font-bold text-on-surface-variant opacity-40 uppercase tracking-widest mt-0.5">Context Active</span>
+              <span className="text-[7px] font-bold text-on-surface-variant opacity-40 uppercase tracking-widest mt-0.5">Ready</span>
             </div>
          </div>
       </div>

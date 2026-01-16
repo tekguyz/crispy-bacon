@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Check, Crown, ArrowRight, Zap, Terminal, Box } from 'lucide-react';
+import { Check, Crown, ArrowRight, Zap } from 'lucide-react';
 import { triggerHaptic } from '../../../../services/hapticService';
 
 interface PricingFeature {
@@ -29,17 +28,12 @@ export const PricingTier: React.FC<PricingTierProps> = ({
   return (
     <div className={`relative flex flex-col rounded-[2.5rem] border-2 transition-all duration-700 group overflow-hidden ${
       isPro 
-        ? 'bg-surface border-on-surface shadow-[12px_12px_0px_0px_rgba(var(--primary-rgb),0.1)] ring-4 ring-primary/5' 
+        ? 'bg-surface border-on-surface shadow-[12px_12px_0px_0px_rgba(0,0,0,0.05)] ring-4 ring-primary/5' 
         : 'bg-surface-container-low border-outline-variant shadow-sm'
     }`}>
-      {isPro && (
-        <div className="bg-primary py-2 px-10 text-center">
-           <span className="text-[8px] font-mono font-black uppercase tracking-[0.5em] text-on-primary">Model: Executive Strategic Array</span>
-        </div>
-      )}
       
       <div className="p-10 md:p-14 flex-1 flex flex-col relative z-10">
-        <div className="mb-14">
+        <div className="mb-10">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
               <div className={`p-2.5 rounded-xl border ${isPro ? 'bg-primary/10 text-primary border-primary/20' : 'bg-on-surface/5 text-on-surface-variant border-outline-variant'}`}>
@@ -58,10 +52,6 @@ export const PricingTier: React.FC<PricingTierProps> = ({
 
         <div className="space-y-12 flex-1">
            <div className="space-y-4">
-              <div className="flex items-center gap-3 px-1 opacity-40">
-                 <Terminal size={12} />
-                 <span className="text-[9px] font-mono font-black uppercase tracking-widest">Capabilities</span>
-              </div>
               <ul className="space-y-5">
                 {features.map((f, i) => (
                   <li key={i} className={`flex items-start gap-4 text-[14px] font-bold leading-tight ${!f.included ? 'opacity-20' : ''}`}>
@@ -75,15 +65,11 @@ export const PricingTier: React.FC<PricingTierProps> = ({
            </div>
 
           <div className="space-y-4">
-              <div className="flex items-center gap-3 px-1 opacity-40">
-                 <Box size={12} />
-                 <span className="text-[9px] font-mono font-black uppercase tracking-widest">Standard Specs</span>
-              </div>
               <div className="flex flex-wrap gap-2">
                 {extraFeatures.map((f, i) => (
                   <div key={i} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-container-high border border-outline-variant/10 shadow-inner group-hover:border-primary/20 transition-colors">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
-                    <span className="text-[10px] font-mono font-black uppercase text-on-surface-variant/70">{f}</span>
+                    <span className="text-[10px] font-black uppercase text-on-surface-variant/70">{f}</span>
                   </div>
                 ))}
               </div>
@@ -98,7 +84,7 @@ export const PricingTier: React.FC<PricingTierProps> = ({
               : 'bg-on-surface text-surface hover:opacity-90 shadow-foreground/5'
           }`}
         >
-          {isPro ? 'Initialize Tier' : 'Entry Protocol'}
+          {isPro ? 'Upgrade to Pro' : 'Start for Free'}
           <ArrowRight size={20} strokeWidth={3} className="group-hover/btn:translate-x-2 transition-transform" />
         </button>
       </div>

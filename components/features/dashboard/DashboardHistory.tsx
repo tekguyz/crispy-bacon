@@ -1,4 +1,3 @@
-
 import React, { useMemo } from 'react';
 import { History, Activity, ChevronRight } from 'lucide-react';
 import InsightCard from '../InsightCard';
@@ -40,7 +39,7 @@ export const DashboardHistory: React.FC<DashboardHistoryProps> = ({ insights, is
       <div className="space-y-6">
         <div className="flex items-center gap-3 px-1">
           <History size={18} className="text-primary" />
-          <h3 className="font-slab font-bold text-xl text-on-surface tracking-tight uppercase">Timeline</h3>
+          <h3 className="font-slab font-bold text-xl text-on-surface tracking-tight uppercase">History</h3>
         </div>
         <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
           <SkeletonCard /><SkeletonCard />
@@ -66,7 +65,7 @@ export const DashboardHistory: React.FC<DashboardHistoryProps> = ({ insights, is
             <div className="w-8 h-8 rounded-lg bg-surface-container-high text-primary flex items-center justify-center shadow-inner">
                <History size={16} strokeWidth={2.5} />
             </div>
-            <h3 className="font-slab font-bold text-xl text-on-surface tracking-tight uppercase">Signals</h3>
+            <h3 className="font-slab font-bold text-xl text-on-surface tracking-tight uppercase">Recent Notes</h3>
          </div>
       </div>
       

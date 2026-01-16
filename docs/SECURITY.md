@@ -5,7 +5,7 @@
 ## 1. Access Control
 The database is hardened using Row Level Security (RLS). We enforce a strict **"My Data"** policy.
 - **Profiles:** Users can only read/write their own profile.
-- **Research Nodes:** Data is strictly partitioned. User A cannot access User B's nodes under any circumstance.
+- **Notes:** Data is strictly partitioned. User A cannot access User B's notes under any circumstance.
 - **Functions:** Backend logic verifies JWT ownership before execution.
 
 ## 2. Privacy Standards

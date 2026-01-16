@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { X, ArrowRight, Check, Loader2, Library, Activity, Users, Star, ClipboardCheck, CornerDownRight } from 'lucide-react';
 import { useFocusTrap } from '../../../../hooks/useFocusTrap';
@@ -93,7 +92,7 @@ export const TeamInquiryForm: React.FC<{ onClose: () => void }> = ({ onClose }) 
         <div className="h-14 bg-on-surface text-surface flex items-center justify-between px-8 shrink-0">
            <div className="flex items-center gap-3">
               <ClipboardCheck size={16} className="text-primary" />
-              <span className="text-[9px] font-mono font-black uppercase tracking-[0.4em]">Inquiry Protocol: COLLECTIVE</span>
+              <span className="text-[9px] font-mono font-black uppercase tracking-[0.4em]">Contact Sales</span>
            </div>
            <button onClick={onClose} className="hover:text-primary transition-colors">
              <X size={20} strokeWidth={3} />
@@ -134,8 +133,8 @@ export const TeamInquiryForm: React.FC<{ onClose: () => void }> = ({ onClose }) 
               {step === 'identity' && (
                 <div className="space-y-10 animate-slide-up">
                   <div className="space-y-4">
-                    <h2 className="text-3xl md:text-5xl font-slab font-bold tracking-tighter uppercase text-on-surface leading-none">Command <br/><span className="text-primary italic">Contact.</span></h2>
-                    <p className="text-[10px] font-bold text-on-surface-variant opacity-40 uppercase tracking-[0.3em]">Initialize personal identity nodes</p>
+                    <h2 className="text-3xl md:text-5xl font-slab font-bold tracking-tighter uppercase text-on-surface leading-none">Your <br/><span className="text-primary italic">Details.</span></h2>
+                    <p className="text-[10px] font-bold text-on-surface-variant opacity-40 uppercase tracking-[0.3em]">Enter your information below</p>
                   </div>
                   <div className="space-y-3">
                     <div className="group relative">
@@ -170,8 +169,8 @@ export const TeamInquiryForm: React.FC<{ onClose: () => void }> = ({ onClose }) 
               {step === 'scale' && (
                 <div className="space-y-10 animate-slide-up">
                   <div className="space-y-4">
-                    <h2 className="text-3xl md:text-5xl font-slab font-bold tracking-tighter uppercase text-on-surface leading-none">Operational <br/><span className="text-primary italic">Scale.</span></h2>
-                    <p className="text-[10px] font-bold text-on-surface-variant opacity-40 uppercase tracking-[0.3em]">Select collective node count</p>
+                    <h2 className="text-3xl md:text-5xl font-slab font-bold tracking-tighter uppercase text-on-surface leading-none">Team <br/><span className="text-primary italic">Size.</span></h2>
+                    <p className="text-[10px] font-bold text-on-surface-variant opacity-40 uppercase tracking-[0.3em]">How many people?</p>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     {['1-10', '11-30', '31-100', '100+'].map(size => (
@@ -191,15 +190,15 @@ export const TeamInquiryForm: React.FC<{ onClose: () => void }> = ({ onClose }) 
               {step === 'needs' && (
                 <div className="space-y-10 animate-slide-up">
                   <div className="space-y-4">
-                    <h2 className="text-3xl md:text-5xl font-slab font-bold tracking-tighter uppercase text-on-surface leading-none">Collective <br/><span className="text-primary italic">Requirements.</span></h2>
-                    <p className="text-[10px] font-bold text-on-surface-variant opacity-40 uppercase tracking-[0.3em]">Check all applicable modules</p>
+                    <h2 className="text-3xl md:text-5xl font-slab font-bold tracking-tighter uppercase text-on-surface leading-none">What do <br/><span className="text-primary italic">You Need?</span></h2>
+                    <p className="text-[10px] font-bold text-on-surface-variant opacity-40 uppercase tracking-[0.3em]">Check all that apply</p>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {[
                       { id: 'library', label: 'Shared Library', icon: Library },
-                      { id: 'analytics', label: 'Research Analytics', icon: Activity },
-                      { id: 'training', label: 'Squad Onboarding', icon: Users },
-                      { id: 'custom', label: 'Special Ops (Custom)', icon: Star },
+                      { id: 'analytics', label: 'Analytics', icon: Activity },
+                      { id: 'training', label: 'Team Onboarding', icon: Users },
+                      { id: 'custom', label: 'Custom Solutions', icon: Star },
                     ].map(req => {
                       const active = formData.requirements.includes(req.id);
                       return (
@@ -226,10 +225,10 @@ export const TeamInquiryForm: React.FC<{ onClose: () => void }> = ({ onClose }) 
                     <Check size={48} strokeWidth={4} />
                   </div>
                   <div className="space-y-4">
-                    <h2 className="text-4xl md:text-5xl font-slab font-bold uppercase tracking-tighter text-on-surface leading-none">Handshake <br/><span className="text-success">Complete.</span></h2>
-                    <p className="text-lg font-medium font-serif text-on-surface-variant opacity-60 max-w-sm mx-auto leading-relaxed">The collective brief has been registered. Our specialists will respond within 24 operational hours.</p>
+                    <h2 className="text-4xl md:text-5xl font-slab font-bold uppercase tracking-tighter text-on-surface leading-none">Request <br/><span className="text-success">Sent.</span></h2>
+                    <p className="text-lg font-medium font-serif text-on-surface-variant opacity-60 max-w-sm mx-auto leading-relaxed">We have received your details. Our team will contact you shortly.</p>
                   </div>
-                  <button type="button" onClick={onClose} className="px-12 h-16 bg-on-surface text-surface rounded-2xl font-black text-[12px] uppercase tracking-[0.4em] shadow-2xl hover:bg-primary transition-all active:scale-95">Back to Unit</button>
+                  <button type="button" onClick={onClose} className="px-12 h-16 bg-on-surface text-surface rounded-2xl font-black text-[12px] uppercase tracking-[0.4em] shadow-2xl hover:bg-primary transition-all active:scale-95">Close</button>
                 </div>
               )}
             </main>
@@ -237,15 +236,14 @@ export const TeamInquiryForm: React.FC<{ onClose: () => void }> = ({ onClose }) 
             {step !== 'success' && (
               <footer className="mt-14 pt-8 border-t-2 border-outline-variant/10 flex justify-between items-center">
                 <div className="flex flex-col">
-                  <span className="text-[8px] font-mono font-black text-on-surface-variant opacity-30 uppercase tracking-[0.5em]">Auth Code</span>
-                  <span className="text-[10px] font-mono font-black text-on-surface opacity-10">RE-449-ALPHA</span>
+                  {/* Auth Code removed */}
                 </div>
                 <button 
                   type="submit"
                   disabled={loading || isStepValid() === false}
                   className="flex items-center gap-4 px-12 h-16 bg-on-surface text-surface rounded-2xl font-black text-[12px] uppercase tracking-[0.3em] shadow-2xl hover:bg-primary transition-all active:scale-95 disabled:opacity-20"
                 >
-                  {loading ? <Loader2 className="animate-spin" size={20} /> : step === 'needs' ? 'Initialize' : 'Next Node'}
+                  {loading ? <Loader2 className="animate-spin" size={20} /> : step === 'needs' ? 'Submit' : 'Next'}
                   {!loading && <ArrowRight size={20} strokeWidth={3} />}
                 </button>
               </footer>

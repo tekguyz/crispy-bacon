@@ -53,7 +53,7 @@ export const createProcessingSlice: StateCreator<AppState, [], [], Partial<Intel
       
       await archiveRefinement(insight.id, session.user.id, recap, insight.metadata);
       await fetchData();
-      addToast("Recap refined successfully.", "success");
+      addToast("Note updated.", "success");
 
     } catch (e: any) { 
         console.error(e);
@@ -67,7 +67,7 @@ export const createProcessingSlice: StateCreator<AppState, [], [], Partial<Intel
     const itemId = uuidv4();
     
     set(s => ({ isProcessing: true, activeProcessCount: s.activeProcessCount + 1 }));
-    if (!session) return addToast("Signal saved locally.", "success");
+    if (!session) return addToast("Note saved to device.", "success");
 
     try {
       await supabase.from('insights').insert([{ id: itemId, user_id: session.user.id, source_type: type, processing_status: ProcessingStatus.PROCESSING }]);
@@ -98,7 +98,7 @@ export const createProcessingSlice: StateCreator<AppState, [], [], Partial<Intel
           source_type: ContentType.MEETING, 
           storage_path: path, 
           processing_status: ProcessingStatus.PROCESSING,
-          title: "Processing Signal...", // Placeholder title
+          title: "Analyzing...", // Placeholder title
           metadata: { originalName: (audioBlob as any).name } 
       });
 
@@ -130,7 +130,7 @@ export const createProcessingSlice: StateCreator<AppState, [], [], Partial<Intel
       await fetchData();
     } catch (e: any) { 
         console.error("Processing Error:", e);
-        addToast("Analysis failed. Original audio saved.", "error"); 
+        addToast("Could not summarize. Audio saved.", "error"); 
     }
     finally { set(s => ({ isProcessing: false, activeProcessCount: 0 })); }
   }

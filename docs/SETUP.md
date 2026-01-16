@@ -42,8 +42,8 @@ Ensure the client ID has access to:
 
 **Core Tables:**
 - `profiles`: Links to Auth Users. Tracks `is_pro` status.
-- `insights`: The central research nodes.
-- `summaries`: The distilled intelligence layer linked to insights.
+- `insights`: The central notes table.
+- `summaries`: The distilled intelligence layer linked to notes.
 - `shared_links`: Public access tokens for collaboration.
 - `collections` / `tags`: Taxonomy organization.
 

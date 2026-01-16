@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Mic, Search, CheckSquare, Activity } from 'lucide-react';
 
@@ -8,7 +7,7 @@ export const LandingMethod: React.FC = () => {
       id: "01",
       title: "Direct Capture",
       tag: "INPUT",
-      desc: "Record system audio from Zoom, Meet, or Teams. Pure signal, zero bots invited.",
+      desc: "Record system audio from Zoom, Meet, or Teams. Pure audio, zero bots invited.",
       icon: Mic
     },
     {

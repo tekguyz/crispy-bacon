@@ -38,8 +38,8 @@ Partitioned into specialized slices:
 ## 3. AI Interrogation Pattern
 
 ### RAG & Context
-1. **Context Loading**: The system pulls the "Research Node" content into the system instruction.
-2. **Global Chat**: Aggregates summaries from recent insights for cross-node reasoning.
+1. **Context Loading**: The system pulls the "Note" content into the system instruction.
+2. **Global Chat**: Aggregates summaries from recent notes for cross-node reasoning.
 3. **Grounding**: The model is restricted to answering using *only* source material.
 
 ---

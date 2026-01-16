@@ -32,7 +32,7 @@ export const TagSelection: React.FC<TagSelectionProps> = ({ insight }) => {
       <div className="flex items-center justify-between px-1">
          <div className="flex items-center gap-2">
             <Hash size={10} className="text-primary/40" strokeWidth={3} />
-            <span className="text-[8px] font-black text-on-surface-variant/40 uppercase tracking-[0.2em]">Signal Tags</span>
+            <span className="text-[8px] font-black text-on-surface-variant/40 uppercase tracking-[0.2em]">Tags</span>
          </div>
          <button onClick={() => setShowTagManagementModal(true)} className="text-[8px] font-black uppercase tracking-widest text-primary hover:underline">Edit</button>
       </div>
