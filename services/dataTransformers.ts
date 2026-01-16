@@ -1,4 +1,3 @@
-
 import { InsightContent, ContentType, Sentiment, ProcessingStatus } from '../types';
 
 /**
@@ -26,15 +25,12 @@ export const mapSupabaseToInsight = (item: any): InsightContent => {
   const finalReadingTime = summaryData.reading_time || calculatedReadingTime || 1;
 
   // CRITICAL HEALING LOGIC v2
-  // We determine 'completion' based on data presence, not just the status column.
-  // If we have a summary OR if the user has already checked off tasks, it IS completed.
   let status = (item.processing_status as ProcessingStatus) || ProcessingStatus.COMPLETED;
   
   const hasActionProgress = item.metadata?.completedActionIndices && item.metadata.completedActionIndices.length > 0;
   const hasIntelligence = hasSummary || summaryText.length > 10 || (item.highlights && item.highlights.length > 0);
 
   if ((hasIntelligence || hasActionProgress) && (status === ProcessingStatus.PROCESSING || status === ProcessingStatus.PENDING || status === ProcessingStatus.SYNCING)) {
-    console.log(`[Healer] 🩹 Force-completing stuck signal: ${item.title || item.id}`);
     status = ProcessingStatus.COMPLETED;
   }
 
@@ -99,27 +95,46 @@ export const formatTranscript = (text: any): string => {
 
 /**
  * Generates a clean Markdown report from an insight for export.
+ * Supports specific tailoring for Notion vs Obsidian.
  */
-export const generateInsightMarkdownReport = (insight: InsightContent): string => {
-  const date = new Date(insight.created_at).toLocaleDateString();
-  let md = `# ${insight.title}\n\n`;
-  if (insight.site_name) md += `**Source:** ${insight.site_name}\n`;
-  md += `**Date:** ${date}\n`;
+export const generateInsightMarkdownReport = (insight: InsightContent, target: 'notion' | 'obsidian' = 'notion'): string => {
+  const date = new Date(insight.created_at).toISOString().split('T')[0];
+  let md = '';
+
+  if (target === 'obsidian') {
+    // Add YAML Frontmatter for Obsidian properties
+    md += `---\n`;
+    md += `title: "${insight.title.replace(/"/g, '\\"')}"\n`;
+    md += `date: ${date}\n`;
+    if (insight.site_name) md += `source: "${insight.site_name}"\n`;
+    if (insight.type) md += `type: ${insight.type.toLowerCase()}\n`;
+    if (insight.tags?.length) {
+      md += `tags: [${insight.tags.map(t => t.name).join(', ')}]\n`;
+    }
+    md += `---\n\n`;
+  }
+
+  md += `# ${insight.title}\n\n`;
+  if (target === 'notion' && insight.site_name) md += `**Source:** ${insight.site_name}\n`;
+  if (target === 'notion') md += `**Date:** ${new Date(insight.created_at).toLocaleDateString()}\n`;
+  
   md += `\n---\n\n`;
-  md += `## Executive Summary\n${insight.summary}\n\n`;
+  md += `## Summary\n${insight.summary}\n\n`;
   
   if (insight.highlights?.length) {
     md += `## Key Takeaways\n`;
     insight.highlights.forEach(h => md += `- ${h}\n`);
+    md += `\n`;
   }
   
   if (insight.action_items?.length) {
-    md += `\n## Next Steps\n`;
+    md += `## Next Steps\n`;
     insight.action_items.forEach((item, i) => md += `${i + 1}. ${item}\n`);
+    md += `\n`;
   }
 
   if (insight.processed_text) {
-    md += `\n---\n\n## Discussion Notes\n\n`;
+    md += `---\n\n## Raw Signal Trace\n\n`;
     md += formatTranscript(insight.processed_text);
   }
   

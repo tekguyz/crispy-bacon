@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Star, Share2, Archive } from 'lucide-react';
 import { useAppStore } from '../../../store/useAppStore';
@@ -12,23 +11,23 @@ interface QuickActionsProps {
 export const QuickActions: React.FC<QuickActionsProps> = ({ insight }) => {
   const { toggleFavorite, toggleArchive, setShowShareModal } = useAppStore();
 
-  const ActionBtn = ({ onClick, active, icon: Icon, label }: any) => (
+  const ActionBtn = ({ onClick, active, icon: Icon, label, activeColor = 'text-primary' }: any) => (
     <button 
       onClick={onClick}
       className={`
-        flex-1 flex flex-col items-center justify-center gap-2 py-3 rounded-xl border transition-all active:scale-95 group
+        flex-1 flex flex-col items-center justify-center gap-1.5 py-3.5 rounded-2xl border transition-all active:scale-95 group
         ${active 
-          ? 'bg-primary/5 border-primary/30 text-primary shadow-inner' 
+          ? `bg-surface border-primary/40 ${activeColor} shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)]` 
           : 'bg-surface-container-low border-outline-variant/10 text-on-surface-variant hover:border-primary/20 hover:text-on-surface'}
       `}
     >
-      <Icon size={16} fill={active ? "currentColor" : "none"} strokeWidth={active ? 2.5 : 2} className={active ? 'animate-spring-scale' : 'opacity-60 group-hover:opacity-100'} />
-      <span className="text-[8px] font-black uppercase tracking-widest">{label}</span>
+      <Icon size={18} fill={active ? "currentColor" : "none"} strokeWidth={active ? 3 : 2} className={active ? 'animate-spring-scale' : 'opacity-40 group-hover:opacity-100'} />
+      <span className="text-[9px] font-black uppercase tracking-widest">{label}</span>
     </button>
   );
 
   return (
-    <div className="flex gap-3">
+    <div className="flex gap-2">
       <ActionBtn 
         onClick={() => { triggerHaptic('light'); toggleFavorite(insight.id); }}
         active={insight.is_favorite}
@@ -48,6 +47,7 @@ export const QuickActions: React.FC<QuickActionsProps> = ({ insight }) => {
         active={insight.is_archived}
         icon={Archive}
         label={insight.is_archived ? "Archived" : "Archive"}
+        activeColor="text-on-surface"
       />
     </div>
   );
