@@ -70,13 +70,22 @@ export const handler = async (event: any) => {
 
     const groundingChunks = response.candidates?.[0]?.groundingMetadata?.groundingChunks || [];
     
+    // Calculate usage
+    const usage = response.usageMetadata ? {
+      inputTokens: response.usageMetadata.promptTokenCount,
+      outputTokens: response.usageMetadata.candidatesTokenCount,
+      totalTokens: response.usageMetadata.totalTokenCount,
+      model: modelName
+    } : undefined;
+
     return {
       statusCode: 200,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ 
         text: response.text || "I had trouble reading that.",
         sources: groundingChunks.map((chunk: any) => chunk.web).filter(Boolean),
-        model: modelName
+        model: modelName,
+        usage
       }),
     };
   } catch (error: any) {

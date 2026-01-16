@@ -49,9 +49,6 @@ export const analyzeContent = async (
     STANDARDS: SKELETAL INTELLIGENCE. Ban conversational lubricant. Direct assertion.
   `;
 
-  // Robust MIME Normalization
-  // If we have audio data, we MUST ensure the mimeType is one of the supported ones (mp3, wav, aac, mp4, flac, webm, etc.)
-  // We use a utility to force this compliance.
   const effectiveMimeType = audioData ? getEffectiveMimeType(audioMimeType || '', 'audio.file') : undefined;
 
   const contents = audioData ? {
@@ -77,11 +74,21 @@ export const analyzeContent = async (
   const result = JSON.parse(response.text || "{}");
   const safeReadingTime = Math.max(1, Math.round(result.reading_time) || 1);
 
-  // Ensure processed_text is strictly a string for DB compatibility
   let discussionPoints = result.discussion_points || input;
   if (typeof discussionPoints !== 'string') {
     discussionPoints = JSON.stringify(discussionPoints);
   }
+
+  // Extract token usage from the SDK response
+  const usage = response.usageMetadata ? {
+    inputTokens: response.usageMetadata.promptTokenCount,
+    outputTokens: response.usageMetadata.candidatesTokenCount,
+    totalTokens: response.usageMetadata.totalTokenCount,
+    model: modelName,
+    estimatedCost: modelName.includes('pro') 
+      ? (response.usageMetadata.totalTokenCount / 1_000_000) * 1.25
+      : (response.usageMetadata.totalTokenCount / 1_000_000) * 0.075
+  } : undefined;
 
   return {
     title: result.title || "Untitled Recap",
@@ -95,7 +102,8 @@ export const analyzeContent = async (
       readingTimeMinutes: safeReadingTime, 
       isDeepStrategist: (modelName === 'gemini-3-pro-preview'),
       momentumScore: result.momentum_score || 50,
-      friction: result.friction || "None"
+      friction: result.friction || "None",
+      usage
     },
     processed_text: discussionPoints
   };

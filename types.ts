@@ -155,6 +155,13 @@ export interface ChatMessage {
   role: 'user' | 'model';
   text: string;
   sources?: { uri: string; title: string }[];
+  usage?: {
+    inputTokens: number;
+    outputTokens: number;
+    totalTokens: number;
+    model: string;
+    estimatedCost?: number;
+  };
 }
 
 export interface CalendarEvent {

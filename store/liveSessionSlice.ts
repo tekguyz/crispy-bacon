@@ -31,7 +31,6 @@ export const createLiveSessionSlice: StateCreator<AppState, [], [], Partial<Inte
     const currentHistory = get().chatHistory;
     const newHistory: ChatMessage[] = [...currentHistory, { role: 'user', text: message }];
     
-    // Context Selection Logic...
     const transcriptText = typeof insight.processed_text === 'string' 
       ? insight.processed_text 
       : JSON.stringify(insight.processed_text || "");
@@ -64,7 +63,7 @@ export const createLiveSessionSlice: StateCreator<AppState, [], [], Partial<Inte
       if (!response.ok || data.error) throw new Error(data?.error || "Server Error");
 
       set({ 
-        chatHistory: [...newHistory, { role: 'model', text: data.text, sources: data.sources }], 
+        chatHistory: [...newHistory, { role: 'model', text: data.text, sources: data.sources, usage: data.usage }], 
         isChatLoading: false,
         isWarmingUp: false
       });
@@ -79,7 +78,6 @@ export const createLiveSessionSlice: StateCreator<AppState, [], [], Partial<Inte
     
     set({ chatHistory: newHistory, isChatLoading: true });
 
-    // Prepare global context: Take summaries of top 20 insights
     const contextData = insights.slice(0, 20).map(i => `[${new Date(i.created_at).toLocaleDateString()} - ${i.title}]: ${i.summary}`).join('\n\n');
 
     try {
@@ -97,7 +95,7 @@ export const createLiveSessionSlice: StateCreator<AppState, [], [], Partial<Inte
       if (!response.ok || data.error) throw new Error(data?.error || "Server Error");
 
       set({ 
-        chatHistory: [...newHistory, { role: 'model', text: data.text }], 
+        chatHistory: [...newHistory, { role: 'model', text: data.text, usage: data.usage }], 
         isChatLoading: false 
       });
     } catch (error: any) { 
