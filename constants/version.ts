@@ -3,7 +3,7 @@
  */
 export const APP_VERSION = "2.5.1";
 export const BUILD_NAME = "Crispy Bacon";
-export const COPYRIGHT_YEAR = "2025";
+export const COPYRIGHT_YEAR = "2026";
 export const LAB_NAME = "Crispy Bacon";
 
 /**
