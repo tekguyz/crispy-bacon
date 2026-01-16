@@ -3,23 +3,23 @@
 **Philosophy:** Fact-Grounded Reasoning
 
 ## 1. Dynamic Routing
-- **Standard Recaps:** Uses `gemini-3-flash-preview` for rapid, cost-effective summarization of standard meetings and articles.
-- **Deep Distillation:** Executive users utilize `gemini-3-pro-preview` for complex reasoning tasks, specifically when the "Deep Strategist" persona is active.
-- **Realtime Assistant:** Uses `gemini-2.5-flash-native-audio-preview-12-2025` for low-latency, multimodal voice interaction during "Ask Voice" sessions.
+- **Standard Recaps:** `gemini-3-flash-preview` for rapid, cost-effective distillation.
+- **Deep Distillation:** `gemini-3-pro-preview` for complex reasoning tasks (Executive Tier).
+- **Realtime Assistant:** `gemini-2.5-flash-native-audio-preview-12-2025` for low-latency voice interrogation.
 
 ## 2. Context Engine
-- **Strategic Trace:** The system maps generated highlights back to the original transcript to ensure accuracy.
-- **Web Grounding:** When analyzing URLs, the model uses Google Search tools to verify facts against live web data.
-- **Attachment Awareness:** Supports multi-modal context injection (Text Files, Drive Documents, Linked Insights).
+- **Strategic Trace:** The model maps generated highlights back to the original source to ensure accuracy.
+- **Web Grounding:** When analyzing URLs, the system validates facts against live web data via Google Search.
+- **Attachment Awareness:** Supports multi-modal context (Text Files, Drive Documents, Linked Insights).
 
 ## 3. Signal Healing
 The system implements a robust **Signal Healing** protocol (`dataTransformers.ts`):
-- **Stuck State Detection:** Identifies notes stuck in `processing` state that actually contain valid summary data.
-- **Auto-Recovery:** Automatically transitions valid but "stuck" nodes to `completed` if summaries or action items are detected in the payload.
+- **Stuck State Detection:** Identifies notes stuck in `reasoning` state that contain valid data.
+- **Auto-Recovery:** Automatically transitions valid but "stuck" nodes to `completed` if the payload is healthy.
 
 ## 4. Structured Output
-We enforce strictly typed JSON schemas for all generation tasks to ensure the UI can render:
-- **Executive Summary** (Markdown text)
+We enforce strictly typed JSON schemas for all generation tasks:
+- **Executive Summary** (Markdown)
 - **Key Takeaways** (String Array)
 - **Action Items** (String Array)
-- **Metadata** (Sentiment, Reading Time, Momentum Score)
+- **Metadata** (Sentiment, Reading Time, Velocity Score)

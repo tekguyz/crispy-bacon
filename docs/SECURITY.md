@@ -3,17 +3,18 @@
 **Encryption:** AES-256 Cloud Secure
 
 ## 1. Access Control
-The database is hardened. We use a strict "My Data" policy.
-- **Profiles:** Only you can see your profile.
-- **Research Nodes:** Even with a valid login, User A cannot see User B's notes.
-- **Functions:** Backend logic is locked down to prevent unauthorized access.
+The database is hardened using Row Level Security (RLS). We enforce a strict **"My Data"** policy.
+- **Profiles:** Users can only read/write their own profile.
+- **Research Nodes:** Data is strictly partitioned. User A cannot access User B's nodes under any circumstance.
+- **Functions:** Backend logic verifies JWT ownership before execution.
 
 ## 2. Privacy Standards
 - **Zero Training:** Your private notes are **never** used to train general AI models.
-- **Ephemeral Processing:** Analysis happens in memory and is encrypted while in transit.
-- **Purge Control:** When you delete a note, it is wiped from our systems instantly.
+- **Ephemeral Processing:** Analysis happens in memory and is encrypted during transit.
+- **Purge Control:** When you delete a note, it is wiped from our systems instantly (Cloud + Database).
 
 ## 3. Sharing Logic
-Shared links use complex, unguessable URLs.
-- **Collaboration:** If you enable "Live Sync," teammates can check off tasks.
-- **Expiry:** You can set links to self-destruct after 24 hours or 7 days.
+Shared links use cryptographically secure slugs.
+- **Collaboration:** "Live Sync" enables real-time task completion tracking across teams.
+- **Expiry:** Links can be configured to self-destruct (24h / 7 Days).
+- **Access:** Public links are read-only unless specifically authorized for collaboration.

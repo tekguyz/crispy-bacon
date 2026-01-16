@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { Activity, Terminal, ShieldCheck, ChevronRight, ChevronDown, ChevronUp } from 'lucide-react';
 import { BaconLoader } from './Loaders';
@@ -13,7 +14,7 @@ interface SummaryOverlayProps {
 
 export const SummaryOverlay: React.FC<SummaryOverlayProps> = ({ 
   onClose, 
-  message = "Refining Note", 
+  message = "Reasoning", 
   isBackgroundable = true 
 }) => {
   const [seconds, setSeconds] = useState(0);

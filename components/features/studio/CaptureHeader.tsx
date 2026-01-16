@@ -19,7 +19,7 @@ export const CaptureHeader: React.FC<CaptureHeaderProps> = ({
        </div>
        <div className="flex flex-col text-left leading-tight">
           <h1 className="text-[12px] font-extrabold uppercase tracking-widest text-on-surface font-sans">
-             {isProcessing ? 'Refining Recap' : isRecording ? 'Recording Live' : 'The Studio'}
+             {isProcessing ? 'Refining Recap' : isRecording ? 'Capturing Signal' : 'The Studio'}
           </h1>
           <span className="text-[8px] font-extrabold text-on-surface-variant/60 uppercase tracking-[0.3em]">
              {isProcessing ? 'Distilling Signal...' : view === 'setup' ? 'Initializing Instrument' : (isRecording ? 'Capturing Session' : 'Ready')}

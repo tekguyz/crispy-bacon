@@ -1,3 +1,4 @@
+
 import React, { useCallback, useState } from 'react';
 import { useAppStore } from '../../store/useAppStore';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
@@ -23,7 +24,7 @@ const InputArea: React.FC = () => {
   } = useFileDrop();
 
   const handleClose = useCallback(() => {
-    if (isProcessing) addToast("Summarizing in background.", "info");
+    if (isProcessing) addToast("Reasoning in background.", "info");
     triggerHaptic('light');
     setIsClosing(true);
     setTimeout(() => {
@@ -62,7 +63,7 @@ const InputArea: React.FC = () => {
 
         <div className="flex-1 flex flex-col bg-background relative overflow-hidden overflow-y-auto custom-scrollbar"> 
            {isProcessing ? (
-             <SummaryOverlay message="Summarizing Research" isBackgroundable={true} onClose={handleClose} />
+             <SummaryOverlay message="Reasoning..." isBackgroundable={true} onClose={handleClose} />
            ) : !importError && (
              <ImportBody 
                 showDrive={showDrive} setShowDrive={setShowDrive}
