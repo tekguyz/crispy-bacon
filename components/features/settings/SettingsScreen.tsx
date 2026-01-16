@@ -1,12 +1,12 @@
 import React from 'react';
-import { COPYRIGHT_YEAR, LAB_NAME } from '../../constants/version';
-import { IdentitySection } from './settings/IdentitySection';
-import { SmartConfigSection } from './settings/SmartConfigSection';
-import { AppearanceSection } from './settings/AppearanceSection';
-import { WorkflowSection } from './settings/WorkflowSection';
-import { IntegrationsSection } from './settings/IntegrationsSection';
-import { DataManagementSection } from './settings/DataManagementSection';
-import { SystemLogViewer } from './settings/SystemLogViewer';
+import { COPYRIGHT_YEAR, LAB_NAME } from '../../../constants/version';
+import { IdentitySection } from './IdentitySection';
+import { SmartConfigSection } from './SmartConfigSection';
+import { AppearanceSection } from './AppearanceSection';
+import { WorkflowSection } from './WorkflowSection';
+import { IntegrationsSection } from './IntegrationsSection';
+import { DataManagementSection } from './DataManagementSection';
+import { SystemLogViewer } from './SystemLogViewer';
 import { Brain, Sliders, Shield, User } from 'lucide-react';
 
 const SettingsScreen: React.FC = () => {
