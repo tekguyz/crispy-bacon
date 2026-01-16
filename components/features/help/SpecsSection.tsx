@@ -1,8 +1,17 @@
-
 import React from 'react';
 import { Cpu, ShieldCheck, Database, Globe, HardDrive, Server, Lock, Terminal, Box } from 'lucide-react';
+import { useAppStore } from '../../../store/useAppStore';
+import { AppView } from '../../../types';
+import { triggerHaptic } from '../../../services/hapticService';
 
 export const SpecsSection: React.FC = () => {
+  const { setView } = useAppStore();
+
+  const handleEthicsClick = () => {
+    triggerHaptic('light');
+    setView(AppView.AI_ETHICS);
+  };
+
   const sections = [
     {
       title: "Reasoning Engine",
@@ -82,7 +91,10 @@ export const SpecsSection: React.FC = () => {
                We prioritize your privacy above all else. Your notes are isolated, encrypted, and never shared with anyone.
             </p>
          </div>
-         <button className="px-10 py-4 bg-primary text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:scale-105 active:scale-95 transition-all relative z-10 shadow-xl shadow-primary/20">
+         <button 
+          onClick={handleEthicsClick}
+          className="px-10 py-4 bg-primary text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:scale-105 active:scale-95 transition-all relative z-10 shadow-xl shadow-primary/20"
+         >
             Read Our Ethics
          </button>
       </footer>
