@@ -48,7 +48,7 @@ export const FeatureGrid: React.FC = () => {
             icon={Globe} 
             domain="WEB"
             signal="HIGH SIGNAL"
-            title="Article Analysis" 
+            title="Web Reasoning" 
             desc="Strip away ads and fluff. Paste any link to extract core research points and organized takeaways."
             specs={["LINK EXTRACTION", "SMART TAGS", "QUICK SCAN"]}
           />
@@ -56,7 +56,7 @@ export const FeatureGrid: React.FC = () => {
             icon={Cpu} 
             domain="ASSISTANT"
             signal="PRO"
-            title="Talk to Notes" 
+            title="Ask Voice" 
             desc="Ask follow-up questions verbally. Engage in a natural conversation with your research to find specific details."
             specs={["NATURAL SPEECH", "DEEP REASONING", "INSTANT ANSWERS"]}
           />

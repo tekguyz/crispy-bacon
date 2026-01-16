@@ -58,7 +58,7 @@ const OnboardingModal: React.FC = () => {
       features: []
     },
     {
-      title: "Find Decisions.",
+      title: "Reasoning Engine.",
       subtitle: "ACTIONABLE NOTES",
       desc: "Our assistant identifies decisions, follow-ups, and key facts automatically. No more digging through long transcripts.",
       icon: Target,

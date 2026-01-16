@@ -1,50 +1,48 @@
 
-# 🥓 Crispy Bacon: Your Professional Research Assistant
+# 🥓 Crispy Bacon: Professional Research Assistant
 
-**Philosophy:** Smart, Clear, and Direct Research.  
-**Status:** Active - Ready to assist.
+**Philosophy:** High-Density, Fact-First, No-Bot Research.  
+**Status:** Active v2.5.1
 
-Crispy Bacon is a high-density research assistant designed for professionals who need clarity and time. It turns long meetings, complex web documents, and raw daily notes into clear, actionable recaps. We focus on the essence of your data so you can focus on the work.
+Crispy Bacon is a mechanical instrument for professional reasoning. It distills meetings, web research, and raw notes into actionable strategic recaps using advanced AI models.
 
 ---
 
-## 🏗️ Core Architecture
+## 🏗️ Architecture: Stratified Ink
 
 | Layer | Technology | Role |
 | :--- | :--- | :--- |
-| **Frontend** | React 19 + Tailwind CSS | Responsive and tactile interface. |
-| **State** | Zustand | Reliable, modular session management. |
-| **AI** | Google Gemini API | Deep reasoning and natural voice interaction. |
-| **Database** | Supabase | Secure, private storage for your artifacts. |
-| **Backend** | Netlify Functions | Secure bridges for research processing. |
+| **Frontend** | React 19 + Tailwind | Tactile "Granola" interface. |
+| **State** | Zustand + TanStack Query | Hybrid Client/Server synchronization. |
+| **AI** | Gemini 3 Pro + Flash | Deep Reasoning & Realtime Voice. |
+| **Storage** | Supabase + IndexedDB | Local-first persistence with cloud vaulting. |
+| **Bridge** | Netlify Functions | Secure API gateway. |
 
 ---
 
 ## 🚀 Key Features
 
-### 1. The Research Studio
-- **Solo Audio**: High-fidelity capture for field notes and brainstorming.
-- **Meeting Recaps**: Capture your microphone and computer audio for Zoom, Teams, and browser calls.
-- **Decision Tracking**: Automatic identification of key outcomes to keep projects moving forward.
+### 1. Direct Capture
+- **System Loopback:** Record Zoom, Teams, or Meet audio directly from your OS.
+- **Zero Bots:** No intrusive avatars or recording notifications. Pure signal capture.
 
-### 2. Smart Ingestion
-- **Web Insight**: Paste links to clear away clutter and find the core information.
-- **Focus Frameworks**: Guide the assistant with goals like *Product Discovery*, *Technical Review*, and *1-on-1 Prep*.
-- **Task Connection**: Link takeaways directly to your professional backlog.
+### 2. Reasoning Engine
+- **Strategic Recaps:** Turns 60-minute calls into 2-minute executive briefs.
+- **Fact Grounding:** The model is prohibited from guessing. Highlights are traced to source.
+- **Auto-Tags:** Smart taxonomy generation for effortless organization.
 
-### 3. Voice Assistant
-- **Natural Interaction**: Talk directly to your notes to ask follow-up questions verbally.
-- **Evidence-Based**: The assistant only uses the facts in your research, ensuring accuracy.
-
----
-
-## 🛡️ Privacy First
-
-- **Isolated Account**: All research is private and secure using standard cloud partitioning.
-- **Strict Privacy**: We never use your private notes to train public AI models.
-- **Complete Control**: You can delete your library and local data instantly at any time.
+### 3. Ask Voice (Live)
+- **Multimodal Interaction:** Talk to your notes naturally.
+- **Low Latency:** Powered by Gemini 2.5 Flash Native Audio.
 
 ---
 
-**Crafted with care by Crispy Bacon Labs.**  
-*Professional research for high-performance teams.*
+## 🛡️ Security
+
+- **Isolated Vaults:** Every user account is strictly partitioned.
+- **No Training:** Private data is never used to train general models.
+- **Encryption:** AES-256 for data at rest and in transit.
+
+---
+
+**Maintained by Engineering Core :: Crispy Bacon Research**

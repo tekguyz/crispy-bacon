@@ -12,7 +12,7 @@ Crispy Bacon is a mechanical instrument for signal recovery. It recaptures lost 
 
 ---
 
-## 1. Capturing Signals
+## 1. Input: Capturing Signal
 Everything starts with an "Input." Capture happens in three distinct flows:
 
 *   **System Audio Recaps**: On Desktop, Bacon listens to your computer's audio loop directly. It hears Zoom, Teams, Meet, or browser audio. **No bots are required.** We capture the signal, not the attendees.
@@ -21,8 +21,8 @@ Everything starts with an "Input." Capture happens in three distinct flows:
 
 ---
 
-## 2. Choosing a Framework
-Direct the reasoning engine by selecting an objective:
+## 2. Reasoning: The Framework
+Direct the reasoning engine by selecting a strategic objective:
 *   **Executive Brief**: Prioritizes outcomes, hard constraints, and next steps.
 *   **Product Discovery**: Calibrated to detect pain points and user friction.
 *   **Technical Review**: Identifies engineering blockers and architectural debt.
@@ -30,7 +30,7 @@ Direct the reasoning engine by selecting an objective:
 
 ---
 
-## 3. Interrogating your Notes
+## 3. Interrogation: Ask Voice
 Notes are not static. Use **Ask Voice** or the **Assistant Chat** to interrogate your research:
 *   **Direct Inquiry**: "Who specifically agreed to the budget?"
 *   **Summarization**: "Give me just the blockers mentioned."
@@ -55,7 +55,6 @@ export const ManualSection: React.FC = () => (
           desc="Capture any meeting audio without inviting intrusive bots. Pure signal capture." 
           badge="HARDWARE" 
         />
-        {/* Fix: Removed invalid kebab-case 'file-text' tag which does not exist in JSX IntrinsicElements */}
         <FeatureCard 
           icon={Target} 
           title="Fact Grounding" 

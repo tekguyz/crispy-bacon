@@ -5,9 +5,9 @@
 The signal is lost in the noise. Crispy Bacon reclaims your **Time-to-Think**. We do not "summarize"; we distill raw capture into high-density strategic nodes, mirroring the skeletal cognitive structure of a master analyst.
 
 ## 2. The Granola Principles
-- **Crunchy (Tactile Clarity):** Interfaces must be physical. We use sharp borders (1px/2px), heavy black headers, and deep layered shadows. Every button click should feel like mechanical hardware.
+- **Crunchy (Tactile Clarity):** Interfaces must be physical. We use sharp borders, heavy black headers, and deep layered shadows. Every button click should feel like mechanical hardware.
 - **Dense (Signal > Noise):** No AI fluff. We banish "In this meeting, the team discussed..." and replace it with direct facts. We prefer objective bullet points and structured decisions over prose.
-- **Organic (Human Language):** We avoid "AI," "LLM," and "Ingestion." We use "Recap," "Reasoning," and "Import." The assistant is a partner, not a tool.
+- **Organic (Human Language):** We avoid "AI," "LLM," and "Ingestion" in user-facing copy. We use **"Recap," "Reasoning,"** and **"Import."** The assistant is a partner, not a tool.
 
 ## 3. The No-Bot Standard
 We respect the social fabric of professional calls. 

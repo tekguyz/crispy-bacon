@@ -7,21 +7,21 @@ export const LandingMethod: React.FC = () => {
     {
       id: "01",
       title: "Direct Capture",
-      tag: "IMPORT",
+      tag: "INPUT",
       desc: "Record system audio from Zoom, Meet, or Teams. Pure signal, zero bots invited.",
       icon: Mic
     },
     {
       id: "02",
       title: "Reasoning",
-      tag: "REASON",
+      tag: "PROCESS",
       desc: "The engine separates fact from filler, identifying decisions and hard constraints automatically.",
       icon: Search
     },
     {
       id: "03",
       title: "Strategic Recap",
-      tag: "RECAP",
+      tag: "OUTPUT",
       desc: "Receive a structured brief with timelines, action items, and follow-ups ready for export.",
       icon: CheckSquare
     }

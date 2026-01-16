@@ -5,9 +5,9 @@ import { Cpu, ShieldCheck, Database, Globe, HardDrive, Server, Lock, Terminal, B
 export const SpecsSection: React.FC = () => {
   const sections = [
     {
-      title: "Assistant Logic",
+      title: "Reasoning Engine",
       icon: Cpu,
-      content: "We use professional-grade reasoning to understand your notes. Our assistant handles long conversations and complex documents by finding the core facts and decisions automatically.",
+      content: "We use professional-grade Gemini 3 series models to understand your notes. Our assistant handles long conversations and complex documents by finding the core facts and decisions automatically.",
       specs: ["High Memory", "Expert Summaries", "Fact-Based Only"]
     },
     {
@@ -34,23 +34,23 @@ export const SpecsSection: React.FC = () => {
     <div className="space-y-12 animate-fade-in pb-20 max-w-4xl">
       <header className="space-y-4">
         <div className="flex items-center gap-3">
-          <Terminal size={24} className="text-brand-primary" />
-          <h2 className="text-3xl font-black font-display uppercase tracking-tighter">How Bacon Works</h2>
+          <Terminal size={24} className="text-primary" />
+          <h2 className="text-3xl font-black font-display uppercase tracking-tighter">System Specs</h2>
         </div>
         <div className="flex items-center gap-3 font-mono text-[10px] font-bold text-on-surface-variant opacity-40 uppercase tracking-widest px-1">
           <span>SECURE SESSION</span>
-          <div className="w-1 h-1 rounded-full bg-brand-primary" />
+          <div className="w-1 h-1 rounded-full bg-primary" />
           <span>STATUS: ONLINE</span>
-          <div className="w-1 h-1 rounded-full bg-brand-primary" />
+          <div className="w-1 h-1 rounded-full bg-primary" />
           <span>ENCRYPTION: ACTIVE</span>
         </div>
       </header>
 
       <div className="grid grid-cols-1 gap-6">
         {sections.map((s, i) => (
-          <div key={i} className="bg-surface-container-low border border-outline-variant/10 rounded-[2.5rem] p-8 md:p-12 space-y-8 hover:border-brand-primary/20 transition-all group">
+          <div key={i} className="bg-surface-container-low border border-outline-variant/10 rounded-[2.5rem] p-8 md:p-12 space-y-8 hover:border-primary/20 transition-all group">
              <div className="flex items-center gap-5">
-                <div className="w-16 h-16 bg-surface-container-high text-on-surface-variant rounded-2xl flex items-center justify-center shrink-0 shadow-inner group-hover:bg-brand-primary group-hover:text-white transition-all duration-500">
+                <div className="w-16 h-16 bg-surface-container-high text-on-surface-variant rounded-2xl flex items-center justify-center shrink-0 shadow-inner group-hover:bg-primary group-hover:text-white transition-all duration-500">
                    <s.icon size={28} strokeWidth={2} />
                 </div>
                 <h3 className="text-2xl font-black font-display uppercase tracking-tight text-on-surface">{s.title}</h3>
@@ -62,8 +62,8 @@ export const SpecsSection: React.FC = () => {
 
              <div className="flex flex-wrap gap-2 pt-4">
                 {s.specs.map((spec, idx) => (
-                   <div key={idx} className="px-4 py-2 bg-background border border-outline-variant/10 rounded-xl flex items-center gap-3 group-hover:border-brand-primary/30 transition-colors">
-                      <Box size={10} className="text-brand-primary opacity-40" />
+                   <div key={idx} className="px-4 py-2 bg-background border border-outline-variant/10 rounded-xl flex items-center gap-3 group-hover:border-primary/30 transition-colors">
+                      <Box size={10} className="text-primary opacity-40" />
                       <span className="text-[10px] font-black uppercase tracking-widest text-on-surface-variant">{spec}</span>
                    </div>
                 ))}
@@ -72,7 +72,7 @@ export const SpecsSection: React.FC = () => {
         ))}
       </div>
 
-      <footer className="bg-foreground text-background p-10 rounded-[3rem] flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl relative overflow-hidden">
+      <footer className="bg-on-surface text-surface p-10 rounded-[3rem] flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl relative overflow-hidden">
          <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
             <ShieldCheck size={140} />
          </div>
@@ -82,7 +82,7 @@ export const SpecsSection: React.FC = () => {
                We prioritize your privacy above all else. Your notes are isolated, encrypted, and never shared with anyone.
             </p>
          </div>
-         <button className="px-10 py-4 bg-brand-primary text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:scale-105 active:scale-95 transition-all relative z-10 shadow-xl shadow-brand-primary/20">
+         <button className="px-10 py-4 bg-primary text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:scale-105 active:scale-95 transition-all relative z-10 shadow-xl shadow-primary/20">
             Read Our Ethics
          </button>
       </footer>

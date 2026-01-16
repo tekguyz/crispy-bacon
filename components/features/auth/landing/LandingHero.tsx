@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ArrowRight, ShieldCheck, Activity, Zap, FileText } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Activity } from 'lucide-react';
 import { HeroStat } from './HeroStat';
 import { triggerHaptic } from '../../../../services/hapticService';
 
@@ -24,13 +24,12 @@ export const LandingHero: React.FC<any> = ({ onSignIn }) => {
           </div>
 
           <div className="space-y-6">
-            {/* Adjusted typography size to prevent excessive wrapping */}
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[5.5rem] font-display font-bold tracking-tighter leading-[0.95] text-on-background text-balance uppercase italic">
               Distill signal <br /> 
               <span className="text-primary not-italic">from noise.</span>
             </h1>
             <p className="text-lg md:text-xl text-on-background font-medium leading-relaxed max-w-xl opacity-60 mx-auto lg:mx-0">
-              A mechanical instrument for professional research. Capture system audio directly and recover facts without intrusive meeting bots.
+              A mechanical instrument for professional reasoning. Capture system audio directly and recover facts without intrusive meeting bots.
             </p>
           </div>
 
@@ -54,13 +53,9 @@ export const LandingHero: React.FC<any> = ({ onSignIn }) => {
           </div>
         </div>
 
-        {/* ILLUSTRATION COLUMN: Prismatic Signal Engine */}
+        {/* ILLUSTRATION COLUMN */}
         <div className="lg:col-span-5 relative hidden lg:flex justify-center items-center animate-fade-in [animation-delay:200ms] h-[500px]">
-          
-          {/* Base Glow */}
           <div className="absolute inset-0 bg-primary/5 blur-[100px] rounded-full pointer-events-none" />
-
-          {/* The Engine Container - Increased size from max-w-[420px] to full width of column */}
           <div className="relative w-full aspect-square flex items-center justify-center scale-110">
              
              {/* 1. The Noise (Left Inputs) */}
@@ -68,7 +63,6 @@ export const LandingHero: React.FC<any> = ({ onSignIn }) => {
                 <div className="w-32 h-2 bg-on-surface-variant/30 rounded-full animate-pulse [animation-duration:2s]" />
                 <div className="w-20 h-2 bg-on-surface-variant/30 rounded-full animate-pulse [animation-duration:3s]" />
                 <div className="w-40 h-2 bg-on-surface-variant/30 rounded-full animate-pulse [animation-duration:1.5s]" />
-                <div className="w-24 h-2 bg-on-surface-variant/30 rounded-full animate-pulse [animation-duration:2.5s]" />
              </div>
 
              {/* 2. The Prism (Processing Core) */}
@@ -93,7 +87,7 @@ export const LandingHero: React.FC<any> = ({ onSignIn }) => {
                 <div className="bg-surface border border-outline rounded-2xl p-6 shadow-xl w-64 space-y-4 transform rotate-3 hover:rotate-0 transition-transform duration-500">
                    <div className="flex items-center gap-3 mb-2">
                       <div className="w-8 h-8 bg-success/10 rounded-lg flex items-center justify-center text-success">
-                         <Zap size={16} fill="currentColor" />
+                         <ShieldCheck size={16} strokeWidth={3} />
                       </div>
                       <span className="text-[10px] font-black uppercase tracking-widest text-on-surface">Insight</span>
                    </div>
@@ -105,16 +99,8 @@ export const LandingHero: React.FC<any> = ({ onSignIn }) => {
                       <span className="text-[8px] font-mono font-bold text-primary uppercase tracking-widest">Actionable</span>
                    </div>
                 </div>
-                
-                {/* Floating Badge */}
-                <div className="absolute -bottom-8 -right-6 bg-on-surface text-surface px-4 py-2 rounded-xl shadow-lg flex items-center gap-2 animate-bounce-gentle">
-                   <FileText size={12} />
-                   <span className="text-[9px] font-black uppercase tracking-widest">Recap Ready</span>
-                </div>
              </div>
-
           </div>
-
         </div>
       </div>
     </section>
