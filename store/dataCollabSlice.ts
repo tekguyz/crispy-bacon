@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { supabase, handleSupabaseError } from '../services/supabaseClient';
 import { trackEvent } from '../services/analyticsService';
 import { AppView, ContentType, ProcessingStatus } from '../types';
+import { queryClient } from '../lib/queryClient';
 
 export const createDataCollabSlice: StateCreator<AppState, [], [], Partial<DataSlice>> = (set, get) => ({
   fetchPublicInsight: async (slug) => {
@@ -98,15 +99,16 @@ export const createDataCollabSlice: StateCreator<AppState, [], [], Partial<DataS
   },
 
   importSharedInsight: async (shared) => {
-    const { session, addToast, fetchData, setView } = get();
+    const { session, addToast, setView } = get();
     if (!session?.user) {
-        addToast("Sign in to save this note.", "info");
+        addToast("Authentication required to save notes.", "info");
         return;
     }
 
     try {
         const insightId = uuidv4();
-        // 1. Create the insight record
+        
+        // 1. Create the primary insight record
         const { error: itemError } = await supabase.from('insights').insert([{
             id: insightId,
             user_id: session.user.id,
@@ -120,9 +122,11 @@ export const createDataCollabSlice: StateCreator<AppState, [], [], Partial<DataS
 
         if (itemError) throw itemError;
 
-        // 2. Insert the summary
+        // 2. Insert the associated intelligence summary
+        // CRITICAL: Must include user_id on the summary for RLS to allow the insert
         const { error: summaryError } = await supabase.from('summaries').insert([{
             insight_id: insightId,
+            user_id: session.user.id,
             summary: shared.summary,
             highlights: shared.highlights,
             action_items: shared.action_items,
@@ -132,13 +136,16 @@ export const createDataCollabSlice: StateCreator<AppState, [], [], Partial<DataS
 
         if (summaryError) throw summaryError;
 
-        await fetchData();
-        addToast("Saved to your library.", "success");
-        setView(AppView.DASHBOARD);
+        // 3. Invalidate Query Cache and Navigate
+        await queryClient.invalidateQueries({ queryKey: ['insights', session.user.id] });
+        
+        addToast("Note secured in library.", "success");
         set({ publicSharedInsight: null });
+        setView(AppView.DASHBOARD);
         
     } catch (err: any) {
-        addToast("Claim failed. Please try again.", "error");
+        console.error("[Bridge] Import failed:", err);
+        addToast("Link claim failed. Note may be expired.", "error");
     }
   }
 });

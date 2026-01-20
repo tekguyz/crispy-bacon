@@ -52,7 +52,7 @@ export const DepthToggle: React.FC<DepthToggleProps> = ({ isPro }) => {
         >
           {!isPro && <Lock size={9} className="opacity-40 shrink-0" />}
           <Brain size={11} fill={personaStyle === PersonaStyle.DEEP_RESEARCH ? "currentColor" : "none"} />
-          <span className="text-[9px] font-black uppercase tracking-tight">Distill</span>
+          <span className="text-[9px] font-black uppercase tracking-tight">Deep Distill</span>
         </button>
       </div>
     </div>

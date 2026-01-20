@@ -37,9 +37,9 @@ export const SummaryStats: React.FC<SummaryStatsProps> = ({ insight }) => {
        <StatItem icon={Clock} value={`${duration}m`} label="Reading Time" />
 
        {insight.metadata?.isDeepStrategist && (
-         <div className="ml-auto flex items-center gap-2 px-3 py-1.5 bg-primary/5 text-primary rounded-lg border border-primary/20 shadow-sm">
+         <div className="ml-auto flex items-center gap-2 px-3 py-1.5 bg-amber-500/5 text-amber-600 rounded-lg border border-amber-500/20 shadow-sm">
             <Zap size={10} fill="currentColor" strokeWidth={0} className="animate-pulse" />
-            <span className="text-[8px] font-black uppercase tracking-[0.2em]">Deep Analysis</span>
+            <span className="text-[8px] font-black uppercase tracking-[0.2em]">Executive Reasoning</span>
          </div>
        )}
     </div>

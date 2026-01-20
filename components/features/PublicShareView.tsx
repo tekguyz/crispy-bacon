@@ -3,12 +3,13 @@ import React, { useState } from 'react';
 import { 
   Sparkles, Calendar, CheckSquare, Check, Loader2, Music, 
   ShieldCheck, Zap, ChevronDown, ChevronUp, Save, 
-  LayoutDashboard, Target, Clock, Activity, Quote 
+  LayoutDashboard, Target, Clock, Activity, Quote, LogIn 
 } from 'lucide-react';
 import { usePublicInsightLogic } from '../../hooks/usePublicInsightLogic';
 import MarkdownRenderer from '../ui/MarkdownRenderer';
 import { BaconLogo } from '../ui/Logo';
 import { useAppStore } from '../../store/useAppStore';
+import { triggerHaptic } from '../../services/hapticService';
 
 const PublicShareView: React.FC = () => {
   const { 
@@ -18,7 +19,7 @@ const PublicShareView: React.FC = () => {
     isCompleted 
   } = usePublicInsightLogic();
 
-  const { session, importSharedInsight, setView, publicSharedInsight } = useAppStore();
+  const { session, importSharedInsight, setView, publicSharedInsight, signOut, addToast } = useAppStore();
   const [showCompleted, setShowCompleted] = useState(false);
   const [isImporting, setIsImporting] = useState(false);
 
@@ -26,6 +27,15 @@ const PublicShareView: React.FC = () => {
 
   const handleImport = async () => {
     if (!publicSharedInsight) return;
+    
+    triggerHaptic('medium');
+
+    if (!session) {
+       addToast("Identity required. Redirecting...", "info");
+       setTimeout(() => signOut(), 1500); // Redirect to login
+       return;
+    }
+
     setIsImporting(true);
     await importSharedInsight(publicSharedInsight);
     setIsImporting(false);
@@ -35,7 +45,6 @@ const PublicShareView: React.FC = () => {
   const activeTasks = actionItems.map((item, i) => ({ item, i })).filter(({ i }) => !isCompleted(i));
   const completedTasks = actionItems.map((item, i) => ({ item, i })).filter(({ i }) => isCompleted(i));
 
-  // High-Density Stat Item for Summary Details
   const StatItem = ({ icon: Icon, value, label }: any) => (
     <div className="flex items-center gap-2">
       <Icon size={12} className="text-primary/40" strokeWidth={3} />
@@ -78,8 +87,10 @@ const PublicShareView: React.FC = () => {
            ) : (
              <button 
                 onClick={handleImport}
-                className="px-6 h-10 bg-primary text-on-primary rounded-xl font-black text-[10px] uppercase tracking-[0.2em] shadow-xl hover:brightness-110 active:scale-95 transition-all"
+                disabled={isImporting}
+                className="px-6 h-10 bg-primary text-on-primary rounded-xl font-black text-[10px] uppercase tracking-[0.2em] shadow-xl hover:brightness-110 active:scale-95 transition-all flex items-center gap-2"
              >
+                {isImporting ? <Loader2 size={14} className="animate-spin" /> : <LogIn size={14} strokeWidth={3} />}
                 Start My Library
              </button>
            )}
@@ -127,7 +138,7 @@ const PublicShareView: React.FC = () => {
             )}
           </header>
 
-          {/* Primary Section: Clear Thinking */}
+          {/* Primary Section */}
           <section className="relative">
             <div className="absolute -left-6 md:-left-12 top-0 bottom-0 w-2 bg-primary opacity-10 hidden md:block rounded-full" />
             
@@ -146,7 +157,7 @@ const PublicShareView: React.FC = () => {
             </div>
           </section>
 
-          {/* Secondary Section: Key Points */}
+          {/* Key Points */}
           {insight.highlights && insight.highlights.length > 0 && (
              <section className="space-y-12">
                 <div className="flex items-center gap-3">
@@ -177,7 +188,7 @@ const PublicShareView: React.FC = () => {
              </section>
           )}
 
-          {/* Tertiary Section: Next Steps */}
+          {/* Next Steps */}
           {actionItems.length > 0 && (
             <section className="space-y-10 pb-20">
               <div className="flex items-center gap-3 px-1">
@@ -234,21 +245,24 @@ const PublicShareView: React.FC = () => {
           )}
           
           {/* Conversion Anchor */}
-          {!session && (
-            <footer className="pt-20 pb-32 text-center">
-                <div className="inline-flex flex-col items-center gap-8 p-12 rounded-[3rem] bg-on-surface text-surface shadow-2xl relative overflow-hidden group">
-                   <div className="absolute inset-0 ledger-grid opacity-[0.05] pointer-events-none" />
-                   <BaconLogo className="w-12 h-12 relative z-10" />
-                   <div className="space-y-2 relative z-10">
-                      <h4 className="text-2xl font-black uppercase tracking-tighter">Time to think.</h4>
-                      <p className="text-[10px] font-bold text-primary uppercase tracking-[0.4em]">Establish Your Library</p>
-                   </div>
-                   <button onClick={handleImport} className="relative z-10 px-10 py-5 bg-primary text-on-primary rounded-2xl font-black text-[11px] uppercase tracking-[0.3em] shadow-xl hover:scale-105 active:scale-95 transition-all">
-                      Keep this Recap
-                   </button>
-                </div>
-            </footer>
-          )}
+          <footer className="pt-20 pb-32 text-center">
+              <div className="inline-flex flex-col items-center gap-8 p-12 rounded-[3rem] bg-on-surface text-surface shadow-2xl relative overflow-hidden group">
+                  <div className="absolute inset-0 ledger-grid opacity-[0.05] pointer-events-none" />
+                  <BaconLogo className="w-12 h-12 relative z-10" />
+                  <div className="space-y-2 relative z-10">
+                    <h4 className="text-2xl font-black uppercase tracking-tighter">Time to think.</h4>
+                    <p className="text-[10px] font-bold text-primary uppercase tracking-[0.4em]">Establish Your Library</p>
+                  </div>
+                  <button 
+                    onClick={handleImport} 
+                    disabled={isImporting}
+                    className="relative z-10 px-10 py-5 bg-primary text-on-primary rounded-2xl font-black text-[11px] uppercase tracking-[0.3em] shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center gap-3 disabled:opacity-50"
+                  >
+                    {isImporting ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} strokeWidth={3} />}
+                    Keep this Recap
+                  </button>
+              </div>
+          </footer>
         </div>
       </main>
     </div>
