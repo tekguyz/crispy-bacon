@@ -34,19 +34,42 @@ export const analyzeContent = async (
   
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
-  const isComplex = (durationSeconds && durationSeconds > 600) || input.length > 25000;
-  const modelName = (isPro && persona === PersonaStyle.DEEP_RESEARCH && isComplex) 
-    ? 'gemini-3-pro-preview' 
-    : 'gemini-3-flash-preview';
+  // LOGIC: Differentiate between "Standard Recap" (Free) and "Deep Distill" (Pro)
+  // Deep Research forces the Pro model and requests significantly higher density output.
+  const isDeep = isPro && persona === PersonaStyle.DEEP_RESEARCH;
+  const modelName = isDeep ? 'gemini-3-pro-preview' : 'gemini-3-flash-preview';
 
-  const instructions = `
-    ROLE: Elite Senior Research Strategist.
-    TASK: Recover signal from raw capture.
-    USER_GOAL: ${userNotes || 'Standard Strategic Recap'}.
-    FOCUS: ${template}.
-    
-    STANDARDS: SKELETAL INTELLIGENCE. Ban conversational lubricant. Direct assertion.
-  `;
+  let instructions = "";
+
+  if (isDeep) {
+    // DEEP DISTILL (PRO): High volume, high detail, narrative depth.
+    instructions = `
+      ROLE: Principal Strategy Consultant.
+      TASK: Conduct a COMPREHENSIVE DEEP-DIVE analysis of the raw capture.
+      USER_GOAL: ${userNotes || 'Detailed Strategic Analysis'}.
+      FOCUS: ${template}.
+      
+      STANDARDS - DEEP RESEARCH MODE (PRO):
+      1. SUMMARY: Must be EXTENSIVE, NARRATIVE, and DETAILED. Do not summarize briefly. Explore nuances, underlying friction, and strategic implications. Explain the "Why" and "How" behind the content. (Target: 600+ words if source allows).
+      2. HIGHLIGHTS: Extract an exhaustive list of facts, figures, decisions, and quotes. Capture specific details, not just generalities.
+      3. ACTION ITEMS: Provide a granular, step-by-step execution plan.
+      4. STYLE: Rigorous, analytical, exhaustive.
+    `;
+  } else {
+    // STANDARD RECAP (FREE): Fast, skeletal, punchy.
+    instructions = `
+      ROLE: Senior Executive Assistant.
+      TASK: Create a RAPID CONCISE RECAP.
+      USER_GOAL: ${userNotes || 'Standard Strategic Recap'}.
+      FOCUS: ${template}.
+      
+      STANDARDS - RAPID MODE (STANDARD):
+      1. SUMMARY: SKELETAL and CONCISE. High-level overview only. (Target: < 200 words).
+      2. HIGHLIGHTS: Top 3-5 critical points only.
+      3. ACTION ITEMS: High-level checklist.
+      4. STYLE: Brevity, direct assertion, zero fluff. Ban conversational lubricant.
+    `;
+  }
 
   const effectiveMimeType = audioData ? getEffectiveMimeType(audioMimeType || '', 'audio.file') : undefined;
 
@@ -102,7 +125,7 @@ export const analyzeContent = async (
     sentiment: (result.sentiment as Sentiment) || Sentiment.NEUTRAL,
     metadata: {
       readingTimeMinutes: safeReadingTime, 
-      isDeepStrategist: (modelName === 'gemini-3-pro-preview'),
+      isDeepStrategist: isDeep,
       momentumScore: result.momentum_score || 50,
       friction: result.friction || "None",
       usage
