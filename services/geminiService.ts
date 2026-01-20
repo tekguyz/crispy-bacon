@@ -1,3 +1,4 @@
+
 import { GoogleGenAI, Type } from "@google/genai";
 import { InsightContent, ContentType, Sentiment, InsightTemplate, PersonaStyle } from "../types";
 import { getEffectiveMimeType } from "../utils/signalUtils";
@@ -50,7 +51,7 @@ export const analyzeContent = async (
       FOCUS: ${template}.
       
       STANDARDS - DEEP RESEARCH MODE (PRO):
-      1. SUMMARY: Must be EXTENSIVE, NARRATIVE, and DETAILED. Do not summarize briefly. Explore nuances, underlying friction, and strategic implications. Explain the "Why" and "How" behind the content. (Target: 600+ words if source allows).
+      1. SUMMARY: Must be EXTENSIVE, NARRATIVE, and DETAILED. Do not summarize briefly. Explore nuances, underlying friction, and strategic implications. Explain the "Why" and "How" behind the content. (Target: 400+ words if source allows).
       2. HIGHLIGHTS: Extract an exhaustive list of facts, figures, decisions, and quotes. Capture specific details, not just generalities.
       3. ACTION ITEMS: Provide a granular, step-by-step execution plan.
       4. STYLE: Rigorous, analytical, exhaustive.
