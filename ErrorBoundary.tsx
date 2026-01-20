@@ -14,9 +14,11 @@ interface ErrorBoundaryState {
 /**
  * ErrorBoundary component to catch rendering errors in the component tree.
  */
-export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+// Fix: Use React.Component to ensure the class correctly inherits and recognizes state, props, and setState.
+export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
+    // Fix: state property is defined in React.Component
     this.state = {
       hasError: false,
       error: null,
@@ -31,10 +33,12 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error("Uncaught error:", error, errorInfo);
+    // Fix: setState property is defined in React.Component
     this.setState({ errorInfo });
   }
 
   public render(): ReactNode {
+    // Fix: state property is defined in React.Component
     const { hasError, error, errorInfo } = this.state;
     
     if (hasError) {
@@ -62,6 +66,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       );
     }
 
+    // Fix: props property is defined in React.Component
     return this.props.children;
   }
 }

@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Target, ArrowRight } from 'lucide-react';
+import MarkdownRenderer from '../../ui/MarkdownRenderer';
 
 interface TakeawayGridProps {
   highlights?: string[];
@@ -29,9 +30,9 @@ const TakeawayGrid: React.FC<TakeawayGridProps> = ({ highlights = [] }) => {
             </div>
             
             <div className="flex-1 pt-1 space-y-4">
-                <p className="text-base md:text-lg font-bold font-sans text-on-surface leading-tight tracking-tight">
-                  {h}
-                </p>
+                <div className="text-base md:text-lg font-bold font-sans text-on-surface leading-tight tracking-tight">
+                  <MarkdownRenderer content={h} className="inline-markdown" />
+                </div>
                 <div className="flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0">
                     <div className="h-px w-8 bg-primary/20" />
                     <span className="text-[8px] font-black uppercase tracking-widest text-primary">Source verified</span>

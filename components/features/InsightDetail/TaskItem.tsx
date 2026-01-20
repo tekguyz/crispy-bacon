@@ -3,6 +3,7 @@ import React from 'react';
 import { Check } from 'lucide-react';
 import { useAppStore } from '../../../store/useAppStore';
 import { triggerHaptic } from '../../../services/hapticService';
+import MarkdownRenderer from '../../ui/MarkdownRenderer';
 
 interface TaskItemProps {
   insightId: string;
@@ -38,12 +39,12 @@ const TaskItem: React.FC<TaskItemProps> = ({ insightId, item, index, isCompleted
           <div className="w-2.5 h-2.5 rounded-sm bg-primary opacity-0 group-hover:opacity-10 transition-opacity" />
         )}
       </div>
-      <p className={`
-        text-base font-medium font-sans leading-tight transition-all
+      <div className={`
+        text-base font-medium font-sans leading-tight transition-all flex-1
         ${isCompleted ? 'text-on-surface-variant/50 line-through' : 'text-on-surface-variant group-hover:text-primary'}
       `}>
-        {item}
-      </p>
+        <MarkdownRenderer content={item} className="inline-markdown" />
+      </div>
     </div>
   );
 };
