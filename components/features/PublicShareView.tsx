@@ -159,7 +159,7 @@ const PublicShareView: React.FC = () => {
 
           {/* Key Points */}
           {insight.highlights && insight.highlights.length > 0 && (
-             <section className="space-y-12">
+             <section className="space-y-8">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-surface-container-high text-primary rounded-xl border border-outline-variant/10 shadow-inner">
                     <Target size={18} strokeWidth={2.5} />
@@ -167,18 +167,18 @@ const PublicShareView: React.FC = () => {
                   <h4 className="text-[10px] font-black uppercase tracking-[0.5em] text-on-surface-variant opacity-30">Knowledge Points</h4>
                 </div>
 
-                <div className="flex flex-col gap-6">
+                <div className="flex flex-col gap-4">
                   {insight.highlights.map((h, i) => (
                     <div key={i} className="flex items-start gap-8 group">
-                      <div className="flex flex-col items-center gap-3 shrink-0 pt-2">
-                          <div className="w-10 h-10 rounded-xl bg-surface-container-low border border-outline-variant/10 flex items-center justify-center transition-all group-hover:bg-primary group-hover:text-on-primary shadow-sm group-hover:shadow-lg group-hover:scale-110">
-                             <span className="text-[11px] font-mono font-black text-on-surface group-hover:text-on-primary">0{i + 1}</span>
+                      <div className="flex flex-col items-center gap-2 shrink-0 pt-1.5">
+                          <div className="w-8 h-8 rounded-lg bg-surface-container-low border border-outline-variant/10 flex items-center justify-center transition-all group-hover:bg-primary group-hover:text-on-primary shadow-sm group-hover:shadow-lg group-hover:scale-105">
+                             <span className="text-[10px] font-mono font-black text-on-surface group-hover:text-on-primary">{i + 1}</span>
                           </div>
-                          <div className="w-px h-12 bg-outline-variant/20 rounded-full group-hover:bg-primary/30 transition-colors" />
+                          <div className="w-px h-8 bg-outline-variant/20 rounded-full group-hover:bg-primary/30 transition-colors" />
                       </div>
                       
                       <div className="flex-1 pt-1">
-                          <p className="text-2xl md:text-3xl font-bold text-on-surface leading-tight tracking-tight">
+                          <p className="text-xl md:text-2xl font-bold text-on-surface leading-tight tracking-tight">
                             {h}
                           </p>
                       </div>

@@ -1,4 +1,4 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
+import React, { ErrorInfo, ReactNode } from 'react';
 import { AlertTriangle, RotateCw } from 'lucide-react'; 
 
 interface ErrorBoundaryProps {
@@ -14,17 +14,14 @@ interface ErrorBoundaryState {
 /**
  * ErrorBoundary component to catch rendering errors in the component tree.
  */
-// Fix: Explicitly using Component to ensure TypeScript correctly identifies inherited properties like state and props
-export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  constructor(props: ErrorBoundaryProps) {
-    super(props);
-    // Fix: Initializing state in the constructor which is now correctly recognized as inherited from Component
-    this.state = {
-      hasError: false,
-      error: null,
-      errorInfo: null
-    };
-  }
+// Fix: Using React.Component explicitly to ensure inherited properties like state, props and setState are correctly recognized by TypeScript
+export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  // Fix: Initializing state as a class property to satisfy property existence checks on the instance
+  public state: ErrorBoundaryState = {
+    hasError: false,
+    error: null,
+    errorInfo: null
+  };
 
   public static getDerivedStateFromError(error: Error): ErrorBoundaryState {
     // Update state so the next render will show the fallback UI.
@@ -33,12 +30,12 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error("Uncaught error:", error, errorInfo);
-    // Fix: setState is now correctly identified as a method inherited from Component
+    // Fix: setState is a standard method inherited from React.Component
     this.setState({ errorInfo });
   }
 
   public render(): ReactNode {
-    // Fix: state is now correctly identified as a property inherited from Component
+    // Fix: accessing state through this.state which is now correctly recognized as inherited from React.Component
     const { hasError, error, errorInfo } = this.state;
     
     if (hasError) {
@@ -66,7 +63,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       );
     }
 
-    // Fix: props is now correctly identified as a property inherited from Component
+    // Fix: children is accessed via this.props which is inherited from React.Component
     return this.props.children;
   }
 }
