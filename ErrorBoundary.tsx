@@ -1,21 +1,21 @@
-import React from 'react';
+import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { AlertTriangle, RotateCw } from 'lucide-react'; 
 
 interface ErrorBoundaryProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 interface ErrorBoundaryState {
   hasError: boolean;
   error: Error | null;
-  errorInfo: React.ErrorInfo | null;
+  errorInfo: ErrorInfo | null;
 }
 
 /**
  * ErrorBoundary component to catch rendering errors in the component tree.
  */
-// Fix: Use React.Component directly from the React namespace to ensure inheritance is correctly recognized by the TypeScript compiler.
-export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+// Fix: Explicitly extend Component from react to ensure TypeScript correctly identifies inherited members like setState and props.
+export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   // Initialize state with proper types
   public state: ErrorBoundaryState = {
     hasError: false,
@@ -28,13 +28,13 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
     return { hasError: true, error, errorInfo: null };
   }
 
-  // Fix: setState is now correctly recognized because the base class is properly resolved using React.Component.
-  public componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+  // Fix: setState is now correctly recognized as an inherited method from Component.
+  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error("Uncaught error:", error, errorInfo);
     this.setState({ errorInfo });
   }
 
-  public render(): React.ReactNode {
+  public render(): ReactNode {
     const { hasError, error, errorInfo } = this.state;
     
     if (hasError) {
@@ -62,7 +62,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
       );
     }
 
-    // Fix: this.props is now correctly recognized as a property inherited from React.Component.
+    // Fix: this.props is now correctly recognized as a property inherited from Component.
     return this.props.children;
   }
 }

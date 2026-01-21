@@ -30,6 +30,7 @@ export const useIngestion = (selectedFiles: File[], clearFiles: () => void, onCl
     }
     onClose();
     try {
+      // Drive files are always treated as batch/indirect imports, so they don't auto-open
       await ingestDriveFiles(files, { template: selectedTemplate });
     } catch (err: any) {
         addToast(`Ingestion issue: ${err.message}`, "error");
@@ -59,11 +60,15 @@ export const useIngestion = (selectedFiles: File[], clearFiles: () => void, onCl
     
     if (!hasLink && validatedFiles.length === 0 && !hasNotes) return;
 
+    // Logic: Auto-open only if there is EXACTLY one signal being added
+    const signalCount = (hasLink ? 1 : 0) + validatedFiles.length + (!hasLink && validatedFiles.length === 0 && hasNotes ? 1 : 0);
+    const autoOpen = signalCount === 1;
+
     onClose();
     try {
       if (hasLink) {
         if (hasNotes) setCurrentIntent(inputValue);
-        await processContent(urlValue, ContentType.URL, { template: selectedTemplate });
+        await processContent(urlValue, ContentType.URL, { template: selectedTemplate, autoOpen });
       }
 
       for (const f of validatedFiles) {
@@ -72,17 +77,17 @@ export const useIngestion = (selectedFiles: File[], clearFiles: () => void, onCl
         const isText = f.type === 'text/plain' || f.name.match(/\.(md|txt)$/i);
 
         if (isAudio) {
-          processMeeting(f, `Uploaded Note: ${f.name}`, { template: selectedTemplate } as any);
+          processMeeting(f, `Uploaded Note: ${f.name}`, { template: selectedTemplate, autoOpen } as any);
         } else if (isDocx) {
           const res = await mammoth.extractRawText({ arrayBuffer: await f.arrayBuffer() });
-          processContent(res.value, ContentType.TEXT, { template: selectedTemplate });
+          processContent(res.value, ContentType.TEXT, { template: selectedTemplate, autoOpen });
         } else if (isText) {
-          processContent(await f.text(), ContentType.TEXT, { template: selectedTemplate });
+          processContent(await f.text(), ContentType.TEXT, { template: selectedTemplate, autoOpen });
         }
       }
 
       if (!hasLink && validatedFiles.length === 0 && hasNotes) {
-        await processContent(inputValue, ContentType.TEXT, { template: selectedTemplate });
+        await processContent(inputValue, ContentType.TEXT, { template: selectedTemplate, autoOpen });
       }
     } catch (err: any) {
        addToast("Ingestion deferred.", "error");

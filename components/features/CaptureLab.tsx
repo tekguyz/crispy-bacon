@@ -49,11 +49,21 @@ const CaptureLab: React.FC = () => {
         message: 'Sign in to summarize this research. Save it locally for now?',
         confirmLabel: 'Save & Sign In',
         onConfirm: () => {
-          processMeeting(blob, currentNote, { template: selectedTemplate, durationSeconds: duration, intent: currentIntent } as any);
+          processMeeting(blob, currentNote, { 
+            template: selectedTemplate, 
+            durationSeconds: duration, 
+            intent: currentIntent,
+            autoOpen: true 
+          } as any);
           signOut(); 
         },
         onCancel: () => { 
-          processMeeting(blob, currentNote, { template: selectedTemplate, durationSeconds: duration, intent: currentIntent } as any);
+          processMeeting(blob, currentNote, { 
+            template: selectedTemplate, 
+            durationSeconds: duration, 
+            intent: currentIntent,
+            autoOpen: true 
+          } as any);
           setShowCaptureLab(false); 
           setLabView('setup'); 
         }
@@ -62,7 +72,13 @@ const CaptureLab: React.FC = () => {
     }
 
     triggerHaptic('medium');
-    processMeeting(blob, currentNote, { template: selectedTemplate, durationSeconds: duration, intent: currentIntent } as any);
+    // Finalized recordings always Constitute a single signal action -> autoOpen: true
+    processMeeting(blob, currentNote, { 
+      template: selectedTemplate, 
+      durationSeconds: duration, 
+      intent: currentIntent,
+      autoOpen: true
+    } as any);
   }, [openConfirmation, processMeeting, currentNote, selectedTemplate, currentIntent, setShowCaptureLab, isGuest, signOut]);
 
   const { stream, elapsedTime, isRecording, isPaused, start, stop, pause, resume, error: recorderError, limit } = useMicrophone(onComplete);

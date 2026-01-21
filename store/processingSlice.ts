@@ -1,3 +1,4 @@
+
 import { StateCreator } from 'zustand';
 import { AppState, IntelligenceSlice } from './types';
 import { ContentType, ProcessingStatus, InsightTemplate } from '../types';
@@ -62,8 +63,8 @@ export const createProcessingSlice: StateCreator<AppState, [], [], Partial<Intel
     finally { set(s => ({ activeProcessCount: Math.max(0, s.activeProcessCount - 1), isProcessing: s.activeProcessCount > 1 })); }
   },
 
-  processContent: async (input, type, options: { template?: InsightTemplate, refUrl?: string } = {}) => {
-    const { userProfile, session, addToast, fetchData, personaStyle } = get();
+  processContent: async (input, type, options: { template?: InsightTemplate, refUrl?: string, autoOpen?: boolean } = {}) => {
+    const { userProfile, session, addToast, fetchData, personaStyle, fetchSingleInsight, setSelectedInsight } = get();
     const itemId = uuidv4();
     
     set(s => ({ isProcessing: true, activeProcessCount: s.activeProcessCount + 1 }));
@@ -73,13 +74,23 @@ export const createProcessingSlice: StateCreator<AppState, [], [], Partial<Intel
       await supabase.from('insights').insert([{ id: itemId, user_id: session.user.id, source_type: type, processing_status: ProcessingStatus.PROCESSING }]);
       const recap = await analyzeContent(input, type, get().currentIntent || '', options.template || get().preferredTemplate, !!userProfile?.is_pro, personaStyle);
       await archiveRefinement(itemId, session.user.id, recap, { template: options.template });
+      
       await fetchData();
+
+      if (options.autoOpen) {
+        // Pinpoint the new insight to ensure it's selected with fresh data
+        await fetchSingleInsight(itemId);
+        const freshItem = get().insights.find(i => i.id === itemId);
+        if (freshItem) {
+          setSelectedInsight(freshItem);
+        }
+      }
     } catch (e: any) { addToast(e.message, "error"); }
     finally { set(s => ({ isProcessing: false, activeProcessCount: 0 })); }
   },
 
-  processMeeting: async (audioBlob, manualNotes, options: { template?: InsightTemplate, refUrl?: string, durationSeconds?: number, intent?: string } = {}) => {
-    const { userProfile, session, addToast, fetchData, personaStyle } = get();
+  processMeeting: async (audioBlob, manualNotes, options: { template?: InsightTemplate, refUrl?: string, durationSeconds?: number, intent?: string, autoOpen?: boolean } = {}) => {
+    const { userProfile, session, addToast, fetchData, personaStyle, fetchSingleInsight, setSelectedInsight } = get();
     const itemId = uuidv4();
     
     set(s => ({ isProcessing: true, activeProcessCount: s.activeProcessCount + 1, showCaptureLab: false }));
@@ -128,6 +139,14 @@ export const createProcessingSlice: StateCreator<AppState, [], [], Partial<Intel
       
       await saveArtifactLocally({ ...localArtifact, sync_status: SyncStatus.SYNCED });
       await fetchData();
+
+      if (options.autoOpen) {
+        await fetchSingleInsight(itemId);
+        const freshItem = get().insights.find(i => i.id === itemId);
+        if (freshItem) {
+          setSelectedInsight(freshItem);
+        }
+      }
     } catch (e: any) { 
         console.error("Processing Error:", e);
         addToast("Could not summarize. Audio saved.", "error"); 

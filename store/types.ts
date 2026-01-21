@@ -227,8 +227,8 @@ export interface IntelligenceSlice {
   setSelectedInsight: (insight: InsightContent | null) => Promise<void>;
   hydrateAudio: (insight: InsightContent) => Promise<void>;
   retryProcessing: (insight: InsightContent) => Promise<void>;
-  processContent: (contentInput: string, type: ContentType, options?: { template?: InsightTemplate, refUrl?: string }) => Promise<void>;
-  processMeeting: (audioBlob: Blob, manualNotes: string, options?: { template?: InsightTemplate, refUrl?: string, durationSeconds?: number, intent?: string }) => Promise<void>;
+  processContent: (contentInput: string, type: ContentType, options?: { template?: InsightTemplate, refUrl?: string, autoOpen?: boolean }) => Promise<void>;
+  processMeeting: (audioBlob: Blob, manualNotes: string, options?: { template?: InsightTemplate, refUrl?: string, durationSeconds?: number, intent?: string, autoOpen?: boolean }) => Promise<void>;
   startLiveAssistant: (insight: InsightContent) => void;
   stopLiveAssistant: () => void;
   setLiveSession: (session: any | null) => void;
