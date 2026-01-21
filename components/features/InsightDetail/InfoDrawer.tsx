@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Loader2, Terminal } from 'lucide-react';
+import { Loader2, Terminal, Radio } from 'lucide-react';
 import { InsightContent } from '../../../types';
 import { ExportActions } from './ExportActions';
 import { FolderSelection } from './FolderSelection';
@@ -8,6 +8,7 @@ import { TagSelection } from './TagSelection';
 import { ContextGrounding } from './ContextGrounding';
 import { QuickActions } from './QuickActions';
 import { TaxonomySection } from './TaxonomySection';
+import { AudioSource } from './AudioSource';
 
 interface InfoDrawerProps {
   insight: InsightContent;
@@ -27,16 +28,32 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
 
   const usage = insight.metadata?.usage;
   const isDeep = !!insight.metadata?.isDeepStrategist;
+  const hasAudio = !!insight.metadata?.audioUrl;
 
   return (
     <div className="h-full flex flex-col bg-background relative overflow-hidden">
       <div className="absolute inset-0 ledger-grid opacity-[0.02] pointer-events-none" />
       
       <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-10">
-        {/* 1. STATE ACTIONS */}
+        {/* 1. PRIMARY ACTIONS */}
         {!isFailed && <QuickActions insight={insight} />}
 
-        {/* 2. AUTOMATED TAXONOMY (The "Smart" Layer) */}
+        {/* 2. REFERENCE SIGNAL (Audio moved here) */}
+        {hasAudio && (
+           <div className="space-y-4 pt-4 border-t border-outline-variant/10">
+              <div className="flex items-center gap-2 px-1">
+                 <Radio size={10} className="text-primary" strokeWidth={3} />
+                 <span className="text-[8px] font-black text-on-surface-variant/40 uppercase tracking-[0.2em]">Reference Signal</span>
+              </div>
+              <AudioSource 
+                  variant="slim"
+                  url={insight.metadata!.audioUrl!} 
+                  title={insight.metadata?.originalName}
+              />
+           </div>
+        )}
+
+        {/* 3. AUTOMATED TAXONOMY */}
         <div className="space-y-8 pt-4 border-t border-outline-variant/10">
           <TaxonomySection 
             topics={insight.topics} 
@@ -45,21 +62,19 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
           />
         </div>
 
-        {/* 3. MANUAL FILING (The "User" Layer) */}
+        {/* 4. MANUAL FILING */}
         <div className="space-y-8 pt-4 border-t border-outline-variant/10">
           <FolderSelection insight={insight} />
           <TagSelection insight={insight} />
         </div>
 
-        {/* 4. PROVENANCE */}
-        <div className="space-y-4 pt-4 border-t border-outline-variant/10">
-          <ContextGrounding 
-            attachments={insight.metadata?.contextAttachments} 
-            sourceUrl={insight.metadata?.sourceDomain || (insight.type === 'URL' ? insight.original_content : undefined)} 
-          />
-        </div>
+        {/* 5. PROVENANCE (Conditionally hidden if empty) */}
+        <ContextGrounding 
+          attachments={insight.metadata?.contextAttachments} 
+          sourceUrl={insight.metadata?.sourceDomain || (insight.type === 'URL' ? insight.original_content : undefined)} 
+        />
 
-        {/* 5. DOWNSTREAM */}
+        {/* 6. DOWNSTREAM */}
         {!isFailed && (
           <div className="space-y-4 pt-4 border-t border-outline-variant/10">
             <h3 className="text-[9px] font-black uppercase tracking-[0.4em] text-on-surface-variant/40">Export Note</h3>
@@ -67,8 +82,8 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
           </div>
         )}
 
-        {/* 6. SYSTEM METRICS */}
-        <div className="pt-24 pb-8 opacity-20 hover:opacity-50 transition-opacity">
+        {/* 7. SYSTEM METRICS */}
+        <div className="pt-24 pb-8 opacity-10 hover:opacity-40 transition-opacity">
           <div className="flex items-center gap-2 mb-3">
              <Terminal size={10} className="text-on-surface-variant" />
              <span className="text-[8px] font-mono font-black uppercase tracking-[0.3em]">Hardware Signal</span>
@@ -87,7 +102,7 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
             </div>
           ) : (
             <div className="text-[8px] font-mono italic opacity-40 uppercase tracking-widest">
-              Standard Processing Node
+              Processing Node Active
             </div>
           )}
         </div>

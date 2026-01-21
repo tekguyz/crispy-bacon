@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Paperclip, Link as LinkIcon, FileText, Sparkles, Globe, ExternalLink } from 'lucide-react';
 import { ContextAttachment } from '../../../types';
@@ -8,13 +9,16 @@ interface ContextGroundingProps {
 }
 
 export const ContextGrounding: React.FC<ContextGroundingProps> = ({ attachments = [], sourceUrl }) => {
-  if (attachments.length === 0 && !sourceUrl) return null;
+  const hasAttachments = attachments.length > 0;
+  const hasUrl = !!sourceUrl;
+
+  if (!hasAttachments && !hasUrl) return null;
 
   return (
-    <section className="space-y-4">
-      <div className="flex items-center gap-2">
-         <div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
-         <h3 className="text-[9px] font-black uppercase tracking-[0.4em] text-on-surface-variant/60">Sources</h3>
+    <section className="space-y-4 pt-4 border-t border-outline-variant/10">
+      <div className="flex items-center gap-2 px-1">
+         <Paperclip size={10} className="text-on-surface-variant/40" strokeWidth={3} />
+         <h3 className="text-[9px] font-black uppercase tracking-[0.4em] text-on-surface-variant/60">Provenance</h3>
       </div>
 
       <div className="space-y-2">

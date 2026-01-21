@@ -1,8 +1,10 @@
+
 import React from 'react';
-import { Star, Share2, Archive } from 'lucide-react';
+import { Star, Share2, Archive, Pin, PinOff } from 'lucide-react';
 import { useAppStore } from '../../../store/useAppStore';
 import { triggerHaptic } from '../../../services/hapticService';
 import { InsightContent } from '../../../types';
+import { Tooltip } from '../../ui/Tooltip';
 
 interface QuickActionsProps {
   insight: InsightContent;
@@ -11,44 +13,61 @@ interface QuickActionsProps {
 export const QuickActions: React.FC<QuickActionsProps> = ({ insight }) => {
   const { toggleFavorite, toggleArchive, setShowShareModal } = useAppStore();
 
-  const ActionBtn = ({ onClick, active, icon: Icon, label, activeColor = 'text-primary' }: any) => (
-    <button 
-      onClick={onClick}
-      className={`
-        flex-1 flex flex-col items-center justify-center gap-1.5 py-3.5 rounded-2xl border transition-all active:scale-95 group
-        ${active 
-          ? `bg-surface border-primary/40 ${activeColor} shadow-[4px_4px_0px_0px_rgba(0,0,0,0.05)]` 
-          : 'bg-surface-container-low border-outline-variant/10 text-on-surface-variant hover:border-primary/20 hover:text-on-surface'}
-      `}
-    >
-      <Icon size={18} fill={active ? "currentColor" : "none"} strokeWidth={active ? 3 : 2} className={active ? 'animate-spring-scale' : 'opacity-40 group-hover:opacity-100'} />
-      <span className="text-[9px] font-black uppercase tracking-widest">{label}</span>
-    </button>
-  );
+  const handlePin = () => {
+    triggerHaptic('light');
+    toggleFavorite(insight.id);
+  };
+
+  const handleArchive = () => {
+    triggerHaptic('medium');
+    toggleArchive(insight.id);
+  };
+
+  const handleShare = () => {
+    triggerHaptic('light');
+    setShowShareModal(true);
+  };
 
   return (
-    <div className="flex gap-2">
-      <ActionBtn 
-        onClick={() => { triggerHaptic('light'); toggleFavorite(insight.id); }}
-        active={insight.is_favorite}
-        icon={Star}
-        label={insight.is_favorite ? "Pinned" : "Pin"}
-      />
-      
-      <ActionBtn 
-        onClick={() => { triggerHaptic('light'); setShowShareModal(true); }}
-        active={false}
-        icon={Share2}
-        label="Share"
-      />
+    <div className="flex items-center justify-between p-1.5 bg-surface-container-low border border-outline-variant/10 rounded-2xl shadow-sm">
+      <div className="flex gap-1">
+        <Tooltip content={insight.is_favorite ? "Unpin Node" : "Pin Node"}>
+            <button 
+              onClick={handlePin}
+              className={`
+                w-10 h-10 flex items-center justify-center rounded-xl transition-all active:scale-90
+                ${insight.is_favorite 
+                  ? 'bg-primary text-on-primary shadow-lg ring-4 ring-primary/10' 
+                  : 'text-on-surface-variant/40 hover:text-primary hover:bg-primary/5'}
+              `}
+            >
+               {insight.is_favorite ? <Star size={18} fill="currentColor" strokeWidth={0} /> : <Star size={18} strokeWidth={2.5} />}
+            </button>
+        </Tooltip>
 
-      <ActionBtn 
-        onClick={() => { triggerHaptic('medium'); toggleArchive(insight.id); }}
-        active={insight.is_archived}
-        icon={Archive}
-        label={insight.is_archived ? "Archived" : "Archive"}
-        activeColor="text-on-surface"
-      />
+        <Tooltip content={insight.is_archived ? "Restore to History" : "Move to Archive"}>
+            <button 
+              onClick={handleArchive}
+              className={`
+                w-10 h-10 flex items-center justify-center rounded-xl transition-all active:scale-90
+                ${insight.is_archived 
+                  ? 'bg-on-surface text-surface shadow-lg' 
+                  : 'text-on-surface-variant/40 hover:text-on-surface hover:bg-on-surface/5'}
+              `}
+            >
+               <Archive size={18} strokeWidth={2.5} />
+            </button>
+        </Tooltip>
+      </div>
+
+      <Tooltip content="External Link">
+        <button 
+          onClick={handleShare}
+          className="w-10 h-10 flex items-center justify-center rounded-xl text-on-surface-variant/40 hover:text-primary hover:bg-primary/5 transition-all active:scale-90"
+        >
+          <Share2 size={18} strokeWidth={2.5} />
+        </button>
+      </Tooltip>
     </div>
   );
 };
