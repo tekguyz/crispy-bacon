@@ -9,7 +9,11 @@ const analysisSchema = {
     title: { type: Type.STRING },
     summary: { type: Type.STRING },
     highlights: { type: Type.ARRAY, items: { type: Type.STRING } },
-    topics: { type: Type.ARRAY, items: { type: Type.STRING } },
+    topics: { 
+      type: Type.ARRAY, 
+      items: { type: Type.STRING },
+      description: "Priority taxonomy: Project-specific entities only."
+    },
     entities: { type: Type.ARRAY, items: { type: Type.STRING } },
     action_items: { type: Type.ARRAY, items: { type: Type.STRING } },
     sentiment: { type: Type.STRING, enum: ["POSITIVE", "NEUTRAL", "NEGATIVE", "COMPLEX"] },
@@ -49,15 +53,10 @@ export const analyzeContent = async (
       
       OUTPUT PROTOCOL - DEEP DISTILL (PRO):
       1. HARD WORD LIMIT: The 'summary' MUST NOT EXCEED 300 WORDS.
-      2. NO BLOBS: Banish long paragraphs. Use headers and short clusters.
-      3. SUMMARY FORMAT: 
-         - Start with **BLUF (Bottom Line Up Front)**: 1 bold sentence summarizing the outcome.
-         - Section: ### THE FRICTION (Identify specific blockers or risks).
-         - Section: ### THE MOMENTUM (Identify wins, progress, or alignment).
-         - Section: ### STRATEGIC OUTLOOK (Next 30-90 days forecast).
-      4. HIGHLIGHTS: Exhaustive, fact-checked list. Use 1 sentence per point.
-      5. STYLE: Mechanical, rigorous, clinical. 
-      6. CONSTRAINT: No paragraph longer than 3 sentences. Use sub-bullets for complexity.
+      2. SUMMARY FORMAT: Use BLUF (Bottom Line Up Front) followed by ### THE FRICTION, ### THE MOMENTUM, and ### STRATEGIC OUTLOOK.
+      3. TAXONOMY: Provide EXACTLY 5 PROJECT-SPECIFIC TOPICS. 
+      4. NEGATIVE CONSTRAINT: Do NOT use generic tags like 'meeting', 'discussion', 'notes', or 'summary'. Focus on the unique subjects mentioned (e.g., 'Q3 Budget', 'User Churn', 'API Latency').
+      5. HIGHLIGHTS: Max 10 items.
     `;
   } else {
     instructions = `
@@ -67,9 +66,10 @@ export const analyzeContent = async (
       FOCUS: ${template}.
       
       OUTPUT PROTOCOL - RAPID MODE (STANDARD):
-      1. SUMMARY: Skeletal overview only. Max 150 words.
-      2. HIGHLIGHTS: Top 3-5 critical decisions only.
-      3. STYLE: Extreme brevity. Direct assertion.
+      1. SUMMARY: Max 150 words. Skeletal overview.
+      2. TAXONOMY: Provide EXACTLY 3 TOPICS. Use only the most critical project identifiers.
+      3. NEGATIVE CONSTRAINT: No generic tags.
+      4. HIGHLIGHTS: Max 5 items.
     `;
   }
 
@@ -120,7 +120,7 @@ export const analyzeContent = async (
     title: result.title || "Untitled Recap",
     summary: result.summary || "",
     highlights: result.highlights || [],
-    topics: result.topics || [],
+    topics: (result.topics || []).slice(0, isDeep ? 5 : 3),
     entities: result.entities || [],
     action_items: result.action_items || [],
     sentiment: (result.sentiment as Sentiment) || Sentiment.NEUTRAL,

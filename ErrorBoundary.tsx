@@ -1,23 +1,23 @@
-
-import React, { ErrorInfo, ReactNode } from 'react';
+import React from 'react';
 import { AlertTriangle, RotateCw } from 'lucide-react'; 
 
 interface ErrorBoundaryProps {
-  children?: ReactNode;
+  children?: React.ReactNode;
 }
 
 interface ErrorBoundaryState {
   hasError: boolean;
   error: Error | null;
-  errorInfo: ErrorInfo | null;
+  errorInfo: React.ErrorInfo | null;
 }
 
 /**
  * ErrorBoundary component to catch rendering errors in the component tree.
  */
+// Fix: Use React.Component directly from the React namespace to ensure inheritance is correctly recognized by the TypeScript compiler.
 export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
   // Initialize state with proper types
-  public override state: ErrorBoundaryState = {
+  public state: ErrorBoundaryState = {
     hasError: false,
     error: null,
     errorInfo: null
@@ -28,14 +28,13 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
     return { hasError: true, error, errorInfo: null };
   }
 
-  // Use override to ensure we are correctly extending the lifecycle method
-  public override componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+  // Fix: setState is now correctly recognized because the base class is properly resolved using React.Component.
+  public componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     console.error("Uncaught error:", error, errorInfo);
-    // Explicitly calling setState from the base React.Component class
     this.setState({ errorInfo });
   }
 
-  public override render(): ReactNode {
+  public render(): React.ReactNode {
     const { hasError, error, errorInfo } = this.state;
     
     if (hasError) {
@@ -63,7 +62,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
       );
     }
 
-    // Accessing children from the inherited props object
+    // Fix: this.props is now correctly recognized as a property inherited from React.Component.
     return this.props.children;
   }
 }

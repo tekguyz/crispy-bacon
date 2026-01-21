@@ -1,3 +1,4 @@
+
 import { supabase } from './supabaseClient';
 import { analyzeContent } from './geminiService';
 import { ContentType, ProcessingStatus, InsightTemplate, InsightContent } from '../types';
@@ -27,6 +28,9 @@ export const archiveRefinement = async (
     safeProcessedText = JSON.stringify(safeProcessedText);
   }
 
+  // Enforce taxonomy density at the persistence layer
+  const cleanTopics = (recap.topics || []).slice(0, 5);
+
   // 2. Update Primary Insight Record
   const updatePayload = cleanPayload({
     title: recap.title,
@@ -49,7 +53,7 @@ export const archiveRefinement = async (
     user_id: userId,
     summary: recap.summary,
     highlights: recap.highlights,
-    topics: recap.topics,
+    topics: cleanTopics,
     entities: recap.entities,
     action_items: recap.action_items,
     sentiment: recap.sentiment,
@@ -61,9 +65,9 @@ export const archiveRefinement = async (
 
   // 4. AUTO-TAGGING PROTOCOL
   // Convert AI generated topics into filterable system tags
-  if (recap.topics && recap.topics.length > 0) {
+  if (cleanTopics.length > 0) {
     try {
-      for (const topicName of recap.topics.slice(0, 5)) {
+      for (const topicName of cleanTopics) {
         const cleanName = topicName.toLowerCase().trim().replace(/#/g, '');
         if (!cleanName) continue;
 

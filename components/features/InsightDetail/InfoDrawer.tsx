@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Loader2, Terminal, ShieldAlert } from 'lucide-react';
 import { InsightContent } from '../../../types';
@@ -6,6 +7,7 @@ import { FolderSelection } from './FolderSelection';
 import { TagSelection } from './TagSelection';
 import { ContextGrounding } from './ContextGrounding';
 import { QuickActions } from './QuickActions';
+import { TaxonomySection } from './TaxonomySection';
 
 interface InfoDrawerProps {
   insight: InsightContent;
@@ -24,6 +26,7 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
   }
 
   const usage = insight.metadata?.usage;
+  const isDeep = !!insight.metadata?.isDeepStrategist;
 
   return (
     <div className="h-full flex flex-col bg-background relative overflow-hidden">
@@ -36,6 +39,15 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
         {/* 2. FILING: Folder and Manual/Auto Tags */}
         <div className="space-y-8 pt-4 border-t border-outline-variant/10">
           <FolderSelection insight={insight} />
+          
+          {/* AI-Generated Taxonomy Layer */}
+          <TaxonomySection 
+            topics={insight.topics} 
+            entities={insight.entities} 
+            isDeepStrategist={isDeep} 
+          />
+          
+          {/* Manual Tag Management */}
           <TagSelection insight={insight} />
         </div>
 
