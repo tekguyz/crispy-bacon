@@ -11,7 +11,6 @@ interface ChatMessageBubbleProps {
 
 export const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({ message }) => {
   const isUser = message.role === 'user';
-  const usage = message.usage;
 
   return (
     <div className={`flex flex-col ${isUser ? 'items-end' : 'items-start'} animate-fade-in space-y-1.5`}>
@@ -27,16 +26,6 @@ export const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({ message })
                 <BaconLogo className="w-3.5 h-3.5" />
                 <span className="text-[7px] font-black uppercase tracking-[0.3em]">Refined Signal</span>
              </div>
-             {usage && (
-                <div className="flex items-center gap-2 group/telemetry">
-                   <div className="flex items-center gap-1.5 px-1.5 py-0.5 bg-surface-container-highest border border-outline-variant/10 rounded-md shadow-inner">
-                      <Cpu size={8} className="text-primary opacity-40" />
-                      <span className="text-[6px] font-mono font-black text-on-surface-variant uppercase tracking-tighter tabular-nums">
-                        {usage.model.replace('gemini-', '').toUpperCase()} :: {usage.totalTokens.toLocaleString()}t
-                      </span>
-                   </div>
-                </div>
-             )}
           </div>
         )}
         <MarkdownRenderer content={message.text} className="chat-markdown" />

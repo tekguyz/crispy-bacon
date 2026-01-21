@@ -53,7 +53,7 @@ export const analyzeContent = async (
       
       OUTPUT PROTOCOL - DEEP DISTILL (PRO):
       1. HARD WORD LIMIT: The 'summary' MUST NOT EXCEED 300 WORDS.
-      2. SUMMARY FORMAT: Use BLUF (Bottom Line Up Front) followed by ### THE FRICTION, ### THE MOMENTUM, and ### STRATEGIC OUTLOOK.
+      2. SUMMARY FORMAT: Start with ### EXECUTIVE OVERVIEW followed by ### THE FRICTION, ### THE MOMENTUM, and ### STRATEGIC OUTLOOK.
       3. TAXONOMY: Provide EXACTLY 5 PROJECT-SPECIFIC TOPICS. 
       4. NEGATIVE CONSTRAINT: Do NOT use generic tags like 'meeting', 'discussion', 'notes', or 'summary'. Focus on the unique subjects mentioned (e.g., 'Q3 Budget', 'User Churn', 'API Latency').
       5. HIGHLIGHTS: Max 10 items.
@@ -66,7 +66,7 @@ export const analyzeContent = async (
       FOCUS: ${template}.
       
       OUTPUT PROTOCOL - RAPID MODE (STANDARD):
-      1. SUMMARY: Max 150 words. Skeletal overview.
+      1. SUMMARY: Max 150 words. Start with ### OVERVIEW.
       2. TAXONOMY: Provide EXACTLY 3 TOPICS. Use only the most critical project identifiers.
       3. NEGATIVE CONSTRAINT: No generic tags.
       4. HIGHLIGHTS: Max 5 items.

@@ -1,4 +1,4 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
+import React, { ErrorInfo, ReactNode } from 'react';
 import { AlertTriangle, RotateCw } from 'lucide-react'; 
 
 interface ErrorBoundaryProps {
@@ -14,8 +14,8 @@ interface ErrorBoundaryState {
 /**
  * ErrorBoundary component to catch rendering errors in the component tree.
  */
-// Use Component explicitly to ensure inherited properties like setState and props are correctly typed.
-export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+// Fix: Extending React.Component explicitly ensures that inherited properties like setState and props are correctly resolved by the TypeScript compiler.
+export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
   // Initialize state with proper types
   public state: ErrorBoundaryState = {
     hasError: false,
@@ -28,10 +28,10 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     return { hasError: true, error, errorInfo: null };
   }
 
-  // Access inherited setState from Component
+  // Access inherited componentDidCatch from React.Component
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error("Uncaught error:", error, errorInfo);
-    // Fix: Accessing setState from the inherited Component class
+    // Fix: Calling setState which is inherited from React.Component
     this.setState({ errorInfo });
   }
 
@@ -63,8 +63,8 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       );
     }
 
-    // Access inherited props from Component
-    // Fix: Accessing props from the inherited Component class
+    // Access inherited props from React.Component
+    // Fix: Returning children from the inherited props object
     return this.props.children;
   }
 }

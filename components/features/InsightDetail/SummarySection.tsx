@@ -27,19 +27,19 @@ const SummarySection: React.FC<SummarySectionProps> = ({ summary, isDeepStrategi
   }
 
   return (
-    <section className="relative group animate-fade-in max-w-3xl">
+    <section className="relative group animate-fade-in w-full">
       <div className="flex items-center gap-4 mb-10">
         <div className={`p-2 rounded-lg shadow-inner border ${isDeepStrategist ? 'bg-amber-500/10 text-amber-600 border-amber-500/20' : 'bg-primary/10 text-primary border-primary/20'}`}>
             {isDeepStrategist ? <Zap size={16} strokeWidth={3} /> : <Quote size={16} strokeWidth={3} />}
         </div>
         <div className="flex flex-col">
             <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-on-surface-variant opacity-40 leading-none">
-              {isDeepStrategist ? 'Deep Strategic Analysis' : 'Executive Recap'}
+              {isDeepStrategist ? 'Strategic Analysis' : 'Executive Recap'}
             </h3>
         </div>
       </div>
 
-      <div className="prose-high-density">
+      <div className="prose-high-density w-full">
         <MarkdownRenderer 
           content={summary} 
           className={`prose-summary font-serif text-on-surface ${isDeepStrategist ? 'is-pro-summary' : ''}`} 
