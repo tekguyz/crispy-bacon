@@ -1,3 +1,4 @@
+
 import React, { ErrorInfo, ReactNode } from 'react';
 import { AlertTriangle, RotateCw } from 'lucide-react'; 
 
@@ -14,10 +15,9 @@ interface ErrorBoundaryState {
 /**
  * ErrorBoundary component to catch rendering errors in the component tree.
  */
-// Fix: Using React.Component explicitly to ensure inherited properties like state, props and setState are correctly recognized by TypeScript
 export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  // Fix: Initializing state as a class property to satisfy property existence checks on the instance
-  public state: ErrorBoundaryState = {
+  // Initialize state with proper types
+  public override state: ErrorBoundaryState = {
     hasError: false,
     error: null,
     errorInfo: null
@@ -28,14 +28,14 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
     return { hasError: true, error, errorInfo: null };
   }
 
-  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+  // Use override to ensure we are correctly extending the lifecycle method
+  public override componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error("Uncaught error:", error, errorInfo);
-    // Fix: setState is a standard method inherited from React.Component
+    // Explicitly calling setState from the base React.Component class
     this.setState({ errorInfo });
   }
 
-  public render(): ReactNode {
-    // Fix: accessing state through this.state which is now correctly recognized as inherited from React.Component
+  public override render(): ReactNode {
     const { hasError, error, errorInfo } = this.state;
     
     if (hasError) {
@@ -63,7 +63,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
       );
     }
 
-    // Fix: children is accessed via this.props which is inherited from React.Component
+    // Accessing children from the inherited props object
     return this.props.children;
   }
 }

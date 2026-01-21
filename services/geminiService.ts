@@ -35,40 +35,41 @@ export const analyzeContent = async (
   
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
-  // LOGIC: Differentiate between "Standard Recap" (Free) and "Deep Distill" (Pro)
-  // Deep Research forces the Pro model and requests significantly higher density output.
   const isDeep = isPro && persona === PersonaStyle.DEEP_RESEARCH;
   const modelName = isDeep ? 'gemini-3-pro-preview' : 'gemini-3-flash-preview';
 
   let instructions = "";
 
   if (isDeep) {
-    // DEEP DISTILL (PRO): High volume, high detail, narrative depth.
     instructions = `
-      ROLE: Principal Strategy Consultant.
-      TASK: Conduct a COMPREHENSIVE DEEP-DIVE analysis of the raw capture.
+      ROLE: Principal Briefing Deck Architect.
+      TASK: Conduct a HIGH-DENSITY STRUCTURAL ANALYSIS. 
       USER_GOAL: ${userNotes || 'Detailed Strategic Analysis'}.
       FOCUS: ${template}.
       
-      STANDARDS - DEEP RESEARCH MODE (PRO):
-      1. SUMMARY: Must be EXTENSIVE, NARRATIVE, and DETAILED. Do not summarize briefly. Explore nuances, underlying friction, and strategic implications. Explain the "Why" and "How" behind the content. (Target: 400+ words if source allows).
-      2. HIGHLIGHTS: Extract an exhaustive list of facts, figures, decisions, and quotes. Capture specific details, not just generalities.
-      3. ACTION ITEMS: Provide a granular, step-by-step execution plan.
-      4. STYLE: Rigorous, analytical, exhaustive.
+      OUTPUT PROTOCOL - DEEP DISTILL (PRO):
+      1. HARD WORD LIMIT: The 'summary' MUST NOT EXCEED 300 WORDS.
+      2. NO BLOBS: Banish long paragraphs. Use headers and short clusters.
+      3. SUMMARY FORMAT: 
+         - Start with **BLUF (Bottom Line Up Front)**: 1 bold sentence summarizing the outcome.
+         - Section: ### THE FRICTION (Identify specific blockers or risks).
+         - Section: ### THE MOMENTUM (Identify wins, progress, or alignment).
+         - Section: ### STRATEGIC OUTLOOK (Next 30-90 days forecast).
+      4. HIGHLIGHTS: Exhaustive, fact-checked list. Use 1 sentence per point.
+      5. STYLE: Mechanical, rigorous, clinical. 
+      6. CONSTRAINT: No paragraph longer than 3 sentences. Use sub-bullets for complexity.
     `;
   } else {
-    // STANDARD RECAP (FREE): Fast, skeletal, punchy.
     instructions = `
       ROLE: Senior Executive Assistant.
-      TASK: Create a RAPID CONCISE RECAP.
+      TASK: Create a RAPID SKELETAL RECAP.
       USER_GOAL: ${userNotes || 'Standard Strategic Recap'}.
       FOCUS: ${template}.
       
-      STANDARDS - RAPID MODE (STANDARD):
-      1. SUMMARY: SKELETAL and CONCISE. High-level overview only. (Target: < 200 words).
-      2. HIGHLIGHTS: Top 3-5 critical points only.
-      3. ACTION ITEMS: High-level checklist.
-      4. STYLE: Brevity, direct assertion, zero fluff. Ban conversational lubricant.
+      OUTPUT PROTOCOL - RAPID MODE (STANDARD):
+      1. SUMMARY: Skeletal overview only. Max 150 words.
+      2. HIGHLIGHTS: Top 3-5 critical decisions only.
+      3. STYLE: Extreme brevity. Direct assertion.
     `;
   }
 
@@ -102,7 +103,6 @@ export const analyzeContent = async (
     discussionPoints = JSON.stringify(discussionPoints);
   }
 
-  // Extract token usage safely from the SDK response
   const usageMetadata = response.usageMetadata;
   const usage = usageMetadata ? {
     inputTokens: usageMetadata.promptTokenCount || 0,
@@ -129,7 +129,8 @@ export const analyzeContent = async (
       isDeepStrategist: isDeep,
       momentumScore: result.momentum_score || 50,
       friction: result.friction || "None",
-      usage
+      usage,
+      velocityScore: result.momentum_score || 50
     },
     processed_text: discussionPoints
   };
