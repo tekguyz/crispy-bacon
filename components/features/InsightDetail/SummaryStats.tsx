@@ -24,7 +24,7 @@ export const SummaryStats: React.FC<SummaryStatsProps> = ({ insight }) => {
   );
 
   return (
-    <div className="flex flex-wrap items-center gap-x-12 gap-y-4 py-6 border-b border-outline-variant/10 mb-12 animate-fade-in">
+    <div className="flex flex-wrap items-center gap-x-12 gap-y-4 py-6 border-b border-outline-variant/10 mb-8 animate-fade-in w-full">
        <StatItem icon={Calendar} value={date} label="Captured" />
        
        <StatItem 

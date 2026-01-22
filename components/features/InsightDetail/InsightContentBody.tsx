@@ -19,11 +19,12 @@ export const InsightContentBody: React.FC<InsightContentBodyProps> = ({
   const isDeep = !!insight.metadata?.isDeepStrategist;
 
   return (
-    <div className="max-w-3xl mx-auto pb-40 px-4 md:px-0">
-      {/* METADATA RIBBON - Anchored higher */}
+    // Expanded max-width from 3xl to 5xl to fill the view
+    <div className="max-w-5xl mx-auto pb-40 px-4 md:px-0">
+      {/* METADATA RIBBON */}
       <SummaryStats insight={insight} />
 
-      <div className="flex flex-col gap-16">
+      <div className="flex flex-col gap-12">
         {/* PRIMARY SIGNAL LAYER */}
         <div className="w-full">
            <SummarySection 
