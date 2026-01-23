@@ -20,7 +20,8 @@ const CaptureLab: React.FC = () => {
   const { 
     currentNote, setCurrentNote, currentIntent, processMeeting, 
     setShowCaptureLab, showCaptureLab, isProcessing, 
-    preferredTemplate, userProfile, openConfirmation, isGuest, signOut
+    preferredTemplate, userProfile, openConfirmation, isGuest, signOut,
+    addToast
   } = useAppStore();
 
   const [includeSystemAudio, setIncludeSystemAudio] = useState(false);
@@ -99,16 +100,21 @@ const CaptureLab: React.FC = () => {
   }, [isRecording]);
 
   const handleClose = useCallback(() => { 
-    if (!isRecording && !isProcessing) {
-      triggerHaptic('light');
-      setIsClosing(true);
-      setTimeout(() => {
-        setShowCaptureLab(false);
-        setIsClosing(false);
-        setLabView('setup');
-      }, 300);
+    // Prevent closing while actively recording audio to avoid data loss without user intent
+    if (isRecording) return;
+
+    if (isProcessing) {
+      addToast("Reasoning in background.", "info");
     }
-  }, [isRecording, isProcessing, setShowCaptureLab]);
+
+    triggerHaptic('light');
+    setIsClosing(true);
+    setTimeout(() => {
+      setShowCaptureLab(false);
+      setIsClosing(false);
+      setLabView('setup');
+    }, 300);
+  }, [isRecording, isProcessing, setShowCaptureLab, addToast]);
 
   const containerRef = useFocusTrap(showCaptureLab, handleClose);
 

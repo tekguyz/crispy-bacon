@@ -24,14 +24,15 @@ const DetailHeader: React.FC<DetailHeaderProps> = ({
   onBack, onToggleDrawer, onStartLive, onUpgrade
 }) => {
   return (
-    <div className="h-14 px-4 md:px-6 border-b border-outline-variant/10 bg-surface-container-low flex items-center justify-between gap-4 shrink-0 shadow-sm z-30">
+    // Increased height from h-14 to h-16 for better vertical stacking
+    <div className="h-16 px-4 md:px-6 border-b border-outline-variant/10 bg-surface-container-low flex items-center justify-between gap-4 shrink-0 shadow-sm z-30">
       <div className="flex items-center gap-3 min-w-0 flex-1">
         <button onClick={() => { triggerHaptic('light'); onBack(); }} className="w-9 h-9 flex items-center justify-center bg-background text-on-surface-variant hover:text-primary rounded-xl transition-all active:scale-90 shrink-0 border border-outline-variant/10 shadow-inner">
             <X size={16} strokeWidth={3} />
         </button>
         
-        <div className="min-w-0 flex-1">
-           <div className="flex items-center gap-2 mb-0.5 h-3">
+        <div className="min-w-0 flex-1 flex flex-col justify-center">
+           <div className="flex items-center gap-2 mb-1.5 h-3.5">
              <span className={`text-[7px] font-mono font-extrabold px-1.5 py-0.5 rounded uppercase tracking-widest shrink-0 ${sentiment === Sentiment.POSITIVE ? 'bg-success/10 text-success border border-success/10' : 'bg-surface-container-highest text-on-surface-variant opacity-40 border border-outline-variant/10'}`}>
                 {sentiment}
              </span>

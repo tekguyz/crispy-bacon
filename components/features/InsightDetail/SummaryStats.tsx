@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Activity, Clock, Calendar, Zap } from 'lucide-react';
 import { InsightContent, ProcessingStatus } from '../../../types';
@@ -23,8 +24,8 @@ export const SummaryStats: React.FC<SummaryStatsProps> = ({ insight }) => {
   );
 
   return (
-    // Reduced padding-top and mb to compress the vertical gap
-    <div className="flex flex-wrap items-center gap-x-12 gap-y-4 pt-2 pb-6 border-b border-outline-variant/10 mb-6 animate-fade-in w-full">
+    // Increased pt-2 to pt-8 for better separation from header
+    <div className="flex flex-wrap items-center gap-x-12 gap-y-4 pt-8 pb-6 border-b border-outline-variant/10 mb-6 animate-fade-in w-full">
        <StatItem icon={Calendar} value={date} label="Captured" />
        
        <StatItem 
