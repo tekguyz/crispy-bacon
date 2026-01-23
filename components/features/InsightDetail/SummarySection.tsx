@@ -53,6 +53,11 @@ const SummarySection: React.FC<SummarySectionProps> = ({ summary, isDeepStrategi
           margin-bottom: 1.5rem;
           opacity: 0.6;
         }
+        /* Fix for top spacing: Remove margin from first header */
+        .prose-summary > div > h3:first-child,
+        .prose-summary h3:first-of-type {
+          margin-top: 0 !important;
+        }
         .prose-summary strong {
           font-weight: 800;
           color: var(--md-sys-color-on-surface);

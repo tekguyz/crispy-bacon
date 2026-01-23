@@ -19,7 +19,7 @@ const TakeawayGrid: React.FC<TakeawayGridProps> = ({ highlights = [] }) => {
         <h4 className="text-[10px] font-black uppercase tracking-[0.5em] text-on-surface-variant opacity-30">Knowledge Points</h4>
       </div>
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-3">
         {highlights.map((h, i) => (
           <div key={i} className="flex items-start gap-4 md:gap-6 group">
             <div className="flex flex-col items-center gap-2 shrink-0 pt-1">
