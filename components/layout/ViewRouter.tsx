@@ -13,7 +13,7 @@ import InsightRow from '../features/InsightRow';
 import { SelectionActionBar } from '../features/feed/SelectionActionBar';
 import { ActiveFiltersBar } from '../features/feed/ActiveFiltersBar';
 
-const SettingsLazy = lazy(() => import('../features/SettingsScreen'));
+const SettingsLazy = lazy(() => import('../features/settings/SettingsScreen'));
 const HelpLazy = lazy(() => import('../features/HelpScreen'));
 
 interface ViewRouterProps {
