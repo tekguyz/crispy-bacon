@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useEffect } from 'react';
 import { X, MessageSquare, Info, CloudUpload } from 'lucide-react';
 import { useAppStore } from '../../store/useAppStore';
@@ -92,8 +91,8 @@ const InsightDetailView: React.FC = () => {
 
       <div className="flex-1 flex overflow-hidden relative">
         <div className={`flex-1 overflow-y-auto custom-scrollbar transition-all duration-300 ${activeDrawer && !isMobile ? 'pr-[400px]' : ''}`}>
-            {/* Reduced vertical padding here from py-16/py-10 to pt-8/pt-6 to remove gap */}
-            <div className={`pb-40 ${isSideSheet ? 'px-6 pt-6' : 'container-fluid pt-8'}`}>
+            {/* Zeroed out top padding to eliminate space between header and stats */}
+            <div className={`pb-40 ${isSideSheet ? 'px-6 pt-0' : 'container-fluid pt-0'}`}>
                 {isLocal ? (
                   <div className="flex flex-col h-full items-center justify-center p-8 text-center space-y-6 max-w-xl mx-auto">
                     <CloudUpload size={28} strokeWidth={2.5} className="text-primary animate-pulse" />

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Quote, Sparkles, RefreshCw, Zap } from 'lucide-react';
 import MarkdownRenderer from '../../ui/MarkdownRenderer';
@@ -39,7 +38,7 @@ const SummarySection: React.FC<SummarySectionProps> = ({ summary, isDeepStrategi
         </div>
       </div>
 
-      <div className="prose-high-density w-full max-w-4xl">
+      <div className="prose-high-density w-full">
         <MarkdownRenderer 
           content={summary} 
           className={`prose-summary font-serif text-on-surface ${isDeepStrategist ? 'is-pro-summary' : ''}`} 

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp, ListTodo, CheckCircle2 } from 'lucide-react';
 import TaskItem from './TaskItem';
@@ -33,7 +32,7 @@ const TaskList: React.FC<TaskListProps> = ({ insightId, activeTasks, completedTa
         </span>
       </div>
 
-      <div className="bg-surface-container-low border-2 border-on-surface/5 rounded-[2.5rem] p-6 md:p-10 shadow-m3-1 relative overflow-hidden">
+      <div className="bg-surface-container-low border-2 border-on-surface/5 rounded-[2.5rem] py-6 md:py-10 shadow-m3-1 relative overflow-hidden">
         <div className="absolute inset-0 ledger-grid opacity-[0.03] pointer-events-none" />
         
         {activeTasks.length > 0 ? (
@@ -49,7 +48,7 @@ const TaskList: React.FC<TaskListProps> = ({ insightId, activeTasks, completedTa
             ))}
           </div>
         ) : (
-          <div className="text-center py-16 bg-success/5 rounded-[2rem] border-2 border-dashed border-success/20 relative z-10">
+          <div className="text-center py-16 bg-success/5 rounded-[2rem] border-2 border-dashed border-success/20 relative z-10 mx-6">
             <CheckCircle2 size={40} className="mx-auto mb-4 text-success opacity-40 animate-pulse" />
             <h5 className="text-lg font-black uppercase tracking-tight text-on-surface mb-1">Queue Empty.</h5>
             <p className="text-[10px] font-bold text-success uppercase tracking-widest">All strategic decisions resolved</p>
