@@ -16,7 +16,7 @@ export default defineConfig({
     },
   },
   define: {
-    'process.env.VITE_APP_VERSION': JSON.stringify('2.5.0'),
+    'process.env.VITE_APP_VERSION': JSON.stringify('2.5.1'),
     'process.env.NODE_ENV': JSON.stringify(env.NODE_ENV || 'development'),
     'process.env.API_KEY': JSON.stringify(env.API_KEY),
   },
@@ -32,12 +32,18 @@ export default defineConfig({
       output: {
         manualChunks: (id) => {
           if (id.includes('node_modules')) {
-            // Group React core together
-            if (id.includes('react') || id.includes('scheduler') || id.includes('prop-types')) {
-              return 'vendor-react';
+            // Group Core UI & Framework logic together to prevent circular loops
+            if (
+              id.includes('react') || 
+              id.includes('scheduler') || 
+              id.includes('prop-types') ||
+              id.includes('@tanstack/react-query') ||
+              id.includes('lucide-react')
+            ) {
+              return 'vendor-framework';
             }
             
-            // Group Markdown ecosystem - include all known related packages to avoid circular chunks
+            // Group Markdown & Content Processing (Heavy but self-contained)
             if (
               id.includes('react-markdown') || 
               id.includes('remark') || 
@@ -46,41 +52,26 @@ export default defineConfig({
               id.includes('unist-util') || 
               id.includes('mdast-util') || 
               id.includes('hast-util') || 
-              id.includes('bail') ||
-              id.includes('is-plain-obj') ||
-              id.includes('trough') ||
               id.includes('unified') ||
-              id.includes('decode-named-character-reference') ||
-              id.includes('character-entities') ||
-              id.includes('ccount') ||
-              id.includes('property-information') ||
-              id.includes('space-separated-tokens') ||
-              id.includes('comma-separated-tokens')
+              id.includes('mammoth')
             ) {
-              return 'vendor-markdown';
+              return 'vendor-content';
             }
             
-            // AI SDK
+            // AI Engine
             if (id.includes('@google/genai')) {
               return 'vendor-genai';
             }
             
-            // Database
-            if (id.includes('@supabase')) {
-              return 'vendor-supabase';
+            // Database & Backend Bridge
+            if (id.includes('@supabase') || id.includes('stripe')) {
+              return 'vendor-infra';
             }
             
-            // UI Utilities
-            if (id.includes('lucide-react')) {
-              return 'vendor-icons';
-            }
-
-            if (id.includes('@tanstack/react-query')) {
-              return 'vendor-query';
-            }
-            
-            // Group everything else as a generic vendor
-            return 'vendor-others';
+            // Note: We avoid a catch-all 'vendor-others' chunk here.
+            // Rollup is more efficient at resolving circularities when 
+            // miscellaneous small packages are allowed to stay in the entry 
+            // or be grouped dynamically based on their usage.
           }
         }
       }
