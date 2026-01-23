@@ -1,4 +1,3 @@
-
 import React, { memo } from 'react';
 import { InsightContent, ContentType, ProcessingStatus, AppView } from '../../types';
 import { Star, Archive, Radio, AlertCircle, Video, Globe, FileText, Lock, ShieldAlert, Trash2, Check, RotateCcw } from 'lucide-react';
@@ -129,7 +128,7 @@ const InsightRow: React.FC<InsightRowProps> = ({ insight }) => {
                 <ShieldAlert size={10} className="icon-tactical" /> Note Locked
              </span>
            ) : (
-             <p className="text-sm font-normal text-on-surface-variant opacity-60 truncate hidden sm:block leading-normal">
+             <p className="text-sm font-normal text-on-surface-variant/80 truncate hidden sm:block leading-normal">
                 {insight.summary || "No summary available."}
              </p>
            )}
@@ -137,7 +136,7 @@ const InsightRow: React.FC<InsightRowProps> = ({ insight }) => {
       </div>
 
       <div className="flex items-center gap-2 md:gap-6 shrink-0">
-        <div className="text-[9px] md:text-[10px] font-mono font-black text-on-surface-variant/40 uppercase tracking-tighter tabular-nums whitespace-nowrap">
+        <div className="text-[9px] md:text-[10px] font-mono font-black text-on-surface-variant/60 uppercase tracking-tighter tabular-nums whitespace-nowrap">
            {new Date(insight.created_at).toLocaleTimeString([], { hour: '2-digit', minute:'2-digit' })}
         </div>
 

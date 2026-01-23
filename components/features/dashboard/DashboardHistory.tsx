@@ -72,8 +72,8 @@ export const DashboardHistory: React.FC<DashboardHistoryProps> = ({ insights, is
       <div className="space-y-2">
         {grouped.today.length > 0 && (
           <div className="mb-8">
-            <div className="flex items-center gap-3 mb-4 opacity-40 px-2">
-              <span className="text-[10px] font-black uppercase tracking-[0.4em]">Today</span>
+            <div className="flex items-center gap-3 mb-4 px-2">
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-on-surface-variant/70">Today</span>
               <div className="h-px flex-1 bg-outline-variant/10" />
             </div>
             {renderGroup(grouped.today)}

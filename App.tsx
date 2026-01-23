@@ -11,13 +11,15 @@ import Sidebar from './components/layout/Sidebar';
 import Header from './components/layout/Header';
 import ViewRouter from './components/layout/ViewRouter';
 import SkeletonDetail from './components/features/InsightDetail/SkeletonDetail';
-import CaptureLab from './components/features/CaptureLab'; 
-import InputArea from './components/features/InputArea';
 import LoginScreen from './components/features/LoginScreen';
-import { FloatingCommandCenter } from './components/features/FloatingCommandCenter';
 import { GlobalModalManager } from './components/modals/GlobalModalManager';
 import { ToastContainer } from './components/ui/Toast';
 import { DataSynchronizer } from './components/DataSynchronizer';
+
+// Lazy load heavy feature components
+const CaptureLab = lazy(() => import('./components/features/CaptureLab'));
+const InputArea = lazy(() => import('./components/features/InputArea'));
+const FloatingCommandCenter = lazy(() => import('./components/features/FloatingCommandCenter').then(module => ({ default: module.FloatingCommandCenter })));
 
 const InsightDetailView = lazy(() => import('./components/features/InsightDetailView'));
 const PublicShareView = lazy(() => import('./components/features/PublicShareView'));
@@ -126,9 +128,11 @@ function App() {
           </Suspense>
         </div>
         
-        <FloatingCommandCenter isSidebarOpen={isSidebarExpanded || isMobileSidebarOpen} />
-        <CaptureLab />
-        <InputArea />
+        <Suspense fallback={null}>
+          <FloatingCommandCenter isSidebarOpen={isSidebarExpanded || isMobileSidebarOpen} />
+          <CaptureLab />
+          <InputArea />
+        </Suspense>
       </main>
     </div>
   );

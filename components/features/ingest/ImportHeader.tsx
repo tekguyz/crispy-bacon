@@ -12,7 +12,11 @@ export const ImportHeader: React.FC<{ onClose: () => void }> = ({ onClose }) => 
           <span className="text-[7px] font-mono font-black uppercase tracking-widest text-on-surface-variant opacity-30">Add content to summarize</span>
         </div>
       </div>
-      <button onClick={onClose} className="w-8 h-8 flex items-center justify-center hover:bg-surface-container-high rounded-xl transition-colors text-on-surface-variant hover:text-on-surface shrink-0 border border-outline-variant/10">
+      <button 
+        onClick={onClose} 
+        className="w-8 h-8 flex items-center justify-center hover:bg-surface-container-high rounded-xl transition-colors text-on-surface-variant hover:text-on-surface shrink-0 border border-outline-variant/10"
+        aria-label="Close Import Modal"
+      >
         <X size={16} />
       </button>
   </div>
