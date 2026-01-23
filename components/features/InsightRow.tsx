@@ -92,10 +92,11 @@ const InsightRow: React.FC<InsightRowProps> = ({ insight }) => {
     restoreInsight(insight.id);
   };
 
-  // Granola Cleanup: Strip literal markdown symbols from preview
+  // Granola Optimization: Remove header lines entirely for the row preview
   const summaryPreview = (insight.summary || "No summary available.")
-    .replace(/^#+\s+/gm, '') // Remove headers
-    .replace(/\*\*/g, '')    // Remove bold
+    .replace(/^#+.*$/gm, '') // Remove entire lines starting with headers
+    .replace(/\*\*/g, '')    // Remove bold symbols
+    .replace(/\n+/g, ' ')    // Flatten into single line
     .trim();
 
   return (

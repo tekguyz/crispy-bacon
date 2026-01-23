@@ -98,10 +98,11 @@ const InsightCard: React.FC<InsightCardProps> = ({ insight }) => {
     ? insight.title 
     : (insight.type === ContentType.MEETING ? "Voice Note" : "Web Research");
 
-  // Granola Cleanup: Strip literal markdown symbols from preview
+  // Granola Optimization: Remove header lines entirely for the card preview
   const summaryPreview = (insight.summary || insight.error_message || "No summary available.")
-    .replace(/^#+\s+/gm, '') // Remove headers
-    .replace(/\*\*/g, '')    // Remove bold
+    .replace(/^#+.*$/gm, '') // Remove entire lines starting with headers
+    .replace(/\*\*/g, '')    // Remove bold symbols
+    .replace(/\n+/g, ' ')    // Flatten into single line for clamping
     .trim();
 
   return (
