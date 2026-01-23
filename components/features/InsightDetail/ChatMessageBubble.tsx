@@ -1,9 +1,8 @@
 
 import React from 'react';
-import { Search, Zap, Cpu } from 'lucide-react';
+import { Search, Bot } from 'lucide-react';
 import { ChatMessage } from '../../../types';
 import MarkdownRenderer from '../../ui/MarkdownRenderer';
-import { BaconLogo } from '../../ui/Logo';
 
 interface ChatMessageBubbleProps {
   message: ChatMessage;
@@ -13,35 +12,35 @@ export const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({ message })
   const isUser = message.role === 'user';
 
   return (
-    <div className={`flex flex-col ${isUser ? 'items-end' : 'items-start'} animate-fade-in space-y-1.5`}>
+    <div className={`flex flex-col ${isUser ? 'items-end' : 'items-start'} animate-fade-in gap-1`}>
+      {!isUser && (
+         <div className="flex items-center gap-2 px-1 mb-0.5 opacity-50">
+            <Bot size={10} className="text-primary" />
+            <span className="text-[8px] font-black uppercase tracking-[0.2em] text-on-surface-variant">Strategist</span>
+         </div>
+      )}
+
       <div className={`
-        max-w-[92%] p-3 md:p-4 text-[0.9rem] leading-relaxed relative border
+        max-w-[90%] md:max-w-[85%] px-4 py-3 text-[13px] leading-relaxed relative border shadow-sm
         ${isUser 
-          ? 'bg-on-surface text-surface border-on-surface rounded-2xl rounded-tr-none shadow-lg' 
-          : 'bg-card text-on-surface border-outline-variant/20 rounded-2xl rounded-tl-none shadow-sm'}
+          ? 'bg-primary text-on-primary border-primary/20 rounded-[1.25rem] rounded-tr-sm' 
+          : 'bg-surface-container-low text-on-surface border-outline-variant/10 rounded-[1.25rem] rounded-tl-sm'}
       `}>
-        {!isUser && (
-          <div className="flex items-center justify-between mb-2 gap-4">
-             <div className="flex items-center gap-2 opacity-40">
-                <BaconLogo className="w-3.5 h-3.5" />
-                <span className="text-[7px] font-black uppercase tracking-[0.3em]">Refined Signal</span>
-             </div>
-          </div>
-        )}
-        <MarkdownRenderer content={message.text} className="chat-markdown" />
+        <MarkdownRenderer content={message.text} className={isUser ? "chat-markdown-user" : "chat-markdown"} />
       </div>
 
       {message.sources && message.sources.length > 0 && (
-        <div className="flex flex-wrap gap-1 px-1">
+        <div className="flex flex-wrap gap-1.5 mt-1.5 px-1 max-w-[90%]">
           {message.sources.map((src, idx) => (
             <a 
               key={idx} 
               href={src.uri} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 px-2 py-1 bg-surface-container-high text-[7px] font-black uppercase tracking-widest text-primary border border-primary/20 rounded-md"
+              className="flex items-center gap-1.5 px-2.5 py-1 bg-surface-container-high hover:bg-surface-container-highest text-[8px] font-black uppercase tracking-widest text-primary border border-outline-variant/20 rounded-lg transition-colors truncate max-w-full"
             >
-              <Search size={8} /> {src.title || 'Source'}
+              <Search size={8} strokeWidth={3} /> 
+              <span className="truncate">{src.title || 'Source Reference'}</span>
             </a>
           ))}
         </div>
