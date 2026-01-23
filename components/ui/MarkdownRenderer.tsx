@@ -1,4 +1,3 @@
-
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 
@@ -21,6 +20,12 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, className 
         components={{
           h1: (props: any) => <h1 className={`${isChat ? 'text-sm font-extrabold mb-2' : isSummary ? 'text-5xl md:text-7xl font-serif mb-10' : 'text-2xl font-extrabold mb-4'} uppercase tracking-tighter leading-none`} {...props} />,
           h2: (props: any) => <h2 className={`${isChat ? 'text-xs font-extrabold mb-1' : 'text-xl font-extrabold mb-3'} uppercase`} {...props} />,
+          h3: (props: any) => {
+            const h3Class = isSummary 
+              ? 'font-mono text-[10px] md:text-[11px] font-black uppercase tracking-[0.4em] text-primary mt-12 mb-6 opacity-80 block' 
+              : 'text-lg font-extrabold mb-2 uppercase';
+            return <h3 className={h3Class} {...props} />;
+          },
           p: (props: any) => {
             const pClass = isChat 
               ? 'text-sm mb-3 leading-relaxed' 

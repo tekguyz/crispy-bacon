@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Quote, Sparkles, RefreshCw, Zap } from 'lucide-react';
 import MarkdownRenderer from '../../ui/MarkdownRenderer';
@@ -36,36 +35,21 @@ const SummarySection: React.FC<SummarySectionProps> = ({ summary, isDeepStrategi
       </div>
 
       <style>{`
+        /* Structural Rhythm for High-Density Prose */
         .prose-summary p {
-          font-size: 1.25rem;
-          line-height: 1.8;
           margin-bottom: 2rem;
           color: var(--md-sys-color-on-surface);
         }
-        .prose-high-density h3 {
-          font-family: 'JetBrains Mono', monospace;
-          font-size: 0.7rem;
-          font-weight: 900;
-          text-transform: uppercase;
-          letter-spacing: 0.3em;
-          color: var(--md-sys-color-primary);
-          margin-top: 3.5rem;
-          margin-bottom: 1.5rem;
-          opacity: 0.6;
-        }
-        /* Fix for top spacing: Remove margin from first header */
+        
+        /* Remove margin from the very first header to keep layout tight */
         .prose-summary > div > h3:first-child,
         .prose-summary h3:first-of-type {
           margin-top: 0 !important;
         }
+
         .prose-summary strong {
           font-weight: 800;
           color: var(--md-sys-color-on-surface);
-        }
-        @media (min-width: 768px) {
-          .prose-summary p {
-            font-size: 1.5rem;
-          }
         }
       `}</style>
     </section>

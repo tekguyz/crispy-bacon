@@ -92,6 +92,12 @@ const InsightRow: React.FC<InsightRowProps> = ({ insight }) => {
     restoreInsight(insight.id);
   };
 
+  // Granola Cleanup: Strip literal markdown symbols from preview
+  const summaryPreview = (insight.summary || "No summary available.")
+    .replace(/^#+\s+/gm, '') // Remove headers
+    .replace(/\*\*/g, '')    // Remove bold
+    .trim();
+
   return (
     <div 
       onClick={handleClick}
@@ -129,7 +135,7 @@ const InsightRow: React.FC<InsightRowProps> = ({ insight }) => {
              </span>
            ) : (
              <p className="text-sm font-normal text-on-surface-variant/80 truncate hidden sm:block leading-normal">
-                {insight.summary || "No summary available."}
+                {summaryPreview}
              </p>
            )}
         </div>

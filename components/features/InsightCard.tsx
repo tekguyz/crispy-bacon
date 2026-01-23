@@ -1,4 +1,3 @@
-
 import React, { memo } from 'react';
 import { InsightContent, Sentiment, ContentType, ProcessingStatus, AppView } from '../../types';
 import { Calendar, Clock, Trash2, Star, Loader2, ArrowRight, Mic, Globe, RotateCcw } from 'lucide-react';
@@ -99,6 +98,12 @@ const InsightCard: React.FC<InsightCardProps> = ({ insight }) => {
     ? insight.title 
     : (insight.type === ContentType.MEETING ? "Voice Note" : "Web Research");
 
+  // Granola Cleanup: Strip literal markdown symbols from preview
+  const summaryPreview = (insight.summary || insight.error_message || "No summary available.")
+    .replace(/^#+\s+/gm, '') // Remove headers
+    .replace(/\*\*/g, '')    // Remove bold
+    .trim();
+
   return (
     <article 
       onClick={handleAction}
@@ -142,7 +147,7 @@ const InsightCard: React.FC<InsightCardProps> = ({ insight }) => {
       </header>
 
       <div className="text-on-surface-variant mb-6 leading-relaxed line-clamp-3 text-sm font-medium opacity-80 relative z-10"> 
-        {(isActuallyProcessing && !hasContent) ? "Recovering skeletal signal from noise..." : (insight.summary || insight.error_message || "No summary available.")}
+        {(isActuallyProcessing && !hasContent) ? "Recovering skeletal signal from noise..." : summaryPreview}
       </div>
 
       <footer className="mt-auto pt-4 flex justify-between items-center border-t border-outline-variant relative z-10"> 
