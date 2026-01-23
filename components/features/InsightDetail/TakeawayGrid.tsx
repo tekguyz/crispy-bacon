@@ -23,7 +23,7 @@ const TakeawayGrid: React.FC<TakeawayGridProps> = ({ highlights = [] }) => {
         {highlights.map((h, i) => (
           <div key={i} className="flex items-start gap-4 md:gap-6 group">
             <div className="flex flex-col items-center gap-2 shrink-0 pt-1">
-                <div className="w-7 h-7 rounded-lg bg-surface-container-low border border-outline-variant/10 flex items-center justify-center transition-all group-hover:bg-primary group-hover:text-on-primary shadow-sm group-hover:shadow-lg group-hover:scale-105">
+                <div className="w-7 h-7 rounded-lg bg-surface-container-low border border-outline-variant/10 flex items-center justify-center transition-all group-hover:bg-primary group-hover:text-on-primary shadow-sm group-hover:scale-105">
                    <span className="text-[9px] font-mono font-black">{i + 1}</span>
                 </div>
                 <div className="w-px h-6 bg-outline-variant/20 rounded-full group-hover:bg-primary/30 transition-colors" />

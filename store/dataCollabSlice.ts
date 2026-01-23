@@ -9,13 +9,56 @@ import { queryClient } from '../lib/queryClient';
 
 export const createDataCollabSlice: StateCreator<AppState, [], [], Partial<DataSlice>> = (set, get) => ({
   fetchPublicInsight: async (slug) => {
-    const { addToast } = get();
+    const { addToast, session } = get();
     const { data, error } = await supabase.from('shared_links').select('*').eq('slug', slug).single();
-    if (error) {
+    
+    if (error || !data) {
       set({ publicSharedInsight: null });
-      handleSupabaseError(error, addToast, 'Link invalid or expired.');
-    } else {
-      set({ publicSharedInsight: data, view: AppView.PUBLIC_SHARE });
+      handleSupabaseError(error || { message: "Link not found" }, addToast, 'Link invalid or expired.');
+      return;
+    }
+
+    // TRAFFIC CONTROL:
+    // 1. If Logged In -> Convert to App Object -> Redirect to Detail View
+    if (session?.user) {
+        const mappedInsight = {
+            id: data.insight_id, 
+            user_id: data.user_id,
+            title: data.title,
+            created_at: data.created_at,
+            summary: data.summary,
+            highlights: data.highlights,
+            action_items: data.action_items,
+            processed_text: data.processed_text,
+            original_content: "", 
+            source_type: ContentType.TEXT,
+            type: ContentType.TEXT,
+            sentiment: data.sentiment,
+            site_name: data.site_name,
+            processing_status: ProcessingStatus.COMPLETED,
+            is_favorite: false,
+            is_archived: false,
+            metadata: { 
+                isSharedPreview: true,
+                audioUrl: data.audio_url,
+                readingTimeMinutes: 1,
+                completedActionIndices: data.completed_indices
+            }
+        };
+
+        set({ 
+            selectedInsight: mappedInsight as any,
+            view: AppView.INSIGHT 
+        });
+        
+        addToast("Opening shared note...", "info");
+    } 
+    // 2. If Guest -> Show Public Flyer
+    else {
+        set({ 
+            publicSharedInsight: data, 
+            view: AppView.PUBLIC_SHARE 
+        });
     }
   },
 
@@ -61,54 +104,16 @@ export const createDataCollabSlice: StateCreator<AppState, [], [], Partial<DataS
     return `${window.location.origin}?share=${slug}`;
   },
 
-  toggleSharedActionItem: async (slug, index) => {
-    const { publicSharedInsight, addToast } = get();
-    if (!publicSharedInsight) return;
-    
-    const currentCompleted = publicSharedInsight.completed_indices || [];
-    const isNowCompleted = !currentCompleted.includes(index);
-    const newCompleted = isNowCompleted ? [...currentCompleted, index] : currentCompleted.filter(i => i !== index);
-    
-    const newVersion = (publicSharedInsight.version || 0) + 1;
-
-    set({ 
-      publicSharedInsight: { 
-        ...publicSharedInsight, 
-        completed_indices: newCompleted,
-        version: newVersion
-      } 
-    });
-    
-    try {
-      const { error } = await supabase
-        .from('shared_links')
-        .update({ 
-          completed_indices: newCompleted,
-          version: newVersion
-        })
-        .eq('slug', slug)
-        .eq('is_collaborative', true);
-
-      if (error) throw error;
-      
-    } catch (error: any) {
-      console.error("[Workspace] Collaboration update failed:", error.message);
-      handleSupabaseError(error, addToast, "Update failed: Link may be read-only.");
-      set({ publicSharedInsight: { ...publicSharedInsight, completed_indices: currentCompleted } });
-    }
+  toggleSharedActionItem: async () => {
+    console.warn("Guest interaction disabled in Preview Protocol.");
   },
 
   importSharedInsight: async (shared) => {
     const { session, addToast, setView } = get();
-    if (!session?.user) {
-        addToast("Authentication required to save notes.", "info");
-        return;
-    }
+    if (!session?.user) return;
 
     try {
         const insightId = uuidv4();
-        
-        // 1. Create the primary insight record
         const { error: itemError } = await supabase.from('insights').insert([{
             id: insightId,
             user_id: session.user.id,
@@ -117,13 +122,15 @@ export const createDataCollabSlice: StateCreator<AppState, [], [], Partial<DataS
             processing_status: ProcessingStatus.COMPLETED,
             processed_text: shared.processed_text,
             site_name: shared.site_name,
-            metadata: { importedFrom: shared.slug, version: 1 }
+            metadata: { 
+                importedFrom: shared.slug, 
+                audioUrl: shared.audio_url,
+                version: 1 
+            }
         }]);
 
         if (itemError) throw itemError;
 
-        // 2. Insert the associated intelligence summary
-        // CRITICAL: Must include user_id on the summary for RLS to allow the insert
         const { error: summaryError } = await supabase.from('summaries').insert([{
             insight_id: insightId,
             user_id: session.user.id,
@@ -136,16 +143,13 @@ export const createDataCollabSlice: StateCreator<AppState, [], [], Partial<DataS
 
         if (summaryError) throw summaryError;
 
-        // 3. Invalidate Query Cache and Navigate
         await queryClient.invalidateQueries({ queryKey: ['insights', session.user.id] });
-        
         addToast("Note secured in library.", "success");
         set({ publicSharedInsight: null });
-        setView(AppView.DASHBOARD);
-        
+        get().fetchSingleInsight(insightId);
+        set({ view: AppView.INSIGHT });
     } catch (err: any) {
-        console.error("[Bridge] Import failed:", err);
-        addToast("Link claim failed. Note may be expired.", "error");
+        addToast("Link claim failed.", "error");
     }
   }
 });

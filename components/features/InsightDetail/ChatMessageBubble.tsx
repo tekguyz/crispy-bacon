@@ -16,7 +16,7 @@ export const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({ message })
       {!isUser && (
          <div className="flex items-center gap-2 px-1 mb-0.5 opacity-50">
             <Bot size={10} className="text-primary" />
-            <span className="text-[8px] font-black uppercase tracking-[0.2em] text-on-surface-variant">Strategist</span>
+            <span className="text-[8px] font-black uppercase tracking-[0.2em] text-on-surface-variant">Assistant</span>
          </div>
       )}
 
@@ -40,7 +40,7 @@ export const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({ message })
               className="flex items-center gap-1.5 px-2.5 py-1 bg-surface-container-high hover:bg-surface-container-highest text-[8px] font-black uppercase tracking-widest text-primary border border-outline-variant/20 rounded-lg transition-colors truncate max-w-full"
             >
               <Search size={8} strokeWidth={3} /> 
-              <span className="truncate">{src.title || 'Source Reference'}</span>
+              <span className="truncate">{src.title || 'Source'}</span>
             </a>
           ))}
         </div>
