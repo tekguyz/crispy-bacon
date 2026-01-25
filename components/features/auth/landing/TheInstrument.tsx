@@ -30,7 +30,7 @@ export const TheInstrument: React.FC = () => {
   ];
 
   return (
-    <section id="process" className="py-24 md:py-32 bg-surface-container-lowest border-y-2 border-outline-variant relative overflow-hidden">
+    <section id="features" className="py-24 md:py-32 bg-surface-container-lowest border-y-2 border-outline-variant relative overflow-hidden">
       <div className="absolute inset-0 ledger-grid pointer-events-none opacity-[0.03]" />
       
       <div className="container-landing relative z-10">
@@ -52,27 +52,27 @@ export const TheInstrument: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-1 bg-outline-variant/10 rounded-[2.5rem] overflow-hidden border border-outline-variant shadow-2xl">
           {signalPath.map((step) => (
-            <div key={step.id} className="bg-background p-6 md:p-8 space-y-5 group hover:bg-surface-container-low transition-all duration-500">
+            <div key={step.id} className="bg-background p-10 space-y-10 group hover:bg-surface-container-low transition-all duration-500">
                <div className="flex justify-between items-start">
-                  <div className="w-12 h-12 bg-surface-container-high rounded-2xl flex items-center justify-center text-primary shadow-inner group-hover:bg-primary group-hover:text-on-primary transition-all duration-500">
-                     <step.icon size={24} strokeWidth={2.5} />
+                  <div className="w-14 h-14 bg-surface-container-high rounded-2xl flex items-center justify-center text-primary shadow-inner group-hover:bg-primary group-hover:text-on-primary transition-all duration-500">
+                     <step.icon size={28} strokeWidth={2.5} />
                   </div>
                   <span className="text-[10px] font-mono font-black text-on-surface-variant opacity-20 tracking-[0.4em]">{step.id}</span>
                </div>
 
-               <div className="space-y-2">
+               <div className="space-y-4">
                   <div className="space-y-1">
-                    <span className="text-[8px] font-mono font-black text-primary uppercase tracking-[0.3em] block">{step.tag}</span>
-                    <h3 className="text-xl font-black uppercase tracking-tight text-on-surface leading-none">{step.title}</h3>
+                    <span className="text-[9px] font-mono font-black text-primary uppercase tracking-[0.3em] block">{step.tag}</span>
+                    <h3 className="text-2xl font-black uppercase tracking-tight text-on-surface leading-none">{step.title}</h3>
                   </div>
-                  <p className="text-[13px] font-medium text-on-surface-variant opacity-70 leading-relaxed">
+                  <p className="text-sm font-medium text-on-surface-variant opacity-70 leading-relaxed min-h-[4rem]">
                     {step.desc}
                   </p>
                </div>
 
                <div className="flex flex-wrap gap-2 pt-4 border-t border-outline-variant/10">
                   {step.specs.map((s, i) => (
-                    <span key={i} className="text-[7px] font-mono font-bold uppercase tracking-widest text-on-surface opacity-30 group-hover:opacity-100 transition-opacity">
+                    <span key={i} className="text-[8px] font-mono font-bold uppercase tracking-widest text-on-surface opacity-30 group-hover:opacity-100 transition-opacity">
                       {s}
                     </span>
                   ))}

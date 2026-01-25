@@ -3,6 +3,7 @@ import { LandingNav } from './LandingNav';
 import { LandingHero } from './LandingHero';
 import { TheInstrument } from './TheInstrument';
 import { PricingTier } from './PricingTier';
+import { SmallTeamsCTA } from './SmallTeamsCTA';
 import { FAQSection } from './FAQSection';
 import { LandingFooter } from './LandingFooter';
 import { useAppStore } from '../../../../store/useAppStore';
@@ -25,18 +26,18 @@ const LandingPage: React.FC<any> = ({ onSignIn, onPrivacy, onTerms, onEthics }) 
         {/* 1. THE ENTRY */}
         <LandingHero onSignIn={onSignIn} />
         
-        {/* 2. THE INSTRUMENT */}
+        {/* 2. THE INSTRUMENT (Merged Method + Features) */}
         <TheInstrument />
 
         {/* 3. THE INVESTMENT */}
-        <section id="pricing" className="py-24 md:py-32 bg-surface-container-lowest border-t-2 border-outline-variant overflow-hidden">
+        <section id="pricing" className="py-24 md:py-32 section-zebra-1 overflow-hidden border-t-2 border-outline-variant">
           <div className="container-landing">
-            <div className="max-w-4xl mx-auto mb-12 space-y-4 text-center">
+            <div className="max-w-4xl mx-auto mb-16 space-y-4 text-center">
               <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Membership</span>
-              <h2 className="text-3xl md:text-5xl font-slab font-bold tracking-tighter uppercase text-on-surface leading-none">Built for Output.</h2>
+              <h2 className="text-4xl md:text-6xl font-slab font-bold tracking-tighter uppercase text-on-surface leading-none">Built for Output.</h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto items-stretch">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto items-stretch">
                <PricingTier 
                 title="Standard" price="$0" subtitle="Essential research bandwidth."
                 features={[
@@ -46,7 +47,7 @@ const LandingPage: React.FC<any> = ({ onSignIn, onPrivacy, onTerms, onEthics }) 
                   { text: "Snapshot Sharing", included: true },
                   { text: "Collaborative Editing", included: false }
                 ]}
-                extraFeatures={["Secure Vault", "15m Limit"]} 
+                extraFeatures={["Secure Cloud Vault", "15m Limit", "Markdown Export"]} 
                 onAction={onSignIn}
                />
                <PricingTier 
@@ -58,22 +59,21 @@ const LandingPage: React.FC<any> = ({ onSignIn, onPrivacy, onTerms, onEthics }) 
                   { text: "Deep Reasoning (Pro)", included: true },
                   { text: "Full Cloud Persistence", included: true }
                 ]}
-                extraFeatures={["60m Limit", "Priority Support"]} 
+                extraFeatures={["60m Limit", "Google Drive Sync", "Priority Support"]} 
                 onAction={onSignIn}
                />
             </div>
+            
+            {/* 4. TEAM CONVERSION (Now Minimal and compact) */}
+            <SmallTeamsCTA />
+            
+            {/* 5. TECHNICAL BRIEF (Condensed FAQ) */}
+            <FAQSection />
           </div>
-        </section>
-
-        {/* 4. TECHNICAL BRIEF */}
-        <section className="pb-24 md:pb-32 pt-0 border-t-2 border-outline-variant">
-           <div className="container-landing">
-              <FAQSection />
-           </div>
         </section>
       </main>
       
-      {/* 5. FOOTER */}
+      {/* 6. FOOTER */}
       <LandingFooter onPrivacy={onPrivacy} onTerms={onTerms} onEthics={onEthics} onSignIn={onSignIn} />
     </div>
   );

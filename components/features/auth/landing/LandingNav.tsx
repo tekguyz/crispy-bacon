@@ -23,15 +23,12 @@ export const LandingNav: React.FC<LandingNavProps> = ({ isScrolled, session, use
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       
-      // Always show at the very top
       if (currentScrollY < 50) {
         setIsVisible(true);
       } 
-      // Scrolling Down - Hide
       else if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
         setIsVisible(false);
       } 
-      // Scrolling Up - Show
       else if (currentScrollY < lastScrollY.current) {
         setIsVisible(true);
       }
@@ -62,15 +59,6 @@ export const LandingNav: React.FC<LandingNavProps> = ({ isScrolled, session, use
     }
   };
 
-  useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => { document.body.style.overflow = ''; };
-  }, [isMobileMenuOpen]);
-
   const navLinks = [
     { id: 'process', label: 'Process' },
     { id: 'features', label: 'Capabilities' },
@@ -80,41 +68,38 @@ export const LandingNav: React.FC<LandingNavProps> = ({ isScrolled, session, use
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ease-in-out border-b flex items-center ${
+      <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ease-in-out border-b ${
         isScrolled 
-          ? 'h-14 md:h-20 bg-background/80 backdrop-blur-xl shadow-sm border-outline-variant' 
-          : 'h-16 md:h-24 bg-transparent border-transparent'
+          ? 'h-16 md:h-20 bg-background/90 backdrop-blur-xl shadow-sm border-outline-variant' 
+          : 'h-20 md:h-24 bg-transparent border-transparent'
       } ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
-        <div className="container-landing flex items-center justify-between">
-          <div className="flex items-center">
-            <button 
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
-              className="hover:opacity-80 transition-opacity shrink-0"
-            >
-              <BaconBrand className="scale-75 origin-left md:scale-100" />
-            </button>
-          </div>
+        <div className="container-landing h-full flex items-center justify-between">
+          <button 
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
+            className="hover:opacity-80 transition-opacity shrink-0 py-2"
+          >
+            <BaconBrand className="scale-75 origin-left md:scale-90" />
+          </button>
 
-          <div className="hidden lg:flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
+          <div className="hidden lg:flex items-center gap-10">
             {navLinks.map((link) => (
               <button 
                 key={link.id} 
                 onClick={() => handleNavClick(link.id)} 
-                className="text-[10px] font-black text-on-background opacity-40 hover:opacity-100 transition-all tracking-[0.2em] uppercase"
+                className="text-[10px] font-black text-on-background opacity-40 hover:opacity-100 transition-all tracking-[0.25em] uppercase"
               >
                 {link.label}
               </button>
             ))}
           </div>
 
-          <div className="flex items-center gap-2 md:gap-4">
-            {/* Desktop Auth */}
-            <div className="hidden md:flex items-center gap-4">
+          <div className="flex items-center gap-4">
+            <div className="hidden md:flex items-center">
               {session ? (
                 <div className="relative">
                   <button 
                     onClick={() => setShowAvatarMenu(!showAvatarMenu)} 
-                    className="w-10 h-10 rounded-full overflow-hidden border-2 border-outline-variant hover:border-primary/20 transition-all active:scale-90 interactive shrink-0 flex items-center justify-center shadow-sm"
+                    className="w-10 h-10 rounded-full overflow-hidden border-2 border-outline-variant hover:border-primary/40 transition-all active:scale-90 shrink-0 flex items-center justify-center shadow-sm"
                   >
                     {avatarUrl ? (
                       <img src={avatarUrl} alt="User" className="w-full h-full object-cover" />
@@ -125,7 +110,7 @@ export const LandingNav: React.FC<LandingNavProps> = ({ isScrolled, session, use
                     )}
                   </button>
                   {showAvatarMenu && (
-                    <div className="absolute right-0 mt-3 w-52 bg-card border border-outline-variant rounded-2xl shadow-2xl overflow-hidden animate-spring-up p-1.5 z-[110]">
+                    <div className="absolute right-0 mt-3 w-56 bg-surface border border-outline-variant rounded-2xl shadow-2xl overflow-hidden animate-spring-up p-1.5 z-[110]">
                       <button onClick={onSignIn} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-on-background/5 text-[11px] font-bold text-on-surface uppercase tracking-widest text-left group">
                         Open Studio 
                         <ArrowRight size={14} className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -138,20 +123,19 @@ export const LandingNav: React.FC<LandingNavProps> = ({ isScrolled, session, use
               ) : (
                 <button 
                   onClick={onSignIn} 
-                  className="px-8 py-3 bg-primary text-on-primary rounded-xl font-black text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:brightness-110 active:scale-95 transition-all flex items-center gap-2"
+                  className="px-8 h-11 bg-on-surface text-surface rounded-xl font-black text-[10px] uppercase tracking-[0.2em] shadow-lg hover:bg-primary transition-all active:scale-95 flex items-center gap-2"
                 >
                   Sign In
                 </button>
               )}
             </div>
 
-            {/* Mobile Toggle */}
             <button 
               onClick={toggleMobileMenu}
-              className="lg:hidden w-11 h-11 flex items-center justify-center rounded-xl bg-on-surface/5 text-on-surface active:scale-90 transition-transform"
+              className="lg:hidden w-11 h-11 flex items-center justify-center rounded-xl bg-on-surface/5 text-on-surface"
               aria-label="Open menu"
             >
-              <Menu size={22} strokeWidth={2.5} />
+              <Menu size={20} strokeWidth={2.5} />
             </button>
           </div>
         </div>
@@ -188,38 +172,15 @@ export const LandingNav: React.FC<LandingNavProps> = ({ isScrolled, session, use
                 ))}
               </div>
             </div>
-
-            <div className="p-6 bg-surface-container rounded-[2rem] border border-outline-variant space-y-4">
-               <span className="text-[9px] font-black uppercase tracking-[0.4em] text-on-surface opacity-30">Infrastructure</span>
-               <div className="grid grid-cols-2 gap-4">
-                  <div className="flex items-center gap-3">
-                     <div className="w-8 h-8 rounded-lg bg-success/10 text-success flex items-center justify-center shadow-inner"><ShieldCheck size={16} /></div>
-                     <span className="text-[10px] font-black uppercase text-on-surface">Secure</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                     <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center shadow-inner"><Cpu size={16} /></div>
-                     <span className="text-[10px] font-black uppercase text-on-surface">Assistant</span>
-                  </div>
-               </div>
-            </div>
           </div>
 
           <div className="mt-auto p-6 border-t border-outline-variant bg-background">
-            {session ? (
-                 <button 
-                  onClick={onSignIn}
-                  className="w-full py-6 bg-primary text-on-primary rounded-2xl font-black text-[13px] uppercase tracking-[0.25em] shadow-xl flex items-center justify-center gap-3"
-                 >
-                  Studio Dashboard <ArrowRight size={18} />
-                 </button>
-            ) : (
-                 <button 
-                  onClick={() => { onSignIn(); setIsMobileMenuOpen(false); }}
-                  className="w-full py-6 bg-primary text-on-primary rounded-2xl font-black text-[13px] uppercase tracking-[0.25em] shadow-xl flex items-center justify-center gap-4"
-                 >
-                  Start for Free <ArrowRight size={18} />
-                 </button>
-            )}
+            <button 
+              onClick={() => { onSignIn(); setIsMobileMenuOpen(false); }}
+              className="w-full py-6 bg-primary text-on-primary rounded-2xl font-black text-[13px] uppercase tracking-[0.25em] shadow-xl flex items-center justify-center gap-4"
+            >
+              {session ? 'Studio Dashboard' : 'Start for Free'} <ArrowRight size={18} />
+            </button>
           </div>
         </div>
       </div>

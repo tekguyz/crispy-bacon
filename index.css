@@ -55,6 +55,30 @@
   --md-sys-color-surface-container-high: oklch(0.24 0.01 0);
 }
 
+/* Structural Chassis */
+.container-landing {
+  width: 100%;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .container-landing {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-landing {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+}
+
 /* Accessibility: Focus Protocol */
 :focus-visible {
   outline: 3px solid var(--md-sys-color-primary);
@@ -77,10 +101,6 @@
   background: linear-gradient(90deg, transparent, var(--md-sys-color-outline-variant), transparent);
   background-size: 200% 100%;
   animation: skeleton-shimmer 1.5s infinite;
-}
-
-.container-landing {
-  @apply w-full max-w-7xl mx-auto px-6 md:px-10;
 }
 
 @keyframes skeleton-shimmer {
