@@ -95,9 +95,9 @@ const Sidebar: React.FC<SidebarProps> = ({
 
       {isMobileOpen && (
         <div className="fixed inset-0 z-[200] md:hidden">
-          <div className="absolute inset-0 bg-black/80" onClick={onCloseMobile} aria-hidden="true" />
+          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onCloseMobile} aria-hidden="true" />
           <div 
-            className="absolute inset-x-0 bottom-0 max-h-[85dvh] mobile-nav-drawer animate-sheet-up overflow-hidden flex flex-col shadow-2xl"
+            className="absolute inset-x-0 bottom-0 max-h-[85dvh] bg-background border-t border-outline-variant mobile-nav-drawer animate-sheet-up overflow-hidden flex flex-col shadow-2xl rounded-t-[2.5rem]"
             role="dialog"
             aria-modal="true"
             aria-label="Mobile Navigation"
@@ -111,7 +111,9 @@ const Sidebar: React.FC<SidebarProps> = ({
               <button onClick={onCloseMobile} className="p-2 rounded-full hover:bg-on-surface/10 text-on-surface transition-colors" aria-label="Close navigation"><X size={20} /></button>
             </div>
             
-            {SidebarContent(true)}
+            <div className="flex-1 min-h-0 overflow-hidden">
+               {SidebarContent(true)}
+            </div>
           </div>
         </div>
       )}
