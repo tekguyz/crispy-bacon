@@ -85,15 +85,17 @@ export const LandingNav: React.FC<LandingNavProps> = ({ isScrolled, session, use
           ? 'h-14 md:h-20 bg-background/80 backdrop-blur-xl shadow-sm border-outline-variant' 
           : 'h-16 md:h-24 bg-transparent border-transparent'
       } ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
-        <div className="container-landing flex items-center justify-between gap-4">
-          <button 
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
-            className="hover:opacity-80 transition-opacity shrink-0"
-          >
-            <BaconBrand className="scale-75 origin-left md:scale-100" />
-          </button>
+        <div className="container-landing flex items-center justify-between">
+          <div className="flex items-center">
+            <button 
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
+              className="hover:opacity-80 transition-opacity shrink-0"
+            >
+              <BaconBrand className="scale-75 origin-left md:scale-100" />
+            </button>
+          </div>
 
-          <div className="hidden lg:flex items-center gap-10">
+          <div className="hidden lg:flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
             {navLinks.map((link) => (
               <button 
                 key={link.id} 
@@ -105,7 +107,8 @@ export const LandingNav: React.FC<LandingNavProps> = ({ isScrolled, session, use
             ))}
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 md:gap-4">
+            {/* Desktop Auth */}
             <div className="hidden md:flex items-center gap-4">
               {session ? (
                 <div className="relative">
@@ -142,15 +145,14 @@ export const LandingNav: React.FC<LandingNavProps> = ({ isScrolled, session, use
               )}
             </div>
 
-            {!isMobileMenuOpen && (
-              <button 
-                onClick={toggleMobileMenu}
-                className="lg:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-on-surface/5 text-on-surface"
-                aria-label="Open menu"
-              >
-                <Menu size={20} strokeWidth={2.5} />
-              </button>
-            )}
+            {/* Mobile Toggle */}
+            <button 
+              onClick={toggleMobileMenu}
+              className="lg:hidden w-11 h-11 flex items-center justify-center rounded-xl bg-on-surface/5 text-on-surface active:scale-90 transition-transform"
+              aria-label="Open menu"
+            >
+              <Menu size={22} strokeWidth={2.5} />
+            </button>
           </div>
         </div>
       </nav>

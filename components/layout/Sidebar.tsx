@@ -94,10 +94,10 @@ const Sidebar: React.FC<SidebarProps> = ({
       </aside>
 
       {isMobileOpen && (
-        <div className="fixed inset-0 z-[200] md:hidden">
+        <div className="fixed inset-0 z-[300] md:hidden">
           <div className="absolute inset-0 bg-black/80" onClick={onCloseMobile} aria-hidden="true" />
           <div 
-            className="absolute inset-x-0 bottom-0 max-h-[85dvh] mobile-nav-drawer animate-sheet-up overflow-hidden flex flex-col shadow-2xl bg-surface-container rounded-t-[2.5rem]"
+            className="absolute inset-x-0 bottom-0 max-h-[85dvh] mobile-nav-drawer animate-sheet-up overflow-hidden flex flex-col shadow-2xl bg-surface rounded-t-[2.5rem] border-t border-outline-variant"
             role="dialog"
             aria-modal="true"
             aria-label="Mobile Navigation"
