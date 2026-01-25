@@ -68,7 +68,8 @@ const ShareModal: React.FC = () => {
   if (!selectedInsight) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-[210] flex items-end md:items-center justify-center p-0 md:p-4 animate-fade-in" onClick={handleClose}>
+    // Boosted Z-Index to 350 to sit above Chat Drawer (250) and Live Island (300)
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-[350] flex items-end md:items-center justify-center p-0 md:p-4 animate-fade-in" onClick={handleClose}>
       <div 
         ref={containerRef}
         className="bg-background w-[calc(100%-2rem)] md:max-w-lg rounded-expressive shadow-2xl overflow-hidden flex flex-col animate-sheet-up md:animate-scale-in ring-1 ring-white/10 focus:outline-none max-h-[90dvh]"
@@ -80,7 +81,7 @@ const ShareModal: React.FC = () => {
            <div className="w-12 h-1 bg-outline-variant/20 rounded-full" />
         </div>
 
-        <div className="flex items-center justify-between p-6 border-b border-outline-variant/10 bg-surface-container-low shrink-0">
+        <div className="flex items-center justify-between p-5 md:p-6 border-b border-outline-variant/10 bg-surface-container-low shrink-0">
           <div className="flex items-center gap-4">
             <div className="w-10 h-10 bg-surface-container-high rounded-xl flex items-center justify-center border border-outline-variant/10 text-primary shadow-inner">
               <Share2 size={18} />
@@ -95,7 +96,7 @@ const ShareModal: React.FC = () => {
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto custom-scrollbar p-6 md:p-8 space-y-8 bg-background">
+        <div className="flex-1 overflow-y-auto custom-scrollbar p-5 md:p-8 bg-background">
           <div className="space-y-6">
              {shareLink ? (
                 <div className="animate-fade-in space-y-6">
@@ -114,7 +115,7 @@ const ShareModal: React.FC = () => {
                             copyToClipboard(shareLink);
                         }
                     }}
-                    className="w-full flex items-center justify-center gap-3 h-14 md:h-12 bg-primary text-on-primary rounded-2xl font-black text-[11px] md:text-xs uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-[1.01] active:scale-95 transition-all"
+                    className="w-full flex items-center justify-center gap-3 h-14 bg-primary text-on-primary rounded-2xl font-black text-[11px] md:text-xs uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-[1.01] active:scale-95 transition-all"
                   >
                     {canNativeShare ? <Share2 size={16} strokeWidth={3} /> : <Mail size={16} strokeWidth={3} />}
                     {canNativeShare ? 'Share Link' : 'Copy Web URL'}
@@ -122,7 +123,7 @@ const ShareModal: React.FC = () => {
                   <button onClick={() => setShareLink('')} className="w-full text-center text-[10px] font-black uppercase tracking-widest text-on-surface-variant opacity-40 hover:opacity-100 transition-opacity py-2">Adjust settings</button>
                 </div>
               ) : (
-                <div className="space-y-8 animate-fade-in">
+                <div className="space-y-5 animate-fade-in">
                   <section className="space-y-3">
                      <div className="flex items-center gap-2 px-1 mb-1">
                         <Target size={12} className="text-primary" />
@@ -175,14 +176,14 @@ const ShareModal: React.FC = () => {
                      </div>
                   </section>
 
-                  <section className="space-y-4">
+                  <section className="space-y-4 pt-2">
                     <div className="flex items-center gap-2 px-1">
                       <Clock size={12} className="text-on-surface-variant opacity-40" />
                       <label className="text-[9px] font-black text-on-surface-variant uppercase tracking-widest opacity-50">Expiration Limit</label>
                     </div>
                     <div className="grid grid-cols-3 gap-2">
                       {[{l:'24 Hours',v:24},{l:'7 Days',v:168},{l:'Never',v:null}].map(o => (
-                        <button key={o.l} onClick={()=>setExpiresHours(o.v)} className={`h-14 md:h-12 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all border-2 ${expiresHours===o.v?'bg-primary/10 border-primary text-primary shadow-sm':'bg-surface-container-low border-transparent text-on-surface-variant hover:bg-surface-container-high'}`}>{o.l}</button>
+                        <button key={o.l} onClick={()=>setExpiresHours(o.v)} className={`h-12 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all border-2 ${expiresHours===o.v?'bg-primary/10 border-primary text-primary shadow-sm':'bg-surface-container-low border-transparent text-on-surface-variant hover:bg-surface-container-high'}`}>{o.l}</button>
                       ))}
                     </div>
                   </section>
@@ -190,7 +191,7 @@ const ShareModal: React.FC = () => {
                   <button 
                     onClick={handleGenerate} 
                     disabled={isLoading} 
-                    className="w-full h-16 md:h-14 bg-primary text-on-primary rounded-[1.75rem] font-black text-[11px] md:text-xs uppercase tracking-[0.3em] shadow-2xl shadow-primary/20 flex items-center justify-center gap-4 hover:brightness-110 active:scale-95 transition-all disabled:opacity-50"
+                    className="w-full h-14 md:h-16 bg-primary text-on-primary rounded-[1.75rem] font-black text-[11px] md:text-xs uppercase tracking-[0.3em] shadow-2xl shadow-primary/20 flex items-center justify-center gap-4 hover:brightness-110 active:scale-95 transition-all disabled:opacity-50 mt-4"
                   >
                       {isLoading ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Globe size={20} strokeWidth={3} />} 
                       {isLoading ? 'PREPARING...' : 'GENERATE PUBLIC LINK'}
@@ -200,7 +201,7 @@ const ShareModal: React.FC = () => {
           </div>
         </div>
 
-        <div className="p-6 bg-surface-container-low border-t border-outline-variant/10 flex items-center justify-between shrink-0 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
+        <div className="p-5 md:p-6 bg-surface-container-low border-t border-outline-variant/10 flex items-center justify-between shrink-0 pb-[calc(1rem+env(safe-area-inset-bottom))] md:pb-6">
             <div className="flex flex-col">
               <span className="text-[8px] font-black uppercase tracking-widest text-on-surface-variant opacity-40">Link Privacy</span>
               <span className={`text-[10px] font-black flex items-center gap-1.5 ${security.color}`}><security.icon size={10} fill={isCollaborative ? "currentColor" : "none"}/> {security.label}</span>
