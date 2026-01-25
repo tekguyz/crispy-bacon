@@ -17,7 +17,6 @@ const RealtimeStatusIndicator = () => {
       className="flex items-center gap-2 px-3 py-1 bg-surface-container border border-outline-variant/10 rounded-full group interactive h-7 shrink-0"
       aria-live="polite"
       role="status"
-      title={`System status: ${status}`}
     >
        <div className="relative">
           <div className={`w-1.5 h-1.5 rounded-full transition-colors duration-500 ${
@@ -93,7 +92,7 @@ const Header: React.FC<HeaderProps> = ({ onOpenSidebar }) => {
         <button 
           onClick={() => { triggerHaptic('medium'); onOpenSidebar(); }}
           className="md:hidden w-11 h-11 -ml-1 rounded-xl bg-surface-container border border-outline-variant/10 text-on-surface-variant flex items-center justify-center shrink-0 interactive"
-          aria-label="Open sidebar menu"
+          aria-label="Open navigation menu"
         >
           <Menu size={20} strokeWidth={2.5} aria-hidden="true" />
         </button>
@@ -122,7 +121,7 @@ const Header: React.FC<HeaderProps> = ({ onOpenSidebar }) => {
                   value={searchQuery}
                   onChange={handleSearchChange}
                   className="w-full h-full bg-transparent pl-9 pr-10 text-[11px] font-black uppercase tracking-widest text-on-surface focus:outline-none placeholder:text-on-surface-variant/20"
-                  aria-label="Search research library"
+                  aria-label="Search items"
                 />
              </div>
 

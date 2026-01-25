@@ -31,23 +31,23 @@ export default defineConfig({
       output: {
         manualChunks: (id) => {
           if (id.includes('node_modules')) {
-            // Core Framework (Must be fast)
-            if (id.includes('react') || id.includes('scheduler') || id.includes('prop-types')) {
+            // Core UI Library
+            if (id.includes('react') || id.includes('react-dom') || id.includes('scheduler')) {
               return 'vendor-core';
             }
-            // State & Navigation
+            // State & Logic
             if (id.includes('zustand') || id.includes('lucide-react') || id.includes('@tanstack/react-query')) {
               return 'vendor-ui-logic';
             }
-            // Heavy Ingestion Engine (Deferred)
+            // Heavy Processing (Deferred)
             if (id.includes('mammoth') || id.includes('react-markdown')) {
               return 'vendor-ingestion';
             }
-            // AI Engine (Critical Split)
+            // AI Infrastructure (Critical Split)
             if (id.includes('@google/genai')) {
               return 'vendor-ai-engine';
             }
-            // Infrastructure
+            // Database & Backend
             if (id.includes('@supabase') || id.includes('uuid')) {
               return 'vendor-infra';
             }
@@ -55,6 +55,6 @@ export default defineConfig({
         }
       }
     },
-    chunkSizeWarningLimit: 600,
+    chunkSizeWarningLimit: 800,
   }
 })

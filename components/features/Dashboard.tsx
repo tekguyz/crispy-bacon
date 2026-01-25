@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useMemo, Suspense, lazy } from 'react';
 import { useAppStore } from '../../store/useAppStore';
 import { useDashboardStats } from '../../hooks/useDashboardStats';
@@ -11,7 +10,7 @@ import { LayoutGrid, Zap, Mic, Globe, Loader2, Sparkles } from 'lucide-react';
 import { triggerHaptic } from '../../services/hapticService';
 import { Tooltip } from '../ui/Tooltip';
 
-// Fix: Use lazy import to match App.tsx and resolve Vite optimization warnings
+// Performance: Lazy load the heavy detail view for Dashboard previews
 const InsightDetailView = lazy(() => import('./InsightDetailView'));
 
 const Dashboard: React.FC = () => {
@@ -149,8 +148,9 @@ const Dashboard: React.FC = () => {
             <button 
                onClick={() => { triggerHaptic('medium'); setIsGlobalChatOpen(true); }}
                className="w-14 h-14 bg-surface-container-high border-2 border-outline-variant/10 rounded-3xl flex items-center justify-center shadow-2xl hover:scale-105 active:scale-95 transition-all group"
+               aria-label="Ask library"
             >
-               <Sparkles size={20} className="text-primary group-hover:rotate-12 transition-transform" fill="currentColor" />
+               <Sparkles size={20} className="text-primary group-hover:rotate-12 transition-transform" fill="currentColor" aria-hidden="true" />
             </button>
          </Tooltip>
       </div>
