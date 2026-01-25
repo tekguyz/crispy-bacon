@@ -1,3 +1,4 @@
+
 import React, { memo } from 'react';
 import { InsightContent, ContentType, ProcessingStatus, AppView } from '../../types';
 import { Star, Archive, Radio, AlertCircle, Video, Globe, FileText, Lock, ShieldAlert, Trash2, Check, RotateCcw } from 'lucide-react';
@@ -92,11 +93,12 @@ const InsightRow: React.FC<InsightRowProps> = ({ insight }) => {
     restoreInsight(insight.id);
   };
 
-  // Granola Optimization: Remove header lines entirely for the row preview
+  // Robust strip-down of Markdown for row previews
   const summaryPreview = (insight.summary || "No summary available.")
-    .replace(/^#+.*$/gm, '') // Remove entire lines starting with headers
-    .replace(/\*\*/g, '')    // Remove bold symbols
-    .replace(/\n+/g, ' ')    // Flatten into single line
+    .replace(/^#+\s+/gm, '') 
+    .replace(/(\*\*|__)/g, '')
+    .replace(/(\*|_)/g, '')
+    .replace(/\n+/g, ' ')
     .trim();
 
   return (

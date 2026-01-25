@@ -1,3 +1,4 @@
+
 import React, { memo } from 'react';
 import { InsightContent, Sentiment, ContentType, ProcessingStatus, AppView } from '../../types';
 import { Calendar, Clock, Trash2, Star, Loader2, ArrowRight, Mic, Globe, RotateCcw } from 'lucide-react';
@@ -98,10 +99,12 @@ const InsightCard: React.FC<InsightCardProps> = ({ insight }) => {
     ? insight.title 
     : (insight.type === ContentType.MEETING ? "Voice Note" : "Web Research");
 
+  // Robust strip-down of Markdown for card previews
   const summaryPreview = (insight.summary || insight.error_message || "No summary available.")
-    .replace(/^#+.*$/gm, '') 
-    .replace(/\*\*/g, '')    
-    .replace(/\n+/g, ' ')    
+    .replace(/^#+\s+/gm, '') // Remove all headers symbols at start of lines
+    .replace(/(\*\*|__)/g, '') // Remove bold
+    .replace(/(\*|_)/g, '') // Remove italics
+    .replace(/\n+/g, ' ') // Flatten to single line
     .trim();
 
   return (
