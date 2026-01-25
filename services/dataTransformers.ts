@@ -1,8 +1,8 @@
+
 import { InsightContent, ContentType, Sentiment, ProcessingStatus } from '../types';
 
 /**
  * Maps a raw Supabase insight into the structured InsightContent interface.
- * Implements "Signal Healing" to prevent stuck 'Thinking' states.
  */
 export const mapSupabaseToInsight = (item: any): InsightContent => {
   const summaryData = item.summaries?.[0] || {};
@@ -19,14 +19,21 @@ export const mapSupabaseToInsight = (item: any): InsightContent => {
     } catch (e) {}
   }
 
-  const summaryText = summaryData.summary || "";
+  // Text Hygiene: Unescape literal newlines that break Markdown parsing (Fix for "Fucked up" text)
+  const cleanText = (txt: string) => {
+    if (!txt) return "";
+    return txt
+      .replace(/\\n/g, '\n') // Fix escaped newlines
+      .replace(/\\t/g, '\t'); // Fix escaped tabs
+  };
+
+  const summaryText = cleanText(summaryData.summary || "");
   const wordCount = summaryText.trim().split(/\s+/).length;
   const calculatedReadingTime = Math.ceil(wordCount / 200);
   const finalReadingTime = summaryData.reading_time || calculatedReadingTime || 1;
 
-  // CRITICAL HEALING LOGIC v2
+  // Status Recovery Logic
   let status = (item.processing_status as ProcessingStatus) || ProcessingStatus.COMPLETED;
-  
   const hasActionProgress = item.metadata?.completedActionIndices && item.metadata.completedActionIndices.length > 0;
   const hasIntelligence = hasSummary || summaryText.length > 10 || (item.highlights && item.highlights.length > 0);
 
@@ -48,10 +55,10 @@ export const mapSupabaseToInsight = (item: any): InsightContent => {
     site_name: item.site_name,
     processed_text: processedText,
     summary: summaryText,
-    highlights: summaryData.highlights || [], 
+    highlights: (summaryData.highlights || []).map(cleanText), 
     topics: summaryData.topics || [],
     entities: summaryData.entities || [],
-    action_items: summaryData.action_items || [],
+    action_items: (summaryData.action_items || []).map(cleanText),
     sentiment: (summaryData.sentiment as Sentiment) || Sentiment.NEUTRAL,
     metadata: {
       ...item.metadata,
@@ -75,72 +82,47 @@ export const mapSupabaseToInsight = (item: any): InsightContent => {
  */
 export const formatTranscript = (text: any): string => {
   if (!text) return '';
-  
   let content = text;
   if (typeof content === 'string' && (content.trim().startsWith('[') || content.trim().startsWith('{'))) {
-    try {
-      content = JSON.parse(content);
-    } catch (e) {}
+    try { content = JSON.parse(content); } catch (e) {}
   }
-  
   if (Array.isArray(content)) {
-    return content.map((turn: any) => {
-      const line = turn.text || turn;
-      return `• ${line}`;
-    }).join('\n\n');
+    return content.map((turn: any) => `• ${turn.text || turn}`).join('\n\n');
   }
-
   return String(content).trim();
 };
 
 /**
  * Generates a tailored Markdown report.
- * Targets:
- * 'notion': High-density, block-clean markdown without YAML.
- * 'obsidian': Multi-modal markdown with YAML Properties for vault indexing.
  */
 export const generateInsightMarkdownReport = (insight: InsightContent, target: 'notion' | 'obsidian' = 'notion'): string => {
   const dateStr = new Date(insight.created_at).toISOString().split('T')[0];
   let md = '';
-
   if (target === 'obsidian') {
-    // Add YAML Frontmatter for indexing
-    md += `---\n`;
-    md += `title: "${insight.title.replace(/"/g, '\\"')}"\n`;
-    md += `date: ${dateStr}\n`;
+    md += `---\ntitle: "${insight.title.replace(/"/g, '\\"')}"\ndate: ${dateStr}\n`;
     if (insight.site_name) md += `source: "${insight.site_name}"\n`;
     if (insight.type) md += `type: ${insight.type.toLowerCase()}\n`;
-    if (insight.tags?.length) {
-      md += `tags: [${insight.tags.map(t => t.name).join(', ')}]\n`;
-    }
+    if (insight.tags?.length) md += `tags: [${insight.tags.map(t => t.name).join(', ')}]\n`;
     md += `---\n\n`;
   }
-
   md += `# ${insight.title}\n\n`;
-  
   if (target === 'notion') {
     if (insight.site_name) md += `**Source:** ${insight.site_name}\n`;
     md += `**Date:** ${new Date(insight.created_at).toLocaleDateString()}\n\n`;
   }
-
   md += `## Summary\n${insight.summary}\n\n`;
-  
   if (insight.highlights?.length) {
     md += `### Key Takeaways\n`;
     insight.highlights.forEach(h => md += `- ${h}\n`);
     md += `\n`;
   }
-  
   if (insight.action_items?.length) {
     md += `### Next Steps\n`;
     insight.action_items.forEach((item, i) => md += `${i + 1}. ${item}\n`);
     md += `\n`;
   }
-
   if (insight.processed_text) {
-    md += `---\n\n### Raw Signal Trace\n\n`;
-    md += formatTranscript(insight.processed_text);
+    md += `---\n\n### Raw Signal Trace\n\n${formatTranscript(insight.processed_text)}`;
   }
-  
   return md;
 };

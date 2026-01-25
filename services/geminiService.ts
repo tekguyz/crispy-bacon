@@ -9,11 +9,7 @@ const analysisSchema = {
     title: { type: Type.STRING },
     summary: { type: Type.STRING },
     highlights: { type: Type.ARRAY, items: { type: Type.STRING } },
-    topics: { 
-      type: Type.ARRAY, 
-      items: { type: Type.STRING },
-      description: "Priority taxonomy: Project-specific entities only."
-    },
+    topics: { type: Type.ARRAY, items: { type: Type.STRING } },
     entities: { type: Type.ARRAY, items: { type: Type.STRING } },
     action_items: { type: Type.ARRAY, items: { type: Type.STRING } },
     sentiment: { type: Type.STRING, enum: ["POSITIVE", "NEUTRAL", "NEGATIVE", "COMPLEX"] },
@@ -39,6 +35,7 @@ export const analyzeContent = async (
   
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
+  // Logic: Pro users can choose "Deep Research". Everyone else (including Pro choosing "Concise") gets Flash.
   const isDeep = isPro && persona === PersonaStyle.DEEP_RESEARCH;
   const modelName = isDeep ? 'gemini-3-pro-preview' : 'gemini-3-flash-preview';
 
@@ -47,15 +44,16 @@ export const analyzeContent = async (
   if (isDeep) {
     instructions = `
       ROLE: Principal Briefing Deck Architect.
-      TASK: Conduct a HIGH-DENSITY STRUCTURAL ANALYSIS. 
+      TASK: Conduct a COMPREHENSIVE NARRATIVE ANALYSIS. 
       USER_GOAL: ${userNotes || 'Detailed Strategic Analysis'}.
       FOCUS: ${template}.
       
       OUTPUT PROTOCOL - DEEP DISTILL (PRO):
-      1. SKELETAL SUMMARY: Max 400 words. Use Markdown headers (###) for structure. Strip all conversational filler.
-      2. CORE THEMES: Analyze outcomes, constraints, friction points, and strategic momentum.
-      3. TAXONOMY: Provide EXACTLY 5 PROJECT-SPECIFIC TOPICS. 
-      4. HIGHLIGHTS: Max 10 items. Facts and evidence only.
+      1. NARRATIVE DEPTH: The 'summary' must be EXTENSIVE (max 300 words). Explore "Why" and "How", nuances, friction points, and strategic implications. Use Markdown headers (###) for sections.
+      2. HIGHLIGHTS: Provide EXACTLY 5 to 10 granular facts/takeaways. (NEVER more than 10).
+      3. ACTION ITEMS: Provide a granular, step-by-step execution plan.
+      4. TAXONOMY: Provide EXACTLY 5 project-specific topics.
+      5. FORMATTING: Always use double newlines (\\n\\n) after every ### header.
     `;
   } else {
     instructions = `
@@ -65,9 +63,10 @@ export const analyzeContent = async (
       FOCUS: ${template}.
       
       OUTPUT PROTOCOL - RAPID MODE (STANDARD):
-      1. SUMMARY: Max 200 words. Use clear Markdown headers.
-      2. TAXONOMY: Provide EXACTLY 3 TOPICS. Use only the most critical project identifiers.
-      3. HIGHLIGHTS: Max 5 items. Direct and dense.
+      1. SUMMARY: Skeletal overview. Max 150 words. Focus strictly on outcomes.
+      2. HIGHLIGHTS: Top 3-5 critical points only.
+      3. ACTION ITEMS: Basic checklist of immediate needs.
+      4. TAXONOMY: Provide EXACTLY 3 topics.
     `;
   }
 

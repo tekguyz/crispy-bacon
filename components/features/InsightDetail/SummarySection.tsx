@@ -26,11 +26,17 @@ const SummarySection: React.FC<SummarySectionProps> = ({ summary, isDeepStrategi
     );
   }
 
+  // Pre-process summary to ensure header separation
+  // Force real newlines and ensure headers (###) have double breaks after them for structural clarity
+  const formattedSummary = summary
+    .replace(/\\n/g, '\n') 
+    .replace(/(### [^\n]+)\n([^\n])/g, '$1\n\n$2');
+
   return (
     <section className="relative group animate-fade-in w-full">
       <div className="prose-high-density w-full">
         <MarkdownRenderer 
-          content={summary} 
+          content={formattedSummary} 
           className={`prose-summary font-serif text-on-surface ${isDeepStrategist ? 'is-pro-summary' : ''}`} 
         />
       </div>
@@ -38,7 +44,7 @@ const SummarySection: React.FC<SummarySectionProps> = ({ summary, isDeepStrategi
       <style>{`
         /* Structural Rhythm for High-Density Prose */
         .prose-summary p {
-          margin-bottom: 1.25rem;
+          margin-bottom: 1.5rem;
           color: var(--md-sys-color-on-surface);
         }
         
