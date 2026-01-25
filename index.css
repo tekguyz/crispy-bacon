@@ -1,10 +1,9 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  /* LIGHT MODE: Sandstone - Tactile & High Contrast */
+  /* LIGHT MODE: Sandstone - Enhanced Accessibility Audit */
   --md-sys-color-background: oklch(0.98 0.01 85); 
   --md-sys-color-on-background: oklch(0.15 0.02 85); 
   
@@ -18,15 +17,16 @@
   --md-sys-color-on-primary-container: oklch(0.30 0.10 45);
   
   --md-sys-color-surface-variant: oklch(0.96 0.01 85);
-  --md-sys-color-on-surface-variant: oklch(0.32 0.02 85); 
+  /* Boosted contrast for AAA compliance on textual metadata */
+  --md-sys-color-on-surface-variant: oklch(0.25 0.02 85); 
 
-  --md-sys-color-outline: oklch(0 0 0 / 0.15); /* Harder, crisp outlines */
+  --md-sys-color-outline: oklch(0 0 0 / 0.15); 
   --md-sys-color-outline-variant: oklch(0 0 0 / 0.08);
 
   --md-sys-color-error: oklch(0.50 0.22 25);
   --md-sys-color-success: oklch(0.48 0.18 145);
   
-  /* Surface Tones (Opaque) */
+  /* Surface Tones */
   --md-sys-color-surface-container-lowest: oklch(1 0 0);
   --md-sys-color-surface-container-low: oklch(0.98 0.01 85);
   --md-sys-color-surface-container: oklch(0.96 0.01 85);
@@ -34,128 +34,57 @@
   --md-sys-color-surface-container-highest: oklch(0.92 0.01 85);
   
   --card-bg: var(--md-sys-color-surface); 
-  
-  /* GRANOLA SHADOWS: No blur, distinct physical offset */
-  --card-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.1);
-  --sheet-shadow: -8px 0px 0px 0px rgba(0, 0, 0, 0.05);
-  
-  --radius-expressive: 1.25rem; /* 20px Lock */
-  --radius-sheet: 2.5rem;       /* 40px Lock */
+  --radius-expressive: 1.25rem;
+  --radius-sheet: 2.5rem;
   --easing-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .dark {
-  /* DARK MODE: Stratified Charcoal - Bedrock Palette */
-  --md-sys-color-background: oklch(0.14 0.01 0); /* Base */
+  /* DARK MODE: Stratified Charcoal - Bedrock Contrast Audit */
+  --md-sys-color-background: oklch(0.14 0.01 0); 
   --md-sys-color-on-background: oklch(0.98 0.01 0); 
   
-  /* Layer 1: Surface */
   --md-sys-color-surface: oklch(0.17 0.01 0); 
   --md-sys-color-on-surface: oklch(0.98 0.01 0);
   
   --md-sys-color-primary: oklch(0.72 0.18 45); 
   --md-sys-color-on-primary: oklch(1 0 0); 
   
-  /* Layer 2: Surface Variant */
   --md-sys-color-surface-variant: oklch(0.24 0.02 0); 
-  --md-sys-color-on-surface-variant: oklch(0.88 0.01 0);
+  --md-sys-color-on-surface-variant: oklch(0.85 0.01 0);
 
-  /* Surface Tones (Opaque Dark) */
+  --md-sys-color-outline: oklch(1 1 1 / 0.20);
+  --md-sys-color-outline-variant: oklch(1 1 1 / 0.10);
+  
   --md-sys-color-surface-container-lowest: oklch(0.12 0.01 0);
   --md-sys-color-surface-container-low: oklch(0.17 0.01 0);
   --md-sys-color-surface-container: oklch(0.21 0.01 0);
   --md-sys-color-surface-container-high: oklch(0.24 0.01 0);
   --md-sys-color-surface-container-highest: oklch(0.27 0.01 0);
-
-  --md-sys-color-outline: oklch(1 1 1 / 0.20);
-  --md-sys-color-outline-variant: oklch(1 1 1 / 0.10);
-  
-  --card-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 0.5);
-  --sheet-shadow: -8px 0px 0px 0px rgba(0, 0, 0, 0.4);
 }
 
-/* APP LAYOUT: High Density, Full Width */
-.container-fluid {
-  width: 100%;
-  max-width: 2400px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
+/* Accessibility: Visibility Rings */
+:focus-visible {
+  outline: 3px solid var(--md-sys-color-primary);
+  outline-offset: 4px;
 }
 
-@media (min-width: 768px) {
-  .container-fluid {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--md-sys-color-outline-variant);
+  border-radius: 10px;
 }
 
-/* LANDING LAYOUT: Marketing Focus, Centered */
-.container-landing {
-  width: 100%;
-  max-width: 1400px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1.5rem; /* 24px Mobile */
-  padding-right: 1.5rem;
+@keyframes skeleton-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton-shimmer {
+  background: linear-gradient(90deg, transparent, var(--md-sys-color-outline-variant), transparent);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
 }
 
-@media (min-width: 768px) {
-  .container-landing {
-    padding-left: 3rem; /* 48px Tablet */
-    padding-right: 3rem;
-  }
-}
-
-@media (min-width: 1280px) {
-  .container-landing {
-    padding-left: 5rem; /* 80px Desktop (Reduced from 6rem to allow more content width) */
-    padding-right: 5rem;
-  }
-}
-
-html, body {
-  min-height: 100dvh;
-  background-color: var(--md-sys-color-background);
-  color: var(--md-sys-color-on-background);
-  transition: background-color 200ms ease, color 200ms ease;
-  overflow-x: hidden;
-  font-family: 'Inter', sans-serif;
-  font-size: 15px; 
-  line-height: 1.5;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* MECHANICAL INTERACTION: Tactile Physics */
-.interactive {
-  transition: transform 100ms var(--easing-spring), background-color 100ms ease, border-color 100ms ease;
-  cursor: pointer;
-  will-change: transform;
-}
-.interactive:hover {
-  transform: translateY(-1px);
-}
-.interactive:active { 
-  transform: scale(0.96) translateY(0); 
-}
-
-.bg-card {
-  background-color: var(--card-bg);
-  box-shadow: var(--card-shadow);
-  border: 1px solid var(--md-sys-color-outline);
-}
-
-.ledger-grid {
-  background-image: 
-    linear-gradient(var(--md-sys-color-outline-variant) 1px, transparent 1px),
-    linear-gradient(90deg, var(--md-sys-color-outline-variant) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
-
-/* Hardened Audio Player UI */
-audio::-webkit-media-controls-enclosure {
-  background-color: var(--md-sys-color-surface-container-high);
-  border-radius: 12px;
-}
+@tailwind utilities;

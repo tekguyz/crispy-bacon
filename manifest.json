@@ -1,18 +1,24 @@
-
 {
   "name": "Crispy Bacon",
   "short_name": "Bacon",
-  "description": "High-Density Research Assistant with Stratified Ink intelligence architecture.",
+  "description": "High-Density Research Assistant for clear strategic thinking.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#faf9f6",
   "theme_color": "#faf9f6",
+  "orientation": "portrait",
   "icons": [
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%23050505'><rect width='512' height='512'/><g transform='translate(64, 64) scale(6)'><path d='M8 12C16 10 24 14 32 12C40 10 48 14 56 12V24C48 26 40 22 32 24C24 26 16 22 8 24V12Z' fill='white' opacity='0.9'/><path d='M8 28C16 26 24 30 32 28C40 26 48 30 56 28V38C48 40 40 36 32 38C24 40 16 36 8 38V28Z' fill='white' opacity='0.3'/><path d='M8 42C16 40 24 44 32 42C40 40 48 44 56 42V52C48 54 40 50 32 52C24 54 16 50 8 52V42Z' fill='oklch(0.68 0.19 45)'/></g></svg>",
-      "sizes": "512x512",
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%231a1a1a'><rect width='512' height='512' rx='128'/><path d='M192 144L128 208V304L192 368' stroke='white' stroke-width='32' stroke-linecap='square'/><path d='M320 144L384 208V304L320 368' stroke='%23ef7d31' stroke-width='32' stroke-linecap='square'/><circle cx='256' cy='256' r='32' fill='white'/></svg>",
+      "sizes": "192x192",
       "type": "image/svg+xml",
       "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%231a1a1a'><rect width='512' height='512' rx='128'/><path d='M192 144L128 208V304L192 368' stroke='white' stroke-width='32' stroke-linecap='square'/><path d='M320 144L384 208V304L320 368' stroke='%23ef7d31' stroke-width='32' stroke-linecap='square'/><circle cx='256' cy='256' r='32' fill='white'/></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
   ]
 }

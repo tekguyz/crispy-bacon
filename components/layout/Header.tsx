@@ -16,6 +16,7 @@ const RealtimeStatusIndicator = () => {
     <div 
       className="flex items-center gap-2 px-3 py-1 bg-surface-container border border-outline-variant/10 rounded-full group interactive h-7 shrink-0"
       aria-live="polite"
+      role="status"
       title={`System status: ${status}`}
     >
        <div className="relative">
@@ -23,7 +24,7 @@ const RealtimeStatusIndicator = () => {
             status === 'connected' ? 'bg-success' : 
             status === 'connecting' ? 'bg-primary animate-pulse' : 
             status === 'error' ? 'bg-error' : 'bg-on-surface-variant/20'
-          }`} />
+          }`} aria-hidden="true" />
        </div>
        <span className="text-[8px] font-black uppercase tracking-[0.2em] text-on-surface-variant opacity-60 group-hover:opacity-100 transition-opacity whitespace-nowrap">
          {status === 'connected' ? 'Synced' : status === 'connecting' ? 'Connecting' : 'Offline'}
@@ -87,14 +88,14 @@ const Header: React.FC<HeaderProps> = ({ onOpenSidebar }) => {
   };
 
   return (
-    <header className="h-16 flex items-center px-4 md:px-8 bg-background sticky top-0 z-[45] border-b border-outline-variant justify-between gap-4">
+    <header className="h-16 flex items-center px-4 md:px-8 bg-background sticky top-0 z-[45] border-b border-outline-variant justify-between gap-4" role="banner">
       <div className="flex items-center gap-3 min-w-0">
         <button 
           onClick={() => { triggerHaptic('medium'); onOpenSidebar(); }}
           className="md:hidden w-11 h-11 -ml-1 rounded-xl bg-surface-container border border-outline-variant/10 text-on-surface-variant flex items-center justify-center shrink-0 interactive"
-          aria-label="Open primary navigation menu"
+          aria-label="Open sidebar menu"
         >
-          <Menu size={20} strokeWidth={2.5} />
+          <Menu size={20} strokeWidth={2.5} aria-hidden="true" />
         </button>
 
         <div className={`flex items-center gap-3 min-w-0 transition-all duration-300 ${isSearchExpanded ? 'opacity-0 md:opacity-100' : 'opacity-100'}`}>
@@ -108,12 +109,15 @@ const Header: React.FC<HeaderProps> = ({ onOpenSidebar }) => {
       </div>
       
       <div className="flex items-center gap-2 shrink-0 h-full">
-          <div className={`relative flex items-center transition-all duration-500 ease-spring ${isSearchExpanded ? 'w-56 md:w-96' : 'w-11'}`}>
+          <div 
+            className={`relative flex items-center transition-all duration-500 ease-spring ${isSearchExpanded ? 'w-56 md:w-96' : 'w-11'}`}
+            role="search"
+          >
              <div className={`absolute inset-0 bg-surface-container border border-outline-variant rounded-2xl transition-all duration-500 origin-right h-11 md:h-10 ${isSearchExpanded ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}>
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant opacity-40" size={14} />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant opacity-40" size={14} aria-hidden="true" />
                 <input 
                   ref={searchInputRef}
-                  type="text" 
+                  type="search" 
                   placeholder="Search notes..." 
                   value={searchQuery}
                   onChange={handleSearchChange}
@@ -122,16 +126,17 @@ const Header: React.FC<HeaderProps> = ({ onOpenSidebar }) => {
                 />
              </div>
 
-             <Tooltip content={isSearchExpanded ? (searchQuery ? "Clear" : "Close") : "Search Library"}>
+             <Tooltip content={isSearchExpanded ? (searchQuery ? "Clear search" : "Close search") : "Search Library"}>
                 <button 
                   onClick={handleSearchAction}
                   className={`relative w-11 h-11 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all active:scale-90 z-10 interactive ${isSearchExpanded ? 'bg-transparent text-primary ml-auto' : 'bg-surface-container border border-outline-variant/10 text-on-surface-variant shadow-sm'}`}
-                  aria-label={isSearchExpanded ? "Close search" : "Open search"}
+                  aria-label={isSearchExpanded ? "Close search bar" : "Expand search bar"}
+                  aria-expanded={isSearchExpanded}
                 >
                     {isSearchExpanded ? (
-                      searchQuery.length > 0 ? <CircleX size={18} strokeWidth={3} className="animate-scale-in" /> : <X size={18} strokeWidth={3} />
+                      searchQuery.length > 0 ? <CircleX size={18} strokeWidth={3} className="animate-scale-in" aria-hidden="true" /> : <X size={18} strokeWidth={3} aria-hidden="true" />
                     ) : (
-                      <Search size={18} strokeWidth={3} />
+                      <Search size={18} strokeWidth={3} aria-hidden="true" />
                     )}
                 </button>
              </Tooltip>

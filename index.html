@@ -2,40 +2,31 @@
 <html lang="en" class="light">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <title>Crispy Bacon | Professional Research Partner</title>
+    
+    <!-- Performance: DNS Prefetch & Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://www.google.com/s2/favicons">
     
     <!-- Primary Meta Tags -->
     <meta name="title" content="Crispy Bacon | Professional Research Partner" />
     <meta name="description" content="Turn meetings and unstructured text into clear, usable knowledge. Private, secure, and bot-free research for high-performance teams." />
     
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://crispy-bacon.netlify.app/" />
-    <meta property="og:title" content="Crispy Bacon | Professional Research Partner" />
-    <meta property="og:description" content="Distill your complex meetings and documents into high-density strategic notes. No bots, just clarity." />
-    <meta property="og:image" content="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?q=80&w=1200&auto=format&fit=crop" />
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://crispy-bacon.netlify.app/" />
-    <meta property="twitter:title" content="Crispy Bacon | Professional Research Partner" />
-    <meta property="twitter:description" content="Distill your complex meetings and documents into high-density strategic notes. No bots, just clarity." />
-    <meta property="twitter:image" content="https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?q=80&w=1200&auto=format&fit=crop" />
-
+    <!-- PWA / Mobile Compliance -->
     <link rel="manifest" href="/manifest.json">
-    
-    <!-- Browser Theme Colors (Synced with Sandstone Palette) -->
     <meta name="theme-color" content="#faf9f6" />
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Bacon">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none'><rect width='64' height='64' rx='16' fill='%231a1a1a'/><path d='M24 18L16 26V38L24 46' stroke='white' stroke-width='4' stroke-linecap='square'/><path d='M40 18L48 26V38L40 46' stroke='%23ef7d31' stroke-width='4' stroke-linecap='square'/><circle cx='32' cy='32' r='4' fill='white'/></svg>">
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none'><rect width='64' height='64' rx='16' fill='%231a1a1a'/><path d='M24 18L16 26V38L24 46' stroke='white' stroke-width='4' stroke-linecap='square'/><path d='M40 18L48 26V38L40 46' stroke='%23ef7d31' stroke-width='4' stroke-linecap='square'/><circle cx='32' cy='32' r='4' fill='white'/></svg>">
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="/index.css">
@@ -51,52 +42,16 @@
               display: ['Newsreader', 'serif'],
               mono: ['"JetBrains Mono"', 'monospace'],
             },
-            transitionTimingFunction: {
-              'spring': 'cubic-bezier(0.34, 1.56, 0.64, 1)',
-            },
             colors: {
               primary: 'var(--md-sys-color-primary)',
               'on-primary': 'var(--md-sys-color-on-primary)',
-              'primary-container': 'var(--md-sys-color-primary-container)',
-              'on-primary-container': 'var(--md-sys-color-on-primary-container)',
-              secondary: 'var(--md-sys-color-secondary)',
-              'on-secondary': 'var(--md-sys-color-on-secondary)',
-              'secondary-container': 'var(--md-sys-color-secondary-container)',
-              'on-secondary-container': 'var(--md-sys-color-on-secondary-container)',
               surface: 'var(--md-sys-color-surface)',
               'on-surface': 'var(--md-sys-color-on-surface)',
-              'surface-variant': 'var(--md-sys-color-surface-variant)',
               'on-surface-variant': 'var(--md-sys-color-on-surface-variant)',
-              'surface-container-lowest': 'var(--md-sys-color-surface-container-lowest)',
-              'surface-container-low': 'var(--md-sys-color-surface-container-low)',
-              'surface-container': 'var(--md-sys-color-surface-container)',
-              'surface-container-high': 'var(--md-sys-color-surface-container-high)',
-              'surface-container-highest': 'var(--md-sys-color-surface-container-highest)',
               outline: 'var(--md-sys-color-outline)',
-              'outline-variant': 'var(--md-sys-color-outline-variant)',
               background: 'var(--md-sys-color-background)',
-              'on-background': 'var(--md-sys-color-on-background)',
-              card: 'var(--card-bg)',
               error: 'var(--md-sys-color-error)',
               success: 'var(--md-sys-color-success)',
-            },
-            borderRadius: {
-              'none': '0',
-              'sm': '0.5rem',
-              'md': '0.75rem',
-              'lg': '1rem',
-              'xl': '1.25rem', /* 20px - Radius Lock Standard */
-              '2xl': '1.5rem',
-              '3xl': '2rem',
-              '4xl': '2.5rem', /* 40px - Radius Lock Sheets */
-              'full': '9999px',
-              'expressive': 'var(--radius-expressive)', /* 20px */
-              'sheet': 'var(--radius-sheet)', /* 40px */
-            },
-            boxShadow: {
-              'm3-1': '2px 2px 0px 0px rgba(0, 0, 0, 0.1)',
-              'm3-2': '3px 3px 0px 0px rgba(0, 0, 0, 0.1)',
-              'm3-3': '4px 4px 0px 0px rgba(0, 0, 0, 0.1)',
             }
           }
         }
@@ -127,7 +82,7 @@
 }
 </script>
   </head>
-  <body class="bg-background text-on-background selection:bg-primary/20 selection:text-primary antialiased">
+  <body class="bg-background text-on-background antialiased overflow-x-hidden">
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
   </body>
