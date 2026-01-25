@@ -10,7 +10,7 @@ export const LandingHero: React.FC<any> = ({ onSignIn }) => {
   };
 
   return (
-    <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-background">
+    <section className="relative pt-24 pb-16 lg:pt-40 lg:pb-24 overflow-hidden bg-background">
       <div className="absolute inset-0 ledger-grid opacity-[0.03] pointer-events-none" />
       
       <div className="container-landing grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-20">
@@ -19,16 +19,16 @@ export const LandingHero: React.FC<any> = ({ onSignIn }) => {
         <div className="lg:col-span-7 space-y-10 animate-fade-in text-center lg:text-left">
           <div className="inline-flex items-center gap-3 px-4 py-1.5 bg-primary/5 border border-primary/10 text-primary rounded-full">
             <Sparkles size={12} strokeWidth={3} />
-            <span className="text-[9px] font-black uppercase tracking-[0.3em]">Clear thinking from every meeting</span>
+            <span className="text-[9px] font-black uppercase tracking-[0.3em]">Professional Research Assistant</span>
           </div>
 
           <div className="space-y-6">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[6rem] font-display font-bold tracking-tighter leading-[0.9] text-on-background text-balance uppercase italic">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[5.5rem] font-display font-bold tracking-tighter leading-[0.85] text-on-background text-balance uppercase italic">
               Distill signal <br /> 
               <span className="text-primary not-italic">from noise.</span>
             </h1>
             <p className="text-lg md:text-xl text-on-background font-medium font-serif leading-relaxed max-w-xl opacity-60 mx-auto lg:mx-0">
-              High-density recaps for professionals. Capture meetings privately and recover facts without intrusive bots or cluttered notes.
+              Recover facts without intrusive bots or cluttered notes. Calibrated for high-performance leadership teams.
             </p>
           </div>
 
@@ -39,9 +39,9 @@ export const LandingHero: React.FC<any> = ({ onSignIn }) => {
             >
               Get Started <ArrowRight size={16} strokeWidth={3} className="group-hover:translate-x-1 transition-transform" />
             </button>
-            <div className="flex items-center gap-3 px-4 py-2">
+            <div className="flex items-center gap-3 px-4 py-2 opacity-50">
                <ShieldCheck size={18} className="text-success" />
-               <span className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-60">Private by Default</span>
+               <span className="text-[10px] font-black uppercase tracking-widest text-on-surface">Private by Default</span>
             </div>
           </div>
           
@@ -53,42 +53,39 @@ export const LandingHero: React.FC<any> = ({ onSignIn }) => {
         </div>
 
         {/* ILLUSTRATION COLUMN */}
-        <div className="lg:col-span-5 relative hidden lg:flex justify-center items-center animate-fade-in [animation-delay:200ms] h-[500px]">
+        <div className="lg:col-span-5 relative hidden lg:flex justify-center items-center animate-fade-in [animation-delay:200ms] h-[400px]">
           <div className="absolute inset-0 bg-primary/5 blur-[100px] rounded-full pointer-events-none" />
-          <div className="relative w-full aspect-square flex items-center justify-center scale-110">
+          <div className="relative w-full aspect-square flex items-center justify-center">
              
-             {/* 2. The Prism (Processing Core) */}
-             <div className="relative z-20 w-56 h-80 bg-surface-container-low border-2 border-on-surface rounded-3xl shadow-2xl flex flex-col items-center justify-center gap-8 transform -rotate-3 transition-transform hover:rotate-0 duration-700 group">
+             {/* The Prism (Processing Core) */}
+             <div className="relative z-20 w-48 h-64 bg-surface-container-low border-2 border-on-surface rounded-3xl shadow-2xl flex flex-col items-center justify-center gap-8 transform -rotate-3 transition-transform hover:rotate-0 duration-700 group">
                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none rounded-3xl" />
-                <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary shadow-inner border border-primary/20 group-hover:scale-110 transition-transform">
-                   <Activity size={32} strokeWidth={2.5} />
+                <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary shadow-inner border border-primary/20 group-hover:scale-110 transition-transform">
+                   <Activity size={28} strokeWidth={2.5} />
                 </div>
                 <div className="space-y-4 w-full px-8">
-                   <div className="h-1.5 w-full bg-primary/20 rounded-full overflow-hidden">
+                   <div className="h-1 w-full bg-primary/20 rounded-full overflow-hidden">
                       <div className="h-full bg-primary w-1/2 animate-[shimmer_2s_infinite]" />
                    </div>
-                   <div className="flex justify-between items-center text-[9px] font-black uppercase tracking-widest text-on-surface">
-                      <span>Summarizing</span>
-                      <span className="text-primary">Live</span>
+                   <div className="flex justify-between items-center text-[8px] font-black uppercase tracking-widest text-on-surface">
+                      <span>Analyzing</span>
+                      <span className="text-primary font-mono">LIVE</span>
                    </div>
                 </div>
              </div>
 
-             {/* 3. The Signal (Right Output) */}
+             {/* The Signal (Right Output) */}
              <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-30">
-                <div className="bg-surface border-2 border-on-surface rounded-2xl p-6 shadow-xl w-64 space-y-4 transform rotate-3 hover:rotate-0 transition-transform duration-500">
+                <div className="bg-surface border-2 border-on-surface rounded-2xl p-6 shadow-xl w-60 space-y-4 transform rotate-3 hover:rotate-0 transition-transform duration-500">
                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-8 h-8 bg-success text-on-primary rounded-lg flex items-center justify-center">
-                         <ShieldCheck size={16} strokeWidth={3} />
+                      <div className="w-6 h-6 bg-success text-on-primary rounded-lg flex items-center justify-center">
+                         <ShieldCheck size={14} strokeWidth={3} />
                       </div>
-                      <span className="text-[10px] font-black uppercase tracking-widest text-on-surface">Note Saved</span>
+                      <span className="text-[9px] font-black uppercase tracking-widest text-on-surface">Recap Ready</span>
                    </div>
                    <div className="space-y-3">
-                      <div className="h-2.5 w-full bg-surface-container-highest rounded-full" />
-                      <div className="h-2.5 w-3/4 bg-surface-container-highest rounded-full" />
-                   </div>
-                   <div className="pt-3 border-t border-outline-variant/10">
-                      <span className="text-[8px] font-bold text-primary uppercase tracking-widest">Summary Ready</span>
+                      <div className="h-2 w-full bg-surface-container-highest rounded-full" />
+                      <div className="h-2 w-3/4 bg-surface-container-highest rounded-full" />
                    </div>
                 </div>
              </div>

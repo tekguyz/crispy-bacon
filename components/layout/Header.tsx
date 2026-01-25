@@ -25,7 +25,7 @@ const RealtimeStatusIndicator = () => {
             status === 'error' ? 'bg-error' : 'bg-on-surface-variant/20'
           }`} aria-hidden="true" />
        </div>
-       <span className="text-[8px] font-black uppercase tracking-[0.2em] text-on-surface-variant opacity-60 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+       <span className="text-[8px] font-black uppercase tracking-[0.2em] text-on-surface-variant group-hover:opacity-100 transition-opacity whitespace-nowrap">
          {status === 'connected' ? 'Synced' : status === 'connecting' ? 'Connecting' : 'Offline'}
        </span>
     </div>
@@ -121,7 +121,7 @@ const Header: React.FC<HeaderProps> = ({ onOpenSidebar }) => {
                   value={searchQuery}
                   onChange={handleSearchChange}
                   className="w-full h-full bg-transparent pl-9 pr-10 text-[11px] font-black uppercase tracking-widest text-on-surface focus:outline-none placeholder:text-on-surface-variant/20"
-                  aria-label="Search items"
+                  aria-label="Search research library"
                 />
              </div>
 

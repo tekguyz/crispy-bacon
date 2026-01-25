@@ -1,9 +1,7 @@
-
 import React, { useState, useEffect } from 'react';
 import { LandingNav } from './LandingNav';
 import { LandingHero } from './LandingHero';
-import { LandingMethod } from './LandingMethod';
-import { FeatureGrid } from './FeatureGrid';
+import { TheInstrument } from './TheInstrument';
 import { PricingTier } from './PricingTier';
 import { SmallTeamsCTA } from './SmallTeamsCTA';
 import { FAQSection } from './FAQSection';
@@ -25,30 +23,23 @@ const LandingPage: React.FC<any> = ({ onSignIn, onPrivacy, onTerms, onEthics }) 
       <LandingNav isScrolled={isScrolled} session={session} userProfile={userProfile} onSignIn={onSignIn} onSignOut={signOut} />
       
       <main className="overflow-x-hidden">
-        {/* 1. THE HOOK */}
+        {/* 1. THE ENTRY */}
         <LandingHero onSignIn={onSignIn} />
         
-        {/* 2. THE STRATEGY */}
-        <LandingMethod />
-        
-        {/* 3. THE PROOF */}
-        <FeatureGrid />
+        {/* 2. THE INSTRUMENT (Merged Method + Features) */}
+        <TheInstrument />
 
-        {/* 4. OBJECTION HANDLING (Moved up for conversion flow) */}
-        <FAQSection />
-
-        {/* 5. THE INVESTMENT */}
-        <section id="pricing" className="py-24 md:py-40 section-zebra-1 overflow-hidden">
+        {/* 3. THE INVESTMENT */}
+        <section id="pricing" className="py-24 md:py-32 section-zebra-1 overflow-hidden border-t-2 border-outline-variant">
           <div className="container-landing">
-            <div className="max-w-4xl mx-auto mb-20 space-y-4 text-center">
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Investment</span>
-              <h2 className="text-4xl md:text-7xl font-slab font-bold tracking-tighter uppercase text-on-surface leading-none">Built for Output.</h2>
-              <p className="text-lg text-on-surface-variant font-medium opacity-60">Simple pricing for high-performance leaders.</p>
+            <div className="max-w-4xl mx-auto mb-16 space-y-4 text-center">
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Membership</span>
+              <h2 className="text-4xl md:text-6xl font-slab font-bold tracking-tighter uppercase text-on-surface leading-none">Built for Output.</h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto items-stretch mb-20">
                <PricingTier 
-                title="Standard" price="$0" subtitle="The essential research workspace."
+                title="Standard" price="$0" subtitle="Essential research bandwidth."
                 features={[
                   { text: "5 Recaps per month", included: true }, 
                   { text: "Strategic Briefing Deck", included: true }, 
@@ -60,7 +51,7 @@ const LandingPage: React.FC<any> = ({ onSignIn, onPrivacy, onTerms, onEthics }) 
                 onAction={onSignIn}
                />
                <PricingTier 
-                title="Executive" price="$20" subtitle="The permanent intelligence vault." isPro={true}
+                title="Executive" price="$20" subtitle="Permanent intelligence vault." isPro={true}
                 features={[
                   { text: "Unlimited Research Recaps", included: true }, 
                   { text: "Collaborative Live Editing", included: true },
@@ -73,13 +64,18 @@ const LandingPage: React.FC<any> = ({ onSignIn, onPrivacy, onTerms, onEthics }) 
                />
             </div>
             
-            {/* 6. FINAL CONVERSION PUSH */}
-            <SmallTeamsCTA />
+            {/* 4. TECHNICAL BRIEF (Condensed FAQ) */}
+            <FAQSection />
+
+            {/* 5. TEAM CONVERSION */}
+            <div className="mt-20">
+              <SmallTeamsCTA />
+            </div>
           </div>
         </section>
       </main>
       
-      {/* 7. FOOTER */}
+      {/* 6. FOOTER */}
       <LandingFooter onPrivacy={onPrivacy} onTerms={onTerms} onEthics={onEthics} onSignIn={onSignIn} />
     </div>
   );

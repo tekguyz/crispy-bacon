@@ -31,23 +31,23 @@ export default defineConfig({
       output: {
         manualChunks: (id) => {
           if (id.includes('node_modules')) {
-            // Core UI Library
+            // Level 1: Core UI (Must be instant)
             if (id.includes('react') || id.includes('react-dom') || id.includes('scheduler')) {
               return 'vendor-core';
             }
-            // State & Logic
+            // Level 2: Logic & Icons
             if (id.includes('zustand') || id.includes('lucide-react') || id.includes('@tanstack/react-query')) {
               return 'vendor-ui-logic';
             }
-            // Heavy Processing (Deferred)
+            // Level 3: Heavy Duty (Deferred)
             if (id.includes('mammoth') || id.includes('react-markdown')) {
               return 'vendor-ingestion';
             }
-            // AI Infrastructure (Critical Split)
+            // Level 4: AI Infrastructure
             if (id.includes('@google/genai')) {
               return 'vendor-ai-engine';
             }
-            // Database & Backend
+            // Level 5: Database Persistence
             if (id.includes('@supabase') || id.includes('uuid')) {
               return 'vendor-infra';
             }
@@ -55,6 +55,6 @@ export default defineConfig({
         }
       }
     },
-    chunkSizeWarningLimit: 800,
+    chunkSizeWarningLimit: 600,
   }
 })

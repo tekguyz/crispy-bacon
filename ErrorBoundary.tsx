@@ -15,14 +15,18 @@ interface ErrorBoundaryState {
 /**
  * ErrorBoundary component to catch rendering errors in the component tree.
  */
-// Fix: Use React.Component to ensure proper inheritance and access to setState/props
+// Fix: Explicitly extending React.Component ensures inheritance of props, state, and setState with correct generic types.
 export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  // Initialize state with proper types
-  public state: ErrorBoundaryState = {
-    hasError: false,
-    error: null,
-    errorInfo: null
-  };
+  // Fix: Initializing state in constructor with correct typing.
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    // Fix: state property is correctly initialized and inherited from React.Component.
+    this.state = {
+      hasError: false,
+      error: null,
+      errorInfo: null
+    };
+  }
 
   public static getDerivedStateFromError(error: Error): ErrorBoundaryState {
     // Update state so the next render will show the fallback UI.
@@ -31,11 +35,12 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error("Uncaught error:", error, errorInfo);
-    // Fix: Use this.setState inherited from React.Component
+    // Fix: setState is correctly inherited and typed from React.Component.
     this.setState({ errorInfo });
   }
 
   public render(): ReactNode {
+    // Fix: Accessing state property inherited from the base React.Component.
     const { hasError, error, errorInfo } = this.state;
     
     if (hasError) {
@@ -63,7 +68,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
       );
     }
 
-    // Fix: Use this.props inherited from React.Component
+    // Fix: Accessing props property inherited from the base React.Component.
     return this.props.children;
   }
 }

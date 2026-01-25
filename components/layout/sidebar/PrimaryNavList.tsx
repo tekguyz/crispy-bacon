@@ -40,6 +40,7 @@ export const PrimaryNavList: React.FC<PrimaryNavListProps> = ({
             <button
               onClick={() => handleNavClick(item.id)}
               aria-current={isActive ? 'page' : undefined}
+              aria-label={`Go to ${item.label}`}
               className={`
                 flex items-center h-11 transition-all duration-300 ease-spring relative interactive group outline-none
                 ${isActive ? 'text-on-surface' : 'text-on-surface-variant/40 hover:text-on-surface hover:bg-on-surface/[0.04]'}
@@ -57,7 +58,7 @@ export const PrimaryNavList: React.FC<PrimaryNavListProps> = ({
               />
               
               <div className="relative z-10 flex items-center justify-center shrink-0 w-5 h-5">
-                <item.icon size={18} strokeWidth={isActive ? 3 : 2} />
+                <item.icon size={18} strokeWidth={isActive ? 3 : 2} aria-hidden="true" />
               </div>
               
               {isExpanded && (

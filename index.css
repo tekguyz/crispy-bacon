@@ -14,8 +14,8 @@
   --md-sys-color-on-primary: oklch(1 0 0); 
   
   --md-sys-color-surface-variant: oklch(0.96 0.01 85);
-  /* Boosted L from 0.85 to 0.40 for proper contrast on white backgrounds */
-  --md-sys-color-on-surface-variant: oklch(0.40 0.02 85); 
+  /* Contrast Audit: Dropping L from 0.40 to 0.25 to ensure AAA compliance on variant text */
+  --md-sys-color-on-surface-variant: oklch(0.25 0.02 85); 
 
   --md-sys-color-outline: oklch(0 0 0 / 0.15); 
   --md-sys-color-outline-variant: oklch(0 0 0 / 0.08);
@@ -55,10 +55,22 @@
   --md-sys-color-surface-container-high: oklch(0.24 0.01 0);
 }
 
-/* Accessibility: Visibility Rings */
+/* Accessibility: Focus Protocol */
 :focus-visible {
   outline: 3px solid var(--md-sys-color-primary);
   outline-offset: 4px;
+}
+
+/* High-Density Typography */
+.prose-summary h3 {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.4em;
+  opacity: 0.6;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 }
 
 .shimmer {
