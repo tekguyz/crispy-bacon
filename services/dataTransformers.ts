@@ -6,7 +6,6 @@ import { InsightContent, ContentType, Sentiment, ProcessingStatus } from '../typ
  */
 export const mapSupabaseToInsight = (item: any): InsightContent => {
   const summaryData = item.summaries?.[0] || {};
-  const hasSummary = item.summaries && item.summaries.length > 0;
   const isMeeting = item.source_type === ContentType.MEETING;
   
   const duration = item.duration_seconds || item.metadata?.durationSeconds || 0;
@@ -19,23 +18,24 @@ export const mapSupabaseToInsight = (item: any): InsightContent => {
     } catch (e) {}
   }
 
-  // Text Hygiene: Unescape literal newlines that break Markdown parsing (Fix for "Fucked up" text)
+  // Text Hygiene: Unescape literal newlines that break Markdown parsing
   const cleanText = (txt: string) => {
     if (!txt) return "";
     return txt
-      .replace(/\\n/g, '\n') // Fix escaped newlines
-      .replace(/\\t/g, '\t'); // Fix escaped tabs
+      .replace(/\\n/g, '\n')
+      .replace(/\\t/g, '\t');
   };
 
   const summaryText = cleanText(summaryData.summary || "");
+  
+  // READING TIME CALCULATION: Strictly based on summary text (200 words per minute)
   const wordCount = summaryText.trim().split(/\s+/).length;
-  const calculatedReadingTime = Math.ceil(wordCount / 200);
-  const finalReadingTime = summaryData.reading_time || calculatedReadingTime || 1;
+  const calculatedReadingTime = Math.max(1, Math.ceil(wordCount / 200));
 
   // Status Recovery Logic
   let status = (item.processing_status as ProcessingStatus) || ProcessingStatus.COMPLETED;
   const hasActionProgress = item.metadata?.completedActionIndices && item.metadata.completedActionIndices.length > 0;
-  const hasIntelligence = hasSummary || summaryText.length > 10 || (item.highlights && item.highlights.length > 0);
+  const hasIntelligence = (item.summaries && item.summaries.length > 0) || summaryText.length > 10;
 
   if ((hasIntelligence || hasActionProgress) && (status === ProcessingStatus.PROCESSING || status === ProcessingStatus.PENDING || status === ProcessingStatus.SYNCING)) {
     status = ProcessingStatus.COMPLETED;
@@ -62,7 +62,7 @@ export const mapSupabaseToInsight = (item: any): InsightContent => {
     sentiment: (summaryData.sentiment as Sentiment) || Sentiment.NEUTRAL,
     metadata: {
       ...item.metadata,
-      readingTimeMinutes: finalReadingTime,
+      readingTimeMinutes: calculatedReadingTime,
       wordCount: wordCount,
       originalDate: item.created_at,
       durationSeconds: duration,
