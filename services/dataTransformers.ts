@@ -19,11 +19,13 @@ export const mapSupabaseToInsight = (item: any): InsightContent => {
   }
 
   // Text Hygiene: Unescape literal newlines that break Markdown parsing
+  // And surgically remove leading spaces that appear after headers (Deep Distill artifact)
   const cleanText = (txt: string) => {
     if (!txt) return "";
     return txt
       .replace(/\\n/g, '\n')
-      .replace(/\\t/g, '\t');
+      .replace(/\\t/g, '\t')
+      .replace(/(### [^\n]+\n+)\s+/g, '$1'); // Removes leading space after a header
   };
 
   const summaryText = cleanText(summaryData.summary || "");
@@ -97,6 +99,12 @@ export const formatTranscript = (text: any): string => {
  */
 export const generateInsightMarkdownReport = (insight: InsightContent, target: 'notion' | 'obsidian' = 'notion'): string => {
   const dateStr = new Date(insight.created_at).toISOString().split('T')[0];
+  
+  // Extra whitespace hygiene for exports
+  const exportSummary = insight.summary
+    .replace(/(### [^\n]+\n+)\s+/g, '$1') // Ensure no leading spaces after headers
+    .trim();
+
   let md = '';
   if (target === 'obsidian') {
     md += `---\ntitle: "${insight.title.replace(/"/g, '\\"')}"\ndate: ${dateStr}\n`;
@@ -110,15 +118,15 @@ export const generateInsightMarkdownReport = (insight: InsightContent, target: '
     if (insight.site_name) md += `**Source:** ${insight.site_name}\n`;
     md += `**Date:** ${new Date(insight.created_at).toLocaleDateString()}\n\n`;
   }
-  md += `## Summary\n${insight.summary}\n\n`;
+  md += `## Summary\n${exportSummary}\n\n`;
   if (insight.highlights?.length) {
     md += `### Key Takeaways\n`;
-    insight.highlights.forEach(h => md += `- ${h}\n`);
+    insight.highlights.forEach(h => md += `- ${h.trim()}\n`);
     md += `\n`;
   }
   if (insight.action_items?.length) {
     md += `### Next Steps\n`;
-    insight.action_items.forEach((item, i) => md += `${i + 1}. ${item}\n`);
+    insight.action_items.forEach((item, i) => md += `${i + 1}. ${item.trim()}\n`);
     md += `\n`;
   }
   if (insight.processed_text) {

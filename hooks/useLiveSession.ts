@@ -24,7 +24,6 @@ export const useLiveSession = () => {
   const lastActivityRef = useRef<number>(Date.now());
   const AUTO_KILL_MS = 3 * 60 * 1000; 
 
-  // Initialize Engine
   useEffect(() => {
     engineRef.current = new LiveEngine({
       onStatusChange: (s) => setStatus(s),
@@ -44,7 +43,6 @@ export const useLiveSession = () => {
     };
   }, [addToast]);
 
-  // Activity Monitor
   useEffect(() => {
     if (!isLiveAssistantActive || status !== 'connected') return;
 
@@ -65,7 +63,6 @@ export const useLiveSession = () => {
     return () => clearInterval(interval);
   }, [isLiveAssistantActive, status, stopLiveAssistant, addToast]);
 
-  // Connection Lifecycle
   useEffect(() => {
     if (!isLiveAssistantActive) {
       if (engineRef.current) engineRef.current.disconnect();
@@ -75,15 +72,44 @@ export const useLiveSession = () => {
     lastActivityRef.current = Date.now();
     logSystemEvent("Assistant requested.");
 
-    const trace = typeof selectedInsight?.processed_text === 'string' 
+    if (!selectedInsight) {
+        engineRef.current?.connect("IDENTITY: Senior professional research partner.", preferredVoice || 'Zephyr');
+        return;
+    }
+
+    // UNIFIED KNOWLEDGE PROTOCOL: Match text chat context
+    const summaryText = selectedInsight.summary || "No summary available.";
+    const highlightsText = (selectedInsight.highlights || []).join('; ');
+    const nextStepsText = (selectedInsight.action_items || []).join('; ');
+
+    const rawTrace = typeof selectedInsight.processed_text === 'string' 
         ? selectedInsight.processed_text 
-        : JSON.stringify(selectedInsight?.processed_text || "");
+        : JSON.stringify(selectedInsight.processed_text || "");
 
-    const instruction = selectedInsight 
-        ? `You are a professional research partner discussing: "${selectedInsight.title}". Context: """${trace.substring(0, 50000)}""". Answer follow-up questions directly.` 
-        : "IDENTITY: Senior professional research partner.";
+    const fullInstruction = `
+      ROLE: Professional Research Partner.
+      CONTEXT: "${selectedInsight.title}"
+      
+      SOURCE MATERIAL (RECAP):
+      """
+      SUMMARY: ${summaryText}
+      KEY_TAKEAWAYS: ${highlightsText}
+      NEXT_STEPS: ${nextStepsText}
+      """
+      
+      SOURCE MATERIAL (RAW_TRACE):
+      """
+      ${rawTrace.substring(0, 30000)}
+      """
+      
+      INSTRUCTIONS:
+      - Answer questions based ONLY on the provided source materials.
+      - Use the RECAP for executive context and the RAW_TRACE for specific evidence or names.
+      - If you are asked about people (e.g. Joe, Sean, Rolando, Brock), consult BOTH the Recap and Raw Trace.
+      - Be direct, professional, and efficient. No fluff.
+    `;
 
-    engineRef.current?.connect(instruction, preferredVoice || 'Zephyr');
+    engineRef.current?.connect(fullInstruction, preferredVoice || 'Zephyr');
 
   }, [isLiveAssistantActive, selectedInsight, preferredVoice, logSystemEvent]);
 
