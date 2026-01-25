@@ -20,24 +20,25 @@ const TaskList: React.FC<TaskListProps> = ({ insightId, activeTasks, completedTa
   if (activeTasks.length === 0 && completedTasks.length === 0) return null;
 
   return (
-    <section className="space-y-4 animate-fade-in">
-      <div className="flex items-center justify-between px-1">
+    <section className="space-y-6 animate-fade-in pt-4">
+      {/* HEADER: Matches MarkdownRenderer H3 exactly */}
+      <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
             <div className="p-1 bg-surface-container-high text-primary rounded border border-outline-variant/20 shadow-inner">
                 <ListTodo size={12} strokeWidth={3} />
             </div>
-            <h4 className="font-mono text-[9px] font-black uppercase tracking-[0.35em] text-on-surface-variant opacity-40 leading-none">Decision Checklist</h4>
+            <h4 className="font-mono text-[10px] font-black uppercase tracking-[0.35em] text-on-surface-variant/60 leading-none">Decision Checklist</h4>
         </div>
         <span className="text-[8px] font-mono font-bold text-on-surface-variant opacity-20 uppercase tracking-widest">
             {activeTasks.length} Pending
         </span>
       </div>
 
-      <div className="bg-surface-container-low border border-outline-variant/10 rounded-[1.5rem] p-4 md:p-6 relative overflow-hidden">
+      <div className="bg-surface-container-low border border-outline-variant/10 rounded-[1.5rem] p-2 relative overflow-hidden">
         <div className="absolute inset-0 ledger-grid opacity-[0.02] pointer-events-none" />
         
         {activeTasks.length > 0 ? (
-          <div className="space-y-1.5 relative z-10">
+          <div className="space-y-1 relative z-10">
             {activeTasks.map(({ item, index }) => (
               <TaskItem 
                 key={index}
@@ -49,9 +50,9 @@ const TaskList: React.FC<TaskListProps> = ({ insightId, activeTasks, completedTa
             ))}
           </div>
         ) : (
-          <div className="text-center py-10 bg-success/5 rounded-xl border border-dashed border-success/20 relative z-10">
+          <div className="text-center py-10 bg-success/5 rounded-xl border border-dashed border-success/20 relative z-10 mx-2 my-2">
             <CheckCircle2 size={32} className="mx-auto mb-3 text-success opacity-30" />
-            <h5 className="text-sm font-black uppercase tracking-tight text-on-surface">Queue Empty.</h5>
+            <h5 className="text-sm font-black uppercase tracking-tight text-on-surface">Queue Clear.</h5>
           </div>
         )}
       </div>

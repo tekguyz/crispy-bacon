@@ -26,11 +26,14 @@ const SummarySection: React.FC<SummarySectionProps> = ({ summary, isDeepStrategi
     );
   }
 
-  // Pre-process summary to ensure header separation and cleanliness
+  // Pre-process summary:
+  // 1. Normalize newlines
+  // 2. Separate headers from text
+  // 3. AGGRESSIVELY strip Markdown horizontal rules (--- or ***)
   const formattedSummary = summary
     .replace(/\\n/g, '\n') 
     .replace(/(### [^\n]+)\n([^\n])/g, '$1\n\n$2')
-    .replace(/---\n/g, ''); // Explicitly strip HR dividers that clutter the high-density prose
+    .replace(/^(?:---|___|\*\*\*)\s*$/gm, ''); 
 
   return (
     <section className="relative group animate-fade-in w-full">
@@ -48,13 +51,14 @@ const SummarySection: React.FC<SummarySectionProps> = ({ summary, isDeepStrategi
           color: var(--md-sys-color-on-surface);
         }
         
+        /* Ensure the first header doesn't have massive top margin */
         .prose-summary > div > h3:first-child,
         .prose-summary h3:first-of-type {
           margin-top: 0 !important;
         }
 
         .prose-summary strong {
-          font-weight: 800;
+          font-weight: 700;
           color: var(--md-sys-color-on-surface);
         }
       `}</style>

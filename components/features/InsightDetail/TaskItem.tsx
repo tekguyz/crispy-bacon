@@ -25,12 +25,12 @@ const TaskItem: React.FC<TaskItemProps> = ({ insightId, item, index, isCompleted
     <div 
       onClick={handleToggle}
       className={`
-        flex items-center gap-3.5 px-4 py-3.5 rounded-xl border transition-all cursor-pointer group active:scale-[0.99] animate-fade-in
-        ${isCompleted ? 'bg-surface-container/20 border-transparent opacity-60' : 'bg-background border-outline-variant/10 hover:border-primary/30'}
+        flex items-start gap-4 px-4 py-4 rounded-xl border transition-all cursor-pointer group active:scale-[0.99] animate-fade-in
+        ${isCompleted ? 'bg-surface-container/20 border-transparent opacity-60' : 'bg-background border-outline-variant/5 hover:border-primary/30 shadow-sm'}
       `}
     >
       <div className={`
-        w-5 h-5 rounded-lg flex items-center justify-center transition-all shrink-0
+        w-5 h-5 rounded-lg flex items-center justify-center transition-all shrink-0 mt-0.5
         ${isCompleted ? 'bg-success' : 'border-2 border-outline-variant group-hover:border-primary/50 bg-surface-container-low'}
       `}>
         {isCompleted ? (
@@ -39,8 +39,10 @@ const TaskItem: React.FC<TaskItemProps> = ({ insightId, item, index, isCompleted
           <div className="w-1.5 h-1.5 rounded-sm bg-primary opacity-0 group-hover:opacity-20 transition-opacity" />
         )}
       </div>
+      
+      {/* Font Weight adjusted from bold to medium/semibold for better visual balance */}
       <div className={`
-        text-sm font-bold font-sans leading-tight transition-all flex-1
+        text-sm font-semibold font-sans leading-relaxed transition-all flex-1
         ${isCompleted ? 'text-on-surface-variant/40 line-through' : 'text-on-surface-variant group-hover:text-on-surface'}
       `}>
         <MarkdownRenderer content={item} className="inline-markdown" />
