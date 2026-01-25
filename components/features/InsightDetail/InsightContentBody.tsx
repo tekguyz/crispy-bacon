@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { InsightContent } from '../../../types';
 import SummarySection from './SummarySection';
@@ -18,12 +19,11 @@ export const InsightContentBody: React.FC<InsightContentBodyProps> = ({
   const isDeep = !!insight.metadata?.isDeepStrategist;
 
   return (
-    // Expanded max-width from 5xl to 7xl to satisfy 'NEED to use more of the space'
     <div className="max-w-7xl mx-auto pb-40 px-4 md:px-0">
-      {/* METADATA RIBBON */}
+      {/* METADATA RIBBON - Slimmed down to surgical standard */}
       <SummaryStats insight={insight} />
 
-      <div className="flex flex-col gap-12">
+      <div className="flex flex-col gap-10">
         {/* PRIMARY SIGNAL LAYER */}
         <div className="w-full">
            <SummarySection 

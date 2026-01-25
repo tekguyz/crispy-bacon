@@ -13,34 +13,33 @@ export const SummaryStats: React.FC<SummaryStatsProps> = ({ insight }) => {
   const date = new Date(insight.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
   const isProcessing = insight.processing_status === ProcessingStatus.PROCESSING;
 
-  const StatItem = ({ icon: Icon, value, label, colorClass = "text-on-surface-variant/30" }: any) => (
+  const StatItem = ({ icon: Icon, value, label, colorClass = "text-on-surface-variant/20" }: any) => (
     <div className="flex items-center gap-2 group/item">
-      <Icon size={12} className={`${colorClass} group-hover/item:text-primary transition-colors`} strokeWidth={3} />
-      <div className="flex flex-col md:flex-row md:items-baseline gap-x-1.5 leading-none">
-        <span className="text-[11px] font-mono font-black text-on-surface uppercase tracking-tight">{value}</span>
-        <span className="text-[8px] font-black text-on-surface-variant opacity-30 uppercase tracking-[0.2em]">{label}</span>
+      <Icon size={11} className={`${colorClass} group-hover/item:text-primary transition-colors`} strokeWidth={2.5} />
+      <div className="flex items-center gap-1.5 leading-none">
+        <span className="text-[10px] font-mono font-black text-on-surface uppercase tracking-tight">{value}</span>
+        <span className="text-[7px] font-black text-on-surface-variant opacity-30 uppercase tracking-[0.15em]">{label}</span>
       </div>
     </div>
   );
 
   return (
-    // Increased pt-2 to pt-8 for better separation from header
-    <div className="flex flex-wrap items-center gap-x-12 gap-y-4 pt-8 pb-6 border-b border-outline-variant/10 mb-6 animate-fade-in w-full">
+    <div className="flex flex-wrap items-center gap-x-8 gap-y-2 py-3 border-b border-outline-variant/10 mb-6 animate-fade-in w-full">
        <StatItem icon={Calendar} value={date} label="Captured" />
        
        <StatItem 
           icon={Activity} 
           value={velocity != null ? `${velocity}%` : (isProcessing ? '--' : '50%')} 
           label="Progress" 
-          colorClass={velocity && velocity > 70 ? "text-success" : "text-primary/40"}
+          colorClass={velocity && velocity > 70 ? "text-success/40" : "text-primary/20"}
        />
 
-       <StatItem icon={Clock} value={`${duration}m`} label="Reading Time" />
+       <StatItem icon={Clock} value={`${duration}m`} label="Read" />
 
        {insight.metadata?.isDeepStrategist && (
-         <div className="ml-auto flex items-center gap-2 px-3 py-1.5 bg-amber-500/5 text-amber-600 rounded-lg border border-amber-500/20 shadow-sm">
-            <Zap size={10} fill="currentColor" strokeWidth={0} className="animate-pulse" />
-            <span className="text-[8px] font-black uppercase tracking-[0.2em]">Executive Reasoning</span>
+         <div className="ml-auto flex items-center gap-1.5 px-2 py-1 bg-amber-500/5 text-amber-600 rounded-md border border-amber-500/10 shadow-sm">
+            <Zap size={9} fill="currentColor" strokeWidth={0} className="animate-pulse" />
+            <span className="text-[7px] font-black uppercase tracking-[0.1em]">Executive Tier</span>
          </div>
        )}
     </div>
