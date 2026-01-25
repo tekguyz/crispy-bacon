@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Activity, Clock, Calendar, Zap, Mic, Globe, FileText } from 'lucide-react';
+import { Activity, Clock, Calendar, Zap, Mic } from 'lucide-react';
 import { InsightContent, ProcessingStatus, ContentType } from '../../../types';
 
 interface SummaryStatsProps {
@@ -9,7 +9,7 @@ interface SummaryStatsProps {
 
 export const SummaryStats: React.FC<SummaryStatsProps> = ({ insight }) => {
   const velocity = insight.metadata?.velocityScore;
-  const readingTime = insight.metadata?.readingTimeMinutes || 1;
+  const readingTime = insight.metadata?.readingTimeMinutes || 0;
   const sourceDurationSeconds = insight.metadata?.durationSeconds || 0;
   const date = new Date(insight.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
   const isProcessing = insight.processing_status === ProcessingStatus.PROCESSING;

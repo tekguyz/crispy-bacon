@@ -18,21 +18,20 @@ export const mapSupabaseToInsight = (item: any): InsightContent => {
     } catch (e) {}
   }
 
-  // Text Hygiene: Unescape literal newlines that break Markdown parsing
-  // And surgically remove leading spaces that appear after headers (Deep Distill artifact)
+  // Text Hygiene: Unescape literal newlines and surgically remove leading spaces after headers
   const cleanText = (txt: string) => {
     if (!txt) return "";
     return txt
       .replace(/\\n/g, '\n')
       .replace(/\\t/g, '\t')
-      .replace(/(### [^\n]+\n+)\s+/g, '$1'); // Removes leading space after a header
+      .replace(/(### [^\n]+\n+)\s+/g, '$1'); 
   };
 
   const summaryText = cleanText(summaryData.summary || "");
   
-  // READING TIME CALCULATION: Strictly based on summary text (200 words per minute)
-  const wordCount = summaryText.trim().split(/\s+/).length;
-  const calculatedReadingTime = Math.max(1, Math.ceil(wordCount / 200));
+  // FIXED READING TIME: Strictly 200 words per minute based on the summary ONLY
+  const wordCount = summaryText.trim().split(/\s+/).filter(w => w.length > 0).length;
+  const calculatedReadingTime = wordCount > 0 ? Math.max(1, Math.ceil(wordCount / 200)) : 0;
 
   // Status Recovery Logic
   let status = (item.processing_status as ProcessingStatus) || ProcessingStatus.COMPLETED;
@@ -100,9 +99,8 @@ export const formatTranscript = (text: any): string => {
 export const generateInsightMarkdownReport = (insight: InsightContent, target: 'notion' | 'obsidian' = 'notion'): string => {
   const dateStr = new Date(insight.created_at).toISOString().split('T')[0];
   
-  // Extra whitespace hygiene for exports
   const exportSummary = insight.summary
-    .replace(/(### [^\n]+\n+)\s+/g, '$1') // Ensure no leading spaces after headers
+    .replace(/(### [^\n]+\n+)\s+/g, '$1') 
     .trim();
 
   let md = '';
