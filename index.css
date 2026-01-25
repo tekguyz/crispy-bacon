@@ -55,27 +55,27 @@
   --md-sys-color-surface-container-high: oklch(0.24 0.01 0);
 }
 
-/* Structural Chassis: Tightened for better density on standard laptops */
+/* Structural Chassis */
 .container-landing {
   width: 100%;
-  max-width: 1280px; /* Reduced from 1400px to maintain density */
+  max-width: 1400px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 @media (min-width: 768px) {
   .container-landing {
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
   }
 }
 
 @media (min-width: 1024px) {
   .container-landing {
-    padding-left: 4rem;
-    padding-right: 4rem;
+    padding-left: 5rem;
+    padding-right: 5rem;
   }
 }
 
