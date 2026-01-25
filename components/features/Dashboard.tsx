@@ -100,23 +100,23 @@ const Dashboard: React.FC = () => {
                </div>
             </div>
 
-            <div className="grid grid-rows-2 gap-4">
-               <div className="bg-surface-container-low p-5 rounded-3xl border border-outline-variant shadow-sm flex items-center justify-between interactive group">
+            <div className="grid grid-cols-2 lg:grid-cols-1 gap-4">
+               <div className="bg-surface-container-low p-4 md:p-5 rounded-3xl border border-outline-variant shadow-sm flex items-center justify-between interactive group">
                   <div className="space-y-1">
                      <span className="text-[9px] font-black uppercase tracking-widest text-on-surface-variant opacity-60">Library</span>
-                     <p className="text-3xl font-mono font-black text-on-surface leading-none">{activeInsights.length}</p>
+                     <p className="text-2xl md:text-3xl font-mono font-black text-on-surface leading-none">{activeInsights.length}</p>
                   </div>
-                  <div className="w-10 h-10 rounded-xl bg-surface-container-high flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-                     <LayoutGrid size={18} strokeWidth={2.5} />
+                  <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-surface-container-high flex items-center justify-center text-primary group-hover:scale-110 transition-transform shrink-0">
+                     <LayoutGrid className="w-4 h-4 md:w-5 md:h-5" strokeWidth={2.5} />
                   </div>
                </div>
-               <div className="bg-surface-container-low p-5 rounded-3xl border border-outline-variant shadow-sm flex items-center justify-between interactive group">
+               <div className="bg-surface-container-low p-4 md:p-5 rounded-3xl border border-outline-variant shadow-sm flex items-center justify-between interactive group">
                   <div className="space-y-1">
                      <span className="text-[9px] font-black uppercase tracking-widest text-on-surface-variant opacity-60">Decisions</span>
-                     <p className="text-3xl font-mono font-black text-on-surface leading-none">{stats.actionItemCount}</p>
+                     <p className="text-2xl md:text-3xl font-mono font-black text-on-surface leading-none">{stats.actionItemCount}</p>
                   </div>
-                  <div className="w-10 h-10 rounded-xl bg-surface-container-high flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-                     <Zap size={18} strokeWidth={2.5} />
+                  <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-surface-container-high flex items-center justify-center text-primary group-hover:scale-110 transition-transform shrink-0">
+                     <Zap className="w-4 h-4 md:w-5 md:h-5" strokeWidth={2.5} />
                   </div>
                </div>
             </div>
