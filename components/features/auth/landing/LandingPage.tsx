@@ -66,7 +66,7 @@ const LandingPage: React.FC<any> = ({ onSignIn, onPrivacy, onTerms, onEthics }) 
         </section>
 
         {/* 4. TECHNICAL BRIEF */}
-        <section className="py-24 md:py-32 section-zebra-1 border-t-2 border-outline-variant">
+        <section className="pb-24 md:pb-32 pt-0 border-t-2 border-outline-variant">
            <div className="container-landing">
               <FAQSection />
            </div>

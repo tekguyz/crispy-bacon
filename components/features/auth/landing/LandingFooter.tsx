@@ -6,9 +6,9 @@ import { triggerHaptic } from '../../../../services/hapticService';
 
 export const LandingFooter: React.FC<any> = ({ onPrivacy, onTerms, onEthics, onSignIn }) => {
   return (
-    <footer className="border-t-2 border-outline-variant py-32 bg-surface-container-lowest/50">
+    <footer className="border-t-2 border-outline-variant py-20 md:py-24 bg-surface-container-lowest/50">
       <div className="container-landing">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-20 md:gap-8 items-start mb-32">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-20 md:gap-8 items-start mb-24">
           <div className="md:col-span-4 space-y-10">
             <div className="space-y-6">
               <BaconBrand />

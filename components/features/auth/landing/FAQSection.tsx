@@ -10,7 +10,7 @@ const MANUAL_DATA = [
 
 export const FAQSection: React.FC = () => {
   return (
-    <div id="faq" className="mt-20 pt-20 border-t border-outline-variant/10">
+    <div id="faq" className="pt-24 md:pt-32">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         <div className="md:col-span-1 space-y-4">
            <div className="flex items-center gap-2 opacity-40">
