@@ -142,12 +142,12 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Global Ask FAB: See-through Outlined Circle */}
+      {/* Global Ask FAB: Solid Opaque Circle */}
       <div className="fixed bottom-10 right-28 z-40 hidden md:block">
          <Tooltip content="Ask Library">
             <button 
                onClick={() => { triggerHaptic('medium'); setIsGlobalChatOpen(true); }}
-               className="w-14 h-14 bg-transparent backdrop-blur-md border-2 border-primary/40 rounded-full flex items-center justify-center shadow-xl hover:shadow-2xl hover:border-primary hover:bg-primary/5 transition-all group active:scale-95"
+               className="w-14 h-14 bg-surface-container-highest border-2 border-outline-variant rounded-full flex items-center justify-center shadow-2xl hover:shadow-primary/10 hover:border-primary/50 transition-all group active:scale-95"
                aria-label="Ask library"
             >
                <Sparkles size={22} className="text-primary group-hover:rotate-12 transition-transform" strokeWidth={2.5} aria-hidden="true" />

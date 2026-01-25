@@ -98,11 +98,10 @@ const InsightCard: React.FC<InsightCardProps> = ({ insight }) => {
     ? insight.title 
     : (insight.type === ContentType.MEETING ? "Voice Note" : "Web Research");
 
-  // Granola Optimization: Remove header lines entirely for the card preview
   const summaryPreview = (insight.summary || insight.error_message || "No summary available.")
-    .replace(/^#+.*$/gm, '') // Remove entire lines starting with headers
-    .replace(/\*\*/g, '')    // Remove bold symbols
-    .replace(/\n+/g, ' ')    // Flatten into single line for clamping
+    .replace(/^#+.*$/gm, '') 
+    .replace(/\*\*/g, '')    
+    .replace(/\n+/g, ' ')    
     .trim();
 
   return (
@@ -113,67 +112,69 @@ const InsightCard: React.FC<InsightCardProps> = ({ insight }) => {
       role="button"
       aria-label={`${displayTitle}.`}
       className={`
-        group relative bg-card rounded-expressive p-6 flex flex-col h-full transition-all duration-300 interactive border-2 outline-none
+        group relative bg-card rounded-expressive p-5 flex flex-col h-full transition-all duration-300 interactive border-2 outline-none
         ${isActuallyProcessing && !hasContent ? 'cursor-wait opacity-80' : 'cursor-pointer'} 
         ${isLocked ? 'grayscale opacity-60' : ''} 
         ${isSelected ? 'border-primary ring-2 ring-primary/20 bg-primary/5' : 'border-outline hover:border-primary/50'}
       `} 
     >
-      <header className="flex justify-between items-start mb-4 relative z-10">
+      <header className="flex justify-between items-start mb-3 relative z-10">
         <div className="flex-1 pr-4 min-w-0">
           <div className="flex flex-wrap items-center gap-2 mb-2">
-            <span className={`text-[9px] font-mono font-black uppercase tracking-widest text-on-surface-variant opacity-60`}>
+            <span className={`text-[8px] font-mono font-black uppercase tracking-widest text-on-surface-variant opacity-60`}>
                 {new Date(insight.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
             </span>
             {isFailed ? (
-              <span className="text-[9px] font-black text-error uppercase tracking-widest">ERROR</span>
+              <span className="text-[8px] font-black text-error uppercase tracking-widest">ERROR</span>
             ) : (isActuallyProcessing && !hasContent) ? (
-              <span className="text-[9px] font-black text-primary flex items-center gap-1 animate-pulse uppercase tracking-widest">
+              <span className="text-[8px] font-black text-primary flex items-center gap-1 animate-pulse uppercase tracking-widest">
                 <Loader2 size={8} className="animate-spin" /> WORKING
               </span>
             ) : (
-              <span className={`text-[9px] font-black uppercase tracking-widest ${insight.sentiment === Sentiment.POSITIVE ? 'text-success' : 'text-on-surface-variant/50'}`}> 
+              <span className={`text-[8px] font-black uppercase tracking-widest ${insight.sentiment === Sentiment.POSITIVE ? 'text-success' : 'text-on-surface-variant/50'}`}> 
                 {insight.sentiment || 'NEUTRAL'}
               </span>
             )}
-            {insight.is_favorite && !isActuallyProcessing && <Star size={10} className="text-primary fill-current" aria-hidden="true" />}
+            {insight.is_favorite && !isActuallyProcessing && <Star size={9} className="text-primary fill-current" aria-hidden="true" />}
           </div>
           <h3 className={`text-xl md:text-2xl font-serif font-bold text-on-surface tracking-tight leading-[1.1] line-clamp-2 ${isActuallyProcessing && !hasContent ? 'opacity-30' : 'group-hover:text-primary transition-colors'}`}>
             {displayTitle}
           </h3> 
         </div>
-        <div className="w-9 h-9 bg-surface-container-high rounded-xl flex items-center justify-center shrink-0 border border-outline-variant text-on-surface-variant opacity-40">
-           {insight.type === ContentType.MEETING ? <Mic size={16} /> : <Globe size={16} />}
+        <div className="w-8 h-8 bg-surface-container-high rounded-xl flex items-center justify-center shrink-0 border border-outline-variant text-on-surface-variant opacity-40">
+           {insight.type === ContentType.MEETING ? <Mic size={14} /> : <Globe size={14} />}
         </div>
       </header>
 
-      <div className="text-on-surface-variant mb-6 leading-relaxed line-clamp-3 text-sm font-medium opacity-80 relative z-10"> 
+      <div className="text-on-surface-variant mb-4 leading-relaxed line-clamp-3 text-sm font-medium opacity-80 relative z-10"> 
         {(isActuallyProcessing && !hasContent) ? "Recovering skeletal signal from noise..." : summaryPreview}
       </div>
 
-      <footer className="mt-auto pt-4 flex justify-between items-center border-t border-outline-variant relative z-10"> 
-        <div className="flex items-center gap-3 text-[9px] font-mono font-black uppercase tracking-widest text-on-surface-variant opacity-50">
-          <span className="flex items-center gap-1"><Clock size={10} /> {insight.metadata?.readingTimeMinutes || 1}M READ</span>
+      <footer className="mt-auto flex justify-between items-center relative z-10 opacity-40 group-hover:opacity-100 transition-opacity"> 
+        <div className="flex items-center gap-3 text-[8px] font-mono font-black uppercase tracking-widest text-on-surface-variant">
+          <span className="flex items-center gap-1.5"><Clock size={10} strokeWidth={3} /> {insight.metadata?.readingTimeMinutes || 1}M READ</span>
         </div>
         
         <div className="flex items-center gap-1">
            {isTrashView && (
               <button 
                 onClick={handleRestore}
-                className="w-9 h-9 flex items-center justify-center rounded-lg text-primary hover:bg-primary/10 transition-all shadow-sm"
+                className="w-7 h-7 flex items-center justify-center rounded-lg text-primary hover:bg-primary/10 transition-all"
+                aria-label="Restore"
               >
-                <RotateCcw size={14} />
+                <RotateCcw size={12} strokeWidth={3} />
               </button>
            )}
            <button 
              onClick={handleDelete}
-             className="w-9 h-9 flex items-center justify-center rounded-lg text-on-surface-variant/40 hover:text-error hover:bg-error/10 transition-all"
+             className="w-7 h-7 flex items-center justify-center rounded-lg text-on-surface-variant/40 hover:text-error hover:bg-error/10 transition-all"
+             aria-label="Delete"
            >
-             <Trash2 size={14} />
+             <Trash2 size={12} strokeWidth={3} />
            </button>
            {!isTrashView && (
-             <div className="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant/30 group-hover:text-primary transition-colors">
-                <ArrowRight size={14} strokeWidth={3} />
+             <div className="w-7 h-7 rounded-lg flex items-center justify-center text-on-surface-variant/30 group-hover:text-primary transition-all">
+                <ArrowRight size={12} strokeWidth={4} />
              </div>
            )}
         </div>
