@@ -99,9 +99,10 @@ const InsightCard: React.FC<InsightCardProps> = ({ insight }) => {
     ? insight.title 
     : (insight.type === ContentType.MEETING ? "Voice Note" : "Web Research");
 
-  // Robust strip-down of Markdown for card previews
+  // Granola Preview Protocol: Strip Markdown symbols AND structural noise like section titles
   const summaryPreview = (insight.summary || insight.error_message || "No summary available.")
-    .replace(/^#+\s+/gm, '') // Remove all headers symbols at start of lines
+    .replace(/^#+\s*(?:OVERVIEW|SUMMARY|EXECUTIVE|RECAP|THEMES|KEY|OUTLOOK|MOMENTUM|FRICTION)\b/gim, '') // Remove specific section labels
+    .replace(/^#+\s+/gm, '') // Remove remaining header symbols
     .replace(/(\*\*|__)/g, '') // Remove bold
     .replace(/(\*|_)/g, '') // Remove italics
     .replace(/\n+/g, ' ') // Flatten to single line
@@ -150,7 +151,7 @@ const InsightCard: React.FC<InsightCardProps> = ({ insight }) => {
       </header>
 
       <div className="text-on-surface-variant mb-4 leading-relaxed line-clamp-3 text-sm font-medium opacity-80 relative z-10"> 
-        {(isActuallyProcessing && !hasContent) ? "Recovering skeletal signal from noise..." : summaryPreview}
+        {(isActuallyProcessing && !hasContent) ? "Distilling skeletal intelligence..." : summaryPreview}
       </div>
 
       <footer className="mt-auto flex justify-between items-center relative z-10 opacity-40 group-hover:opacity-100 transition-opacity"> 

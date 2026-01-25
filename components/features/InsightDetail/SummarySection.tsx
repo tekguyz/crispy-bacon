@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Quote, Sparkles, RefreshCw, Zap } from 'lucide-react';
 import MarkdownRenderer from '../../ui/MarkdownRenderer';
@@ -11,14 +12,14 @@ interface SummarySectionProps {
 const SummarySection: React.FC<SummarySectionProps> = ({ summary, isDeepStrategist, onRetry }) => {
   if (!summary || summary.length < 5) {
     return (
-        <section className="bg-surface-container-low border-2 border-outline-variant/20 rounded-[2rem] p-12 text-center space-y-6 shadow-inner">
-            <div className="w-16 h-16 bg-surface-container-highest text-on-surface-variant rounded-2xl flex items-center justify-center opacity-50 mx-auto shadow-inner border border-outline-variant/10">
-                <Sparkles size={32} strokeWidth={1.5} />
+        <section className="bg-surface-container-low border-2 border-outline-variant/20 rounded-[2rem] p-10 text-center space-y-6 shadow-inner">
+            <div className="w-12 h-12 bg-surface-container-highest text-on-surface-variant rounded-xl flex items-center justify-center opacity-50 mx-auto shadow-inner border border-outline-variant/10">
+                <Sparkles size={24} strokeWidth={1.5} />
             </div>
-            <h3 className="text-xl font-black uppercase tracking-widest text-on-surface-variant">Writing Recap...</h3>
+            <h3 className="text-lg font-black uppercase tracking-widest text-on-surface-variant">Writing Recap...</h3>
             {onRetry && (
-                <button onClick={onRetry} className="px-8 py-3 bg-primary text-on-primary rounded-xl font-black text-[10px] uppercase tracking-[0.2em] shadow-xl hover:scale-105 transition-all mx-auto flex items-center gap-3 active:scale-95">
-                    <RefreshCw size={14} strokeWidth={3} /> Try Again
+                <button onClick={onRetry} className="px-6 py-2.5 bg-primary text-on-primary rounded-xl font-black text-[9px] uppercase tracking-[0.2em] shadow-xl hover:scale-105 transition-all mx-auto flex items-center gap-2 active:scale-95">
+                    <RefreshCw size={12} strokeWidth={3} /> Try Again
                 </button>
             )}
         </section>
@@ -37,11 +38,10 @@ const SummarySection: React.FC<SummarySectionProps> = ({ summary, isDeepStrategi
       <style>{`
         /* Structural Rhythm for High-Density Prose */
         .prose-summary p {
-          margin-bottom: 2rem;
+          margin-bottom: 1.25rem;
           color: var(--md-sys-color-on-surface);
         }
         
-        /* Remove margin from the very first header to keep layout tight */
         .prose-summary > div > h3:first-child,
         .prose-summary h3:first-of-type {
           margin-top: 0 !important;

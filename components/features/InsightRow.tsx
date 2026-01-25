@@ -93,8 +93,9 @@ const InsightRow: React.FC<InsightRowProps> = ({ insight }) => {
     restoreInsight(insight.id);
   };
 
-  // Robust strip-down of Markdown for row previews
+  // Synchronized Preview logic
   const summaryPreview = (insight.summary || "No summary available.")
+    .replace(/^#+\s*(?:OVERVIEW|SUMMARY|EXECUTIVE|RECAP|THEMES|KEY)\b/gim, '')
     .replace(/^#+\s+/gm, '') 
     .replace(/(\*\*|__)/g, '')
     .replace(/(\*|_)/g, '')

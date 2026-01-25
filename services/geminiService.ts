@@ -52,11 +52,10 @@ export const analyzeContent = async (
       FOCUS: ${template}.
       
       OUTPUT PROTOCOL - DEEP DISTILL (PRO):
-      1. HARD WORD LIMIT: The 'summary' MUST NOT EXCEED 400 WORDS.
-      2. SUMMARY STRUCTURE: Use standard Markdown headers (###) for sections. Focus on Outcomes, Momentum, and Strategic Outlook.
+      1. SKELETAL SUMMARY: Max 400 words. Use Markdown headers (###) for structure. Strip all conversational filler.
+      2. CORE THEMES: Analyze outcomes, constraints, friction points, and strategic momentum.
       3. TAXONOMY: Provide EXACTLY 5 PROJECT-SPECIFIC TOPICS. 
-      4. NEGATIVE CONSTRAINT: Do NOT use generic tags like 'meeting', 'discussion', 'notes', or 'summary'. Focus on the unique subjects mentioned.
-      5. HIGHLIGHTS: Max 10 items.
+      4. HIGHLIGHTS: Max 10 items. Facts and evidence only.
     `;
   } else {
     instructions = `
@@ -66,10 +65,9 @@ export const analyzeContent = async (
       FOCUS: ${template}.
       
       OUTPUT PROTOCOL - RAPID MODE (STANDARD):
-      1. SUMMARY: Max 150 words. Use clear Markdown headers.
+      1. SUMMARY: Max 200 words. Use clear Markdown headers.
       2. TAXONOMY: Provide EXACTLY 3 TOPICS. Use only the most critical project identifiers.
-      3. NEGATIVE CONSTRAINT: No generic tags.
-      4. HIGHLIGHTS: Max 5 items.
+      3. HIGHLIGHTS: Max 5 items. Direct and dense.
     `;
   }
 
