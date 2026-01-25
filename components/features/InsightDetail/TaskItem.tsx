@@ -25,23 +25,23 @@ const TaskItem: React.FC<TaskItemProps> = ({ insightId, item, index, isCompleted
     <div 
       onClick={handleToggle}
       className={`
-        flex items-center gap-4 md:gap-5 p-5 md:p-6 min-h-[48px] rounded-3xl border transition-all cursor-pointer group active:scale-[0.99] animate-fade-in
-        ${isCompleted ? 'bg-surface-container/30 border-outline-variant/5' : 'bg-background border-outline-variant/10 hover:border-primary/40 shadow-sm'}
+        flex items-center gap-3.5 px-4 py-3.5 rounded-xl border transition-all cursor-pointer group active:scale-[0.99] animate-fade-in
+        ${isCompleted ? 'bg-surface-container/20 border-transparent opacity-60' : 'bg-background border-outline-variant/10 hover:border-primary/30'}
       `}
     >
       <div className={`
-        w-6 h-6 md:w-7 md:h-7 rounded-xl flex items-center justify-center transition-all shadow-inner shrink-0
-        ${isCompleted ? 'bg-success animate-spring-scale' : 'border-2 border-outline-variant/40 group-hover:border-primary bg-surface-container-low'}
+        w-5 h-5 rounded-lg flex items-center justify-center transition-all shrink-0
+        ${isCompleted ? 'bg-success' : 'border-2 border-outline-variant group-hover:border-primary/50 bg-surface-container-low'}
       `}>
         {isCompleted ? (
-          <Check size={14} className="text-surface-container-lowest" strokeWidth={4} />
+          <Check size={10} className="text-white" strokeWidth={5} />
         ) : (
-          <div className="w-2.5 h-2.5 rounded-sm bg-primary opacity-0 group-hover:opacity-10 transition-opacity" />
+          <div className="w-1.5 h-1.5 rounded-sm bg-primary opacity-0 group-hover:opacity-20 transition-opacity" />
         )}
       </div>
       <div className={`
-        text-base font-medium font-sans leading-tight transition-all flex-1
-        ${isCompleted ? 'text-on-surface-variant/50 line-through' : 'text-on-surface-variant group-hover:text-primary'}
+        text-sm font-bold font-sans leading-tight transition-all flex-1
+        ${isCompleted ? 'text-on-surface-variant/40 line-through' : 'text-on-surface-variant group-hover:text-on-surface'}
       `}>
         <MarkdownRenderer content={item} className="inline-markdown" />
       </div>
