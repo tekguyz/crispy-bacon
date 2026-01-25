@@ -79,6 +79,10 @@
   animation: skeleton-shimmer 1.5s infinite;
 }
 
+.container-landing {
+  @apply w-full max-w-7xl mx-auto px-6 md:px-10;
+}
+
 @keyframes skeleton-shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }

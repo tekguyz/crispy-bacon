@@ -84,18 +84,24 @@ const Dashboard: React.FC = () => {
                   </p>
                </div>
 
-               <div className="relative z-10 flex gap-3 mt-8">
+               <div className="relative z-10 flex flex-wrap gap-3 mt-8">
                   <button 
                     onClick={() => { triggerHaptic('medium'); setShowCaptureLab(true); }}
-                    className="flex items-center gap-3 px-6 h-12 bg-primary text-on-primary rounded-xl font-black text-[10px] uppercase tracking-[0.2em] shadow-lg interactive"
+                    className="flex items-center gap-3 px-6 h-12 bg-primary text-on-primary rounded-xl font-black text-[10px] uppercase tracking-[0.2em] shadow-lg interactive hover:brightness-110 active:scale-95 transition-all"
                   >
-                    <Mic size={14} strokeWidth={3} /> Record Signal
+                    <Mic size={14} strokeWidth={3} /> Record
                   </button>
                   <button 
                     onClick={() => { triggerHaptic('light'); setShowInputModal(true); }}
-                    className="flex items-center gap-3 px-6 h-12 bg-surface-container-high border border-outline-variant text-on-surface rounded-xl font-black text-[10px] uppercase tracking-[0.2em] interactive hover:bg-surface-container-highest"
+                    className="flex items-center gap-3 px-6 h-12 bg-surface-container-high border border-outline-variant text-on-surface rounded-xl font-black text-[10px] uppercase tracking-[0.2em] interactive hover:bg-surface-container-highest active:scale-95 transition-all"
                   >
                     <Globe size={14} strokeWidth={3} /> Import
+                  </button>
+                  <button 
+                    onClick={() => { triggerHaptic('light'); setIsGlobalChatOpen(true); }}
+                    className="flex items-center gap-3 px-6 h-12 bg-surface-container-high border border-outline-variant text-on-surface rounded-xl font-black text-[10px] uppercase tracking-[0.2em] interactive hover:bg-surface-container-highest active:scale-95 transition-all"
+                  >
+                    <Sparkles size={14} strokeWidth={3} className="text-primary" /> Ask Library
                   </button>
                </div>
             </div>
@@ -140,19 +146,6 @@ const Dashboard: React.FC = () => {
             </aside>
           </div>
         </div>
-      </div>
-
-      {/* Global Ask FAB */}
-      <div className="fixed bottom-10 right-28 z-40 hidden md:block">
-         <Tooltip content="Ask Library">
-            <button 
-               onClick={() => { triggerHaptic('medium'); setIsGlobalChatOpen(true); }}
-               className="w-14 h-14 bg-surface-container-high border-2 border-outline-variant/10 rounded-3xl flex items-center justify-center shadow-2xl hover:scale-105 active:scale-95 transition-all group"
-               aria-label="Ask library"
-            >
-               <Sparkles size={20} className="text-primary group-hover:rotate-12 transition-transform" fill="currentColor" aria-hidden="true" />
-            </button>
-         </Tooltip>
       </div>
 
       <GlobalChatSheet isOpen={isGlobalChatOpen} onClose={() => setIsGlobalChatOpen(false)} />
