@@ -1,5 +1,4 @@
-
-import React, { ErrorInfo, ReactNode } from 'react';
+import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { AlertTriangle, RotateCw } from 'lucide-react'; 
 
 interface ErrorBoundaryProps {
@@ -15,12 +14,9 @@ interface ErrorBoundaryState {
 /**
  * ErrorBoundary component to catch rendering errors in the component tree.
  */
-// Fix: Explicitly extending React.Component ensures inheritance of props, state, and setState with correct generic types.
-export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  // Fix: Initializing state in constructor with correct typing.
+export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
-    // Fix: state property is correctly initialized and inherited from React.Component.
     this.state = {
       hasError: false,
       error: null,
@@ -35,12 +31,10 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error("Uncaught error:", error, errorInfo);
-    // Fix: setState is correctly inherited and typed from React.Component.
     this.setState({ errorInfo });
   }
 
   public render(): ReactNode {
-    // Fix: Accessing state property inherited from the base React.Component.
     const { hasError, error, errorInfo } = this.state;
     
     if (hasError) {
@@ -68,7 +62,6 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
       );
     }
 
-    // Fix: Accessing props property inherited from the base React.Component.
     return this.props.children;
   }
 }

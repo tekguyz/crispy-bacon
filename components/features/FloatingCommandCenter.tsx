@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Plus, X, Mic, FileText } from 'lucide-react';
 import { useAppStore } from '../../store/useAppStore';
@@ -26,7 +27,8 @@ export const FloatingCommandCenter: React.FC<FloatingCommandCenterProps> = ({ is
         />
       )}
       
-      <div className={`fixed bottom-10 right-6 md:bottom-8 md:right-10 flex flex-col-reverse items-end gap-4 z-50 transition-all duration-300 ${isSidebarOpen || store.showInputModal || store.showCaptureLab ? 'opacity-0 pointer-events-none scale-90' : 'opacity-100'}`}>
+      {/* v2.5.2: Positioning tightened to bottom-8 right-8 to feel more anchored and less intrusive */}
+      <div className={`fixed bottom-8 right-8 flex flex-col-reverse items-end gap-4 z-50 transition-all duration-300 ${isSidebarOpen || store.showInputModal || store.showCaptureLab ? 'opacity-0 pointer-events-none scale-90' : 'opacity-100'}`}>
           <Tooltip content={isOpen ? "Close Actions" : "Create New Recap"} side="left">
             <button 
                 onClick={() => setIsOpen(!isOpen)} 

@@ -31,7 +31,7 @@ export const FolderSelection: React.FC<FolderSelectionProps> = ({ insight }) => 
   return (
     <div className="space-y-3">
        <div className="flex items-center justify-between">
-          <span className="text-[8px] font-mono font-bold text-on-surface-variant/30 uppercase tracking-widest">Folders</span>
+          <span className="text-[8px] font-mono font-bold text-on-surface-variant/30 uppercase tracking-widest">Library Filing</span>
           <button onClick={() => setShowCollectionManagementModal(true)} className="text-[8px] font-black uppercase tracking-widest text-primary hover:underline">Manage</button>
        </div>
        
@@ -51,7 +51,7 @@ export const FolderSelection: React.FC<FolderSelectionProps> = ({ insight }) => 
           })}
           <button
             onClick={() => { triggerHaptic('light'); setShowCollectionManagementModal(true); }}
-            className="flex items-center justify-center w-8 h-8 rounded-lg border border-dashed border-outline-variant/30 text-on-surface-variant/30 hover:text-primary hover:border-primary/30 transition-all active:scale-95"
+            className="flex items-center justify-center w-8 h-8 rounded-lg border border-dashed border-outline-variant/30 text-on-surface-variant/30 hover:text-primary hover:border-primary/30 hover:bg-primary/5 transition-all active:scale-95"
           >
             <Plus size={12} strokeWidth={3} />
           </button>

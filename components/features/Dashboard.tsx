@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useMemo, Suspense, lazy } from 'react';
 import { useAppStore } from '../../store/useAppStore';
 import { useDashboardStats } from '../../hooks/useDashboardStats';
@@ -142,8 +143,8 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Global Ask FAB: Solid Opaque Circle */}
-      <div className="fixed bottom-10 right-28 z-40 hidden md:block">
+      {/* Global Ask FAB: Shifted further to the bottom right quadrant */}
+      <div className="fixed bottom-10 right-10 md:right-32 z-40 hidden md:block">
          <Tooltip content="Ask Library">
             <button 
                onClick={() => { triggerHaptic('medium'); setIsGlobalChatOpen(true); }}

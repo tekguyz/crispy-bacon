@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useEffect } from 'react';
 import { X, MessageSquare, Info, CloudUpload } from 'lucide-react';
 import { useAppStore } from '../../store/useAppStore';
@@ -21,11 +22,11 @@ const InsightDetailView: React.FC = () => {
   } = useAppStore();
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
-  const [activeDrawer, setActiveDrawer] = useState<'info' | 'chat' | null>(
-    window.innerWidth >= 1024 ? 'chat' : null
-  );
-
   const isSideSheet = view === AppView.DASHBOARD;
+
+  // v2.5.2: Content-First Default. 
+  // Drawers now always start CLOSED to provide immediate readability of the recap.
+  const [activeDrawer, setActiveDrawer] = useState<'info' | 'chat' | null>(null);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 1024);
@@ -90,8 +91,8 @@ const InsightDetailView: React.FC = () => {
       )}
 
       <div className="flex-1 flex overflow-hidden relative">
-        <div className={`flex-1 overflow-y-auto custom-scrollbar transition-all duration-300 ${activeDrawer && !isMobile ? 'pr-[400px]' : ''}`}>
-            {/* Zeroed out top padding to eliminate space between header and stats */}
+        {/* v2.5.2: Content logic. Pruning the right padding if we are in SideSheet mode (overlay logic) */}
+        <div className={`flex-1 overflow-y-auto custom-scrollbar transition-all duration-300 ${activeDrawer && !isMobile && !isSideSheet ? 'pr-[400px]' : ''}`}>
             <div className={`pb-40 ${isSideSheet ? 'px-6 pt-0' : 'container-fluid pt-0'}`}>
                 {isLocal ? (
                   <div className="flex flex-col h-full items-center justify-center p-8 text-center space-y-6 max-w-xl mx-auto">
@@ -116,10 +117,11 @@ const InsightDetailView: React.FC = () => {
 
         {activeDrawer && (
           <aside className={`
-            ${isMobile ? 'fixed inset-0 z-[250] bg-background animate-sheet-up' : 'w-[400px] absolute top-0 right-0 h-full border-l border-outline-variant/10 shadow-2xl z-40'} 
+            /* v2.5.2: SideSheet drawers now behave like Mobile Overlays (inset-0) to prevent content compression */
+            ${(isMobile || isSideSheet) ? 'absolute inset-0 z-[250] bg-background animate-sheet-up' : 'w-[400px] absolute top-0 right-0 h-full border-l border-outline-variant/10 shadow-2xl z-40'} 
             flex flex-col transition-all duration-300 bg-background
           `}>
-            {isMobile && (
+            {(isMobile || isSideSheet) && (
               <div className="flex justify-center pt-3 pb-1 shrink-0">
                  <div className="w-12 h-1 bg-outline-variant/20 rounded-full" />
               </div>

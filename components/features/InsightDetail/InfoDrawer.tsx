@@ -4,7 +4,6 @@ import { Loader2, Terminal, Radio } from 'lucide-react';
 import { InsightContent } from '../../../types';
 import { ExportActions } from './ExportActions';
 import { FolderSelection } from './FolderSelection';
-import { TagSelection } from './TagSelection';
 import { ContextGrounding } from './ContextGrounding';
 import { QuickActions } from './QuickActions';
 import { TaxonomySection } from './TaxonomySection';
@@ -65,7 +64,6 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
         {/* 4. MANUAL FILING */}
         <div className="space-y-8 pt-4 border-t border-outline-variant/10">
           <FolderSelection insight={insight} />
-          <TagSelection insight={insight} />
         </div>
 
         {/* 5. PROVENANCE (Conditionally hidden if empty) */}
