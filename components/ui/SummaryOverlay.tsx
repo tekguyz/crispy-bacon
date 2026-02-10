@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Activity, ShieldCheck, ChevronRight } from 'lucide-react';
 import { BaconLoader } from './Loaders';
@@ -24,10 +25,11 @@ export const SummaryOverlay: React.FC<SummaryOverlayProps> = ({
 
   return (
     <div 
-      className="absolute inset-0 z-50 bg-surface-container-lowest flex flex-col animate-fade-in overflow-hidden h-full"
+      className="absolute inset-0 z-50 bg-surface-container-lowest flex flex-col animate-fade-in overflow-hidden h-full pointer-events-auto"
       role="dialog"
       aria-modal="true"
       ref={containerRef as any}
+      onClick={(e) => e.stopPropagation()}
     >
       {/* Header */}
       <div className="w-full px-6 py-4 border-b border-outline-variant/10 bg-surface-container-low shrink-0 z-20">
@@ -38,7 +40,7 @@ export const SummaryOverlay: React.FC<SummaryOverlayProps> = ({
                   </div>
                   <div className="flex flex-col">
                      <h2 className="text-base font-black uppercase tracking-tight text-on-surface leading-none">Working</h2>
-                     <span className="text-[8px] font-black uppercase tracking-widest text-on-surface-variant opacity-60 mt-1">Reviewing Recording</span>
+                     <span className="text-[8px] font-black uppercase tracking-widest text-on-surface-variant opacity-60 mt-1">Processing Audio</span>
                   </div>
               </div>
               <div className="text-right">
@@ -72,8 +74,8 @@ export const SummaryOverlay: React.FC<SummaryOverlayProps> = ({
           <div className="max-w-2xl mx-auto flex flex-col items-center gap-3">
              {isBackgroundable && onClose && (
                <button 
-                  onClick={onClose}
-                  className="w-full md:w-auto px-12 h-11 bg-on-surface text-surface rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:bg-primary transition-all active:scale-[0.98] shadow-lg flex items-center justify-center gap-3 group"
+                  onClick={(e) => { e.stopPropagation(); onClose(); }}
+                  className="w-full md:w-auto px-12 h-11 bg-on-surface text-surface rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] hover:bg-primary transition-all active:scale-[0.98] shadow-lg flex items-center justify-center gap-3 group pointer-events-auto"
                >
                   Continue in Background
                   <ChevronRight size={14} strokeWidth={3} className="group-hover:translate-x-1 transition-transform" />

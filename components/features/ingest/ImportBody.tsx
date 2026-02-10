@@ -1,3 +1,4 @@
+
 import React, { useRef } from 'react';
 import { ArrowRight, Cloud, Link as LinkIcon, Upload, FileText, Target, Sparkles, ChevronDown, Crown } from 'lucide-react';
 import { DriveSelector } from './DriveSelector';
@@ -26,7 +27,7 @@ export const ImportBody: React.FC<any> = ({
             <div className="w-14 h-14 bg-surface-container-low rounded-2xl flex items-center justify-center text-primary/40 border border-outline-variant/10 shadow-inner"><Cloud size={24} className="shrink-0" /></div>
             <div className="space-y-1 max-w-xs">
               <h3 className="text-base font-black font-display italic uppercase">Executive Access</h3>
-              <p className="text-[10px] font-bold text-on-surface-variant opacity-60 leading-relaxed">Cloud import is reserved for Pro members.</p>
+              <p className="text-[10px] font-bold text-on-surface-variant opacity-60 leading-relaxed">Cloud access is reserved for Pro members.</p>
             </div>
             <button onClick={() => setShowUpgradeModal(true)} className="px-6 py-2.5 bg-primary text-on-primary rounded-xl font-black text-[9px] uppercase tracking-widest shadow-xl hover:scale-105 transition-all flex items-center gap-2">
               <Crown size={12} fill="currentColor" className="shrink-0" /> Upgrade Access

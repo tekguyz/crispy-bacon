@@ -31,7 +31,7 @@ export const FolderSelection: React.FC<FolderSelectionProps> = ({ insight }) => 
   return (
     <div className="space-y-3">
        <div className="flex items-center justify-between">
-          <span className="text-[8px] font-mono font-bold text-on-surface-variant/30 uppercase tracking-widest">Library Filing</span>
+          <span className="text-[8px] font-mono font-bold text-on-surface-variant/30 uppercase tracking-widest">Folders</span>
           <button onClick={() => setShowCollectionManagementModal(true)} className="text-[8px] font-black uppercase tracking-widest text-primary hover:underline">Manage</button>
        </div>
        

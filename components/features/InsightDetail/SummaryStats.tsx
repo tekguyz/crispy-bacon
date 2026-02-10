@@ -36,7 +36,7 @@ export const SummaryStats: React.FC<SummaryStatsProps> = ({ insight }) => {
        <StatItem 
           icon={Activity} 
           value={velocity != null ? `${velocity}%` : (isProcessing ? '--' : '50%')} 
-          label="Signal" 
+          label="Clarity" 
           colorClass={velocity && velocity > 70 ? "text-success/40" : "text-primary/20"}
        />
 
@@ -62,12 +62,12 @@ export const SummaryStats: React.FC<SummaryStatsProps> = ({ insight }) => {
        {isDeep ? (
          <div className="ml-auto flex items-center gap-1.5 px-2 py-1 bg-primary text-on-primary rounded-md shadow-sm">
             <Zap size={9} fill="currentColor" strokeWidth={0} className="animate-pulse" />
-            <span className="text-[7px] font-black uppercase tracking-[0.2em]">Deep Distill</span>
+            <span className="text-[7px] font-black uppercase tracking-[0.2em]">Deep Research</span>
          </div>
        ) : (
          <div className="ml-auto flex items-center gap-1.5 px-2 py-1 bg-surface-container-high text-on-surface-variant/60 rounded-md border border-outline-variant/20 shadow-inner">
             <Activity size={9} strokeWidth={3} />
-            <span className="text-[7px] font-black uppercase tracking-[0.2em]">Rapid Recap</span>
+            <span className="text-[7px] font-black uppercase tracking-[0.2em]">Quick Summary</span>
          </div>
        )}
     </div>

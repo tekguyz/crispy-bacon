@@ -19,10 +19,10 @@ export const TaxonomySection: React.FC<TaxonomySectionProps> = ({ topics, isDeep
                 {isDeepStrategist ? <Zap size={12} strokeWidth={3} /> : <Tag size={12} strokeWidth={3} />}
             </div>
             <h3 className="text-[9px] font-black uppercase tracking-[0.4em] text-on-surface-variant/60">
-              {isDeepStrategist ? 'High-Density Taxonomy' : 'Smart Tags'}
+              {isDeepStrategist ? 'Strategic Topics' : 'Key Topics'}
             </h3>
          </div>
-         {isDeepStrategist && <span className="text-[7px] font-mono font-black text-amber-600/40 uppercase tracking-widest">PRO NODES</span>}
+         {isDeepStrategist && <span className="text-[7px] font-mono font-black text-amber-600/40 uppercase tracking-widest">PRO</span>}
       </div>
 
       <div className="flex flex-wrap gap-2">

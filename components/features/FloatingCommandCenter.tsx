@@ -56,11 +56,11 @@ export const FloatingCommandCenter: React.FC<FloatingCommandCenterProps> = ({ is
           
           {/* ASK LIBRARY (Sparkles) - Hidden when menu is open to focus on actions */}
           {!isOpen && (
-            <Tooltip content="Ask Library" side="left">
+            <Tooltip content="Ask a question" side="left">
               <button 
                   onClick={handleAskLibrary}
                   className="w-10 h-10 bg-surface-container-highest border border-outline-variant rounded-full flex items-center justify-center shadow-xl pointer-events-auto hover:border-primary/50 transition-all group active:scale-90"
-                  aria-label="Ask library"
+                  aria-label="Ask a question"
               >
                   <Sparkles size={16} className="text-primary group-hover:rotate-12 transition-transform" strokeWidth={2.5} />
               </button>

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { RefreshCw, WifiOff, Download, ShieldCheck, AlertCircle } from 'lucide-react';
 import { InsightContent, ProcessingStatus, ContentType } from '../../../types';
@@ -33,9 +34,9 @@ export const FailedState: React.FC<StatusProps> = ({ insight }) => {
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
-      addToast("Raw signal rescued to device.", "success");
+      addToast("Raw signal saved to device.", "success");
     } catch (e) {
-      addToast("Rescue failed. Check Activity Log.", "error");
+      addToast("Download failed. Check Activity Log.", "error");
     } finally {
       setIsRescuing(false);
     }
@@ -67,7 +68,7 @@ export const FailedState: React.FC<StatusProps> = ({ insight }) => {
         <div className="flex items-center justify-between px-2">
             <div className="flex items-center gap-2">
                 <ShieldCheck size={14} className="text-success" />
-                <span className="text-[9px] font-black uppercase tracking-widest text-on-surface-variant">Note Secured</span>
+                <span className="text-[9px] font-black uppercase tracking-widest text-on-surface-variant">Note Saved</span>
             </div>
             <span className="text-[8px] font-mono font-bold opacity-30 uppercase tracking-widest">Capture_{insight.id.substring(0,6)}</span>
         </div>
@@ -92,7 +93,7 @@ export const FailedState: React.FC<StatusProps> = ({ insight }) => {
       
       <div className="flex items-center gap-3 opacity-30 group">
          <div className="h-px w-8 bg-on-surface-variant" />
-         <p className="text-[8px] font-black uppercase tracking-[0.4em]">Zero Data Loss Active</p>
+         <p className="text-[8px] font-black uppercase tracking-[0.4em]">Backup Saved</p>
          <div className="h-px w-8 bg-on-surface-variant" />
       </div>
     </div>

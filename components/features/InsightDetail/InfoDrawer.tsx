@@ -20,7 +20,7 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
     return (
       <div className="flex flex-col items-center justify-center h-full p-8 opacity-40 space-y-4">
         <Loader2 size={24} className="animate-spin text-primary" />
-        <p className="text-[10px] font-black uppercase tracking-[0.3em]">Processing...</p>
+        <p className="text-[10px] font-black uppercase tracking-[0.3em]">Working...</p>
       </div>
     );
   }
@@ -42,7 +42,7 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
            <div className="space-y-4 pt-4 border-t border-outline-variant/10">
               <div className="flex items-center gap-2 px-1">
                  <Radio size={10} className="text-primary" strokeWidth={3} />
-                 <span className="text-[8px] font-black text-on-surface-variant/40 uppercase tracking-[0.2em]">Reference Signal</span>
+                 <span className="text-[8px] font-black text-on-surface-variant/40 uppercase tracking-[0.2em]">Audio Recording</span>
               </div>
               <AudioSource 
                   variant="slim"
@@ -52,7 +52,7 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
            </div>
         )}
 
-        {/* 3. AUTOMATED TAXONOMY */}
+        {/* 3. AUTOMATED TAXONOMY -> TOPICS */}
         <div className="space-y-8 pt-4 border-t border-outline-variant/10">
           <TaxonomySection 
             topics={insight.topics} 
@@ -61,12 +61,12 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
           />
         </div>
 
-        {/* 4. MANUAL FILING */}
+        {/* 4. MANUAL FILING -> FOLDERS */}
         <div className="space-y-8 pt-4 border-t border-outline-variant/10">
           <FolderSelection insight={insight} />
         </div>
 
-        {/* 5. PROVENANCE */}
+        {/* 5. PROVENANCE -> SOURCES */}
         <ContextGrounding 
           attachments={insight.metadata?.contextAttachments} 
           sourceUrl={insight.metadata?.sourceDomain || (insight.type === 'URL' ? insight.original_content : undefined)} 
@@ -84,7 +84,7 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
         <div className="pt-24 pb-8 opacity-10 hover:opacity-40 transition-opacity">
           <div className="flex items-center gap-2 mb-3">
              <Terminal size={10} className="text-on-surface-variant" />
-             <span className="text-[8px] font-mono font-black uppercase tracking-[0.3em]">Hardware Signal</span>
+             <span className="text-[8px] font-mono font-black uppercase tracking-[0.3em]">System Info</span>
           </div>
           
           {usage ? (
@@ -100,7 +100,7 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
             </div>
           ) : (
             <div className="text-[8px] font-mono italic opacity-40 uppercase tracking-widest">
-              Analysis Node Active
+              Analysis Complete
             </div>
           )}
         </div>

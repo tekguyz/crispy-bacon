@@ -27,7 +27,7 @@ export const TagSelection: React.FC<TagSelectionProps> = ({ insight }) => {
       <div className="flex items-center justify-between px-1">
          <div className="flex items-center gap-2">
             <Hash size={10} className="text-on-surface-variant/40" strokeWidth={3} />
-            <span className="text-[8px] font-black text-on-surface-variant/40 uppercase tracking-[0.2em]">Filing Tags</span>
+            <span className="text-[8px] font-black text-on-surface-variant/40 uppercase tracking-[0.2em]">Tags</span>
          </div>
          <button 
           onClick={() => { triggerHaptic('light'); setShowTagManagementModal(true); }}
@@ -39,7 +39,7 @@ export const TagSelection: React.FC<TagSelectionProps> = ({ insight }) => {
       
       <div className="flex flex-wrap gap-1.5 min-h-[32px]">
          {assignedTags.length === 0 ? (
-           <p className="text-[9px] font-medium text-on-surface-variant/30 italic px-1">No manual tags linked.</p>
+           <p className="text-[9px] font-medium text-on-surface-variant/30 italic px-1">No tags.</p>
          ) : (
            assignedTags.map(tag => (
               <div
@@ -63,7 +63,7 @@ export const TagSelection: React.FC<TagSelectionProps> = ({ insight }) => {
             className="flex items-center justify-center px-3 h-7 rounded-lg border border-dashed border-outline-variant/30 text-[9px] font-black uppercase tracking-widest text-on-surface-variant/30 hover:text-primary hover:border-primary/30 hover:bg-primary/5 transition-all active:scale-95 gap-2"
          >
             <Plus size={10} strokeWidth={3} />
-            <span>Link Node</span>
+            <span>Add</span>
          </button>
       </div>
     </div>

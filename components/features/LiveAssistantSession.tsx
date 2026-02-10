@@ -57,7 +57,7 @@ const LiveAssistantSession: React.FC = () => {
         <div className="flex-1 flex flex-col justify-center min-w-0">
           {status === 'connecting' ? (
             <div className="flex flex-col gap-1 px-1">
-              <span className="text-[8px] font-black uppercase tracking-[0.3em] text-primary animate-pulse">Syncing...</span>
+              <span className="text-[8px] font-black uppercase tracking-[0.3em] text-primary animate-pulse">Connecting...</span>
               <div className="h-0.5 w-16 bg-primary/10 rounded-full overflow-hidden">
                 <div className="h-full bg-primary animate-[shimmer_2s_infinite]" style={{ width: '40%' }} />
               </div>
@@ -71,7 +71,7 @@ const LiveAssistantSession: React.FC = () => {
             <div className="flex flex-col gap-0.5 px-1 overflow-hidden">
               <div className="flex items-center justify-between">
                 <span className="text-[8px] font-mono font-black text-on-surface uppercase tracking-[0.3em]">
-                  {isSpeaking ? 'Model Output' : 'Listening...'}
+                  {isSpeaking ? 'Speaking' : 'Listening...'}
                 </span>
                 {timeToAutoKill && (
                   <span className="text-[7px] font-black text-primary uppercase tabular-nums">
@@ -81,7 +81,7 @@ const LiveAssistantSession: React.FC = () => {
               </div>
               <div className="flex items-center gap-1.5 opacity-40">
                  <div className={`w-1 h-1 rounded-full ${isConnected ? 'bg-success animate-pulse' : 'bg-on-surface-variant'}`} />
-                 <span className="text-[7px] font-black uppercase tracking-[0.2em] truncate">Assistant Bridge Active</span>
+                 <span className="text-[7px] font-black uppercase tracking-[0.2em] truncate">Assistant Active</span>
               </div>
             </div>
           )}
@@ -91,7 +91,7 @@ const LiveAssistantSession: React.FC = () => {
         <button 
           onClick={stopLiveAssistant}
           className="w-10 h-10 rounded-full bg-surface-container-high border border-outline-variant/10 flex items-center justify-center text-on-surface-variant hover:text-error hover:bg-error/5 transition-all group active:scale-90"
-          aria-label="Terminate Session"
+          aria-label="End Session"
         >
           <Power size={14} strokeWidth={3} className="group-hover:rotate-12 transition-transform" />
         </button>

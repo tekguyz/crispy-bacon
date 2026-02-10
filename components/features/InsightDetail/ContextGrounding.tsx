@@ -18,7 +18,7 @@ export const ContextGrounding: React.FC<ContextGroundingProps> = ({ attachments 
     <section className="space-y-4 pt-4 border-t border-outline-variant/10">
       <div className="flex items-center gap-2 px-1">
          <Paperclip size={10} className="text-on-surface-variant/40" strokeWidth={3} />
-         <h3 className="text-[9px] font-black uppercase tracking-[0.4em] text-on-surface-variant/60">Provenance</h3>
+         <h3 className="text-[9px] font-black uppercase tracking-[0.4em] text-on-surface-variant/60">Sources</h3>
       </div>
 
       <div className="space-y-2">

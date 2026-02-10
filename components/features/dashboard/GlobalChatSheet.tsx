@@ -43,10 +43,10 @@ export const GlobalChatSheet: React.FC = () => {
   };
 
   const suggestions = [
-    "What are the recurring themes this week?",
-    "List all action items assigned to engineering.",
-    "Summarize the main friction points across recent calls.",
-    "What decisions have we made about pricing?"
+    "What has been the main focus this week?",
+    "What decisions have we made about pricing?",
+    "Show me the tasks for the engineering team.",
+    "Are there any recurring blockers in recent notes?"
   ];
 
   const handleClose = () => {
@@ -55,7 +55,7 @@ export const GlobalChatSheet: React.FC = () => {
   };
 
   return (
-    <SideSheet isOpen={showGlobalChat} onClose={handleClose} title="Library Intelligence">
+    <SideSheet isOpen={showGlobalChat} onClose={handleClose} title="Ask your notes">
       <div className="flex flex-col h-full bg-background relative overflow-hidden" onClick={(e) => e.stopPropagation()}>
         <div className="absolute inset-0 ledger-grid opacity-[0.02] pointer-events-none" />
 
@@ -66,9 +66,9 @@ export const GlobalChatSheet: React.FC = () => {
                    <Library size={32} className="text-primary opacity-60" />
                 </div>
                 <div className="text-center max-w-xs space-y-2">
-                   <h3 className="text-xl font-black uppercase tracking-tight text-on-surface">Ask Your Library</h3>
+                   <h3 className="text-xl font-black uppercase tracking-tight text-on-surface">Talk to your research</h3>
                    <p className="text-xs font-medium text-on-surface-variant opacity-60">
-                     I can analyze your {Math.min(20, insights.length)} most recent notes to find patterns and answers.
+                     I'll look through your {Math.min(20, insights.length)} most recent notes to find the answers you need.
                    </p>
                 </div>
                 <div className="w-full space-y-2">
@@ -95,7 +95,7 @@ export const GlobalChatSheet: React.FC = () => {
               <div className="flex justify-start animate-fade-in pl-2">
                 <div className="bg-surface-container-high px-4 py-3 rounded-2xl flex items-center gap-2 border border-outline-variant/10 shadow-sm">
                    <Loader2 size={14} className="animate-spin text-primary" />
-                   <span className="text-[10px] font-black uppercase tracking-widest text-on-surface-variant">Scanning Library...</span>
+                   <span className="text-[10px] font-black uppercase tracking-widest text-on-surface-variant">Thinking...</span>
                 </div>
               </div>
             )}
@@ -108,7 +108,7 @@ export const GlobalChatSheet: React.FC = () => {
               <input 
                   value={chatInput} 
                   onChange={e => setChatInput(e.target.value)} 
-                  placeholder="Query your research..."
+                  placeholder="What are you looking for?"
                   disabled={isChatLoading}
                   className="w-full bg-surface-container-high/50 border-2 border-transparent focus:border-primary/20 focus:bg-background rounded-2xl pl-5 pr-14 py-4 text-sm font-bold text-on-surface outline-none transition-all placeholder:text-on-surface-variant/30 font-sans"
               />

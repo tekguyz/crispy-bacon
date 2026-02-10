@@ -148,8 +148,8 @@ export const createDataSlice: StateCreator<AppState, [], [], DataSlice> = (set, 
     const filesToProcess = files.length > 5 ? files.slice(0, 5) : files;
     if (files.length > 5) addToast("Premium limit: Processing 5 files at once.", "warn");
 
-    logSystemEvent(`[IMPORT] Bulk cloud pull: ${filesToProcess.length} signals.`);
-    addToast(`Retrieving ${filesToProcess.length} independent signals...`, "info");
+    logSystemEvent(`[IMPORT] Bulk import: ${filesToProcess.length} signals.`);
+    addToast(`Importing ${filesToProcess.length} files...`, "info");
 
     const accessToken = (session as any).provider_token;
 
@@ -170,7 +170,7 @@ export const createDataSlice: StateCreator<AppState, [], [], DataSlice> = (set, 
       }
     }
     
-    addToast("Research Ingestion Active.", "success");
+    addToast("Files added.", "success");
   },
 
   recoverOrphanedFiles: async () => {

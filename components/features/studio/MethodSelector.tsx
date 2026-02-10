@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ArrowRight, Layers, ShieldCheck, Mic, Monitor } from 'lucide-react';
 import { triggerHaptic } from '../../../services/hapticService';
@@ -36,7 +37,7 @@ export const MethodSelector: React.FC<MethodSelectorProps> = ({ onSelect }) => {
               </div>
               <div className="flex justify-between items-center">
                  <span className="text-[8px] font-mono font-black text-on-surface-variant/40 uppercase">Storage</span>
-                 <span className="text-[8px] font-mono font-black text-on-surface uppercase">Vault Locked</span>
+                 <span className="text-[8px] font-mono font-black text-on-surface uppercase">Encrypted</span>
               </div>
            </div>
         </div>

@@ -104,7 +104,7 @@ const CaptureLab: React.FC = () => {
     if (isRecording) return;
 
     if (isProcessing) {
-      addToast("Reasoning in background.", "info");
+      addToast("Finishing up in background.", "info");
     }
 
     triggerHaptic('light');

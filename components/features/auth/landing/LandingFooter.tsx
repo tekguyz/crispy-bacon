@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Cpu, Database, Zap, ArrowRight, ShieldCheck, Mail } from 'lucide-react';
 import { BaconBrand } from '../../../ui/Logo';
@@ -38,7 +39,7 @@ export const LandingFooter: React.FC<any> = ({ onPrivacy, onTerms, onEthics, onS
                 {[
                   { icon: Cpu, label: 'Assistant' }, 
                   { icon: Database, label: 'Vaulting' }, 
-                  { icon: Zap, label: 'Cloud Bridge' }
+                  { icon: Zap, label: 'Cloud Import' }
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-4 opacity-40 cursor-default hover:opacity-100 transition-opacity group">
                     <item.icon size={13} className="text-primary/60 group-hover:text-primary transition-colors" />
@@ -86,11 +87,11 @@ export const LandingFooter: React.FC<any> = ({ onPrivacy, onTerms, onEthics, onS
         
         <div className="pt-12 border-t border-outline-variant/10 flex flex-col md:flex-row justify-between items-center gap-8">
           <p className="text-[9px] font-mono font-black uppercase tracking-[0.5em] opacity-20 text-on-background">
-            &copy; {COPYRIGHT_YEAR} CRISPY BACON LABS :: SYSTEM CORE 1.4.2
+            &copy; {COPYRIGHT_YEAR} CRISPY BACON LABS :: VERSION 2.5.1
           </p>
           <div className="flex gap-8 opacity-20 hover:opacity-100 transition-opacity">
-             <span className="text-[7px] font-mono font-black uppercase tracking-widest">Latency: 40ms</span>
-             <span className="text-[7px] font-mono font-black uppercase tracking-widest">Status: Operational</span>
+             <span className="text-[7px] font-mono font-black uppercase tracking-widest">Ping: 40ms</span>
+             <span className="text-[7px] font-mono font-black uppercase tracking-widest">System: Ready</span>
           </div>
         </div>
       </div>

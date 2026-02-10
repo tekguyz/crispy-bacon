@@ -51,7 +51,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = ({
               <div className="w-4 h-4 flex items-center justify-center shrink-0">
                 <GeminiLiveIcon className={`w-full h-full aspect-square ${isLiveAssistantActive ? 'animate-pulse' : ''}`} />
               </div>
-              <span className="hidden sm:inline">ASK VOICE</span>
+              <span className="hidden sm:inline">TALK</span>
               {!isPro && <Crown size={9} className="text-primary shrink-0" />}
           </button>
 

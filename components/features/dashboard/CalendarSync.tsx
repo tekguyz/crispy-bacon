@@ -89,7 +89,7 @@ const CalendarSync: React.FC<CalendarSyncProps> = ({
     return (
       <div className="bg-surface-container-low border border-outline-variant/10 p-6 rounded-expressive shadow-sm flex flex-col relative overflow-hidden group/pro hover:shadow-lg transition-all duration-500 min-h-[340px]">
         <div className="absolute inset-0 ledger-grid opacity-10 pointer-events-none" />
-        <CardHeader label="Agenda Link" icon={Calendar} color="text-primary" />
+        <CardHeader label="Calendar" icon={Calendar} color="text-primary" />
         
         <div className="flex-1 flex flex-col justify-center gap-6 relative z-10">
           <div className="space-y-3">
@@ -126,9 +126,9 @@ const CalendarSync: React.FC<CalendarSyncProps> = ({
                 {!providerToken ? "Reconnecting" : "Checking Agenda"}
             </p>
             <p className="text-[8px] font-bold text-on-surface-variant opacity-40 uppercase tracking-widest">
-                Linking...
+                Connecting...
             </p>
-            <button onClick={onReauth} className="text-[7px] font-black uppercase text-primary hover:underline">Manual Pulse</button>
+            <button onClick={onReauth} className="text-[7px] font-black uppercase text-primary hover:underline">Check Now</button>
         </div>
       </div>
     );
@@ -149,7 +149,7 @@ const CalendarSync: React.FC<CalendarSyncProps> = ({
               <div className="space-y-1">
                  <h4 className="text-xl font-slab font-bold text-on-surface uppercase tracking-tight leading-none">Schedule Clear.</h4>
                  <p className="text-[9px] font-black text-success uppercase tracking-widest flex items-center gap-1.5">
-                    <Clock size={12} strokeWidth={2} /> Agenda Synced
+                    <Clock size={12} strokeWidth={2} /> Calendar Connected
                  </p>
               </div>
            </div>

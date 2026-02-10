@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Terminal, Copy, Check, AlertCircle, Info, AlertTriangle, ChevronDown, Trash2, ZapOff } from 'lucide-react';
 import { useAppStore } from '../../../store/useAppStore';
@@ -92,7 +93,12 @@ export const SystemLogViewer: React.FC = () => {
                         <div className="pt-0.5 shrink-0">{getIcon(log.level)}</div>
                         <div className="min-w-0 break-words flex-1">
                         <span className={`${log.level === 'error' ? 'text-error font-bold' : (log.level === 'warn' ? 'text-warning font-bold' : 'text-on-surface opacity-70')}`}>
-                            {log.message.replace(/Neural Link/gi, 'Assistant').replace(/Distillation/gi, 'Analysis').replace(/Ingest/gi, 'Import')}
+                            {log.message
+                                .replace(/Neural Link/gi, 'Assistant')
+                                .replace(/Distillation/gi, 'Analysis')
+                                .replace(/Ingest/gi, 'Import')
+                                .replace(/Telemetry/gi, 'Activity')
+                            }
                         </span>
                         </div>
                     </div>

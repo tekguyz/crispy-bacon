@@ -136,7 +136,7 @@ export const SmartConfigSection: React.FC = () => {
         <div className="pt-10 border-t border-outline-variant/10 space-y-6">
             <div className="flex items-center gap-3 px-1">
               <Brain size={14} className="text-primary" strokeWidth={3} />
-              <h2 className="text-[10px] font-black uppercase tracking-[0.3em]">Analysis Fidelity</h2>
+              <h2 className="text-[10px] font-black uppercase tracking-[0.3em]">Detail Level</h2>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -145,7 +145,7 @@ export const SmartConfigSection: React.FC = () => {
                   className={`flex flex-col p-6 rounded-[2rem] border-2 transition-all text-left relative group ${personaStyle === PersonaStyle.CONCISE ? 'bg-surface-container-high border-primary shadow-lg ring-4 ring-primary/5' : 'bg-surface-container border-outline opacity-60 hover:opacity-100'}`}
               >
                   <div className="flex justify-between items-start mb-4">
-                    <span className={`text-[11px] font-black uppercase tracking-widest ${personaStyle === PersonaStyle.CONCISE ? 'text-primary' : 'text-on-surface-variant'}`}>Rapid Recap</span>
+                    <span className={`text-[11px] font-black uppercase tracking-widest ${personaStyle === PersonaStyle.CONCISE ? 'text-primary' : 'text-on-surface-variant'}`}>Quick Summary</span>
                     {personaStyle === PersonaStyle.CONCISE && <CheckCircle2 size={18} className="text-primary" strokeWidth={3} />}
                   </div>
                   <p className="text-[11px] font-bold text-on-surface-variant leading-relaxed mb-3 uppercase tracking-widest">Skeletal overview. Fastest results for solo thinking and quick checks.</p>
@@ -158,7 +158,7 @@ export const SmartConfigSection: React.FC = () => {
               >
                   <div className="flex justify-between items-start mb-4">
                     <div className="flex items-center gap-2">
-                       <span className={`text-[11px] font-black uppercase tracking-widest ${personaStyle === PersonaStyle.DEEP_RESEARCH ? 'text-primary' : 'text-on-surface-variant'}`}>Deep Distill</span>
+                       <span className={`text-[11px] font-black uppercase tracking-widest ${personaStyle === PersonaStyle.DEEP_RESEARCH ? 'text-primary' : 'text-on-surface-variant'}`}>Deep Research</span>
                        <Zap size={12} fill="currentColor" className="text-primary animate-pulse" />
                     </div>
                     {personaStyle === PersonaStyle.DEEP_RESEARCH && <CheckCircle2 size={18} className="text-primary" strokeWidth={3} />}
