@@ -1,6 +1,6 @@
 
 import React, { useState, useCallback, useEffect } from 'react';
-import { X, MessageSquare, Info, CloudUpload } from 'lucide-react';
+import { X, MessageSquare, Info, CloudUpload, Layers } from 'lucide-react';
 import { useAppStore } from '../../store/useAppStore';
 import { useInsightDetailLogic } from '../../hooks/useInsightDetailLogic';
 import { triggerHaptic } from '../../services/hapticService';
@@ -12,6 +12,7 @@ import ChatDrawer from './InsightDetail/ChatDrawer';
 import { InsightContentBody } from './InsightDetail/InsightContentBody';
 import { LockedView } from './InsightDetail/LockedView';
 import { ProcessingStatus, AppView } from '../../types';
+import { GeminiLiveIcon } from '../ui/Logo';
 
 const InsightDetailView: React.FC = () => {
   const { 
@@ -67,25 +68,30 @@ const InsightDetailView: React.FC = () => {
       )}
 
       {isSideSheet && (
-         <div className="h-12 flex items-center gap-2 px-6 border-b border-outline-variant/10 bg-surface-container-low shrink-0 overflow-x-auto no-scrollbar">
+         <div className="h-14 flex items-center justify-between px-6 border-b border-outline-variant/10 bg-surface-container-low shrink-0 overflow-x-auto no-scrollbar gap-4">
+            <div className="flex items-center gap-1.5">
+               <button 
+                  onClick={() => toggleDrawer('chat')}
+                  className={`flex items-center gap-2 px-3 h-9 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all ${activeDrawer === 'chat' ? 'bg-surface-container-highest text-primary shadow-sm' : 'text-on-surface-variant/50 hover:text-primary hover:bg-on-surface/5'}`}
+               >
+                  <MessageSquare size={14} strokeWidth={activeDrawer === 'chat' ? 3 : 2} />
+                  <span>Chat</span>
+               </button>
+               <button 
+                  onClick={() => toggleDrawer('info')}
+                  className={`flex items-center gap-2 px-3 h-9 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all ${activeDrawer === 'info' ? 'bg-surface-container-highest text-primary shadow-sm' : 'text-on-surface-variant/50 hover:text-primary hover:bg-on-surface/5'}`}
+               >
+                  <Layers size={14} strokeWidth={activeDrawer === 'info' ? 3 : 2} />
+                  <span>Info</span>
+               </button>
+            </div>
+
             <button 
                 onClick={() => { triggerHaptic('medium'); !!userProfile?.is_pro ? startLiveAssistant(insight) : setShowUpgradeModal(true); }}
-                className={`flex-none flex items-center gap-2 px-4 h-8 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${isLiveAssistantActive ? 'bg-primary text-on-primary shadow-lg animate-spring-scale' : 'bg-surface-container-high text-on-surface-variant hover:text-primary'}`}
+                className={`flex items-center gap-2.5 px-4 h-9 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all ${isLiveAssistantActive ? 'bg-primary text-on-primary shadow-lg animate-spring-scale' : 'bg-background border border-outline-variant/10 text-on-surface shadow-sm hover:border-primary/30'}`}
             >
-                ASK
-            </button>
-            <div className="w-px h-4 bg-outline-variant/20 mx-1" />
-            <button 
-                onClick={() => toggleDrawer('chat')}
-                className={`flex-none px-4 h-8 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${activeDrawer === 'chat' ? 'bg-surface-container-highest text-primary' : 'text-on-surface-variant hover:text-primary'}`}
-            >
-                Ask
-            </button>
-            <button 
-                onClick={() => toggleDrawer('info')}
-                className={`flex-none px-4 h-8 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${activeDrawer === 'info' ? 'bg-surface-container-highest text-primary' : 'text-on-surface-variant hover:text-primary'}`}
-            >
-                Structure
+                <GeminiLiveIcon className={`w-4 h-4 ${isLiveAssistantActive ? 'animate-pulse' : ''}`} />
+                <span>Voice</span>
             </button>
          </div>
       )}
@@ -93,7 +99,7 @@ const InsightDetailView: React.FC = () => {
       <div className="flex-1 flex overflow-hidden relative">
         {/* v2.5.2: Content logic. Pruning the right padding if we are in SideSheet mode (overlay logic) */}
         <div className={`flex-1 overflow-y-auto custom-scrollbar transition-all duration-300 ${activeDrawer && !isMobile && !isSideSheet ? 'pr-[400px]' : ''}`}>
-            <div className={`pb-40 ${isSideSheet ? 'px-6 pt-0' : 'container-fluid pt-0'}`}>
+            <div className={`pb-40 ${isSideSheet ? 'px-6 pt-6' : 'container-fluid pt-0'}`}>
                 {isLocal ? (
                   <div className="flex flex-col h-full items-center justify-center p-8 text-center space-y-6 max-w-xl mx-auto">
                     <CloudUpload size={28} strokeWidth={2.5} className="text-primary animate-pulse" />
