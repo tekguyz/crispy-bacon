@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useAppStore } from '../store/useAppStore';
 import { ContentType, InsightTemplate } from '../types';
 import { DriveFile } from '../store/types';
+import mammoth from 'mammoth';
 
 const MAX_FILE_SIZE_MB = 19.5; // Strictly under Gemini 20MB limit for inline data
 const MAX_BATCH_COUNT = 5; 
@@ -78,8 +79,6 @@ export const useIngestion = (selectedFiles: File[], clearFiles: () => void, onCl
         if (isAudio) {
           processMeeting(f, `Uploaded Note: ${f.name}`, { template: selectedTemplate, autoOpen } as any);
         } else if (isDocx) {
-          // Dynamic Import: Load mammoth only when needed
-          const mammoth = await import('mammoth');
           const res = await mammoth.extractRawText({ arrayBuffer: await f.arrayBuffer() });
           processContent(res.value, ContentType.TEXT, { template: selectedTemplate, autoOpen });
         } else if (isText) {

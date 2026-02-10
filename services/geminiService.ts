@@ -1,5 +1,5 @@
 
-import { Type } from "@google/genai";
+import { GoogleGenAI, Type } from "@google/genai";
 import { InsightContent, ContentType, Sentiment, InsightTemplate, PersonaStyle } from "../types";
 import { getEffectiveMimeType } from "../utils/signalUtils";
 
@@ -33,8 +33,6 @@ export const analyzeContent = async (
   durationSeconds?: number
 ): Promise<Partial<InsightContent>> => {
   
-  // Dynamic Import: Load heavy AI SDK only when processing starts
-  const { GoogleGenAI } = await import("@google/genai");
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   // Logic: Pro users can choose "Deep Research". Everyone else (including Pro choosing "Concise") gets Flash.

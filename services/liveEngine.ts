@@ -1,5 +1,5 @@
 
-import { Modality, LiveServerMessage } from '@google/genai';
+import { GoogleGenAI, LiveServerMessage, Modality } from '@google/genai';
 import { createBlob, decodeAudioData, decode } from './audioProcessing';
 import { startAudioCapture, stopAudioCapture } from './audioService';
 import { useAppStore } from '../store/useAppStore';
@@ -58,8 +58,6 @@ export class LiveEngine {
     this.setStatus('connecting');
 
     try {
-      // Dynamic Import for heavy SDK
-      const { GoogleGenAI } = await import("@google/genai");
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       
       // 1. Audio Output Setup
