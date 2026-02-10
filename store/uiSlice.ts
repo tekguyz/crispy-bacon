@@ -64,6 +64,7 @@ export const createUISlice: StateCreator<AppState, [], [], UISlice> = (set, get)
   showUpgradeModal: false,
   showProfileDrawer: false,
   showOnboarding: false,
+  showGlobalChat: false,
   searchQuery: '',
   activeSourceTypeFilter: 'all',
   activeCollectionFilterId: null,
@@ -154,6 +155,7 @@ export const createUISlice: StateCreator<AppState, [], [], UISlice> = (set, get)
   setShowUpgradeModal: (show) => { triggerHaptic('light'); set({ showUpgradeModal: show }); },
   setShowProfileDrawer: (show) => { triggerHaptic('light'); set({ showProfileDrawer: show }); },
   setShowOnboarding: (show) => { triggerHaptic('light'); set({ showOnboarding: show }); },
+  setShowGlobalChat: (show) => { triggerHaptic('light'); set({ showGlobalChat: show }); },
   completeOnboarding: () => {
     triggerHaptic('medium');
     set({ hasSeenOnboarding: true, showOnboarding: false });

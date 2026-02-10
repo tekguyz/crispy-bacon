@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Loader2, Terminal, Radio } from 'lucide-react';
+import { Loader2, Terminal, Radio, Info } from 'lucide-react';
 import { InsightContent } from '../../../types';
 import { ExportActions } from './ExportActions';
 import { FolderSelection } from './FolderSelection';
@@ -20,7 +20,7 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
     return (
       <div className="flex flex-col items-center justify-center h-full p-8 opacity-40 space-y-4">
         <Loader2 size={24} className="animate-spin text-primary" />
-        <p className="text-[10px] font-black uppercase tracking-[0.3em]">Working...</p>
+        <p className="text-[10px] font-black uppercase tracking-[0.3em]">Processing...</p>
       </div>
     );
   }
@@ -37,7 +37,7 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
         {/* 1. PRIMARY ACTIONS */}
         {!isFailed && <QuickActions insight={insight} />}
 
-        {/* 2. REFERENCE SIGNAL (Audio moved here) */}
+        {/* 2. REFERENCE SIGNAL */}
         {hasAudio && (
            <div className="space-y-4 pt-4 border-t border-outline-variant/10">
               <div className="flex items-center gap-2 px-1">
@@ -66,7 +66,7 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
           <FolderSelection insight={insight} />
         </div>
 
-        {/* 5. PROVENANCE (Conditionally hidden if empty) */}
+        {/* 5. PROVENANCE */}
         <ContextGrounding 
           attachments={insight.metadata?.contextAttachments} 
           sourceUrl={insight.metadata?.sourceDomain || (insight.type === 'URL' ? insight.original_content : undefined)} 
@@ -100,7 +100,7 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
             </div>
           ) : (
             <div className="text-[8px] font-mono italic opacity-40 uppercase tracking-widest">
-              Processing Node Active
+              Analysis Node Active
             </div>
           )}
         </div>

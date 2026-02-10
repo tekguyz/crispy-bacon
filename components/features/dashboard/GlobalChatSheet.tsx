@@ -1,37 +1,45 @@
 
 import React, { useRef, useEffect, useState } from 'react';
-import { Send, Loader2, MessageSquare, ArrowRight, Library, Sparkles } from 'lucide-react';
+import { Send, Loader2, MessageSquare, ArrowRight, Library, Sparkles, X } from 'lucide-react';
 import { useAppStore } from '../../../store/useAppStore';
 import { triggerHaptic } from '../../../services/hapticService';
 import { ChatMessageBubble } from '../InsightDetail/ChatMessageBubble';
 import { SideSheet } from '../../ui/SideSheet';
 
-interface GlobalChatSheetProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-export const GlobalChatSheet: React.FC<GlobalChatSheetProps> = ({ isOpen, onClose }) => {
-  const { chatHistory, isChatLoading, sendGlobalChatMessage, insights, clearChat } = useAppStore();
+export const GlobalChatSheet: React.FC = () => {
+  const { 
+    chatHistory, isChatLoading, sendGlobalChatMessage, 
+    insights, clearChat, showGlobalChat, setShowGlobalChat 
+  } = useAppStore();
+  
   const [chatInput, setChatInput] = useState('');
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (isOpen) clearChat(); // Reset chat when opening global mode
-  }, [isOpen]);
+    if (showGlobalChat) clearChat(); // Reset chat when opening global mode
+  }, [showGlobalChat, clearChat]);
 
   useEffect(() => {
     if (chatEndRef.current) chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
   }, [chatHistory, isChatLoading]);
 
   const handleSendMessage = async (e?: React.FormEvent, manualMsg?: string) => {
-    if (e) e.preventDefault();
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     const msg = manualMsg || chatInput;
     if (!msg.trim() || isChatLoading) return;
     
     triggerHaptic('light');
     setChatInput('');
     await sendGlobalChatMessage(msg, insights);
+  };
+
+  const handleSuggestionClick = (e: React.MouseEvent, s: string) => {
+    e.preventDefault();
+    e.stopPropagation(); // CRITICAL: Stop background items from receiving the click
+    handleSendMessage(undefined, s);
   };
 
   const suggestions = [
@@ -41,9 +49,14 @@ export const GlobalChatSheet: React.FC<GlobalChatSheetProps> = ({ isOpen, onClos
     "What decisions have we made about pricing?"
   ];
 
+  const handleClose = () => {
+    triggerHaptic('light');
+    setShowGlobalChat(false);
+  };
+
   return (
-    <SideSheet isOpen={isOpen} onClose={onClose} title="Library Intelligence">
-      <div className="flex flex-col h-full bg-background relative">
+    <SideSheet isOpen={showGlobalChat} onClose={handleClose} title="Library Intelligence">
+      <div className="flex flex-col h-full bg-background relative overflow-hidden" onClick={(e) => e.stopPropagation()}>
         <div className="absolute inset-0 ledger-grid opacity-[0.02] pointer-events-none" />
 
         <div className="flex-1 overflow-y-auto p-6 custom-scrollbar relative z-0">
@@ -62,8 +75,9 @@ export const GlobalChatSheet: React.FC<GlobalChatSheetProps> = ({ isOpen, onClos
                    {suggestions.map((s, i) => (
                       <button 
                         key={i} 
-                        onClick={() => handleSendMessage(undefined, s)}
-                        className="w-full p-3 text-left text-[10px] font-bold text-on-surface-variant bg-surface-container-low border border-outline-variant/10 rounded-xl hover:text-primary hover:border-primary/20 transition-all active:scale-[0.98]"
+                        type="button"
+                        onClick={(e) => handleSuggestionClick(e, s)}
+                        className="w-full p-3 text-left text-[10px] font-bold text-on-surface-variant bg-surface-container-low border border-outline-variant/10 rounded-xl hover:text-primary hover:border-primary/20 transition-all active:scale-[0.98] pointer-events-auto"
                       >
                         <Sparkles size={10} className="inline mr-2 opacity-50" /> {s}
                       </button>
@@ -90,13 +104,12 @@ export const GlobalChatSheet: React.FC<GlobalChatSheetProps> = ({ isOpen, onClos
         </div>
         
         <div className="p-4 bg-surface-container-low border-t border-outline-variant/10 z-10 shrink-0">
-          <form onSubmit={handleSendMessage} className="relative flex items-center group">
+          <form onSubmit={handleSendMessage} className="relative flex items-center group pointer-events-auto">
               <input 
                   value={chatInput} 
                   onChange={e => setChatInput(e.target.value)} 
                   placeholder="Query your research..."
                   disabled={isChatLoading}
-                  autoFocus
                   className="w-full bg-surface-container-high/50 border-2 border-transparent focus:border-primary/20 focus:bg-background rounded-2xl pl-5 pr-14 py-4 text-sm font-bold text-on-surface outline-none transition-all placeholder:text-on-surface-variant/30 font-sans"
               />
               <button 

@@ -25,8 +25,6 @@ const InsightDetailView: React.FC = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
   const isSideSheet = view === AppView.DASHBOARD;
 
-  // v2.5.2: Content-First Default. 
-  // Drawers now always start CLOSED to provide immediate readability of the recap.
   const [activeDrawer, setActiveDrawer] = useState<'info' | 'chat' | null>(null);
 
   useEffect(() => {
@@ -46,7 +44,6 @@ const InsightDetailView: React.FC = () => {
 
   if (!insight) return null;
 
-  // View Decoupling: Locked State
   const isLocked = !userProfile?.is_pro && (Date.now() - new Date(insight.created_at).getTime() > 7 * 24 * 60 * 60 * 1000);
   if (isLocked) return <LockedView />;
 
@@ -97,7 +94,6 @@ const InsightDetailView: React.FC = () => {
       )}
 
       <div className="flex-1 flex overflow-hidden relative">
-        {/* v2.5.2: Content logic. Pruning the right padding if we are in SideSheet mode (overlay logic) */}
         <div className={`flex-1 overflow-y-auto custom-scrollbar transition-all duration-300 ${activeDrawer && !isMobile && !isSideSheet ? 'pr-[400px]' : ''}`}>
             <div className={`pb-40 ${isSideSheet ? 'px-6 pt-6' : 'container-fluid pt-0'}`}>
                 {isLocal ? (
@@ -123,7 +119,6 @@ const InsightDetailView: React.FC = () => {
 
         {activeDrawer && (
           <aside className={`
-            /* v2.5.2: SideSheet drawers now behave like Mobile Overlays (inset-0) to prevent content compression */
             ${(isMobile || isSideSheet) ? 'absolute inset-0 z-[250] bg-background animate-sheet-up' : 'w-[400px] absolute top-0 right-0 h-full border-l border-outline-variant/10 shadow-2xl z-40'} 
             flex flex-col transition-all duration-300 bg-background
           `}>
@@ -138,13 +133,13 @@ const InsightDetailView: React.FC = () => {
                 onClick={() => toggleDrawer('chat')} 
                 className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all ${activeDrawer === 'chat' ? 'bg-primary text-on-primary shadow-lg' : 'text-on-surface-variant hover:bg-surface-container-high'}`}
               >
-                Assistant
+                Chat
               </button>
               <button 
                 onClick={() => toggleDrawer('info')} 
                 className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all ${activeDrawer === 'info' ? 'bg-primary text-on-primary shadow-lg' : 'text-on-surface-variant hover:bg-surface-container-high'}`}
               >
-                Structure
+                Info
               </button>
               <button onClick={() => setActiveDrawer(null)} className="p-2.5 text-on-surface-variant hover:text-error transition-all"><X size={18} strokeWidth={3} /></button>
             </div>

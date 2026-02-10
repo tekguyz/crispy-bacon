@@ -1,3 +1,4 @@
+
 import React, { Suspense, lazy, useCallback, useState, useMemo } from 'react';
 import { Loader2 } from 'lucide-react'; 
 import { AppView } from './types';
@@ -15,6 +16,7 @@ import LoginScreen from './components/features/LoginScreen';
 import { GlobalModalManager } from './components/modals/GlobalModalManager';
 import { ToastContainer } from './components/ui/Toast';
 import { DataSynchronizer } from './components/DataSynchronizer';
+import { GlobalChatSheet } from './components/features/dashboard/GlobalChatSheet';
 
 // Lazy load heavy feature components
 const CaptureLab = lazy(() => import('./components/features/CaptureLab'));
@@ -98,6 +100,7 @@ function App() {
       <DataSynchronizer />
       <ToastContainer />
       <GlobalModalManager />
+      <GlobalChatSheet />
       
       <Sidebar 
         isExpanded={isSidebarExpanded}

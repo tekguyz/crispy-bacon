@@ -1,6 +1,6 @@
 
 import React, { useRef, useEffect, useState, useMemo } from 'react';
-import { Loader2, Activity, Sparkles, Zap, ChevronRight, ArrowRight, Bot, FileText, AlignLeft } from 'lucide-react';
+import { Loader2, Activity, Sparkles, Zap, ChevronRight, ArrowRight, Bot, FileText, AlignLeft, MessageSquare } from 'lucide-react';
 import { InsightContent, ProcessingStatus } from '../../../types';
 import { useAppStore } from '../../../store/useAppStore';
 import { triggerHaptic } from '../../../services/hapticService';
@@ -53,14 +53,14 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ insight }) => {
       <div className="px-4 py-3 border-b border-outline-variant/10 flex items-center justify-between shrink-0 bg-background/80 backdrop-blur-md z-10 h-14">
          <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-surface-container-high text-primary rounded-lg flex items-center justify-center border border-outline-variant/10 shadow-inner">
-                <Bot size={16} strokeWidth={2.5} />
+                <MessageSquare size={16} strokeWidth={2.5} />
             </div>
             <div className="flex flex-col">
-              <span className="text-[10px] font-black uppercase tracking-widest text-on-surface leading-none">Assistant</span>
+              <span className="text-[10px] font-black uppercase tracking-widest text-on-surface leading-none">CHAT</span>
               <div className="flex items-center gap-1.5 mt-0.5">
                   <div className={`w-1.5 h-1.5 rounded-full ${isSummarizing ? 'bg-primary animate-pulse' : 'bg-success'}`} />
                   <span className="text-[8px] font-bold text-on-surface-variant opacity-50 uppercase tracking-widest">
-                    {isSummarizing ? 'Processing' : 'Active'}
+                    {isSummarizing ? 'Syncing' : 'Ready'}
                   </span>
               </div>
             </div>
@@ -77,7 +77,7 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ insight }) => {
            <div className="mt-auto pb-4 animate-slide-up">
               <div className="flex items-center gap-2 mb-4 opacity-40 px-1">
                  <BaconLogo className="w-4 h-4" />
-                 <span className="text-[9px] font-black uppercase tracking-[0.3em]">Quick Prompts</span>
+                 <span className="text-[9px] font-black uppercase tracking-[0.3em]">Direct Query</span>
               </div>
               <div className="grid grid-cols-2 gap-2">
                  {suggestions.map((s, i) => (

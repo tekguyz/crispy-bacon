@@ -134,6 +134,7 @@ export interface UISlice {
   showUpgradeModal: boolean;
   showProfileDrawer: boolean;
   showOnboarding: boolean;
+  showGlobalChat: boolean;
   searchQuery: string;
   activeSourceTypeFilter: ContentType | 'all';
   activeCollectionFilterId: string | null;
@@ -173,6 +174,7 @@ export interface UISlice {
   setShowUpgradeModal: (show: boolean) => void;
   setShowProfileDrawer: (show: boolean) => void;
   setShowOnboarding: (show: boolean) => void;
+  setShowGlobalChat: (show: boolean) => void;
   completeOnboarding: () => void;
   toggleSidebarCollapse: () => void;
   addToast: (message: string, type?: ToastType) => void;
