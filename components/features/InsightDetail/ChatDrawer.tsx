@@ -1,7 +1,7 @@
 
 import React, { useRef, useEffect, useState, useMemo } from 'react';
-import { Loader2, Activity, Sparkles, Zap, ChevronRight, ArrowRight, Bot, FileText, AlignLeft, MessageSquare } from 'lucide-react';
-import { InsightContent, ProcessingStatus } from '../../../types';
+import { Loader2, Activity, Sparkles, Zap, ChevronRight, ArrowRight, Bot, FileText, AlignLeft, MessageSquare, ShieldAlert, Code, Users, Briefcase, Target } from 'lucide-react';
+import { InsightContent, ProcessingStatus, InsightTemplate } from '../../../types';
 import { useAppStore } from '../../../store/useAppStore';
 import { triggerHaptic } from '../../../services/hapticService';
 import { ChatMessageBubble } from './ChatMessageBubble';
@@ -41,12 +41,45 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ insight }) => {
     await sendChatMessage(msg, insight);
   };
 
-  const suggestions = [
-    { label: "Friction", icon: Activity, query: "Identify core friction points." },
-    { label: "Decisions", icon: Zap, query: "List all decisions made." },
-    { label: "Actions", icon: ChevronRight, query: "Synthesize next steps." },
-    { label: "Metrics", icon: Sparkles, query: "Find key numbers." }
-  ];
+  // DYNAMIC SUGGESTION ENGINE
+  const suggestions = useMemo(() => {
+    const template = insight.metadata?.template;
+    const type = insight.type;
+
+    // 1. Engineering / Technical Context
+    if (template === InsightTemplate.ENGINEERING) {
+      return [
+        { label: "Blockers", icon: ShieldAlert, query: "What are the primary technical blockers mentioned?" },
+        { label: "Architecture", icon: Code, query: "Summarize the architectural decisions or changes." },
+        { label: "Next Steps", icon: ChevronRight, query: "List the immediate engineering tasks." }
+      ];
+    }
+
+    // 2. Product / Discovery Context
+    if (template === InsightTemplate.PRODUCT) {
+      return [
+        { label: "User Pain", icon: Activity, query: "What are the core user pain points identified?" },
+        { label: "Features", icon: Zap, query: "List the requested feature changes." },
+        { label: "Sentiment", icon: Users, query: "What is the overall sentiment regarding this topic?" }
+      ];
+    }
+
+    // 3. Executive / Stakeholder Context
+    if (template === InsightTemplate.EXECUTIVE || template === InsightTemplate.STAKEHOLDER) {
+      return [
+        { label: "Risks", icon: ShieldAlert, query: "Identify potential risks or concerns raised." },
+        { label: "Bottom Line", icon: Target, query: "Give me the bottom line conclusion of this note." },
+        { label: "Timeline", icon: Activity, query: "Were any specific dates or timelines mentioned?" }
+      ];
+    }
+
+    // 4. Default / General Context
+    return [
+      { label: "Summarize", icon: FileText, query: "Give me a 3-sentence summary of this." },
+      { label: "Action Items", icon: ChevronRight, query: "Extract a checklist of next steps." },
+      { label: "Key Quotes", icon: Sparkles, query: "Find the most important quotes or statements." }
+    ];
+  }, [insight.metadata?.template, insight.type]);
 
   return (
     <div className="flex flex-col h-full bg-surface-container-lowest relative overflow-hidden">
@@ -77,19 +110,19 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ insight }) => {
            <div className="mt-auto pb-4 animate-slide-up">
               <div className="flex items-center gap-2 mb-4 opacity-40 px-1">
                  <BaconLogo className="w-4 h-4" />
-                 <span className="text-[9px] font-black uppercase tracking-[0.3em]">Direct Query</span>
+                 <span className="text-[9px] font-black uppercase tracking-[0.3em]">Suggested Queries</span>
               </div>
-              <div className="grid grid-cols-2 gap-2">
+              
+              {/* Context-Aware Pills */}
+              <div className="flex flex-wrap gap-2">
                  {suggestions.map((s, i) => (
                     <button 
                       key={i} 
                       onClick={() => handleSendMessage(undefined, s.query)}
-                      className="flex items-center gap-3 p-3 rounded-xl bg-surface-container-low border border-outline-variant/10 hover:bg-surface-container hover:border-primary/20 transition-all group text-left active:scale-[0.98]"
+                      className="flex items-center gap-2 pl-3 pr-4 py-2.5 rounded-full bg-surface-container-low border border-outline-variant/10 hover:bg-surface-container hover:border-primary/20 hover:text-primary transition-all group active:scale-[0.98] shadow-sm"
                     >
-                       <div className="w-6 h-6 rounded-lg bg-surface-container-high flex items-center justify-center text-on-surface-variant group-hover:text-primary shrink-0">
-                          <s.icon size={12} strokeWidth={2.5} />
-                       </div>
-                       <span className="text-[9px] font-bold uppercase tracking-wide text-on-surface-variant group-hover:text-on-surface truncate">
+                       <s.icon size={12} strokeWidth={2.5} className="text-on-surface-variant group-hover:text-primary transition-colors" />
+                       <span className="text-[10px] font-bold uppercase tracking-wide text-on-surface-variant group-hover:text-primary transition-colors">
                           {s.label}
                        </span>
                     </button>
