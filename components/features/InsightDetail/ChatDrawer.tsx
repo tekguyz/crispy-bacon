@@ -106,9 +106,9 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ insight }) => {
          </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto no-scrollbar p-4 relative z-0 flex flex-col">
+      <div className="flex-1 overflow-y-auto no-scrollbar px-2 py-4 relative z-0 flex flex-col">
         {chatHistory.length === 0 && !isSummarizing && (
-           <div className="mt-auto pb-4 animate-slide-up">
+           <div className="mt-auto pb-4 animate-slide-up px-1">
               <div className="flex items-center gap-2 mb-4 opacity-40 px-1">
                  <BaconLogo className="w-4 h-4" />
                  <span className="text-[9px] font-black uppercase tracking-[0.3em]">Suggested Queries</span>
