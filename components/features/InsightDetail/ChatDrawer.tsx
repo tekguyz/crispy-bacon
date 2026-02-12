@@ -1,6 +1,6 @@
 
 import React, { useRef, useEffect, useState, useMemo } from 'react';
-import { Loader2, Activity, Sparkles, Zap, ChevronRight, ArrowRight, Bot, FileText, AlignLeft, MessageSquare, ShieldAlert, Code, Users, Briefcase, Target } from 'lucide-react';
+import { Loader2, Activity, Sparkles, Zap, ChevronRight, ArrowRight, Bot, FileText, AlignLeft, MessageSquare, ShieldAlert, Code, Users, Briefcase, Target, Hash, HelpCircle } from 'lucide-react';
 import { InsightContent, ProcessingStatus, InsightTemplate } from '../../../types';
 import { useAppStore } from '../../../store/useAppStore';
 import { triggerHaptic } from '../../../services/hapticService';
@@ -41,45 +41,46 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ insight }) => {
     await sendChatMessage(msg, insight);
   };
 
-  // DYNAMIC SUGGESTION ENGINE
+  // DYNAMIC SUGGESTION ENGINE v2
+  // Prioritizes extracted topics (Guaranteed Hits) over generic templates.
   const suggestions = useMemo(() => {
+    const validTopics = (insight.topics || []).filter(t => t.length < 25); // Filter out overly long generated topics
+    
+    // 1. Topic-Based Suggestions (High Signal / Guaranteed Answer)
+    const topicSuggestions = validTopics.slice(0, 2).map(topic => ({
+      label: topic,
+      icon: Hash,
+      query: `Summarize the key discussion points regarding "${topic}".`
+    }));
+
+    // 2. Template-Specific Fallbacks (Contextual but risky if content drifts)
+    let contextSuggestions: any[] = [];
     const template = insight.metadata?.template;
-    const type = insight.type;
 
-    // 1. Engineering / Technical Context
-    if (template === InsightTemplate.ENGINEERING) {
-      return [
-        { label: "Blockers", icon: ShieldAlert, query: "What are the primary technical blockers mentioned?" },
-        { label: "Architecture", icon: Code, query: "Summarize the architectural decisions or changes." },
-        { label: "Next Steps", icon: ChevronRight, query: "List the immediate engineering tasks." }
-      ];
+    if (topicSuggestions.length < 2) {
+        if (template === InsightTemplate.ENGINEERING) {
+          contextSuggestions.push({ label: "Blockers", icon: ShieldAlert, query: "What are the primary technical blockers or risks mentioned?" });
+        } else if (template === InsightTemplate.PRODUCT) {
+          contextSuggestions.push({ label: "User Pain", icon: Activity, query: "What specific user pain points or feedback was discussed?" });
+        } else if (template === InsightTemplate.EXECUTIVE) {
+          contextSuggestions.push({ label: "Bottom Line", icon: Target, query: "What is the strategic bottom line?" });
+        }
     }
 
-    // 2. Product / Discovery Context
-    if (template === InsightTemplate.PRODUCT) {
-      return [
-        { label: "User Pain", icon: Activity, query: "What are the core user pain points identified?" },
-        { label: "Features", icon: Zap, query: "List the requested feature changes." },
-        { label: "Sentiment", icon: Users, query: "What is the overall sentiment regarding this topic?" }
-      ];
-    }
-
-    // 3. Executive / Stakeholder Context
-    if (template === InsightTemplate.EXECUTIVE || template === InsightTemplate.STAKEHOLDER) {
-      return [
-        { label: "Risks", icon: ShieldAlert, query: "Identify potential risks or concerns raised." },
-        { label: "Bottom Line", icon: Target, query: "Give me the bottom line conclusion of this note." },
-        { label: "Timeline", icon: Activity, query: "Were any specific dates or timelines mentioned?" }
-      ];
-    }
-
-    // 4. Default / General Context
-    return [
-      { label: "Summarize", icon: FileText, query: "Give me a 3-sentence summary of this." },
-      { label: "Action Items", icon: ChevronRight, query: "Extract a checklist of next steps." },
-      { label: "Key Quotes", icon: Sparkles, query: "Find the most important quotes or statements." }
+    // 3. Universal Defaults (Safe Fallbacks)
+    const defaults = [
+      { label: "Key Takeaways", icon: Sparkles, query: "Give me the 3 most important takeaways from this note." },
+      { label: "Next Steps", icon: ChevronRight, query: "List all explicit action items and next steps." }
     ];
-  }, [insight.metadata?.template, insight.type]);
+
+    // Merge: Topics First -> Context -> Defaults. Cap at 4 items.
+    const merged = [...topicSuggestions, ...contextSuggestions, ...defaults].slice(0, 4);
+    
+    // Deduplicate labels just in case
+    return merged.filter((item, index, self) => 
+        index === self.findIndex((t) => (t.label === item.label))
+    );
+  }, [insight.topics, insight.metadata?.template]);
 
   return (
     <div className="flex flex-col h-full bg-surface-container-lowest relative overflow-hidden">
@@ -119,10 +120,10 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ insight }) => {
                     <button 
                       key={i} 
                       onClick={() => handleSendMessage(undefined, s.query)}
-                      className="flex items-center gap-2 pl-3 pr-4 py-2.5 rounded-full bg-surface-container-low border border-outline-variant/10 hover:bg-surface-container hover:border-primary/20 hover:text-primary transition-all group active:scale-[0.98] shadow-sm"
+                      className="flex items-center gap-2 pl-3 pr-4 py-2.5 rounded-full bg-surface-container-low border border-outline-variant/10 hover:bg-surface-container hover:border-primary/20 hover:text-primary transition-all group active:scale-[0.98] shadow-sm max-w-full"
                     >
-                       <s.icon size={12} strokeWidth={2.5} className="text-on-surface-variant group-hover:text-primary transition-colors" />
-                       <span className="text-[10px] font-bold uppercase tracking-wide text-on-surface-variant group-hover:text-primary transition-colors">
+                       <s.icon size={12} strokeWidth={2.5} className="text-on-surface-variant group-hover:text-primary transition-colors shrink-0" />
+                       <span className="text-[10px] font-bold uppercase tracking-wide text-on-surface-variant group-hover:text-primary transition-colors truncate">
                           {s.label}
                        </span>
                     </button>
