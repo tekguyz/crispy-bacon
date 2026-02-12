@@ -105,6 +105,9 @@ const CaptureLab: React.FC = () => {
 
     if (isProcessing) {
       addToast("Finishing up in background.", "info");
+      setShowCaptureLab(false);
+      setLabView('setup');
+      return;
     }
 
     triggerHaptic('light');

@@ -1,7 +1,7 @@
 
 import { 
   UserProfile, InsightContent, Collection, Tag, SharedLink, 
-  CalendarEvent, AppView, ThemeOption, AccentColor, TextSize, 
+  CalendarEvent, AppView, ThemeOption, TextSize, 
   ContentType, InsightTemplate, PersonaStyle, VoiceOption, VisualizerStyle, ChatMessage, ContextAttachment, SystemLogEntry
 } from '../types';
 
@@ -58,7 +58,6 @@ export interface DataSlice {
   ingestDriveFiles: (files: DriveFile[], options: { template: InsightTemplate }) => Promise<void>;
   recoverOrphanedFiles: () => Promise<void>;
   
-  pollInsightStatus: (id: string) => Promise<void>;
   deleteInsight: (id: string) => Promise<void>;
   deleteInsightForever: (id: string) => Promise<void>;
   restoreInsight: (id: string) => Promise<void>;
@@ -94,7 +93,6 @@ export interface UISlice {
   view: AppView;
   previousView: AppView;
   theme: ThemeOption;
-  accentColor: AccentColor;
   textSize: TextSize;
   isSidebarCollapsed: boolean;
   hasSeenOnboarding: boolean;
@@ -146,7 +144,6 @@ export interface UISlice {
   defaultExportFormat: 'markdown' | 'text' | 'json';
 
   setTheme: (theme: ThemeOption) => void;
-  setAccentColor: (color: AccentColor) => void;
   setTextSize: (size: TextSize) => void;
   setView: (view: AppView) => void;
   setFeedViewMode: (mode: 'grid' | 'list') => void;

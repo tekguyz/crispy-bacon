@@ -9,7 +9,6 @@ export const createUISlice: StateCreator<AppState, [], [], UISlice> = (set, get)
   view: AppView.DASHBOARD,
   previousView: AppView.DASHBOARD,
   theme: (localStorage.getItem('theme') as ThemeOption) || 'system',
-  accentColor: 'orange',
   textSize: 'medium',
   isSidebarCollapsed: localStorage.getItem('sidebarCollapsed') === null ? true : localStorage.getItem('sidebarCollapsed') === 'true',
   hasSeenOnboarding: localStorage.getItem('hasSeenOnboarding_v1') === 'true',
@@ -81,7 +80,6 @@ export const createUISlice: StateCreator<AppState, [], [], UISlice> = (set, get)
     localStorage.setItem('theme', theme); 
     get().logSystemEvent(`Visual mode set: ${theme}`);
   },
-  setAccentColor: () => {},
   setTextSize: () => {},
   setView: (view) => {
     triggerHaptic('light');

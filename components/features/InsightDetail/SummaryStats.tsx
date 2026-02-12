@@ -1,7 +1,8 @@
 
 import React from 'react';
-import { Activity, Clock, Calendar, Zap, Mic } from 'lucide-react';
+import { Activity, Clock, Calendar, Zap, Mic, HelpCircle } from 'lucide-react';
 import { InsightContent, ProcessingStatus, ContentType } from '../../../types';
+import { Tooltip } from '../../ui/Tooltip';
 
 interface SummaryStatsProps {
   insight: InsightContent;
@@ -33,12 +34,14 @@ export const SummaryStats: React.FC<SummaryStatsProps> = ({ insight }) => {
        
        <Divider />
 
-       <StatItem 
-          icon={Activity} 
-          value={velocity != null ? `${velocity}%` : (isProcessing ? '--' : '50%')} 
-          label="Clarity" 
-          colorClass={velocity && velocity > 70 ? "text-success/40" : "text-primary/20"}
-       />
+       <Tooltip content="Signal Density Score (0-100%)">
+         <StatItem 
+            icon={Activity} 
+            value={velocity != null ? `${velocity}%` : (isProcessing ? '--' : '50%')} 
+            label="Clarity" 
+            colorClass={velocity && velocity > 70 ? "text-success/40" : (velocity && velocity < 20 ? "text-error" : "text-primary/20")}
+         />
+       </Tooltip>
 
        <Divider />
 

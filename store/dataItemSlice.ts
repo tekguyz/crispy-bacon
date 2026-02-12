@@ -1,3 +1,4 @@
+
 import { StateCreator } from 'zustand';
 import { AppState, DataSlice } from './types';
 import { supabase } from '../services/supabaseClient';
@@ -5,10 +6,6 @@ import { deleteArtifactLocally } from '../services/localDbService';
 import { ProcessingStatus } from '../types';
 
 export const createDataItemSlice: StateCreator<AppState, [], [], Partial<DataSlice>> = (set, get) => ({
-  pollInsightStatus: async (id) => {
-    console.debug(`[Legacy] Polling deferred for node ${id}. Realtime active.`);
-  },
-
   deleteInsight: async (id) => {
     const { insights, addToast, selectedInsight, setSelectedInsight } = get();
     

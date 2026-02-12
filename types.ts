@@ -34,8 +34,6 @@ export enum Sentiment {
   COMPLEX = 'COMPLEX'
 }
 
-export type AccentColor = 'orange' | 'blue' | 'green' | 'purple' | 'red';
-
 export interface UserProfile {
   id: string;
   full_name?: string;

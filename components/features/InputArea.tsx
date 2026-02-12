@@ -24,7 +24,15 @@ const InputArea: React.FC = () => {
   } = useFileDrop();
 
   const handleClose = useCallback(() => {
-    if (isProcessing) addToast("Reasoning in background.", "info");
+    // Immediate dismissal if processing to prevent race conditions with heavy main thread work
+    if (isProcessing) {
+      addToast("Finishing up in background.", "info");
+      setShowInputModal(false);
+      clearImportError();
+      setShowDrive(false);
+      return;
+    }
+
     triggerHaptic('light');
     setIsClosing(true);
     setTimeout(() => {
@@ -32,7 +40,7 @@ const InputArea: React.FC = () => {
       setIsClosing(false);
       clearImportError();
       setShowDrive(false);
-      if (!isProcessing) clearFiles();
+      clearFiles();
     }, 300);
   }, [isProcessing, setShowInputModal, clearImportError, addToast, clearFiles]);
 

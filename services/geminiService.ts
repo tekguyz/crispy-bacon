@@ -53,7 +53,8 @@ export const analyzeContent = async (
       2. HIGHLIGHTS: Provide EXACTLY 5 to 10 granular facts/takeaways. (NEVER more than 10).
       3. ACTION ITEMS: Provide a granular, step-by-step execution plan.
       4. TAXONOMY: Provide EXACTLY 5 project-specific topics.
-      5. FORMATTING: Always use double newlines (\\n\\n) after every ### header.
+      5. MOMENTUM_SCORE: Rate the signal clarity (0-100). 0=Incoherent/Noisy, 100=High Density/Clear Decisions.
+      6. FORMATTING: Always use double newlines (\\n\\n) after every ### header.
     `;
   } else {
     instructions = `
@@ -67,6 +68,7 @@ export const analyzeContent = async (
       2. HIGHLIGHTS: Top 3-5 critical points only.
       3. ACTION ITEMS: Basic checklist of immediate needs.
       4. TAXONOMY: Provide EXACTLY 3 topics.
+      5. MOMENTUM_SCORE: Rate signal clarity (0-100). 0=Unintelligible, 100=Perfect Clarity.
     `;
   }
 
