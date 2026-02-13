@@ -1,6 +1,6 @@
 
 import React, { useRef, useEffect, useState, useMemo } from 'react';
-import { Loader2, Activity, Sparkles, Zap, ChevronRight, ArrowRight, Bot, FileText, AlignLeft, MessageSquare, ShieldAlert, Code, Users, Briefcase, Target, Hash, HelpCircle } from 'lucide-react';
+import { ChevronRight, ArrowRight, MessageSquare, ShieldAlert, Activity, Target, Hash, Sparkles, Mail, Feather } from 'lucide-react';
 import { InsightContent, ProcessingStatus, InsightTemplate } from '../../../types';
 import { useAppStore } from '../../../store/useAppStore';
 import { triggerHaptic } from '../../../services/hapticService';
@@ -35,51 +35,59 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ insight }) => {
     await sendChatMessage(msg, insight);
   };
 
-  // DYNAMIC SUGGESTION ENGINE v2
-  // Prioritizes extracted topics (Guaranteed Hits) over generic templates.
+  // REFINED SUGGESTION ENGINE
+  // Philosophy: Verbs & Objects. Max 2 words.
   const suggestions = useMemo(() => {
-    const validTopics = (insight.topics || []).filter(t => t.length < 25); // Filter out overly long generated topics
+    const validTopics = (insight.topics || []).filter(t => t.length < 20);
     
-    // 1. Topic-Based Suggestions (High Signal / Guaranteed Answer)
-    const topicSuggestions = validTopics.slice(0, 2).map(topic => ({
-      label: topic,
-      icon: Hash,
-      query: `Summarize the key discussion points regarding "${topic}".`
-    }));
-
-    // 2. Context Aware (Guaranteed by new Backend Logic)
+    // 1. Context Specific (High Value)
     const contextSuggestions = [];
+    
+    // If we have explicit actions, offer to list them cleanly
     if (insight.action_items && insight.action_items.length > 0) {
-       contextSuggestions.push({ label: "Checklist", icon: ShieldAlert, query: "List all explicit action items and next steps." });
+       contextSuggestions.push({ 
+         label: "Checklist", 
+         icon: ShieldAlert, 
+         query: "List all explicit action items and decisions as a checklist." 
+       });
+    }
+
+    // 2. Topic Drill-down (Dynamic)
+    // Only show the most relevant topic to avoid clutter
+    if (validTopics.length > 0) {
+      contextSuggestions.push({
+        label: `Topic: ${validTopics[0]}`,
+        icon: Hash,
+        query: `Tell me more about ${validTopics[0]} and why it matters.`
+      });
     }
     
-    // 3. Template-Specific Fallbacks 
+    // 3. Template/Role Specific (Strategic)
     const template = insight.metadata?.template;
     if (template === InsightTemplate.ENGINEERING) {
-      contextSuggestions.push({ label: "Blockers", icon: ShieldAlert, query: "What are the primary technical blockers or risks mentioned?" });
+      contextSuggestions.push({ label: "Blockers", icon: ShieldAlert, query: "What are the technical blockers or risks?" });
     } else if (template === InsightTemplate.PRODUCT) {
-      contextSuggestions.push({ label: "User Pain", icon: Activity, query: "What specific user pain points or feedback was discussed?" });
+      contextSuggestions.push({ label: "Pain Points", icon: Activity, query: "Summarize user pain points and feedback." });
     } else if (template === InsightTemplate.EXECUTIVE) {
       contextSuggestions.push({ label: "Bottom Line", icon: Target, query: "What is the strategic bottom line?" });
     }
 
-    // 4. Universal Defaults (Safe Fallbacks)
+    // 4. Productivity Actions (Universal)
+    // "Draft Email" is often more useful than "Key Takeaways" which is already on screen
     const defaults = [
-      { label: "Key Takeaways", icon: Sparkles, query: "Give me the 3 most important takeaways from this note." },
-      { label: "Next Steps", icon: ChevronRight, query: "List all explicit action items and next steps." }
+      { label: "Draft Email", icon: Mail, query: "Draft a concise follow-up email to the team summarizing this." },
+      { label: "Briefing", icon: Feather, query: "Create a 3-bullet executive briefing of this note." }
     ];
 
-    // Merge: Topics First -> Context -> Defaults. Cap at 5 items for the scroll bar.
-    const merged = [...contextSuggestions, ...topicSuggestions, ...defaults].slice(0, 5);
+    // Merge & Dedupe: Context -> Topics -> Defaults
+    const merged = [...contextSuggestions, ...defaults].slice(0, 4);
     
-    // Deduplicate labels just in case
-    return merged.filter((item, index, self) => 
-        index === self.findIndex((t) => (t.label === item.label))
-    );
+    return merged;
   }, [insight.topics, insight.metadata?.template, insight.action_items]);
 
   return (
     <div className="flex flex-col h-full bg-surface-container-lowest relative overflow-hidden">
+      {/* HEADER: Cleaned up. Removed Word Count Pill. */}
       <div className="px-4 py-3 border-b border-outline-variant/10 flex items-center justify-between shrink-0 bg-background/80 backdrop-blur-md z-10 h-14">
          <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-surface-container-high text-primary rounded-lg flex items-center justify-center border border-outline-variant/10 shadow-inner">
@@ -97,9 +105,11 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ insight }) => {
          </div>
       </div>
 
+      {/* CHAT AREA */}
       <div className="flex-1 overflow-y-auto no-scrollbar px-2 py-4 relative z-0 flex flex-col">
+        {/* EMPTY STATE: Fills the void when history is empty */}
         {chatHistory.length === 0 && !isSummarizing && (
-           <div className="absolute inset-0 flex flex-col items-center justify-center p-8 animate-fade-in z-0 pointer-events-none opacity-60">
+           <div className="absolute inset-0 flex flex-col items-center justify-center p-8 animate-fade-in z-0 pointer-events-none opacity-60 pb-20">
               <div className="w-20 h-20 bg-surface-container-high rounded-[2rem] flex items-center justify-center mb-6 shadow-inner border border-outline-variant/10 relative overflow-hidden">
                  <div className="absolute inset-0 ledger-grid opacity-[0.1]" />
                  <BaconLogo className="w-10 h-10 text-primary opacity-80" />
@@ -128,19 +138,19 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ insight }) => {
         </div>
       </div>
       
-      {/* PERSISTENT SUGGESTION BAR + INPUT */}
+      {/* FOOTER: Suggestions + Input */}
       <div className="bg-background border-t border-outline-variant/10 z-10 shrink-0 pb-[calc(env(safe-area-inset-bottom)+1rem)] md:pb-4 flex flex-col gap-2">
-        {/* Horizontal Suggestion Scroll */}
+        {/* Horizontal Suggestion Scroll - Updated Style: Smaller, Pill-shaped */}
         {!isChatLoading && !isSummarizing && (
             <div className="overflow-x-auto no-scrollbar flex gap-2 px-4 py-2 pt-3">
                 {suggestions.map((s, i) => (
                     <button 
                         key={i} 
                         onClick={() => handleSendMessage(undefined, s.query)}
-                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-low border border-outline-variant/10 hover:bg-surface-container hover:border-primary/20 hover:text-primary transition-all group active:scale-[0.98] shadow-sm shrink-0 whitespace-nowrap"
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-low border border-outline-variant/10 hover:bg-surface-container hover:border-primary/20 hover:text-primary transition-all group active:scale-[0.98] shadow-sm shrink-0 whitespace-nowrap"
                     >
-                        <s.icon size={10} strokeWidth={2.5} className="text-on-surface-variant group-hover:text-primary transition-colors" />
-                        <span className="text-[9px] font-bold uppercase tracking-wide text-on-surface-variant group-hover:text-primary transition-colors">
+                        <s.icon size={10} strokeWidth={2.5} className="text-on-surface-variant group-hover:text-primary transition-colors opacity-70" />
+                        <span className="text-[9px] font-black uppercase tracking-widest text-on-surface-variant group-hover:text-primary transition-colors">
                             {s.label}
                         </span>
                     </button>
