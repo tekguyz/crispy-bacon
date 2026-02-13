@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Mic, Search, CheckSquare, Radio, Globe, Cpu, ArrowRight } from 'lucide-react';
 
@@ -7,14 +8,14 @@ export const TheInstrument: React.FC = () => {
       id: "01",
       tag: "INPUT",
       title: "Direct Capture",
-      desc: "Record system audio from Zoom or Meet. No bots, just pure signal.",
+      desc: "Record system audio from Zoom or Meet. No bots, just pure audio.",
       icon: Radio,
       specs: ["ZERO BOTS", "PRIVACY FIRST"]
     },
     {
       id: "02",
       tag: "PROCESS",
-      title: "Deep Reasoning",
+      title: "Deep Research",
       desc: "Our engine separates fact from filler, identifying decisions automatically.",
       icon: Search,
       specs: ["FACT CHECKED", "HIGH DENSITY"]
@@ -37,10 +38,10 @@ export const TheInstrument: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-end mb-20">
            <div className="lg:col-span-8 space-y-6">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/5 border border-primary/10 text-primary rounded-full">
-                  <span className="text-[10px] font-mono font-black uppercase tracking-[0.3em]">The Signal Path</span>
+                  <span className="text-[10px] font-mono font-black uppercase tracking-[0.3em]">How It Works</span>
               </div>
               <h2 className="text-4xl md:text-7xl font-display font-bold tracking-tighter text-on-surface uppercase leading-[0.85] italic">
-                The <span className="text-primary not-italic text-outline">Instrument.</span>
+                The <span className="text-primary not-italic text-outline">Assistant.</span>
               </h2>
            </div>
            <div className="lg:col-span-4 pb-2">

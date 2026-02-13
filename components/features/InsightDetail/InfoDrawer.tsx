@@ -37,9 +37,13 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
         {/* 1. PRIMARY ACTIONS */}
         {!isFailed && <QuickActions insight={insight} />}
 
-        {/* 2. REFERENCE SIGNAL */}
+        {/* 2. SOURCE AUDIO */}
         {hasAudio && (
            <div className="pt-4 border-t border-outline-variant/10">
+              <div className="flex items-center gap-2 mb-3 px-1">
+                 <Radio size={10} className="text-on-surface-variant/40" strokeWidth={3} />
+                 <h3 className="text-[9px] font-black uppercase tracking-[0.4em] text-on-surface-variant/60">Source Audio</h3>
+              </div>
               <AudioSource 
                   variant="slim"
                   url={insight.metadata!.audioUrl!} 
@@ -48,7 +52,7 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
            </div>
         )}
 
-        {/* 3. AUTOMATED TAXONOMY -> TOPICS */}
+        {/* 3. TOPICS */}
         <div className="space-y-8 pt-4 border-t border-outline-variant/10">
           <TaxonomySection 
             topics={insight.topics} 
@@ -57,18 +61,18 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
           />
         </div>
 
-        {/* 4. MANUAL FILING -> FOLDERS */}
+        {/* 4. FOLDERS */}
         <div className="space-y-8 pt-4 border-t border-outline-variant/10">
           <FolderSelection insight={insight} />
         </div>
 
-        {/* 5. PROVENANCE -> SOURCES */}
+        {/* 5. SOURCES */}
         <ContextGrounding 
           attachments={insight.metadata?.contextAttachments} 
           sourceUrl={insight.metadata?.sourceDomain || (insight.type === 'URL' ? insight.original_content : undefined)} 
         />
 
-        {/* 6. DOWNSTREAM */}
+        {/* 6. EXPORT */}
         {!isFailed && (
           <div className="space-y-4 pt-4 border-t border-outline-variant/10">
             <h3 className="text-[9px] font-black uppercase tracking-[0.4em] text-on-surface-variant/40">Export Note</h3>
@@ -76,11 +80,11 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
           </div>
         )}
 
-        {/* 7. SYSTEM METRICS */}
+        {/* 7. FILE PROPERTIES */}
         <div className="pt-24 pb-8 opacity-10 hover:opacity-40 transition-opacity">
           <div className="flex items-center gap-2 mb-3">
              <Terminal size={10} className="text-on-surface-variant" />
-             <span className="text-[8px] font-mono font-black uppercase tracking-[0.3em]">System Info</span>
+             <span className="text-[8px] font-mono font-black uppercase tracking-[0.3em]">File Properties</span>
           </div>
           
           {usage ? (
@@ -90,13 +94,13 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
                 <span className="uppercase tracking-tight">{usage.model.replace('gemini-', '')}</span>
               </div>
               <div className="flex justify-between">
-                <span className="opacity-50">Usage</span>
-                <span>{usage.totalTokens.toLocaleString()}t</span>
+                <span className="opacity-50">Volume</span>
+                <span>{usage.totalTokens.toLocaleString()} tokens</span>
               </div>
             </div>
           ) : (
             <div className="text-[8px] font-mono italic opacity-40 uppercase tracking-widest">
-              Analysis Complete
+              Standard Note
             </div>
           )}
         </div>

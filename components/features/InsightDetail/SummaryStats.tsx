@@ -34,7 +34,7 @@ export const SummaryStats: React.FC<SummaryStatsProps> = ({ insight }) => {
        
        <Divider />
 
-       <Tooltip content="Signal Density Score (0-100%)">
+       <Tooltip content="Clarity Score (0-100%)">
          <StatItem 
             icon={Activity} 
             value={velocity != null ? `${velocity}%` : (isProcessing ? '--' : '50%')} 

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Globe, ShieldCheck, CheckCircle2, AlertCircle, ExternalLink } from 'lucide-react';
 import { useAppStore } from '../../../store/useAppStore';
@@ -31,7 +32,7 @@ export const IntegrationsSection: React.FC = () => {
               </svg>
            </div>
            <div className="flex flex-col leading-none">
-              <span className="text-sm font-black uppercase tracking-widest text-on-surface">Google Workspace</span>
+              <span className="text-sm font-black uppercase tracking-widest text-on-surface">Google Account</span>
               <span className="text-[8px] font-bold text-on-surface-variant opacity-40 uppercase tracking-widest mt-1">Calendar & Drive</span>
            </div>
         </div>
@@ -44,14 +45,14 @@ export const IntegrationsSection: React.FC = () => {
         ) : (
            <div className="flex items-center gap-1 text-on-surface-variant opacity-30">
               <AlertCircle size={14} strokeWidth={3} />
-              <span className="text-[9px] font-black uppercase tracking-widest">Unlinked</span>
+              <span className="text-[9px] font-black uppercase tracking-widest">Not Connected</span>
            </div>
         )}
       </div>
 
       <div className="space-y-4">
         <p className="text-[10px] font-bold text-on-surface-variant opacity-60 leading-relaxed">
-          Unlock automated agenda syncing and direct cloud research. Connecting your workspace allows the assistant to pull context from your daily schedule.
+          Unlock automated agenda syncing and direct cloud research. Connecting your account allows the assistant to pull context from your daily schedule.
         </p>
         
         <div className="flex flex-col gap-2">
@@ -59,7 +60,7 @@ export const IntegrationsSection: React.FC = () => {
               onClick={handleLink}
               className={`w-full h-12 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all active:scale-[0.98] flex items-center justify-center gap-2 ${(isGoogleLinked && hasProviderToken) ? 'bg-surface-container-highest text-on-surface' : 'bg-primary text-on-primary shadow-lg shadow-primary/20'}`}
             >
-              {(isGoogleLinked && hasProviderToken) ? 'Refresh Connection' : 'Link Google Account'}
+              {(isGoogleLinked && hasProviderToken) ? 'Refresh Connection' : 'Connect Google'}
               <ExternalLink size={12} className="opacity-40" />
             </button>
             <p className="text-[7px] text-center font-black text-on-surface-variant opacity-20 uppercase tracking-[0.4em]">

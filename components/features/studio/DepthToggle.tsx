@@ -26,7 +26,7 @@ export const DepthToggle: React.FC<DepthToggleProps> = ({ isPro }) => {
     <div className="space-y-3">
       <div className="flex items-center gap-2 px-1">
         <Brain size={12} className="text-primary opacity-40" />
-        <h3 className="text-[9px] font-black uppercase tracking-widest text-on-surface-variant/60">Logic Mode</h3>
+        <h3 className="text-[9px] font-black uppercase tracking-widest text-on-surface-variant/60">Detail Level</h3>
       </div>
 
       <div className="p-1 bg-surface-container-high border border-outline-variant/10 rounded-xl flex gap-1 shadow-inner">
@@ -52,7 +52,7 @@ export const DepthToggle: React.FC<DepthToggleProps> = ({ isPro }) => {
         >
           {!isPro && <Lock size={9} className="opacity-40 shrink-0" />}
           <Brain size={11} fill={personaStyle === PersonaStyle.DEEP_RESEARCH ? "currentColor" : "none"} />
-          <span className="text-[9px] font-black uppercase tracking-tight">Deep Distill</span>
+          <span className="text-[9px] font-black uppercase tracking-tight">Deep Research</span>
         </button>
       </div>
     </div>

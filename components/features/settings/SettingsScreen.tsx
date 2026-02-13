@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { COPYRIGHT_YEAR, LAB_NAME } from '../../../constants/version';
 import { IdentitySection } from './IdentitySection';
@@ -22,7 +23,7 @@ const SettingsScreen: React.FC = () => {
         <div className="space-y-6">
            <div className="flex items-center gap-3 px-1 opacity-40">
               <User size={14} strokeWidth={3} />
-              <h2 className="text-[10px] font-black uppercase tracking-[0.3em]">Account & Integrations</h2>
+              <h2 className="text-[10px] font-black uppercase tracking-[0.3em]">Account & Connections</h2>
            </div>
            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <IdentitySection />
@@ -55,7 +56,7 @@ const SettingsScreen: React.FC = () => {
         <div className="space-y-6">
           <div className="flex items-center gap-3 px-1 opacity-40">
             <Shield size={14} strokeWidth={3} />
-            <h2 className="text-[10px] font-black uppercase tracking-[0.3em]">Storage & Data</h2>
+            <h2 className="text-[10px] font-black uppercase tracking-[0.3em]">Storage</h2>
           </div>
           <div className="space-y-6">
              <DataManagementSection />

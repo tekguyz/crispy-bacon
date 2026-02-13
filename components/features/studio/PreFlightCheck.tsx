@@ -40,11 +40,11 @@ export const PreFlightCheck: React.FC<PreFlightCheckProps> = ({ onConfirm, onCan
                   <div className="w-5 h-5 rounded-md bg-primary text-on-primary flex items-center justify-center font-black text-[10px] shrink-0">1</div>
                   <div className="space-y-2 flex-1 min-w-0">
                     <p className="text-[10px] font-bold text-on-surface leading-snug">
-                      Check <span className="font-black">"Share System Audio"</span> in the pop-up.
+                      Check <span className="font-black">"Share Audio"</span> in the pop-up.
                     </p>
                     <div className="bg-surface-container-low border border-primary/10 rounded-lg p-2 flex items-center gap-3 animate-pulse">
                         <div className="w-3.5 h-3.5 rounded border-2 border-primary bg-primary flex items-center justify-center shrink-0" />
-                        <span className="text-[7px] font-black uppercase tracking-widest text-primary truncate">Share system audio</span>
+                        <span className="text-[7px] font-black uppercase tracking-widest text-primary truncate">Share Audio</span>
                     </div>
                   </div>
                 </div>

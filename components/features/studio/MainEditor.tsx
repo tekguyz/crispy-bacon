@@ -15,12 +15,12 @@ export const MainEditor: React.FC<MainEditorProps> = ({ value, onChange }) => (
       <div className="flex items-center justify-between py-3 px-6 md:px-10 border-b border-outline-variant/5 bg-surface-container-lowest shrink-0">
           <div className="flex items-center gap-3">
             <AlignLeft size={14} className="text-primary/40" />
-            <label className="text-[10px] font-black uppercase tracking-[0.4em] text-on-surface-variant/40 leading-none">Draft Pad</label>
+            <label className="text-[10px] font-black uppercase tracking-[0.4em] text-on-surface-variant/40 leading-none">Notes</label>
           </div>
           <div className="flex items-center gap-4 text-[8px] font-mono font-black text-on-surface-variant opacity-20 uppercase tracking-widest">
              <span>{value.split(/\s+/).filter(Boolean).length} words</span>
              <div className="w-1 h-1 rounded-full bg-current" />
-             <span>Autosave active</span>
+             <span>Saved</span>
           </div>
       </div>
 

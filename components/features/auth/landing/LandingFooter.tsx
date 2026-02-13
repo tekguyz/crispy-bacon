@@ -34,7 +34,7 @@ export const LandingFooter: React.FC<any> = ({ onPrivacy, onTerms, onEthics, onS
           {/* NAVIGATION LINKS */}
           <div className="md:col-span-5 grid grid-cols-2 gap-12 md:px-12 border-l border-outline-variant/10">
             <div className="space-y-8">
-              <span className="text-[9px] font-mono font-black uppercase tracking-[0.4em] opacity-20 text-on-background">Capabilities</span>
+              <span className="text-[9px] font-mono font-black uppercase tracking-[0.4em] opacity-20 text-on-background">Features</span>
               <div className="space-y-5">
                 {[
                   { icon: Cpu, label: 'Assistant' }, 
@@ -90,7 +90,7 @@ export const LandingFooter: React.FC<any> = ({ onPrivacy, onTerms, onEthics, onS
             &copy; {COPYRIGHT_YEAR} CRISPY BACON LABS :: VERSION 2.5.1
           </p>
           <div className="flex gap-8 opacity-20 hover:opacity-100 transition-opacity">
-             <span className="text-[7px] font-mono font-black uppercase tracking-widest">Ping: 40ms</span>
+             <span className="text-[7px] font-mono font-black uppercase tracking-widest">Online</span>
              <span className="text-[7px] font-mono font-black uppercase tracking-widest">System: Ready</span>
           </div>
         </div>

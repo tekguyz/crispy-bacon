@@ -16,7 +16,7 @@ export const FailedState: React.FC<StatusProps> = ({ insight }) => {
 
   const handleRescue = async () => {
     if (!insight.metadata?.audioUrl) {
-      addToast("Original signal not found in local memory.", "warn");
+      addToast("Original audio not found in local memory.", "warn");
       return;
     }
     
@@ -30,11 +30,11 @@ export const FailedState: React.FC<StatusProps> = ({ insight }) => {
       const a = document.createElement('a');
       a.style.display = 'none';
       a.href = url;
-      a.download = `rescue_${insight.id.substring(0,8)}_${insight.type === ContentType.MEETING ? 'audio.webm' : 'note.txt'}`;
+      a.download = `backup_${insight.id.substring(0,8)}_${insight.type === ContentType.MEETING ? 'audio.webm' : 'note.txt'}`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
-      addToast("Raw signal saved to device.", "success");
+      addToast("Backup file saved to device.", "success");
     } catch (e) {
       addToast("Download failed. Check Activity Log.", "error");
     } finally {
@@ -59,8 +59,8 @@ export const FailedState: React.FC<StatusProps> = ({ insight }) => {
         </h3>
         <p className="text-xs font-bold text-on-surface-variant opacity-60 leading-relaxed uppercase tracking-widest">
           {isOversized 
-            ? "This session exceeds the limit, but the raw data is secured in your vault."
-            : "We couldn't finish this note. The original capture is safe."}
+            ? "This session exceeds the limit, but the audio is secured in your vault."
+            : "We couldn't finish this note. The original recording is safe."}
         </p>
       </div>
 
@@ -68,9 +68,9 @@ export const FailedState: React.FC<StatusProps> = ({ insight }) => {
         <div className="flex items-center justify-between px-2">
             <div className="flex items-center gap-2">
                 <ShieldCheck size={14} className="text-success" />
-                <span className="text-[9px] font-black uppercase tracking-widest text-on-surface-variant">Note Saved</span>
+                <span className="text-[9px] font-black uppercase tracking-widest text-on-surface-variant">Secure</span>
             </div>
-            <span className="text-[8px] font-mono font-bold opacity-30 uppercase tracking-widest">Capture_{insight.id.substring(0,6)}</span>
+            <span className="text-[8px] font-mono font-bold opacity-30 uppercase tracking-widest">Note_{insight.id.substring(0,6)}</span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -86,7 +86,7 @@ export const FailedState: React.FC<StatusProps> = ({ insight }) => {
                 disabled={isRescuing || !insight.metadata?.audioUrl}
                 className="flex items-center justify-center gap-3 px-6 h-14 bg-surface-container-highest text-on-surface rounded-2xl font-black text-[10px] uppercase tracking-widest border border-outline-variant/20 hover:bg-background active:scale-[0.98] transition-all disabled:opacity-30"
             >
-                <Download size={14} strokeWidth={3} /> Download Original
+                <Download size={14} strokeWidth={3} /> Download Backup
             </button>
         </div>
       </div>
@@ -104,9 +104,9 @@ export const ProcessingState: React.FC<StatusProps> = ({ insight }) => {
   const { fetchData, addToast, setSelectedInsight } = useAppStore();
 
   const handleForceReset = async () => {
-    const resetItem = { ...insight, processing_status: ProcessingStatus.FAILED, error_message: 'Capture stopped by user. Original data safe.' };
+    const resetItem = { ...insight, processing_status: ProcessingStatus.FAILED, error_message: 'Recording stopped by user. Audio safe.' };
     setSelectedInsight(resetItem);
-    addToast("Writing stopped. Capture safe.", "info");
+    addToast("Writing stopped. Audio safe.", "info");
   };
 
   return (

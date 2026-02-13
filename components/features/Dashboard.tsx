@@ -72,13 +72,13 @@ const Dashboard: React.FC = () => {
                <div className="relative z-10 space-y-2">
                   <div className="flex items-center gap-3 mb-2">
                      <div className="w-2 h-2 rounded-full bg-success animate-pulse" />
-                     <span className="text-[9px] font-mono font-black uppercase tracking-widest text-success">System Active</span>
+                     <span className="text-[9px] font-mono font-black uppercase tracking-widest text-success">Online</span>
                   </div>
                   <h1 className="text-4xl md:text-5xl font-serif font-bold text-on-surface leading-[0.95] tracking-tight">
                     {greeting}, <span className="text-primary italic">{displayName}.</span>
                   </h1>
                   <p className="text-[11px] font-bold text-on-surface-variant opacity-60 max-w-md mt-2 leading-relaxed">
-                    Your research vault is secure. {stats.actionItemCount} pending decisions detected across {activeInsights.length} signals.
+                    Your library is secure. {stats.actionItemCount} pending decisions detected across {activeInsights.length} notes.
                   </p>
                </div>
 
@@ -87,7 +87,7 @@ const Dashboard: React.FC = () => {
                     onClick={() => { triggerHaptic('medium'); setShowCaptureLab(true); }}
                     className="flex items-center gap-3 px-6 h-12 bg-primary text-on-primary rounded-xl font-black text-[10px] uppercase tracking-[0.2em] shadow-lg interactive"
                   >
-                    <Mic size={14} strokeWidth={3} /> Record Signal
+                    <Mic size={14} strokeWidth={3} /> Record Note
                   </button>
                   <button 
                     onClick={() => { triggerHaptic('light'); setShowInputModal(true); }}

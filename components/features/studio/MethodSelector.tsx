@@ -25,7 +25,7 @@ export const MethodSelector: React.FC<MethodSelectorProps> = ({ onSelect }) => {
                 <Layers size={20} strokeWidth={2.5} />
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] font-black uppercase tracking-widest text-on-surface">Ready to Capture</span>
+                <span className="text-[10px] font-black uppercase tracking-widest text-on-surface">Ready to Record</span>
                 <span className="text-[8px] font-mono font-black uppercase tracking-widest text-success">Online</span>
               </div>
            </div>

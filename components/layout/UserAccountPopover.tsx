@@ -86,7 +86,7 @@ export const UserAccountPopover: React.FC = () => {
               </p>
               <div className="flex items-center gap-1.5 opacity-30 mt-1">
                 <ShieldCheck size={10} className="text-success" />
-                <span className="text-[7px] font-black uppercase tracking-widest">Signal Encrypted</span>
+                <span className="text-[7px] font-black uppercase tracking-widest">Private</span>
               </div>
             </div>
           </div>
@@ -120,7 +120,7 @@ export const UserAccountPopover: React.FC = () => {
               className="w-full flex items-center gap-4 px-5 py-4 rounded-xl hover:bg-error/5 transition-colors text-left group interactive"
             >
               <LogOut size={18} className="text-error opacity-40 group-hover:opacity-100 transition-opacity" strokeWidth={2.5} />
-              <span className="text-[11px] font-black uppercase tracking-widest text-error opacity-80">Terminate Session</span>
+              <span className="text-[11px] font-black uppercase tracking-widest text-error opacity-80">Sign Out</span>
             </button>
           </div>
         </div>

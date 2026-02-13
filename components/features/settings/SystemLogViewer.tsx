@@ -56,7 +56,7 @@ export const SystemLogViewer: React.FC = () => {
             title="Force reset the assistant state"
           >
              <ZapOff size={14} className="group-hover:scale-110 transition-transform" />
-             <span className="text-[10px] font-black uppercase tracking-widest">Reset State</span>
+             <span className="text-[10px] font-black uppercase tracking-widest">Reset App</span>
           </button>
       </div>
 
@@ -83,7 +83,7 @@ export const SystemLogViewer: React.FC = () => {
             <div className="bg-surface-container-lowest rounded-[1.5rem] border border-outline-variant/20 p-4 h-60 overflow-y-auto custom-scrollbar font-mono text-[10px] leading-relaxed shadow-inner">
                 {systemLogs.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full opacity-20">
-                    <p className="font-black uppercase tracking-widest text-[8px]">System quiet.</p>
+                    <p className="font-black uppercase tracking-widest text-[8px]">No activity.</p>
                 </div>
                 ) : (
                 <div className="space-y-1.5">
