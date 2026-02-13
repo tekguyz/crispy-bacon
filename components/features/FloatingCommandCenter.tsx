@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Plus, X, Mic, FileText, Sparkles } from 'lucide-react';
+import { Plus, X, Mic, FileText } from 'lucide-react';
 import { useAppStore } from '../../store/useAppStore';
 import { AppView } from '../../types';
 import { Tooltip } from '../ui/Tooltip';
@@ -23,12 +23,6 @@ export const FloatingCommandCenter: React.FC<FloatingCommandCenterProps> = ({ is
     e.stopPropagation();
     triggerHaptic('light');
     setIsOpen(!isOpen);
-  };
-
-  const handleAskLibrary = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    triggerHaptic('medium');
-    store.setShowGlobalChat(true);
   };
 
   const handleAction = (type: 'record' | 'import') => {
@@ -54,19 +48,6 @@ export const FloatingCommandCenter: React.FC<FloatingCommandCenterProps> = ({ is
       {/* Command Hub Container */}
       <div className={`fixed bottom-8 right-8 flex flex-col items-center gap-3 transition-all duration-300 z-[150] ${isSidebarOpen || store.showInputModal || store.showCaptureLab ? 'opacity-0 pointer-events-none scale-90' : 'opacity-100'}`}>
           
-          {/* ASK LIBRARY (Sparkles) - Hidden when menu is open to focus on actions */}
-          {!isOpen && (
-            <Tooltip content="Ask a question" side="left">
-              <button 
-                  onClick={handleAskLibrary}
-                  className="w-10 h-10 bg-surface-container-highest border border-outline-variant rounded-full flex items-center justify-center shadow-xl pointer-events-auto hover:border-primary/50 transition-all group active:scale-90"
-                  aria-label="Ask a question"
-              >
-                  <Sparkles size={16} className="text-primary group-hover:rotate-12 transition-transform" strokeWidth={2.5} />
-              </button>
-            </Tooltip>
-          )}
-
           {/* MAIN FAB & MENU GROUP */}
           <div className="relative pointer-events-none">
             {/* Side Menu */}

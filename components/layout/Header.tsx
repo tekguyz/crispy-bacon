@@ -1,10 +1,10 @@
+
 import React, { useState, useRef, useEffect } from 'react';
-import { Search, X, CircleX, Menu } from 'lucide-react';
+import { Search, X, CircleX, Menu, Sparkles } from 'lucide-react';
 import { useAppStore } from '../../store/useAppStore';
 import { AppView } from '../../types';
 import { Tooltip } from '../ui/Tooltip';
 import { triggerHaptic } from '../../services/hapticService';
-import { UserAccountPopover } from './UserAccountPopover';
 
 const RealtimeStatusIndicator = () => {
   const status = useAppStore(state => state.realtimeStatus);
@@ -39,7 +39,12 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ onOpenSidebar }) => {
-  const { view, setView, searchQuery, setSearchQuery, activeCollectionFilterId, collections } = useAppStore();
+  const { 
+    view, setView, searchQuery, setSearchQuery, 
+    activeCollectionFilterId, collections,
+    setShowGlobalChat
+  } = useAppStore();
+  
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -107,7 +112,7 @@ const Header: React.FC<HeaderProps> = ({ onOpenSidebar }) => {
         </div>
       </div>
       
-      <div className="flex items-center gap-2 shrink-0 h-full">
+      <div className="flex items-center gap-3 shrink-0 h-full">
           <div 
             className={`relative flex items-center transition-all duration-500 ease-spring ${isSearchExpanded ? 'w-56 md:w-96' : 'w-11'}`}
             role="search"
@@ -141,9 +146,17 @@ const Header: React.FC<HeaderProps> = ({ onOpenSidebar }) => {
              </Tooltip>
           </div>
 
-          <div className="w-px h-6 bg-outline-variant/20 mx-1 hidden sm:block" aria-hidden="true" />
+          <div className="w-px h-6 bg-outline-variant/20 hidden sm:block" aria-hidden="true" />
 
-          <UserAccountPopover />
+          {/* GLOBAL CHAT ACTION (Formerly in FloatingCommandCenter) */}
+          <Tooltip content="Ask Library">
+            <button 
+              onClick={() => { triggerHaptic('medium'); setShowGlobalChat(true); }}
+              className="w-11 h-11 md:w-10 md:h-10 rounded-xl bg-surface-container border border-outline-variant/10 text-primary flex items-center justify-center shadow-sm hover:border-primary/30 transition-all active:scale-90 group"
+            >
+               <Sparkles size={18} strokeWidth={2.5} className="group-hover:rotate-12 transition-transform" />
+            </button>
+          </Tooltip>
       </div>
     </header>
   );

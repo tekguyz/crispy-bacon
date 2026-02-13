@@ -1,10 +1,11 @@
+
 import React from 'react';
 import { Menu, X } from 'lucide-react';
 import { PrimaryNavList } from './sidebar/PrimaryNavList';
 import { CollectionVault } from './sidebar/CollectionVault';
-import { UpgradeCard } from './sidebar/UpgradeCard';
 import { useAppStore } from '../../store/useAppStore';
 import { triggerHaptic } from '../../services/hapticService';
+import { UserAccountPopover } from '../UserAccountPopover';
 
 interface SidebarProps {
   isExpanded: boolean;
@@ -21,6 +22,9 @@ const Sidebar: React.FC<SidebarProps> = ({
   onCloseMobile, 
   onResetFilters 
 }) => {
+  const { userProfile } = useAppStore();
+  const isPro = !!userProfile?.is_pro;
+
   const handleToggle = () => {
     triggerHaptic('light');
     onToggleExpansion();
@@ -32,10 +36,15 @@ const Sidebar: React.FC<SidebarProps> = ({
       {!isMobile && (
         <div className={`mb-8 flex shrink-0 items-center ${!isExpanded ? 'justify-center' : 'pl-6 pr-4 justify-between'}`}>
           {isExpanded && (
-            <div className="sidebar-label-fade flex-1">
-              <span className="font-black text-lg tracking-tighter uppercase leading-none truncate block text-on-surface">
+            <div className="sidebar-label-fade flex-1 flex items-center gap-2">
+              <span className="font-black text-lg tracking-tighter uppercase leading-none truncate text-on-surface">
                 Crispy <span className="text-primary">Bacon</span>
               </span>
+              {isPro && (
+                <span className="px-1.5 py-0.5 rounded-md bg-primary text-on-primary text-[8px] font-black uppercase tracking-wider shadow-sm">
+                  PRO
+                </span>
+              )}
             </div>
           )}
           <button 
@@ -65,18 +74,10 @@ const Sidebar: React.FC<SidebarProps> = ({
         />
       </nav>
 
-      {/* Action Stack */}
-      {!isMobile && (
-        <div className={`mt-auto flex flex-col gap-4 pt-4 pb-0 ${!isExpanded ? 'items-center' : ''}`}>
-          <UpgradeCard isExpanded={isExpanded} />
-        </div>
-      )}
-      
-      {isMobile && (
-         <div className="mt-auto px-4 pt-4">
-            <UpgradeCard isExpanded={true} />
-         </div>
-      )}
+      {/* User Profile at Bottom */}
+      <div className={`mt-auto pt-4 ${isMobile ? 'px-4' : ''}`}>
+         <UserAccountPopover isExpanded={isExpanded || isMobile} />
+      </div>
     </div>
   );
 
@@ -111,7 +112,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               <button onClick={onCloseMobile} className="p-2 rounded-full hover:bg-on-surface/10 text-on-surface transition-colors" aria-label="Close navigation"><X size={20} /></button>
             </div>
             
-            <div className="flex-1 min-h-0 overflow-hidden">
+            <div className="flex-1 min-w-0 overflow-hidden">
                {SidebarContent(true)}
             </div>
           </div>
