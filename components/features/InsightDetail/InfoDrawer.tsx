@@ -39,11 +39,7 @@ const InfoDrawer: React.FC<InfoDrawerProps> = ({ insight, isSummarizing, isFaile
 
         {/* 2. REFERENCE SIGNAL */}
         {hasAudio && (
-           <div className="space-y-4 pt-4 border-t border-outline-variant/10">
-              <div className="flex items-center gap-2 px-1">
-                 <Radio size={10} className="text-primary" strokeWidth={3} />
-                 <span className="text-[8px] font-black text-on-surface-variant/40 uppercase tracking-[0.2em]">Audio Recording</span>
-              </div>
+           <div className="pt-4 border-t border-outline-variant/10">
               <AudioSource 
                   variant="slim"
                   url={insight.metadata!.audioUrl!} 

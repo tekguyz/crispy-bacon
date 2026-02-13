@@ -25,13 +25,26 @@ const InsightDetailView: React.FC = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
   const isSideSheet = view === AppView.DASHBOARD;
 
-  const [activeDrawer, setActiveDrawer] = useState<'info' | 'chat' | null>(null);
+  // UX Improvement: Default to 'chat' open on desktop, 'null' on mobile
+  const [activeDrawer, setActiveDrawer] = useState<'info' | 'chat' | null>(() => {
+    if (typeof window !== 'undefined' && window.innerWidth >= 1024) {
+      return 'chat';
+    }
+    return null;
+  });
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 1024);
+    const handleResize = () => {
+      const mobile = window.innerWidth < 1024;
+      setIsMobile(mobile);
+      // Auto-open chat if expanding to desktop and nothing is open
+      if (!mobile && !activeDrawer) {
+        setActiveDrawer('chat');
+      }
+    };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [activeDrawer]);
 
   const handleBack = useCallback(() => { setSelectedInsight(null); clearChat(); }, [setSelectedInsight, clearChat]);
   

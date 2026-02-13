@@ -25,12 +25,6 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ insight }) => {
     }
   }, [chatHistory, isChatLoading]);
 
-  const contextStats = useMemo(() => {
-    const text = typeof insight.processed_text === 'string' ? insight.processed_text : JSON.stringify(insight.processed_text || '');
-    const wordCount = text.trim().split(/\s+/).length;
-    return { wordCount };
-  }, [insight]);
-
   const handleSendMessage = async (e?: React.FormEvent, manualMsg?: string) => {
     if (e) e.preventDefault();
     const msg = manualMsg || chatInput;
@@ -53,34 +47,36 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ insight }) => {
       query: `Summarize the key discussion points regarding "${topic}".`
     }));
 
-    // 2. Template-Specific Fallbacks (Contextual but risky if content drifts)
-    let contextSuggestions: any[] = [];
+    // 2. Context Aware (Guaranteed by new Backend Logic)
+    const contextSuggestions = [];
+    if (insight.action_items && insight.action_items.length > 0) {
+       contextSuggestions.push({ label: "Checklist", icon: ShieldAlert, query: "List all explicit action items and next steps." });
+    }
+    
+    // 3. Template-Specific Fallbacks 
     const template = insight.metadata?.template;
-
-    if (topicSuggestions.length < 2) {
-        if (template === InsightTemplate.ENGINEERING) {
-          contextSuggestions.push({ label: "Blockers", icon: ShieldAlert, query: "What are the primary technical blockers or risks mentioned?" });
-        } else if (template === InsightTemplate.PRODUCT) {
-          contextSuggestions.push({ label: "User Pain", icon: Activity, query: "What specific user pain points or feedback was discussed?" });
-        } else if (template === InsightTemplate.EXECUTIVE) {
-          contextSuggestions.push({ label: "Bottom Line", icon: Target, query: "What is the strategic bottom line?" });
-        }
+    if (template === InsightTemplate.ENGINEERING) {
+      contextSuggestions.push({ label: "Blockers", icon: ShieldAlert, query: "What are the primary technical blockers or risks mentioned?" });
+    } else if (template === InsightTemplate.PRODUCT) {
+      contextSuggestions.push({ label: "User Pain", icon: Activity, query: "What specific user pain points or feedback was discussed?" });
+    } else if (template === InsightTemplate.EXECUTIVE) {
+      contextSuggestions.push({ label: "Bottom Line", icon: Target, query: "What is the strategic bottom line?" });
     }
 
-    // 3. Universal Defaults (Safe Fallbacks)
+    // 4. Universal Defaults (Safe Fallbacks)
     const defaults = [
       { label: "Key Takeaways", icon: Sparkles, query: "Give me the 3 most important takeaways from this note." },
       { label: "Next Steps", icon: ChevronRight, query: "List all explicit action items and next steps." }
     ];
 
-    // Merge: Topics First -> Context -> Defaults. Cap at 4 items.
-    const merged = [...topicSuggestions, ...contextSuggestions, ...defaults].slice(0, 4);
+    // Merge: Topics First -> Context -> Defaults. Cap at 5 items for the scroll bar.
+    const merged = [...contextSuggestions, ...topicSuggestions, ...defaults].slice(0, 5);
     
     // Deduplicate labels just in case
     return merged.filter((item, index, self) => 
         index === self.findIndex((t) => (t.label === item.label))
     );
-  }, [insight.topics, insight.metadata?.template]);
+  }, [insight.topics, insight.metadata?.template, insight.action_items]);
 
   return (
     <div className="flex flex-col h-full bg-surface-container-lowest relative overflow-hidden">
@@ -99,40 +95,23 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ insight }) => {
               </div>
             </div>
          </div>
-         <div className="flex items-center gap-2 px-2 py-1 bg-surface-container-high rounded-md border border-outline-variant/10">
-            <span className="text-[8px] font-mono font-bold text-on-surface-variant uppercase tracking-widest">
-                {contextStats.wordCount > 0 ? `${(contextStats.wordCount / 1000).toFixed(1)}k Words` : 'Ready'}
-            </span>
-         </div>
       </div>
 
       <div className="flex-1 overflow-y-auto no-scrollbar px-2 py-4 relative z-0 flex flex-col">
         {chatHistory.length === 0 && !isSummarizing && (
-           <div className="mt-auto pb-4 animate-slide-up px-1">
-              <div className="flex items-center gap-2 mb-4 opacity-40 px-1">
-                 <BaconLogo className="w-4 h-4" />
-                 <span className="text-[9px] font-black uppercase tracking-[0.3em]">Suggested Queries</span>
+           <div className="absolute inset-0 flex flex-col items-center justify-center p-8 animate-fade-in z-0 pointer-events-none opacity-60">
+              <div className="w-20 h-20 bg-surface-container-high rounded-[2rem] flex items-center justify-center mb-6 shadow-inner border border-outline-variant/10 relative overflow-hidden">
+                 <div className="absolute inset-0 ledger-grid opacity-[0.1]" />
+                 <BaconLogo className="w-10 h-10 text-primary opacity-80" />
               </div>
-              
-              {/* Context-Aware Pills */}
-              <div className="flex flex-wrap gap-2">
-                 {suggestions.map((s, i) => (
-                    <button 
-                      key={i} 
-                      onClick={() => handleSendMessage(undefined, s.query)}
-                      className="flex items-center gap-2 pl-3 pr-4 py-2.5 rounded-full bg-surface-container-low border border-outline-variant/10 hover:bg-surface-container hover:border-primary/20 hover:text-primary transition-all group active:scale-[0.98] shadow-sm max-w-full"
-                    >
-                       <s.icon size={12} strokeWidth={2.5} className="text-on-surface-variant group-hover:text-primary transition-colors shrink-0" />
-                       <span className="text-[10px] font-bold uppercase tracking-wide text-on-surface-variant group-hover:text-primary transition-colors truncate">
-                          {s.label}
-                       </span>
-                    </button>
-                 ))}
-              </div>
+              <h3 className="text-sm font-black uppercase tracking-[0.2em] text-on-surface mb-3">Research Ready</h3>
+              <p className="text-[10px] font-bold text-on-surface-variant opacity-50 text-center leading-relaxed max-w-[220px]">
+                 I have analyzed this document. Ask about specific details, decisions, or next steps.
+              </p>
            </div>
         )}
 
-        <div className="space-y-6">
+        <div className="space-y-6 relative z-10">
           {chatHistory.map((msg, i) => (
             <ChatMessageBubble key={i} message={msg} />
           ))}
@@ -149,8 +128,27 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ insight }) => {
         </div>
       </div>
       
-      <div className="p-4 bg-background border-t border-outline-variant/10 z-10 shrink-0 pb-[calc(env(safe-area-inset-bottom)+1rem)] md:pb-4">
-        <form onSubmit={handleSendMessage} className="relative group">
+      {/* PERSISTENT SUGGESTION BAR + INPUT */}
+      <div className="bg-background border-t border-outline-variant/10 z-10 shrink-0 pb-[calc(env(safe-area-inset-bottom)+1rem)] md:pb-4 flex flex-col gap-2">
+        {/* Horizontal Suggestion Scroll */}
+        {!isChatLoading && !isSummarizing && (
+            <div className="overflow-x-auto no-scrollbar flex gap-2 px-4 py-2 pt-3">
+                {suggestions.map((s, i) => (
+                    <button 
+                        key={i} 
+                        onClick={() => handleSendMessage(undefined, s.query)}
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-low border border-outline-variant/10 hover:bg-surface-container hover:border-primary/20 hover:text-primary transition-all group active:scale-[0.98] shadow-sm shrink-0 whitespace-nowrap"
+                    >
+                        <s.icon size={10} strokeWidth={2.5} className="text-on-surface-variant group-hover:text-primary transition-colors" />
+                        <span className="text-[9px] font-bold uppercase tracking-wide text-on-surface-variant group-hover:text-primary transition-colors">
+                            {s.label}
+                        </span>
+                    </button>
+                ))}
+            </div>
+        )}
+
+        <form onSubmit={handleSendMessage} className="relative group px-4">
             <input 
                 value={chatInput} 
                 onChange={e => setChatInput(e.target.value)} 
@@ -161,7 +159,7 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ insight }) => {
             <button 
                 type="submit"
                 disabled={!chatInput.trim() || isChatLoading || isSummarizing}
-                className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-on-surface text-surface rounded-xl flex items-center justify-center shadow-lg transition-all active:scale-90 disabled:opacity-0 disabled:scale-75"
+                className="absolute right-6 top-1/2 -translate-y-1/2 w-8 h-8 bg-on-surface text-surface rounded-xl flex items-center justify-center shadow-lg transition-all active:scale-90 disabled:opacity-0 disabled:scale-75"
             >
                 <ArrowRight size={14} strokeWidth={3} />
             </button>

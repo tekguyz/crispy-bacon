@@ -35,19 +35,41 @@ export const handler = async (event: any) => {
           - Be concise and professional.
         `;
     } else {
+        // CONTEXT HYDRATION:
+        // We inject the structured analysis (what the user sees in the UI) into the prompt.
+        // This ensures consistency between the "Decision Checklist" on screen and the Chat's answers.
+        
+        const knownActions = (analysis?.action_items || []).map((i: string) => `- ${i}`).join('\n');
+        const knownHighlights = (analysis?.highlights || []).map((i: string) => `- ${i}`).join('\n');
+        const knownSummary = analysis?.summary || "No summary available.";
+        
         const primaryContext = rawContent && rawContent.length > 10 ? rawContent : transcript;
+
         systemInstructionText = `
           ROLE: Professional Research Partner.
-          CONTEXT: ${analysis?.title || 'Untitled Research'}
+          CONTEXT: "${analysis?.title || 'Untitled Research'}"
           
-          SOURCE MATERIAL:
+          === KNOWN INTELLIGENCE (ALREADY EXTRACTED) ===
+          The following points have already been identified in this document. Use them as the PRIMARY source of truth for lists, decisions, and summaries.
+          
+          SUMMARY:
+          ${knownSummary}
+          
+          ESTABLISHED ACTION ITEMS & DECISIONS:
+          ${knownActions.length > 0 ? knownActions : "None explicitly extracted yet."}
+          
+          KEY TAKEAWAYS:
+          ${knownHighlights}
+          
+          === RAW SOURCE MATERIAL ===
+          Use this to answer specific questions about details not covered in the extracted intelligence above.
           """
           ${primaryContext}
           """
           
           INSTRUCTIONS:
-          - Use the 'SOURCE MATERIAL' to provide precise, evidence-based answers.
-          - If the detail is not in the material, be honest.
+          - If asked for "Action Items", "Decisions", or "Takeaways", REITERATE the 'ESTABLISHED ACTION ITEMS' listed above first.
+          - Then, check the RAW SOURCE MATERIAL for any additional details.
           - Be direct and efficient.
         `;
     }
