@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { LandingNav } from './LandingNav';
 import { LandingHero } from './LandingHero';
 import { TheInstrument } from './TheInstrument';
+import { LandingFeatures } from './LandingFeatures';
+import { FAQSection } from './FAQSection';
 import { PricingTier } from './PricingTier';
 import { SmallTeamsCTA } from './SmallTeamsCTA';
 import { LandingFooter } from './LandingFooter';
@@ -26,15 +28,17 @@ const LandingPage: React.FC<any> = ({ onSignIn, onPrivacy, onTerms, onEthics }) 
         <LandingHero onSignIn={onSignIn} />
         
         <TheInstrument />
+        
+        <LandingFeatures />
 
-        <section id="pricing" className="py-24 bg-surface-container-lowest/50 border-t border-outline-variant/10">
-          <div className="container-landing">
-            <div className="text-center mb-16 space-y-4">
+        <section id="pricing" className="py-24 bg-surface-container-lowest/50 border-y border-outline-variant/10">
+          <div className="w-full max-w-[1600px] mx-auto px-6 md:px-12 lg:px-16">
+            <div className="text-center mb-20 space-y-4">
               <h2 className="text-3xl md:text-5xl font-display font-bold tracking-tighter uppercase text-on-surface">Membership</h2>
               <p className="text-xs font-bold text-on-surface-variant opacity-50 uppercase tracking-widest">Simple pricing for serious work.</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                <PricingTier 
                 title="Standard" price="Free" subtitle="Essential research bandwidth."
                 features={[
@@ -59,11 +63,11 @@ const LandingPage: React.FC<any> = ({ onSignIn, onPrivacy, onTerms, onEthics }) 
                />
             </div>
             
-            <div className="mt-20">
-               <SmallTeamsCTA />
-            </div>
+            <SmallTeamsCTA />
           </div>
         </section>
+
+        <FAQSection />
       </main>
       
       <LandingFooter onPrivacy={onPrivacy} onTerms={onTerms} onEthics={onEthics} onSignIn={onSignIn} />

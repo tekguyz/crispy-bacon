@@ -51,7 +51,7 @@ export const AuthPortal: React.FC<AuthPortalProps> = ({ mode, setMode, onBack })
         await signInWithEmail(email, password);
       }
     } catch (err: any) {
-      setError(err.message || 'Authentication failed.');
+      setError(err.message || 'Sign in failed.');
       setIsLoading(false);
     }
   };

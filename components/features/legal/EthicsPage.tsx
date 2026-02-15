@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ArrowLeft, Sparkles, Zap, Brain, Target, Activity, ShieldCheck } from 'lucide-react';
 import { useAppStore } from '../../../store/useAppStore';

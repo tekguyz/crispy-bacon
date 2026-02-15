@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Settings, LogOut, ArrowRight, Menu, X, Globe, Cpu, Database, Zap, ShieldCheck } from 'lucide-react';
 import { BaconBrand } from '../../../ui/Logo';
@@ -73,7 +74,7 @@ export const LandingNav: React.FC<LandingNavProps> = ({ isScrolled, session, use
           ? 'h-16 md:h-20 bg-background/90 backdrop-blur-xl shadow-sm border-outline-variant' 
           : 'h-20 md:h-24 bg-transparent border-transparent'
       } ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
-        <div className="container-landing h-full flex items-center justify-between">
+        <div className="w-full max-w-[1600px] mx-auto px-6 md:px-12 lg:px-16 h-full flex items-center justify-between">
           <button 
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
             className="hover:opacity-80 transition-opacity shrink-0 py-2"
