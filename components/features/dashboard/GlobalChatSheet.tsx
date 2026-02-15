@@ -103,7 +103,7 @@ export const GlobalChatSheet: React.FC = () => {
           </div>
         </div>
         
-        <div className="p-4 bg-surface-container-low border-t border-outline-variant/10 z-10 shrink-0">
+        <div className="p-4 bg-surface-container-low border-t border-outline-variant/10 z-10 shrink-0 pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
           <form onSubmit={handleSendMessage} className="relative flex items-center group pointer-events-auto">
               <input 
                   value={chatInput} 

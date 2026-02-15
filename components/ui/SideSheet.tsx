@@ -28,7 +28,7 @@ export const SideSheet: React.FC<SideSheetProps> = ({ isOpen, onClose, title, ch
       {/* solid contrast backdrop */}
       {isOpen && (
         <div 
-          className="fixed inset-0 bg-black/80 z-[140] animate-fade-in" 
+          className="fixed inset-0 bg-black/60 z-[140] animate-fade-in backdrop-blur-sm" 
           onClick={onClose} 
         />
       )}
@@ -39,15 +39,19 @@ export const SideSheet: React.FC<SideSheetProps> = ({ isOpen, onClose, title, ch
         aria-modal="true"
         aria-label={title}
         className={`
-          fixed z-[150] bg-background shadow-[-20px_0_60px_rgba(0,0,0,0.5)]
-          transition-all duration-500 ease-spring transform
-          /* Desktop: Right Side Sheet */
-          md:top-0 md:right-0 md:h-full md:w-[480px] md:border-l md:border-outline-variant md:rounded-l-[2.5rem]
-          ${isOpen ? 'md:translate-x-0' : 'md:translate-x-full'}
+          fixed z-[150] bg-background shadow-2xl
+          transition-transform duration-500 ease-[cubic-bezier(0.2,0.0,0,1.0)]
+          
           /* Mobile: Bottom Sheet */
-          bottom-0 left-1/2 -translate-x-1/2 w-[calc(100%-1rem)] h-[85dvh] rounded-t-[2.5rem] border-t border-outline-variant
+          bottom-0 left-0 right-0 w-full h-[90dvh] rounded-t-[2rem] border-t border-outline-variant
           ${isOpen ? 'translate-y-0' : 'translate-y-full'}
-          md:left-auto md:translate-x-full
+
+          /* Desktop: Right Flush Drawer */
+          md:top-0 md:right-0 md:bottom-auto md:left-auto
+          md:h-full md:w-[500px] 
+          md:rounded-none md:border-l md:border-t-0 md:border-outline-variant
+          md:translate-y-0
+          ${isOpen ? 'md:translate-x-0' : 'md:translate-x-full'}
         `}
       >
         <div className="flex flex-col h-full overflow-hidden">
@@ -55,19 +59,19 @@ export const SideSheet: React.FC<SideSheetProps> = ({ isOpen, onClose, title, ch
              <div className="w-12 h-1 bg-on-surface/10 rounded-full" />
           </div>
 
-          <header className="h-16 flex items-center justify-between px-8 border-b border-outline-variant bg-surface-container shrink-0">
+          <header className="h-16 flex items-center justify-between px-6 md:px-8 border-b border-outline-variant/10 bg-surface-container-low shrink-0">
             <h2 className="text-xs font-black uppercase tracking-[0.2em] text-on-surface truncate pr-4">
               {title}
             </h2>
             <button 
               onClick={() => { triggerHaptic('light'); onClose(); }}
-              className="p-2.5 bg-surface-container-high hover:bg-surface-container-highest rounded-xl transition-all text-on-surface-variant hover:text-on-surface active:scale-90 border border-outline-variant"
+              className="p-2.5 bg-surface-container-high hover:bg-surface-container-highest rounded-xl transition-all text-on-surface-variant hover:text-on-surface active:scale-90 border border-outline-variant/10"
             >
               <X size={18} strokeWidth={3} />
             </button>
           </header>
           
-          <div className="flex-1 overflow-y-auto custom-scrollbar bg-background">
+          <div className="flex-1 overflow-y-auto custom-scrollbar bg-background relative">
             {children}
           </div>
         </div>
