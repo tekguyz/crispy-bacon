@@ -1,25 +1,26 @@
-# 🧠 Intelligence Strategy
+
+# 🧠 AI & Reasoning
 **Engine:** Gemini 3 & 2.5 Series
 **Philosophy:** Fact-Grounded Reasoning
 
-## 1. Dynamic Routing
-- **Standard Recaps:** `gemini-3-flash-preview` for rapid, cost-effective distillation.
-- **Deep Distillation:** `gemini-3-pro-preview` for complex reasoning tasks (Executive Tier).
-- **Realtime Assistant:** `gemini-2.5-flash-native-audio-preview-12-2025` for low-latency voice interrogation.
+## 1. Model Selection
+- **Standard Recaps:** Uses a fast, efficient model for quick summaries.
+- **Deep Analysis:** Uses a more powerful reasoning model for complex documents (Executive Tier).
+- **Realtime Assistant:** Uses a specialized native-audio model for instant voice conversation.
 
-## 2. Context Engine
-- **Source Mapping:** The model maps generated highlights back to the original source to ensure accuracy.
-- **Web Grounding:** When analyzing URLs, the system validates facts against live web data via Google Search.
-- **Attachment Awareness:** Supports multi-modal context (Text Files, Drive Documents, Linked Notes).
+## 2. Context Awareness
+- **Fact Checking:** The system maps generated highlights back to the original source text to ensure accuracy.
+- **Web Grounding:** When analyzing links, the system validates facts against live web data via Google Search.
+- **Attachment Support:** The assistant can read multiple sources (Text Files, Drive Documents, Linked Notes) to build a complete picture.
 
 ## 3. Note Recovery
-The system implements a robust **Auto-Recovery** protocol (`dataTransformers.ts`):
-- **Stuck Status Detection:** Identifies notes stuck in `reasoning` state that contain valid data.
-- **Auto-Recovery:** Automatically transitions valid but "stuck" notes to `completed` if the payload is healthy.
+The system implements a robust **Auto-Recovery** method:
+- **Health Check:** Automatically detects if a note gets stuck during analysis.
+- **Repair:** If valid data exists, the system forces the note to complete, ensuring you don't lose your work due to a network hiccup.
 
 ## 4. Structured Output
-We enforce strictly typed JSON schemas for all generation tasks:
-- **Executive Summary** (Markdown)
-- **Key Takeaways** (String Array)
-- **Action Items** (String Array)
-- **Metadata** (Sentiment, Reading Time, Velocity Score)
+We enforce strict formats for all AI generation to ensure consistency:
+- **Executive Summary** (Markdown text)
+- **Key Takeaways** (List)
+- **Action Items** (Checklist)
+- **Metadata** (Sentiment, Reading Time, Clarity Score)

@@ -1,35 +1,41 @@
+
 # 🏗️ System Architecture
-**Topology:** Hybrid Local-Cloud (Stratified Ink)
-**State Strategy:** Reactive Synchronization
+**Structure:** Local-First, Cloud-Secure
+**Strategy:** Reactive Synchronization
 
-## 1. The Data Pipeline
-1.  **Capture:** Raw PCM audio (16kHz/24kHz) is captured via `AudioContext` loopback or `AudioWorklet`.
-2.  **Stash:** Binary blobs are immediately persisted to **IndexedDB** via `localDbService` to guarantee data safety before network transport.
-3.  **Bridge:** Netlify Functions (`/functions/calendar`, `/functions/drive`) act as a secure gateway.
-4.  **Vault:** Artifacts are encrypted and uploaded to Supabase Storage; metadata is indexed in Postgres.
+## 1. The Data Flow
+1.  **Recording:** Raw audio is captured directly from your device (Microphone or System Audio) using a high-fidelity processor.
+2.  **Local Save:** Data is immediately saved to your device's internal database (IndexedDB) to guarantee safety before any network transfer.
+3.  **Gateway:** Secure serverless functions handle communication with external services like Google and Stripe.
+4.  **Cloud Storage:** Files are encrypted and uploaded to a private storage vault; note details are indexed in a secure database.
 
-## 2. Reasoning Engine
-The system utilizes a "Dual-Engine" routing logic based on user tier and task complexity.
+## 2. Intelligence Engine
+The system uses a "Smart Selection" logic to choose the right model for the user's tier and task.
 
 | Tier | Capability | Engine |
 | :--- | :--- | :--- |
-| **Standard** | Rapid Recap | **Gemini 3 Flash** (Velocity Optimized) |
-| **Executive** | Deep Strategist | **Gemini 3 Pro** (High-Reasoning / 2M Context) |
+| **Standard** | Rapid Recap | **Gemini 3 Flash** (Speed Optimized) |
+| **Executive** | Deep Analysis | **Gemini 3 Pro** (High-Reasoning / Large Context) |
 | **Live** | Ask Voice | **Gemini 2.5 Flash Native Audio** (Low Latency) |
 
-## 3. Database Schema (Supabase)
+## 3. Database Structure
 ### `insights` (The Note)
-- `id`: Unique UUID.
-- `processing_status`: State machine (`local` -> `uploading` -> `reasoning` -> `completed`).
-- `metadata`: Stores `velocityScore`, `friction`, `contextAttachments`, and `isDeepStrategist`.
+- `id`: Unique Identifier.
+- `processing_status`: Tracks progress (`local` -> `uploading` -> `analyzing` -> `completed`).
+- `metadata`: Stores scores, attachment links, and analysis depth settings.
 
-### `summaries` (The Distilled Layer)
-- `summary`: Markdown-formatted Executive Recap.
-- `highlights`: Array of extracted facts.
-- `action_items`: Array of detected next steps.
+### `summaries` (The Content)
+- `summary`: The Executive Recap text.
+- `highlights`: List of extracted facts.
+- `action_items`: List of detected next steps.
 
-## 4. State Management
-**Hybrid Architecture:**
-- **Client State (Zustand):** Manages ephemeral UI state (Modals, Toasts, Recorder, Live Buffers).
-- **Server State (TanStack Query):** Handles hydration, caching, and invalidation for Notes and Collections.
-- **Synchronization:** The `<DataSynchronizer />` component injects Query data into the Zustand store, ensuring reactive UI updates.
+## 4. App State & Logic
+**Hybrid Approach:**
+- **Client State (Zustand):** Manages immediate UI interactions (Modals, Alerts, Recorder status).
+- **Server State (TanStack Query):** Handles data loading, caching, and keeping notes in sync with the cloud.
+- **Synchronization:** A specialized background component connects the local UI with the cloud data, ensuring the screen always shows the latest information.
+
+## 5. Audio Implementation
+- **Web Audio:** We use standard web technologies to capture high-quality audio streams.
+- **Processor:** A dedicated background worker (`AudioWorklet`) ensures audio is processed smoothly without freezing the interface.
+- **Safety:** Binary audio data is saved to the local device immediately, preventing data loss if the internet connection drops.

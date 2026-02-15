@@ -1,29 +1,27 @@
-# 🥓 Crispy Bacon Knowledge Base
-**Status:** Canonical :: Secure :: Jargon-Free
 
-Welcome to the central intelligence hub. This library is organized into six core pillars.
+# 🥓 Crispy Bacon Knowledge Base
+**Status:** Canonical :: Human-Readable
+
+Welcome to the central library. This knowledge base is organized into five core pillars.
 
 ---
 
 ## 🏛️ The Pillars
 
 ### 1. [VISION.md](VISION.md)
-The "Recap First" philosophy. Why we build tools that are **Dense**, **Crunchy**, and **Organic**.
+The "Recap First" philosophy. Why we build tools that are **Dense**, **Tactile**, and **Quiet**.
 
 ### 2. [ARCHITECTURE.md](ARCHITECTURE.md)
-The technical flow. Hybrid Local-Cloud topology, Gemini Model routing, and the Zustand/Query state bridge.
+The system design. How data moves from your device to the secure cloud, and how the application manages memory and state.
 
 ### 3. [SECURITY.md](SECURITY.md)
-The Vault Protocol. RLS policies, Row-Level isolation, and our "No-Bot" privacy standard.
+The Privacy Standard. How we isolate your data, secure your notes, and ensure no bots ever join your meetings.
 
 ### 4. [INTELLIGENCE.md](INTELLIGENCE.md)
-AI implementation. Flash vs Pro reasoning, Signal Healing protocols, and Realtime Assistant interrogation.
+The Reasoning Engine. How we select the right AI model for the task, ground facts in reality, and handle voice interactions.
 
 ### 5. [SETUP.md](SETUP.md)
-Infrastructure Manifest. Environment variables, Google Cloud permissions, and Stripe configuration.
-
-### 6. [TECHNICAL_SPEC.md](TECHNICAL_SPEC.md)
-Deep dive into the codebase implementation details, frameworks, state orchestration, and operational protocols.
+Configuration Guide. Environment variables, Google Cloud permissions, and billing setup for deployment.
 
 ---
 *Maintained by Engineering Core :: Crispy Bacon Research*
