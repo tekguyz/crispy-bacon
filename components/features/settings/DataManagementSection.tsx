@@ -23,7 +23,7 @@ export const DataManagementSection: React.FC = () => {
 
   const handleClearData = () => {
     openConfirmation({
-      title: 'Factory Reset?',
+      title: 'Reset App?',
       message: 'This will delete local history and sign you out. Cloud notes are safe.',
       variant: 'danger',
       confirmLabel: 'Reset',
@@ -67,7 +67,7 @@ export const DataManagementSection: React.FC = () => {
                   <HardDrive size={18} strokeWidth={2.5} />
                </div>
                <div className="flex flex-col">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-on-surface">Local Cache</span>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-on-surface">On Device</span>
                   <span className="text-[8px] font-bold text-on-surface-variant opacity-60 uppercase tracking-widest">{formatSize(storageUsage)} used</span>
                </div>
             </div>
@@ -86,8 +86,8 @@ export const DataManagementSection: React.FC = () => {
                   <ZapOff size={18} strokeWidth={2.5} />
                </div>
                <div className="flex flex-col">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-error">Factory Reset</span>
-                  <span className="text-[8px] font-bold text-error opacity-60 uppercase tracking-widest">Sign out & wipe local</span>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-error">Reset App</span>
+                  <span className="text-[8px] font-bold text-error opacity-60 uppercase tracking-widest">Sign out & clear data</span>
                </div>
             </div>
             <button 

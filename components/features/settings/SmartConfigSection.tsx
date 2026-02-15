@@ -33,7 +33,7 @@ export const SmartConfigSection: React.FC = () => {
             <div className="space-y-6">
                 <div className="flex items-center gap-2 pb-2 border-b border-outline-variant/5">
                     <Mic size={14} className="text-primary" strokeWidth={2.5} />
-                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface">Assistant Voice</h3>
+                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface">Voice</h3>
                 </div>
 
                 <div className="space-y-4">
@@ -67,7 +67,7 @@ export const SmartConfigSection: React.FC = () => {
                 </div>
             </div>
 
-            {/* COLUMN 2: REASONING ENGINE */}
+            {/* COLUMN 2: AI MODEL */}
             <div className="space-y-6">
                 <div className="flex items-center gap-2 pb-2 border-b border-outline-variant/5">
                     <Brain size={14} className="text-primary" strokeWidth={2.5} />
@@ -102,7 +102,7 @@ export const SmartConfigSection: React.FC = () => {
                             onClick={() => isPro ? setPersonaStyle(PersonaStyle.DEEP_RESEARCH) : null}
                             className={`flex-1 py-2 rounded-lg text-[8px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-1 ${personaStyle === PersonaStyle.DEEP_RESEARCH ? 'bg-primary text-on-primary shadow-sm' : 'text-on-surface-variant/40 hover:text-on-surface'} ${!isPro ? 'opacity-50 cursor-not-allowed' : ''}`}
                         >
-                            Deep Strategy
+                            Deep Mode
                             {!isPro && <Lock size={8} />}
                         </button>
                     </div>
@@ -115,7 +115,7 @@ export const SmartConfigSection: React.FC = () => {
             <div className="flex items-center justify-between px-1 mb-4">
                 <div className="flex items-center gap-2">
                     <Archive size={14} className="text-primary" strokeWidth={2.5} />
-                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface">Retention Policy</h3>
+                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface">History Settings</h3>
                 </div>
             </div>
             
@@ -128,7 +128,7 @@ export const SmartConfigSection: React.FC = () => {
                      <Clock size={16} />
                      <div className="flex flex-col text-left">
                         <span className="text-[9px] font-black uppercase tracking-widest">30-Day History</span>
-                        <span className="text-[8px] font-bold opacity-60 uppercase tracking-widest">Auto-Purge</span>
+                        <span className="text-[8px] font-bold opacity-60 uppercase tracking-widest">Auto-Delete</span>
                      </div>
                   </div>
                   {!isPro && <div className="w-2 h-2 rounded-full bg-primary" />}
@@ -142,7 +142,7 @@ export const SmartConfigSection: React.FC = () => {
                   <div className="flex items-center gap-3">
                      <ShieldCheck size={16} />
                      <div className="flex flex-col text-left">
-                        <span className="text-[9px] font-black uppercase tracking-widest">Permanent Vault</span>
+                        <span className="text-[9px] font-black uppercase tracking-widest">Keep Forever</span>
                         <span className="text-[8px] font-bold opacity-60 uppercase tracking-widest">Never Delete</span>
                      </div>
                   </div>

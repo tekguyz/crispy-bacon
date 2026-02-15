@@ -69,7 +69,7 @@ export const LandingFooter: React.FC<any> = ({ onPrivacy, onTerms, onEthics, onS
                     <p className="text-2xl md:text-3xl font-slab font-bold uppercase tracking-tight leading-[0.9] italic">
                       Ready to <br /><span className="text-primary not-italic">Refine?</span>
                     </p>
-                    <p className="text-[9px] font-mono font-black uppercase tracking-widest opacity-30">Open your laboratory</p>
+                    <p className="text-[9px] font-mono font-black uppercase tracking-widest opacity-30">Start your research</p>
                   </div>
 
                   <button 

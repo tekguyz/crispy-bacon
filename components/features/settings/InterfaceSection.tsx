@@ -17,11 +17,11 @@ export const InterfaceSection: React.FC = () => {
     <div className="bg-surface-container-low border border-outline-variant/10 rounded-[2rem] p-6 shadow-sm">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         
-        {/* Visual Mode */}
+        {/* Appearance */}
         <div className="space-y-3">
            <div className="flex items-center gap-2 px-1">
               <Palette size={12} className="text-primary opacity-60" />
-              <label className="text-[9px] font-black uppercase tracking-[0.3em] text-on-surface-variant opacity-60">Visual Mode</label>
+              <label className="text-[9px] font-black uppercase tracking-[0.3em] text-on-surface-variant opacity-60">Appearance</label>
            </div>
            <div className="flex bg-surface-container-high border border-outline-variant/10 rounded-xl p-1 shadow-inner">
               {themes.map((t) => (
@@ -41,7 +41,7 @@ export const InterfaceSection: React.FC = () => {
            <div className="flex items-center justify-between px-1">
               <div className="flex items-center gap-2">
                  <Smartphone size={12} className="text-primary opacity-60" />
-                 <label className="text-[9px] font-black uppercase tracking-[0.3em] text-on-surface-variant opacity-60">Tactile Feedback</label>
+                 <label className="text-[9px] font-black uppercase tracking-[0.3em] text-on-surface-variant opacity-60">Vibration</label>
               </div>
               <span className="text-[9px] font-mono font-bold text-primary">{Math.round(hapticIntensity * 100)}%</span>
            </div>

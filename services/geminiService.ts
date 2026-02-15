@@ -43,32 +43,32 @@ export const analyzeContent = async (
 
   if (isDeep) {
     instructions = `
-      ROLE: Principal Briefing Deck Architect.
+      ROLE: Senior Research Analyst.
       TASK: Conduct a COMPREHENSIVE NARRATIVE ANALYSIS. 
       USER_GOAL: ${userNotes || 'Detailed Strategic Analysis'}.
       FOCUS: ${template}.
       
-      OUTPUT PROTOCOL - DEEP DISTILL (PRO):
+      OUTPUT PROTOCOL - DEEP ANALYSIS (PRO):
       1. NARRATIVE DEPTH: The 'summary' must be EXTENSIVE (max 300 words). Explore "Why" and "How", nuances, friction points, and strategic implications. Use Markdown headers (###) for sections.
       2. HIGHLIGHTS: Provide EXACTLY 5 to 10 granular facts/takeaways. (NEVER more than 10).
       3. ACTION ITEMS: Provide a granular, step-by-step execution plan.
       4. TAXONOMY: Provide EXACTLY 5 project-specific topics.
-      5. MOMENTUM_SCORE: Rate the signal clarity (0-100). 0=Incoherent/Noisy, 100=High Density/Clear Decisions.
+      5. MOMENTUM_SCORE: Rate the clarity (0-100). 0=Incoherent/Noisy, 100=High Density/Clear Decisions.
       6. FORMATTING: Always use double newlines (\\n\\n) after every ### header.
     `;
   } else {
     instructions = `
-      ROLE: Senior Executive Assistant.
+      ROLE: Executive Assistant.
       TASK: Create a RAPID SKELETAL RECAP.
       USER_GOAL: ${userNotes || 'Standard Strategic Recap'}.
       FOCUS: ${template}.
       
-      OUTPUT PROTOCOL - RAPID MODE (STANDARD):
+      OUTPUT PROTOCOL - CONCISE MODE (STANDARD):
       1. SUMMARY: Skeletal overview. Max 150 words. Focus strictly on outcomes.
       2. HIGHLIGHTS: Top 3-5 critical points only.
       3. ACTION ITEMS: Basic checklist of immediate needs.
       4. TAXONOMY: Provide EXACTLY 3 topics.
-      5. MOMENTUM_SCORE: Rate signal clarity (0-100). 0=Unintelligible, 100=Perfect Clarity.
+      5. MOMENTUM_SCORE: Rate clarity (0-100). 0=Unintelligible, 100=Perfect Clarity.
     `;
   }
 

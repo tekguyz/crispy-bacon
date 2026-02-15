@@ -73,7 +73,7 @@ export const GoalSelector: React.FC<GoalSelectorProps> = ({
               value={currentIntent}
               onChange={(e) => setCurrentIntent(e.target.value)}
               disabled={!isPro}
-              placeholder={isPro ? "Strategic directives..." : "Identity required."}
+              placeholder={isPro ? "What should I focus on?" : "Identity required."}
               className={`
                 w-full min-h-[60px] bg-surface-container-high border rounded-xl p-3 text-[10px] font-bold leading-relaxed resize-none focus:outline-none transition-all placeholder:text-on-surface-variant/20 shadow-inner
                 ${!isPro ? 'opacity-40 grayscale cursor-not-allowed' : 'border-outline-variant/10 focus:border-primary/40'}

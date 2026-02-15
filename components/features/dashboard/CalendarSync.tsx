@@ -67,11 +67,11 @@ const CalendarSync: React.FC<CalendarSyncProps> = ({
           <p className="text-xl font-slab font-bold text-on-surface uppercase tracking-tight leading-none">Set a <br/>Goal.</p>
           
           <div className="space-y-2 mt-2">
-            <label className="text-[8px] font-black uppercase tracking-widest text-on-surface-variant opacity-40 px-1">Active Objective</label>
+            <label className="text-[8px] font-black uppercase tracking-widest text-on-surface-variant opacity-40 px-1">Focus</label>
             <textarea 
               value={currentIntent}
               onChange={(e) => setCurrentIntent(e.target.value)}
-              placeholder="What are we refining today?"
+              placeholder="What is the goal of this note?"
               className="w-full bg-surface-container-high border-2 border-outline-variant/10 rounded-2xl p-4 text-xs font-bold text-on-surface outline-none focus:border-primary/40 shadow-inner resize-none min-h-[100px] placeholder:text-on-surface-variant/20"
             />
           </div>

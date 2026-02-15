@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { LandingNav } from './LandingNav';
 import { LandingHero } from './LandingHero';
@@ -42,7 +43,7 @@ const LandingPage: React.FC<any> = ({ onSignIn, onPrivacy, onTerms, onEthics }) 
                 title="Standard" price="$0" subtitle="Essential research bandwidth."
                 features={[
                   { text: "5 Recaps per month", included: true }, 
-                  { text: "Strategic Briefing Deck", included: true }, 
+                  { text: "Executive Summary", included: true }, 
                   { text: "Standard Research Chat", included: true }, 
                   { text: "Snapshot Sharing", included: true },
                   { text: "Collaborative Editing", included: false }

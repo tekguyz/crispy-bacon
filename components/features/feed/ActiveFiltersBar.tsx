@@ -1,3 +1,4 @@
+
 import React, { useMemo } from 'react';
 import { useAppStore } from '../../../store/useAppStore';
 import RemovableFilterChip from '../../ui/RemovableFilterChip';
@@ -35,7 +36,7 @@ export const ActiveFiltersBar: React.FC = () => {
       )}
       {activeTagFilterIds.length > 0 && (
         <RemovableFilterChip 
-          label={`${activeTagFilterIds.length} SIGNAL TAGS`} 
+          label={`${activeTagFilterIds.length} TAGS`} 
           onRemove={() => useAppStore.setState({ activeTagFilterIds: [] })} 
         />
       )}

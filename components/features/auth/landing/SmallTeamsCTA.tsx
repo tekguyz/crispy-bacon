@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Users, ArrowRight, ShieldCheck, Database } from 'lucide-react';
 import { TeamInquiryForm } from './TeamInquiryForm';
@@ -42,7 +43,7 @@ export const SmallTeamsCTA: React.FC = () => {
                </div>
                <div className="flex items-center gap-2 opacity-30">
                   <Database size={14} />
-                  <span className="text-[8px] font-black uppercase tracking-widest">Unified Ops</span>
+                  <span className="text-[8px] font-black uppercase tracking-widest">Team Admin</span>
                </div>
             </div>
 

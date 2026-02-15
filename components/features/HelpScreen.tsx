@@ -9,14 +9,14 @@ const MANUAL_CONTENT = `
 # User Guide
 ### Research Assistant
 
-Crispy Bacon is designed to be a quiet place to think. It captures audio or text and distills it into high-density notes using the Gemini 3 Pro model.
+Crispy Bacon is designed to be a quiet place to think. It captures audio or text and turns it into clear, useful notes using advanced AI.
 
 ---
 
 ## 1. Recording Methods
 *   **Voice Memos**: Record thoughts directly. Private and secure.
-*   **Meetings**: Capture system audio from Zoom, Teams, or Meet. No bots required.
-*   **Import**: Upload files or paste links for instant analysis.
+*   **Meetings**: Capture audio from Zoom, Teams, or Meet. No bots required.
+*   **Import**: Upload files or paste links for instant summary.
 
 ## 2. Summary Types
 We separate facts from fluff.
@@ -47,8 +47,8 @@ const HelpScreen: React.FC = () => {
            <BookOpen size={28} strokeWidth={2} />
         </div>
         <div>
-           <h1 className="text-3xl font-black uppercase tracking-tight text-on-surface">The Manual</h1>
-           <p className="text-[10px] font-bold text-on-surface-variant opacity-60 uppercase tracking-widest mt-1">System Documentation v2.5</p>
+           <h1 className="text-3xl font-black uppercase tracking-tight text-on-surface">User Guide</h1>
+           <p className="text-[10px] font-bold text-on-surface-variant opacity-60 uppercase tracking-widest mt-1">Documentation v2.5</p>
         </div>
       </header>
 
@@ -80,7 +80,7 @@ const HelpScreen: React.FC = () => {
                <div className="p-2 bg-primary/10 text-primary rounded-lg">
                  <Crown size={18} />
                </div>
-               <h3 className="text-xs font-black uppercase tracking-widest">Executive Tier</h3>
+               <h3 className="text-xs font-black uppercase tracking-widest">Pro Plan</h3>
             </div>
             
             <p className="text-xs font-medium text-on-surface-variant leading-relaxed opacity-80 relative z-10">

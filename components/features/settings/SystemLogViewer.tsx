@@ -94,12 +94,13 @@ export const SystemLogViewer: React.FC = () => {
                         <div className="min-w-0 break-words flex-1">
                         <span className={`${log.level === 'error' ? 'text-error font-bold' : (log.level === 'warn' ? 'text-warning font-bold' : 'text-on-surface opacity-70')}`}>
                             {log.message
-                                .replace(/Neural Link/gi, 'Assistant')
+                                .replace(/Neural Link/gi, 'AI Service')
                                 .replace(/Distillation/gi, 'Analysis')
                                 .replace(/Ingest/gi, 'Import')
-                                .replace(/Telemetry/gi, 'Activity')
-                                .replace(/Protocol/gi, 'Process')
+                                .replace(/Telemetry/gi, 'System Activity')
+                                .replace(/Protocol/gi, 'Method')
                                 .replace(/Vector/gi, 'Item')
+                                .replace(/Signal/gi, 'Note')
                             }
                         </span>
                         </div>

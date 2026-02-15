@@ -36,7 +36,7 @@ export const IntegrationsSection: React.FC = () => {
               </svg>
            </div>
            <div className="flex flex-col leading-none">
-              <span className="text-xs font-black uppercase tracking-widest text-on-surface">Workspace</span>
+              <span className="text-xs font-black uppercase tracking-widest text-on-surface">Google Workspace</span>
               <span className="text-[8px] font-bold text-on-surface-variant opacity-60 uppercase tracking-widest mt-1">Calendar & Drive</span>
            </div>
         </div>
@@ -44,12 +44,12 @@ export const IntegrationsSection: React.FC = () => {
         {(isGoogleLinked && hasProviderToken) ? (
            <div className="px-2 py-1 bg-success/10 text-success rounded-lg flex items-center gap-1.5 border border-success/10">
               <CheckCircle2 size={10} strokeWidth={4} />
-              <span className="text-[8px] font-black uppercase tracking-widest">Active</span>
+              <span className="text-[8px] font-black uppercase tracking-widest">Connected</span>
            </div>
         ) : (
            <div className="px-2 py-1 bg-surface-container-high text-on-surface-variant/50 rounded-lg flex items-center gap-1.5 border border-outline-variant/10">
               <AlertCircle size={10} strokeWidth={3} />
-              <span className="text-[8px] font-black uppercase tracking-widest">Unlinked</span>
+              <span className="text-[8px] font-black uppercase tracking-widest">Not Connected</span>
            </div>
         )}
       </div>

@@ -48,7 +48,7 @@ export const SummaryStats: React.FC<SummaryStatsProps> = ({ insight }) => {
        <StatItem 
           icon={Clock} 
           value={`${readingTime}m`} 
-          label="Reading" 
+          label="Read Time" 
        />
 
        {sourceDurationSeconds > 0 && insight.type === ContentType.MEETING && (
@@ -57,7 +57,7 @@ export const SummaryStats: React.FC<SummaryStatsProps> = ({ insight }) => {
            <StatItem 
               icon={Mic} 
               value={`${Math.ceil(sourceDurationSeconds / 60)}m`} 
-              label="Source" 
+              label="Duration" 
            />
          </>
        )}
@@ -65,12 +65,12 @@ export const SummaryStats: React.FC<SummaryStatsProps> = ({ insight }) => {
        {isDeep ? (
          <div className="ml-auto flex items-center gap-1.5 px-2 py-1 bg-primary text-on-primary rounded-md shadow-sm">
             <Zap size={9} fill="currentColor" strokeWidth={0} className="animate-pulse" />
-            <span className="text-[7px] font-black uppercase tracking-[0.2em]">Deep Research</span>
+            <span className="text-[7px] font-black uppercase tracking-[0.2em]">Deep Mode</span>
          </div>
        ) : (
          <div className="ml-auto flex items-center gap-1.5 px-2 py-1 bg-surface-container-high text-on-surface-variant/60 rounded-md border border-outline-variant/20 shadow-inner">
             <Activity size={9} strokeWidth={3} />
-            <span className="text-[7px] font-black uppercase tracking-[0.2em]">Quick Summary</span>
+            <span className="text-[7px] font-black uppercase tracking-[0.2em]">Concise</span>
          </div>
        )}
     </div>

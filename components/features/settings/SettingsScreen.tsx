@@ -18,7 +18,7 @@ const SettingsScreen: React.FC = () => {
       </header>
 
       <div className="space-y-12">
-        {/* SECTION 1: IDENTITY & ACCESS */}
+        {/* SECTION 1: ACCOUNT */}
         <section className="space-y-4">
            <div className="flex items-center gap-3 px-1 opacity-40">
               <User size={14} strokeWidth={3} />
@@ -30,16 +30,16 @@ const SettingsScreen: React.FC = () => {
            </div>
         </section>
 
-        {/* SECTION 2: INTELLIGENCE ENGINE */}
+        {/* SECTION 2: ASSISTANT */}
         <section className="space-y-4">
           <div className="flex items-center gap-3 px-1 opacity-40">
             <Brain size={14} strokeWidth={3} />
-            <h2 className="text-[10px] font-black uppercase tracking-[0.3em]">Assistant Settings</h2>
+            <h2 className="text-[10px] font-black uppercase tracking-[0.3em]">Assistant</h2>
           </div>
           <SmartConfigSection />
         </section>
 
-        {/* SECTION 3: INTERFACE & HAPTICS */}
+        {/* SECTION 3: INTERFACE */}
         <section className="space-y-4">
            <div className="flex items-center gap-3 px-1 opacity-40">
              <Sliders size={14} strokeWidth={3} />
@@ -48,7 +48,7 @@ const SettingsScreen: React.FC = () => {
            <InterfaceSection />
         </section>
 
-        {/* SECTION 4: DATA VAULT */}
+        {/* SECTION 4: DATA */}
         <section className="space-y-4">
           <div className="flex items-center gap-3 px-1 opacity-40">
             <HardDrive size={14} strokeWidth={3} />
@@ -57,7 +57,7 @@ const SettingsScreen: React.FC = () => {
           <DataManagementSection />
         </section>
 
-        {/* SECTION 5: DIAGNOSTICS */}
+        {/* SECTION 5: ACTIVITY */}
         <section className="space-y-4 pt-8 border-t border-outline-variant/10">
            <SystemLogViewer />
         </section>

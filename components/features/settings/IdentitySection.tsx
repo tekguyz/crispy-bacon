@@ -8,7 +8,7 @@ export const IdentitySection: React.FC = () => {
   
   const metadata = session?.user?.user_metadata || {};
   const avatarUrl = metadata.picture || userProfile?.avatar_url || metadata.avatar_url;
-  const displayName = userProfile?.full_name || metadata.full_name || metadata.name || session?.user?.email?.split('@')[0] || 'Guest Strategist';
+  const displayName = userProfile?.full_name || metadata.full_name || metadata.name || session?.user?.email?.split('@')[0] || 'Guest User';
   const isPro = !!userProfile?.is_pro;
 
   return (
@@ -36,10 +36,10 @@ export const IdentitySection: React.FC = () => {
           <h2 className="text-base font-black text-on-surface tracking-tight truncate leading-none uppercase mb-1.5">{displayName}</h2>
           <div className="flex flex-col gap-1">
              <span className="text-[9px] font-bold text-on-surface-variant/60 truncate">
-               {session?.user?.email || 'Local Session'}
+               {session?.user?.email || 'Guest Mode'}
              </span>
              <span className={`text-[7px] font-black uppercase tracking-widest w-fit px-1.5 py-0.5 rounded ${isPro ? 'bg-primary/10 text-primary' : 'bg-surface-container-highest text-on-surface-variant'}`}>
-               {isPro ? 'Executive Tier' : 'Standard Tier'}
+               {isPro ? 'Pro Plan' : 'Free Plan'}
              </span>
           </div>
       </div>

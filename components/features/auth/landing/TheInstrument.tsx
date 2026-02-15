@@ -6,24 +6,24 @@ export const TheInstrument: React.FC = () => {
   const signalPath = [
     {
       id: "01",
-      tag: "INPUT",
-      title: "Direct Capture",
+      tag: "RECORD",
+      title: "Direct Recording",
       desc: "Record system audio from Zoom or Meet. No bots, just pure audio.",
       icon: Radio,
       specs: ["ZERO BOTS", "PRIVACY FIRST"]
     },
     {
       id: "02",
-      tag: "PROCESS",
-      title: "Deep Research",
+      tag: "ANALYZE",
+      title: "Smart Notes",
       desc: "Our engine separates fact from filler, identifying decisions automatically.",
       icon: Search,
       specs: ["FACT CHECKED", "HIGH DENSITY"]
     },
     {
       id: "03",
-      tag: "OUTPUT",
-      title: "Ask Voice",
+      tag: "ASK",
+      title: "Voice Assistant",
       desc: "Don't just read notes. Interrogate them with natural voice follow-ups.",
       icon: Cpu,
       specs: ["INSTANT ANSWERS", "PRO LOGIC"]
