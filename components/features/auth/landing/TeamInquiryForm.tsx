@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { X, ArrowRight, Check, Loader2, Library, Activity, Users, Star, ClipboardCheck, CornerDownRight } from 'lucide-react';
 import { useFocusTrap } from '../../../../hooks/useFocusTrap';
@@ -140,7 +141,7 @@ export const TeamInquiryForm: React.FC<{ onClose: () => void }> = ({ onClose }) 
                     <div className="group relative">
                         <CornerDownRight size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-primary opacity-0 group-focus-within:opacity-100 transition-opacity" />
                         <input 
-                            autoFocus
+                            autoFocus={typeof window !== 'undefined' && window.innerWidth >= 768}
                             type="text" 
                             name="name"
                             placeholder="Full Name" 
@@ -208,8 +209,8 @@ export const TeamInquiryForm: React.FC<{ onClose: () => void }> = ({ onClose }) 
                           onClick={() => { toggleRequirement(req.id); triggerHaptic('light'); }}
                           className={`flex items-center gap-4 px-6 h-20 rounded-2xl border-2 transition-all active:scale-[0.98] ${active ? 'bg-primary text-on-primary border-primary shadow-lg' : 'bg-surface-container-high border-outline-variant/10 text-on-surface hover:border-primary/30'}`}
                         >
-                          <div className={`w-10 h-10 rounded-xl flex items-center justify-center border transition-colors ${active ? 'bg-white/10 border-white/20' : 'bg-background/40 border-outline-variant/10'}`}>
-                             <req.icon size={20} className={active ? 'text-white' : 'opacity-30'} />
+                          <div className={`w-10 h-10 rounded-xl flex items-center justify-center border transition-colors ${active ? 'bg-on-primary/10 border-on-primary/20' : 'bg-background/40 border-outline-variant/10'}`}>
+                             <req.icon size={20} className={active ? 'text-on-primary' : 'opacity-30'} />
                           </div>
                           <span className="font-black text-[11px] uppercase tracking-widest">{req.label}</span>
                         </button>
@@ -221,7 +222,7 @@ export const TeamInquiryForm: React.FC<{ onClose: () => void }> = ({ onClose }) 
 
               {step === 'success' && (
                 <div className="flex-1 flex flex-col items-center justify-center text-center space-y-10 animate-fade-in">
-                  <div className="w-24 h-24 bg-success text-on-primary rounded-[2.5rem] flex items-center justify-center shadow-2xl shadow-success/40 border-4 border-white/10">
+                  <div className="w-24 h-24 bg-success text-on-primary rounded-[2.5rem] flex items-center justify-center shadow-2xl shadow-success/40 border-4 border-on-primary/10">
                     <Check size={48} strokeWidth={4} />
                   </div>
                   <div className="space-y-4">

@@ -72,7 +72,7 @@ const ShareModal: React.FC = () => {
     <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-[350] flex items-end md:items-center justify-center p-0 md:p-4 animate-fade-in" onClick={handleClose}>
       <div 
         ref={containerRef}
-        className="bg-background w-[calc(100%-2rem)] md:max-w-lg rounded-expressive shadow-2xl overflow-hidden flex flex-col animate-sheet-up md:animate-scale-in ring-1 ring-white/10 focus:outline-none max-h-[90dvh]"
+        className="bg-background w-[calc(100%-2rem)] md:max-w-lg rounded-expressive shadow-2xl overflow-hidden flex flex-col animate-sheet-up md:animate-scale-in ring-1 ring-outline/10 focus:outline-none max-h-[90dvh]"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
       >
@@ -150,7 +150,7 @@ const ShareModal: React.FC = () => {
                            disabled={!isAudioCapable}
                            className={`w-11 h-6 rounded-full transition-all relative shadow-inner ${!isAudioCapable ? 'opacity-20 grayscale cursor-not-allowed' : 'cursor-pointer'} ${includeAudio ? 'bg-primary' : 'bg-surface-container-highest'}`}
                         >
-                           <div className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow-md transition-all ${includeAudio ? 'left-6' : 'left-1'}`} />
+                           <div className={`absolute top-1 w-4 h-4 bg-surface rounded-full shadow-md transition-all ${includeAudio ? 'left-6' : 'left-1'}`} />
                         </button>
                      </div>
 
@@ -171,7 +171,7 @@ const ShareModal: React.FC = () => {
                            onClick={() => isPro ? setIsCollaborative(!isCollaborative) : setShowUpgradeModal(true)}
                            className={`w-11 h-6 rounded-full cursor-pointer transition-all relative shadow-inner ${isCollaborative ? 'bg-primary' : 'bg-surface-container-highest'}`}
                         >
-                           <div className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow-md transition-all ${isCollaborative ? 'left-6' : 'left-1'}`} />
+                           <div className={`absolute top-1 w-4 h-4 bg-surface rounded-full shadow-md transition-all ${isCollaborative ? 'left-6' : 'left-1'}`} />
                         </button>
                      </div>
                   </section>
@@ -193,7 +193,7 @@ const ShareModal: React.FC = () => {
                     disabled={isLoading} 
                     className="w-full h-14 md:h-16 bg-primary text-on-primary rounded-[1.75rem] font-black text-[11px] md:text-xs uppercase tracking-[0.3em] shadow-2xl shadow-primary/20 flex items-center justify-center gap-4 hover:brightness-110 active:scale-95 transition-all disabled:opacity-50 mt-4"
                   >
-                      {isLoading ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Globe size={20} strokeWidth={3} />} 
+                      {isLoading ? <div className="w-5 h-5 border-2 border-on-primary/30 border-t-on-primary rounded-full animate-spin" /> : <Globe size={20} strokeWidth={3} />} 
                       {isLoading ? 'PREPARING...' : 'GENERATE PUBLIC LINK'}
                   </button>
                 </div>

@@ -87,7 +87,7 @@ const TagManagementModal: React.FC = () => {
     >
       <div
         ref={containerRef}
-        className="bg-background w-[calc(100%-2rem)] md:max-w-lg rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col animate-sheet-up md:animate-scale-in ring-1 ring-white/10 focus:outline-none max-h-[90dvh]"
+        className="bg-background w-[calc(100%-2rem)] md:max-w-lg rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col animate-sheet-up md:animate-scale-in ring-1 ring-outline/10 focus:outline-none max-h-[90dvh]"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"

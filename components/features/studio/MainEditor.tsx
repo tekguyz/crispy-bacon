@@ -31,7 +31,7 @@ export const MainEditor: React.FC<MainEditorProps> = ({ value, onChange }) => (
           value={value}
           onChange={(e) => onChange(e.target.value)}
           spellCheck={false}
-          autoFocus
+          autoFocus={typeof window !== 'undefined' && window.innerWidth >= 768}
         />
       </div>
   </div>

@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback } from 'react';
 import { 
   X, Crown, Zap, Loader2, 
@@ -86,7 +87,7 @@ const UpgradeModal: React.FC = () => {
     <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-[210] flex items-end md:items-center justify-center p-0 md:p-4 animate-fade-in" onClick={handleClose}>
       <div 
         ref={containerRef}
-        className={`bg-background w-[calc(100%-1.5rem)] md:w-full md:max-w-4xl rounded-t-expressive md:rounded-expressive max-h-[90dvh] shadow-2xl overflow-hidden flex flex-col md:flex-row border border-outline-variant/20 focus:outline-none relative ${isClosing ? 'animate-sheet-down' : 'md:animate-spring-up animate-sheet-up'}`}
+        className={`bg-background w-[calc(100%-1.5rem)] md:w-full md:max-w-4xl rounded-t-expressive md:rounded-expressive max-h-[90dvh] shadow-2xl overflow-hidden flex flex-col md:flex-row border border-outline-variant/20 focus:outline-none relative ${isClosing ? 'animate-sheet-down' : 'md:animate-spring-up animate-sheet-up'} ring-1 ring-outline/10`}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
       >
@@ -134,7 +135,7 @@ const UpgradeModal: React.FC = () => {
               </div>
            </div>
            
-           <div className="relative z-10 pt-6 border-t border-white/5">
+           <div className="relative z-10 pt-6 border-t border-surface/5">
               <div className="flex items-center gap-2 text-[7px] font-black text-primary uppercase tracking-[0.4em]">
                  <ShieldCheck size={10} /> Tier Safety Verified
               </div>

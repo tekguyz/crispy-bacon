@@ -37,7 +37,7 @@ const ToastItem: React.FC<{ toast: ToastMessage; onRemove: (id: string) => void 
       
       <button 
         onClick={() => onRemove(toast.id)}
-        className={`p-1.5 rounded-lg transition-all flex items-center gap-1 focus:outline-none focus:ring-2 focus:ring-white/20 ${toast.type === 'success' ? 'text-on-primary/60 hover:text-on-primary' : 'text-on-surface-variant hover:bg-on-surface/5'}`}
+        className={`p-1.5 rounded-lg transition-all flex items-center gap-1 focus:outline-none focus:ring-2 focus:ring-current/20 ${toast.type === 'success' ? 'text-on-primary/60 hover:text-on-primary' : 'text-on-surface-variant hover:bg-on-surface/5'}`}
         aria-label="Dismiss Notification"
       >
         <span className="text-[7px] font-mono font-black hidden group-hover:block uppercase">Dismiss</span>

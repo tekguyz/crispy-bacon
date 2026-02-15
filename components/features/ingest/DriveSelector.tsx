@@ -50,9 +50,9 @@ export const DriveSelector: React.FC<DriveSelectorProps> = ({ onSelect, disabled
   };
 
   const getFileIcon = (mimeType: string) => {
-    if (mimeType.includes('document')) return <FileText size={18} className="text-blue-500 shrink-0" />;
-    if (mimeType.includes('audio') || mimeType.includes('mpeg')) return <Music size={18} className="text-orange-500 shrink-0" />;
-    if (mimeType.includes('pdf')) return <FileIcon size={18} className="text-red-500 shrink-0" />;
+    if (mimeType.includes('document')) return <FileText size={18} className="text-primary shrink-0" />;
+    if (mimeType.includes('audio') || mimeType.includes('mpeg')) return <Music size={18} className="text-primary shrink-0" />;
+    if (mimeType.includes('pdf')) return <FileIcon size={18} className="text-error shrink-0" />;
     return <FileIcon size={18} className="text-on-surface-variant/40 shrink-0" />;
   };
 

@@ -56,8 +56,8 @@ const ConfirmationModal: React.FC = () => {
         <div className="p-8 md:p-10 flex flex-col items-center text-center overflow-y-auto custom-scrollbar">
           <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 shrink-0 ${
             confirmation.variant === 'danger' 
-              ? 'bg-error text-white shadow-lg shadow-error/20' 
-              : 'bg-primary text-on-primary shadow-lg shadow-primary/20'
+              ? 'bg-error/10 text-error shadow-lg shadow-error/10' 
+              : 'bg-primary/10 text-primary shadow-lg shadow-primary/10'
           }`}>
             {confirmation.variant === 'danger' ? (
               <AlertTriangle size={24} aria-hidden="true" />
@@ -77,7 +77,7 @@ const ConfirmationModal: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-3 w-full shrink-0 mt-auto">
             <button
               onClick={handleClose}
-              className="order-2 sm:order-1 flex-1 h-14 md:h-12 px-5 rounded-2xl md:rounded-xl font-black text-[11px] md:text-[10px] uppercase tracking-widest text-on-surface bg-surface-container-highest hover:bg-surface-container-low transition-all focus:outline-none interactive border border-outline-variant/10 shadow-sm"
+              className="order-2 sm:order-1 flex-1 h-14 md:h-12 px-5 rounded-2xl md:rounded-xl font-black text-[11px] md:text-[10px] uppercase tracking-widest text-on-surface bg-transparent border border-outline-variant hover:bg-surface-container-high transition-all focus:outline-none interactive"
             >
               {confirmation.cancelLabel}
             </button>
@@ -85,7 +85,7 @@ const ConfirmationModal: React.FC = () => {
               onClick={handleConfirm}
               className={`order-1 sm:order-2 flex-1 h-14 md:h-12 px-5 rounded-2xl md:rounded-xl font-black text-[11px] md:text-[10px] uppercase tracking-widest shadow-xl transition-all active:scale-95 focus:outline-none interactive ${
                 confirmation.variant === 'danger'
-                  ? 'bg-error text-white hover:brightness-110 shadow-error/30'
+                  ? 'bg-error text-on-error hover:opacity-90 shadow-error/30'
                   : 'bg-primary text-on-primary hover:brightness-110 shadow-primary/30'
               }`}
             >

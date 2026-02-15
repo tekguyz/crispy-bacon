@@ -110,7 +110,7 @@ export const ContextDeck: React.FC = () => {
                 {!showInsightPicker ? (
                     <>
                         <input 
-                            autoFocus
+                            autoFocus={typeof window !== 'undefined' && window.innerWidth >= 768}
                             type="text" 
                             placeholder="Paste link here..." 
                             value={urlInput}

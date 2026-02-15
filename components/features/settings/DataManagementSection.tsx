@@ -92,7 +92,7 @@ export const DataManagementSection: React.FC = () => {
             </div>
             <button 
                 onClick={handleClearData}
-                className="px-4 py-2 bg-background border border-error/10 rounded-xl text-[9px] font-black uppercase tracking-widest text-error hover:bg-error hover:text-white transition-all active:scale-95"
+                className="px-4 py-2 bg-transparent border border-error/20 rounded-xl text-[9px] font-black uppercase tracking-widest text-error hover:bg-error hover:text-on-error transition-all active:scale-95"
             >
                 Reset App
             </button>
