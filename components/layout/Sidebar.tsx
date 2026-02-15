@@ -5,7 +5,7 @@ import { PrimaryNavList } from './sidebar/PrimaryNavList';
 import { CollectionVault } from './sidebar/CollectionVault';
 import { useAppStore } from '../../store/useAppStore';
 import { triggerHaptic } from '../../services/hapticService';
-import { UserAccountPopover } from '../UserAccountPopover';
+import { UserAccountPopover } from './UserAccountPopover';
 
 interface SidebarProps {
   isExpanded: boolean;
