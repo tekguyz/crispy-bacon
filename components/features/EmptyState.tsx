@@ -21,9 +21,10 @@ const EmptyState: React.FC<EmptyStateProps> = ({
   iconColorClass = 'text-primary',
   animationClass = 'animate-bounce-gentle'
 }) => {
+  // Granola Standard: Direct, no jargon.
   const displayTitle = (title === "Awaiting strategic signals." || title === "Ready for your first summary.") ? "Ready for notes." : title;
   const displayDescription = (description === "Initialize ingestion to begin distillation." || description === "Capture a meeting, upload a document, or paste a link to get started.")
-    ? "Add a note or link to get started." 
+    ? "Start a recording or add a link to begin." 
     : description;
 
   if (variant === 'filtered') {
@@ -33,8 +34,8 @@ const EmptyState: React.FC<EmptyStateProps> = ({
            <div className="absolute inset-0 ledger-grid opacity-[0.05]" />
            <Icon size={28} strokeWidth={2.5} className="relative z-10 icon-tactical" />
         </div>
-        <h3 className="text-xl font-slab font-bold text-on-surface mb-3 tracking-tight uppercase">{displayTitle}</h3>
-        <p className="text-on-surface-variant text-[13px] max-w-[280px] mb-8 opacity-60 font-bold leading-relaxed">{displayDescription}</p>
+        <h3 className="text-xl font-slab font-bold text-on-surface mb-3 tracking-tight uppercase">No Notes Found</h3>
+        <p className="text-on-surface-variant text-[13px] max-w-[280px] mb-8 opacity-60 font-bold leading-relaxed">{description === "Refine your filter nodes or adjust keywords." ? "Try adjusting your filters." : description}</p>
         {action}
       </div>
     );

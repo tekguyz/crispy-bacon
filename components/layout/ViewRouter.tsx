@@ -1,3 +1,4 @@
+
 import React, { lazy, useMemo, Suspense } from 'react';
 import { AppView, InsightContent, ContentType } from '../../types';
 import { useAppStore } from '../../store/useAppStore';
@@ -54,8 +55,8 @@ const ViewRouter: React.FC<ViewRouterProps> = ({ onResetFilters }) => {
         <EmptyState 
           variant="filtered" 
           icon={SearchX} 
-          title="Zero Signal Found" 
-          description="Refine your filter nodes or adjust keywords." 
+          title="No Notes Found" 
+          description="Adjust your filters or search terms." 
           action={
             <button onClick={onResetFilters} className="px-10 py-4 bg-surface-container-high border border-outline-variant/20 rounded-2xl text-[10px] font-black uppercase tracking-widest text-primary hover:bg-surface-container-highest transition-all shadow-xl active:scale-95">Reset Filters</button>
           }
@@ -65,17 +66,17 @@ const ViewRouter: React.FC<ViewRouterProps> = ({ onResetFilters }) => {
     
     switch (view) {
       case AppView.FAVORITES: 
-        return <EmptyState icon={Star} title="Pinned Intelligence" description="Save high-signal research for priority access." />;
+        return <EmptyState icon={Star} title="Pinned Notes" description="Save important research here for quick access." />;
       case AppView.ARCHIVED: 
-        return <EmptyState icon={Inbox} title="Project Archive" description="Cold storage nodes. Searchable and ready for retrieval." />;
+        return <EmptyState icon={Inbox} title="Archive" description="Completed projects and old notes." />;
       case AppView.TRASH:
-        return <EmptyState icon={Trash2} title="Trash Queue" description="Signals in this node are purged every 30 days." />;
+        return <EmptyState icon={Trash2} title="Trash" description="Notes here are deleted after 30 days." />;
       default: 
         return (
           <EmptyState 
             icon={Sparkles} 
-            title="Awaiting Input." 
-            description="Capture a meeting or link research to establish your library."
+            title="Ready for notes." 
+            description="Capture a meeting or add a link to start your library."
             action={
               <button 
                 onClick={() => setShowInputModal(true)}
@@ -174,7 +175,7 @@ const ViewRouter: React.FC<ViewRouterProps> = ({ onResetFilters }) => {
                     <ChevronRight size={14} className="text-primary opacity-40 shrink-0" strokeWidth={4} />
                     <h3 className="text-[11px] font-black text-on-surface uppercase tracking-[0.4em] leading-none">{date}</h3>
                     <div className="h-px flex-1 bg-outline-variant/10" />
-                    <span className="text-[9px] font-mono font-black text-on-surface-variant opacity-20 uppercase">{items.length} SIGNALS</span>
+                    <span className="text-[9px] font-mono font-black text-on-surface-variant opacity-20 uppercase">{items.length} ITEMS</span>
                   </div>
                   
                   {feedViewMode === 'grid' ? (

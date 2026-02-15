@@ -98,6 +98,8 @@ export const SystemLogViewer: React.FC = () => {
                                 .replace(/Distillation/gi, 'Analysis')
                                 .replace(/Ingest/gi, 'Import')
                                 .replace(/Telemetry/gi, 'Activity')
+                                .replace(/Protocol/gi, 'Process')
+                                .replace(/Vector/gi, 'Item')
                             }
                         </span>
                         </div>

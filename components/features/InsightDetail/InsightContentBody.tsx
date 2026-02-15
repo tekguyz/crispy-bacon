@@ -24,7 +24,7 @@ export const InsightContentBody: React.FC<InsightContentBodyProps> = ({
       <SummaryStats insight={insight} />
 
       <div className="flex flex-col gap-10">
-        {/* PRIMARY SIGNAL LAYER */}
+        {/* EXECUTIVE SUMMARY */}
         <div className="w-full">
            <SummarySection 
               summary={insight.summary} 
@@ -33,10 +33,10 @@ export const InsightContentBody: React.FC<InsightContentBodyProps> = ({
           />
         </div>
 
-        {/* FACT LAYER */}
+        {/* KEY FACTS */}
         <TakeawayGrid highlights={insight.highlights} />
 
-        {/* DECISION LAYER */}
+        {/* ACTION PLAN */}
         <TaskList insightId={insight.id} activeTasks={activeTasks} completedTasks={completedTasks} />
       </div>
     </div>
