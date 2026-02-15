@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from 'react';
 import { Paperclip, Link as LinkIcon, FileText, Sparkles, X, Plus, Loader2 } from 'lucide-react';
 import { useAppStore } from '../../../store/useAppStore';
@@ -145,7 +146,7 @@ export const ContextDeck: React.FC = () => {
                 ) : (
                     <div className="space-y-3">
                         <div className="flex justify-between items-center px-1">
-                            <span className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-60">Select Research Point</span>
+                            <span className="text-[10px] font-black uppercase tracking-widest text-on-surface opacity-60">Select Note</span>
                             <button onClick={() => setShowInsightPicker(false)} className="text-[10px] font-black text-primary hover:underline uppercase tracking-widest">Cancel</button>
                         </div>
                         <div className="max-h-48 overflow-y-auto custom-scrollbar flex flex-col gap-1.5 p-1 bg-background/50 rounded-lg">

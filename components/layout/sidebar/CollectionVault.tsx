@@ -47,7 +47,7 @@ export const CollectionVault: React.FC<CollectionVaultProps> = ({
       <div className="flex flex-col gap-1.5 px-3 pb-[calc(env(safe-area-inset-bottom)+1rem)]">
         {collections.length === 0 ? (
           <div className="px-6 py-4 opacity-20">
-            <p className="text-[9px] font-black uppercase tracking-widest leading-relaxed font-serif">Setup vaults to organize research nodes.</p>
+            <p className="text-[9px] font-black uppercase tracking-widest leading-relaxed font-serif">Setup folders to organize notes.</p>
           </div>
         ) : (
           collections.map((col) => {

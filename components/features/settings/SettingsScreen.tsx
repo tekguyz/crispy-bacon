@@ -67,7 +67,7 @@ const SettingsScreen: React.FC = () => {
         <footer className="pt-24 flex flex-col items-center gap-6 text-center opacity-20">
            <div className="h-px w-24 bg-surface-container-highest rounded-full" />
            <p className="text-[9px] font-black tracking-[0.5em] uppercase text-on-surface">
-             &copy; {COPYRIGHT_YEAR} {LAB_NAME} :: SYSTEM CORE
+             &copy; {COPYRIGHT_YEAR} {LAB_NAME} :: SYSTEM
            </p>
         </footer>
       </div>

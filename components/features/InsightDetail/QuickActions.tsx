@@ -31,7 +31,7 @@ export const QuickActions: React.FC<QuickActionsProps> = ({ insight }) => {
   return (
     <div className="flex items-center justify-between p-1.5 bg-surface-container-low border border-outline-variant/10 rounded-2xl shadow-sm">
       <div className="flex gap-1">
-        <Tooltip content={insight.is_favorite ? "Unpin Node" : "Pin Node"}>
+        <Tooltip content={insight.is_favorite ? "Unpin Note" : "Pin Note"}>
             <button 
               onClick={handlePin}
               className={`

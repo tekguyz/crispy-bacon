@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Crown, Zap, Database, Target, Clock, Radio, Check, Share2, Activity } from 'lucide-react';
 
@@ -76,7 +77,7 @@ export const ProSection: React.FC<ProSectionProps> = ({ onUpgrade }) => {
           onClick={onUpgrade}
           className="px-10 py-4 bg-primary text-on-primary rounded-xl font-black text-[10px] uppercase tracking-[0.2em] shadow-lg hover:scale-105 active:scale-95 transition-all relative z-10"
          >
-            Go Neural Pro
+            Go Executive
          </button>
       </footer>
     </div>

@@ -151,7 +151,7 @@ const InsightCard: React.FC<InsightCardProps> = ({ insight }) => {
       </header>
 
       <div className="text-on-surface-variant mb-4 leading-relaxed line-clamp-3 text-sm font-medium opacity-80 relative z-10"> 
-        {(isActuallyProcessing && !hasContent) ? "Distilling skeletal intelligence..." : summaryPreview}
+        {(isActuallyProcessing && !hasContent) ? "Writing summary..." : summaryPreview}
       </div>
 
       <footer className="mt-auto flex justify-between items-center relative z-10 opacity-40 group-hover:opacity-100 transition-opacity"> 

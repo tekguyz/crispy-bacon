@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback } from 'react';
 import { 
   X, Crown, Zap, Loader2, 
@@ -80,7 +79,7 @@ const UpgradeModal: React.FC = () => {
     { label: 'Unlimited Research', icon: Infinity, desc: 'No monthly caps.' },
     { label: 'Permanent Library', icon: Database, desc: 'Lifetime storage.' },
     { label: 'Deep Reasoning', icon: Target, desc: 'Strategist models.' },
-    { label: 'Voice Interrogation', icon: Radio, desc: 'Talk to notes.' }
+    { label: 'Voice Questions', icon: Radio, desc: 'Talk to notes.' }
   ];
 
   return (
@@ -150,7 +149,7 @@ const UpgradeModal: React.FC = () => {
               <div className="max-w-sm w-full space-y-6">
                   <div className="text-center space-y-1">
                      <div className="px-3 py-0.5 bg-primary/10 border border-primary/20 text-primary rounded-full w-fit mx-auto mb-2">
-                        <span className="text-[7px] font-black uppercase tracking-[0.3em]">Professional Protocol</span>
+                        <span className="text-[7px] font-black uppercase tracking-[0.3em]">Professional Standard</span>
                      </div>
                      <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight text-on-surface">Member Activation</h3>
                   </div>
@@ -191,7 +190,7 @@ const UpgradeModal: React.FC = () => {
                       disabled={isProcessing}
                       className="w-full h-14 md:h-12 bg-primary text-on-primary rounded-2xl font-black text-[11px] md:text-xs uppercase tracking-[0.2em] shadow-xl shadow-primary/20 flex items-center justify-center gap-3 hover:brightness-110 active:scale-[0.98] transition-all disabled:opacity-70 group"
                     >
-                      {isProcessing ? <Loader2 className="animate-spin" size={18} /> : <>Initialize Tier <ArrowRight size={18} strokeWidth={3} className="group-hover:translate-x-1 transition-transform" /></>}
+                      {isProcessing ? <Loader2 className="animate-spin" size={18} /> : <>Activate Membership <ArrowRight size={18} strokeWidth={3} className="group-hover:translate-x-1 transition-transform" /></>}
                     </button>
                     <p className="text-[7px] text-center font-black text-on-surface-variant opacity-30 uppercase tracking-[0.4em]">One-Tap Activation • Cloud Secure</p>
                   </div>
