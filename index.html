@@ -28,6 +28,7 @@
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none'><rect width='64' height='64' rx='16' fill='%231a1a1a'/><path d='M24 18L16 26V38L24 46' stroke='white' stroke-width='4' stroke-linecap='square'/><path d='M40 18L48 26V38L40 46' stroke='%23ef7d31' stroke-width='4' stroke-linecap='square'/><circle cx='32' cy='32' r='4' fill='white'/></svg>">
     
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="/index.css">
 
@@ -40,61 +41,22 @@
               sans: ['Inter', 'sans-serif'],
               serif: ['Newsreader', 'serif'],
               display: ['Newsreader', 'serif'],
-              slab: ['Newsreader', 'serif'],
-              mono: ['Geist Mono', 'monospace'],
+              mono: ['"JetBrains Mono"', 'monospace'],
             },
             colors: {
-              // ============================================
-              // 1. THE NEW CLAUDE SYSTEM (Source of Truth)
-              // ============================================
-              
-              // LIGHT MODE
-              'light-bg-1': 'oklch(0.99 0 0)',           // Main Background
-              'light-bg-2': 'oklch(0.97 0 0)',           // Secondary
-              'light-elevated': 'oklch(1 0 0)',          // Cards (Pure White)
-              'light-text-1': 'oklch(0.20 0 0)',         // Primary Text (Soft Black)
-              'light-text-2': 'oklch(0.45 0 0)',         // Secondary Text
-              'light-border': 'oklch(0.90 0 0)',         // Borders
-              
-              // DARK MODE (Warm Purple/Black)
-              'dark-bg-1': 'oklch(0.18 0.01 270)',       
-              'dark-elevated': 'oklch(0.25 0.01 270)',   
-              'dark-text-1': 'oklch(0.95 0 0)',          
-              'dark-text-2': 'oklch(0.75 0 0)',
-              'dark-border': 'oklch(0.30 0.01 270)',
-
-              // BRAND (Orange)
-              'claude-light': 'oklch(0.65 0.15 35)',
-              'claude-dark': 'oklch(0.70 0.15 35)',
-
-              // ============================================
-              // 2. LEGACY MAPPING (Aliases for Stability)
-              // ============================================
-              // This stops the app from breaking. We map old names to new colors.
-              
-              'background': 'oklch(0.99 0 0)',          // Maps to light-bg-1
-              'surface': 'oklch(1 0 0)',                // Maps to light-elevated
-              'surface-variant': 'oklch(0.97 0 0)',     // Maps to light-bg-2
-              'surface-container': 'oklch(0.97 0 0)',   // Maps to light-bg-2
-              'surface-container-low': 'oklch(0.99 0 0)',
-              'surface-container-high': 'oklch(0.95 0 0)',
-              'surface-container-highest': 'oklch(0.93 0 0)',
-              
-              'primary': 'oklch(0.65 0.15 35)',         // Maps to claude-light
-              'on-primary': 'oklch(1 0 0)',             // White
-              
-              'on-background': 'oklch(0.20 0 0)',       // Maps to light-text-1
-              'on-surface': 'oklch(0.20 0 0)',          // Maps to light-text-1
-              'on-surface-variant': 'oklch(0.45 0 0)',  // Maps to light-text-2
-              
-              'outline': 'oklch(0.90 0 0)',             // Maps to light-border
-              'outline-variant': 'oklch(0.95 0 0)',
-              'error': 'oklch(0.50 0.22 25)',
-              'success': 'oklch(0.48 0.18 145)',
+              primary: 'var(--md-sys-color-primary)',
+              'on-primary': 'var(--md-sys-color-on-primary)',
+              surface: 'var(--md-sys-color-surface)',
+              'on-surface': 'var(--md-sys-color-on-surface)',
+              'on-surface-variant': 'var(--md-sys-color-on-surface-variant)',
+              outline: 'var(--md-sys-color-outline)',
+              background: 'var(--md-sys-color-background)',
+              error: 'var(--md-sys-color-error)',
+              success: 'var(--md-sys-color-success)',
             },
             borderRadius: {
-              'expressive': '1.25rem',
-              'sheet': '2.5rem',
+              'expressive': 'var(--radius-expressive)',
+              'sheet': 'var(--radius-sheet)',
               '4xl': '2rem',
               '5xl': '2.5rem',
             }
@@ -126,7 +88,7 @@
 }
 </script>
 </head>
-  <body class="bg-light-bg-1 text-light-text-1 dark:bg-dark-bg-1 dark:text-dark-text-1 antialiased overflow-x-hidden transition-colors duration-300">
+  <body class="bg-background text-on-background antialiased overflow-x-hidden">
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
   </body>

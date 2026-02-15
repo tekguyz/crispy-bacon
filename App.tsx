@@ -81,7 +81,7 @@ function App() {
 
   if (shouldBlock) {
     return (
-      <div className="h-screen w-full flex flex-col items-center justify-center gap-6" aria-busy="true">
+      <div className="h-screen w-full bg-background flex flex-col items-center justify-center gap-6" aria-busy="true">
         <Loader2 className="animate-spin text-primary relative z-10" size={32} />
         {isAuthConnecting && (
           <div className="text-center animate-fade-in px-8">
@@ -96,7 +96,7 @@ function App() {
   if (!store.session && !store.isGuest) return <LoginScreen />;
 
   return (
-    <div className="flex h-screen font-sans overflow-hidden bg-light-bg-1 dark:bg-dark-bg-1 text-light-text-1 dark:text-dark-text-1">
+    <div className="flex h-screen bg-background text-foreground font-sans overflow-hidden">
       <DataSynchronizer />
       <ToastContainer />
       <GlobalModalManager />
@@ -110,7 +110,7 @@ function App() {
         onResetFilters={resetFilters} 
       />
       
-      <main id="main-content" className="flex-1 flex flex-col h-screen overflow-hidden relative w-full">
+      <main id="main-content" className="flex-1 flex flex-col h-screen overflow-hidden relative bg-background w-full">
         {!isDetailView && (
           <Header 
             onOpenSidebar={toggleMobileSidebar} 
@@ -119,7 +119,7 @@ function App() {
           />
         )}
 
-        <div className="flex-1 overflow-y-auto custom-scrollbar">
+        <div className="flex-1 overflow-y-auto bg-background custom-scrollbar">
           <Suspense fallback={<SkeletonDetail />}>
             {isDetailView ? (
               <InsightDetailView />
