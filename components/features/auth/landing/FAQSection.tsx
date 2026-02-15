@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { ChevronDown, HelpCircle } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 const FAQS = [
   { 
@@ -33,50 +33,50 @@ export const FAQSection: React.FC = () => {
   };
 
   return (
-    <section id="faq" className="py-24 bg-background border-t border-outline-variant/10">
+    <section id="faq" className="py-24 md:py-32 bg-surface-container-low border-b border-outline-variant/10">
       <div className="w-full max-w-[1600px] mx-auto px-6 md:px-12 lg:px-16">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-16 items-start">
           
-          <div className="md:col-span-4 space-y-6">
-             <div className="flex items-center gap-2 opacity-40">
-                <HelpCircle size={12} strokeWidth={3} />
-                <span className="text-[9px] font-mono font-black uppercase tracking-[0.3em]">Support</span>
+          {/* Header Column */}
+          <div className="md:col-span-4 sticky top-32">
+             <div className="flex items-center gap-3 mb-6">
+                <div className="h-px w-12 bg-primary" />
+                <span className="text-[10px] font-mono font-black uppercase tracking-[0.4em] text-primary">FAQ</span>
              </div>
-             <h3 className="text-3xl font-display font-bold uppercase tracking-tighter text-on-surface italic leading-none">
-               Common <br/>Questions.
-             </h3>
-             <p className="text-sm font-medium text-on-surface-variant opacity-60 leading-relaxed max-w-xs">
+             <h2 className="text-4xl md:text-5xl font-display font-black uppercase tracking-tighter text-on-surface leading-[0.9] mb-6">
+               Common <br/><span className="text-primary italic">Questions.</span>
+             </h2>
+             <p className="text-sm font-medium text-on-surface-variant opacity-60 leading-relaxed">
                 Everything you need to know about privacy, recording, and how we handle your research.
              </p>
           </div>
 
-          <div className="md:col-span-8">
-             <div className="divide-y divide-outline-variant/10 border-t border-b border-outline-variant/10">
-                {FAQS.map((item, i) => {
-                   const isOpen = openIndex === i;
-                   return (
-                     <div key={i} className="group">
-                        <button 
-                          onClick={() => toggle(i)}
-                          className="w-full flex items-center justify-between py-6 text-left focus:outline-none"
-                        >
-                           <span className={`text-sm md:text-base font-bold uppercase tracking-wide transition-colors ${isOpen ? 'text-primary' : 'text-on-surface group-hover:text-primary'}`}>
-                             {item.q}
-                           </span>
-                           <div className={`p-1 rounded-full border transition-all duration-300 ${isOpen ? 'bg-primary border-primary text-on-primary rotate-180' : 'bg-transparent border-outline-variant/20 text-on-surface-variant'}`}>
-                              <ChevronDown size={16} strokeWidth={3} />
-                           </div>
-                        </button>
-                        
-                        <div className={`overflow-hidden transition-all duration-300 ease-spring ${isOpen ? 'max-h-48 opacity-100 pb-6' : 'max-h-0 opacity-0'}`}>
-                           <p className="text-sm font-medium text-on-surface-variant leading-relaxed max-w-2xl">
-                             {item.a}
-                           </p>
+          {/* Accordion Column */}
+          <div className="md:col-span-8 space-y-4">
+             {FAQS.map((item, i) => {
+                const isOpen = openIndex === i;
+                return (
+                  <div key={i} className={`group rounded-[2rem] border transition-all duration-300 overflow-hidden ${isOpen ? 'bg-background border-primary/20 shadow-xl' : 'bg-background/50 border-outline-variant/10 hover:border-outline-variant/30'}`}>
+                     <button 
+                       onClick={() => toggle(i)}
+                       className="w-full flex items-center justify-between p-8 text-left focus:outline-none"
+                     >
+                        <span className={`text-lg md:text-xl font-bold font-slab tracking-tight transition-colors pr-8 ${isOpen ? 'text-primary' : 'text-on-surface'}`}>
+                          {item.q}
+                        </span>
+                        <div className={`w-8 h-8 rounded-full border flex items-center justify-center shrink-0 transition-all duration-300 ${isOpen ? 'bg-primary border-primary text-on-primary rotate-180' : 'bg-transparent border-outline-variant/20 text-on-surface-variant'}`}>
+                           <ChevronDown size={16} strokeWidth={3} />
                         </div>
+                     </button>
+                     
+                     <div className={`transition-all duration-500 ease-spring px-8 ${isOpen ? 'max-h-48 opacity-100 pb-8' : 'max-h-0 opacity-0'}`}>
+                        <p className="text-base font-serif font-medium text-on-surface-variant opacity-80 leading-relaxed max-w-3xl">
+                          {item.a}
+                        </p>
                      </div>
-                   );
-                })}
-             </div>
+                  </div>
+                );
+             })}
           </div>
 
         </div>

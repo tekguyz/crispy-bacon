@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Settings, LogOut, ArrowRight, Menu, X, Globe, Cpu, Database, Zap, ShieldCheck } from 'lucide-react';
+import { Settings, LogOut, ArrowRight, Menu, X } from 'lucide-react';
 import { BaconBrand } from '../../../ui/Logo';
 import { triggerHaptic } from '../../../../services/hapticService';
 
@@ -64,14 +64,14 @@ export const LandingNav: React.FC<LandingNavProps> = ({ isScrolled, session, use
     { id: 'process', label: 'Process' },
     { id: 'features', label: 'Capabilities' },
     { id: 'pricing', label: 'Pricing' },
-    { id: 'faq', label: 'Support' }
+    { id: 'faq', label: 'FAQ' }
   ];
 
   return (
     <>
       <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ease-in-out border-b ${
         isScrolled 
-          ? 'h-16 md:h-20 bg-background/90 backdrop-blur-xl shadow-sm border-outline-variant' 
+          ? 'h-16 md:h-20 bg-background/80 backdrop-blur-2xl backdrop-saturate-150 shadow-sm border-outline-variant/10' 
           : 'h-20 md:h-24 bg-transparent border-transparent'
       } ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
         <div className="w-full max-w-[1600px] mx-auto px-6 md:px-12 lg:px-16 h-full flex items-center justify-between">
@@ -87,7 +87,7 @@ export const LandingNav: React.FC<LandingNavProps> = ({ isScrolled, session, use
               <button 
                 key={link.id} 
                 onClick={() => handleNavClick(link.id)} 
-                className="text-[10px] font-black text-on-background opacity-40 hover:opacity-100 transition-all tracking-[0.25em] uppercase"
+                className="text-[10px] font-black text-on-background opacity-40 hover:opacity-100 transition-all tracking-[0.25em] uppercase hover:text-primary"
               >
                 {link.label}
               </button>
@@ -124,7 +124,7 @@ export const LandingNav: React.FC<LandingNavProps> = ({ isScrolled, session, use
               ) : (
                 <button 
                   onClick={onSignIn} 
-                  className="px-8 h-11 bg-on-surface text-surface rounded-xl font-black text-[10px] uppercase tracking-[0.2em] shadow-lg hover:bg-primary transition-all active:scale-95 flex items-center gap-2"
+                  className="px-8 h-11 bg-on-surface text-surface rounded-xl font-black text-[10px] uppercase tracking-[0.2em] shadow-lg hover:bg-primary hover:text-on-primary transition-all active:scale-95 flex items-center gap-2 border border-transparent hover:border-primary/10"
                 >
                   Sign In
                 </button>
@@ -133,7 +133,7 @@ export const LandingNav: React.FC<LandingNavProps> = ({ isScrolled, session, use
 
             <button 
               onClick={toggleMobileMenu}
-              className="lg:hidden w-11 h-11 flex items-center justify-center rounded-xl bg-on-surface/5 text-on-surface"
+              className="lg:hidden w-11 h-11 flex items-center justify-center rounded-xl bg-on-surface/5 text-on-surface hover:bg-on-surface/10 transition-colors"
               aria-label="Open menu"
             >
               <Menu size={20} strokeWidth={2.5} />
@@ -168,7 +168,7 @@ export const LandingNav: React.FC<LandingNavProps> = ({ isScrolled, session, use
                     className="w-full text-left px-4 py-6 rounded-2xl hover:bg-on-surface/5 text-3xl font-black tracking-tighter uppercase transition-all flex items-center justify-between group"
                   >
                     {link.label}
-                    <ArrowRight size={24} className="opacity-20" />
+                    <ArrowRight size={24} className="opacity-20 group-hover:text-primary group-hover:opacity-100 transition-all" />
                   </button>
                 ))}
               </div>

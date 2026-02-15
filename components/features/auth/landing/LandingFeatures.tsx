@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ShieldCheck, Brain, Cloud, Database, Lock, Zap } from 'lucide-react';
+import { ShieldCheck, Brain, Cloud, Database, Lock, Zap, ArrowRight } from 'lucide-react';
 
 export const LandingFeatures: React.FC = () => {
   const features = [
@@ -10,7 +10,7 @@ export const LandingFeatures: React.FC = () => {
       icon: Database
     },
     {
-      title: "Advanced AI",
+      title: "Advanced Reasoning",
       desc: "Powered by Google's most advanced model for detailed thinking and complex queries.",
       icon: Brain
     },
@@ -37,33 +37,41 @@ export const LandingFeatures: React.FC = () => {
   ];
 
   return (
-    <section id="features" className="py-24 bg-background border-b border-outline-variant/10">
-      <div className="w-full max-w-[1600px] mx-auto px-6 md:px-12 lg:px-16">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-           <div className="max-w-2xl">
-              <h2 className="text-3xl md:text-5xl font-display font-bold tracking-tighter text-on-surface uppercase leading-none mb-4">
-                Research <br/><span className="text-primary italic">Capabilities.</span>
-              </h2>
-              <p className="text-sm font-medium text-on-surface-variant opacity-60 uppercase tracking-widest max-w-lg">
-                Built for the rigorous demands of professional analysts and executives.
-              </p>
-           </div>
-           <div className="h-px bg-outline-variant/20 flex-1 mb-2 hidden md:block" />
+    <section id="features" className="py-24 md:py-32 bg-background border-b border-outline-variant/10 relative">
+      <div className="w-full max-w-[1600px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
+        
+        {/* V2 Header Anatomy */}
+        <div className="mb-20 max-w-4xl">
+            <div className="flex items-center gap-3 mb-6">
+                <div className="h-px w-12 bg-primary" />
+                <span className="text-[10px] font-mono font-black uppercase tracking-[0.4em] text-primary">Capabilities</span>
+            </div>
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-display font-black tracking-tighter uppercase text-on-surface leading-[0.9]">
+                Research <span className="text-primary italic">Engine.</span>
+            </h2>
+            <p className="mt-8 text-xl font-serif font-medium text-on-surface-variant opacity-60 max-w-2xl leading-relaxed">
+               Built for the rigorous demands of professional analysts. Speed, privacy, and truth are the default settings.
+            </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
            {features.map((feat, i) => (
-             <div key={i} className="flex gap-5 group">
-                <div className="shrink-0 mt-1">
-                   <div className="w-10 h-10 rounded-xl bg-surface-container-high border border-outline-variant/10 flex items-center justify-center text-on-surface-variant group-hover:text-primary group-hover:bg-primary/5 transition-colors">
-                      <feat.icon size={18} strokeWidth={2} />
-                   </div>
-                </div>
-                <div className="space-y-2">
-                   <h3 className="text-sm font-black uppercase tracking-widest text-on-surface">{feat.title}</h3>
-                   <p className="text-[13px] font-medium text-on-surface-variant opacity-60 leading-relaxed">
-                      {feat.desc}
-                   </p>
+             <div key={i} className="group relative p-8 rounded-[2.5rem] bg-surface-container-low border border-outline-variant/10 hover:border-primary/20 hover:shadow-2xl transition-all duration-500 overflow-hidden">
+                <div className="absolute inset-0 ledger-grid opacity-[0.03] pointer-events-none" />
+                
+                <div className="relative z-10 flex flex-col h-full">
+                    <div className="w-12 h-12 rounded-2xl bg-surface-container-high border border-outline-variant/10 flex items-center justify-center text-on-surface-variant group-hover:text-on-primary group-hover:bg-primary transition-colors shadow-inner mb-6">
+                       <feat.icon size={20} strokeWidth={2} />
+                    </div>
+                    
+                    <h3 className="text-xl font-slab font-bold uppercase tracking-tight text-on-surface mb-3 group-hover:text-primary transition-colors">{feat.title}</h3>
+                    <p className="text-sm font-medium text-on-surface-variant opacity-60 leading-relaxed group-hover:opacity-100 transition-opacity">
+                       {feat.desc}
+                    </p>
+                    
+                    <div className="mt-auto pt-6 flex items-center gap-2 text-[9px] font-mono font-black uppercase tracking-widest text-primary opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0">
+                       <ArrowRight size={12} strokeWidth={3} /> Learn More
+                    </div>
                 </div>
              </div>
            ))}
