@@ -28,7 +28,7 @@ const ToastItem: React.FC<{ toast: ToastMessage; onRemove: (id: string) => void 
         ${bgColors[toast.type]}
       `} 
     >
-      <div className={`shrink-0 p-2 rounded-xl shadow-inner ${toast.type === 'success' ? 'bg-white/20' : 'bg-background'}`} aria-hidden="true">
+      <div className={`shrink-0 p-2 rounded-xl shadow-inner ${toast.type === 'success' ? 'bg-on-primary/20' : 'bg-background'}`} aria-hidden="true">
         {icons[toast.type]}
       </div>
       <p className="flex-1 text-[11px] font-black uppercase tracking-tight leading-tight">

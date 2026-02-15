@@ -2,110 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  /* LIGHT MODE: Sandstone - Accessibility Optimized */
-  --md-sys-color-background: oklch(0.98 0.01 85); 
-  --md-sys-color-on-background: oklch(0.15 0.02 85); 
-  
-  --md-sys-color-surface: oklch(1 0 0); 
-  --md-sys-color-on-surface: oklch(0.08 0.02 85); 
-  
-  --md-sys-color-primary: oklch(0.68 0.19 45); 
-  --md-sys-color-on-primary: oklch(1 0 0); 
-  
-  --md-sys-color-surface-variant: oklch(0.96 0.01 85);
-  /* Contrast Audit: Dropping L from 0.40 to 0.25 to ensure AAA compliance on variant text */
-  --md-sys-color-on-surface-variant: oklch(0.25 0.02 85); 
-
-  --md-sys-color-outline: oklch(0 0 0 / 0.15); 
-  --md-sys-color-outline-variant: oklch(0 0 0 / 0.08);
-
-  --md-sys-color-error: oklch(0.50 0.22 25);
-  --md-sys-color-success: oklch(0.48 0.18 145);
-  
-  /* Surface Tones */
-  --md-sys-color-surface-container-lowest: oklch(1 0 0);
-  --md-sys-color-surface-container-low: oklch(0.98 0.01 85);
-  --md-sys-color-surface-container: oklch(0.96 0.01 85);
-  --md-sys-color-surface-container-high: oklch(0.94 0.01 85);
-  --md-sys-color-surface-container-highest: oklch(0.92 0.01 85);
-  
-  --radius-expressive: 1.25rem;
-  --radius-sheet: 2.5rem;
-}
-
-.dark {
-  /* DARK MODE: Stratified Charcoal */
-  --md-sys-color-background: oklch(0.14 0.01 0); 
-  --md-sys-color-on-background: oklch(0.98 0.01 0); 
-  
-  --md-sys-color-surface: oklch(0.17 0.01 0); 
-  --md-sys-color-on-surface: oklch(0.98 0.01 0);
-  
-  --md-sys-color-primary: oklch(0.72 0.18 45); 
-  --md-sys-color-on-primary: oklch(1 0 0); 
-  
-  --md-sys-color-on-surface-variant: oklch(0.85 0.01 0);
-
-  --md-sys-color-outline: oklch(1 1 1 / 0.20);
-  --md-sys-color-outline-variant: oklch(1 1 1 / 0.10);
-  
-  --md-sys-color-surface-container-low: oklch(0.17 0.01 0);
-  --md-sys-color-surface-container: oklch(0.21 0.01 0);
-  --md-sys-color-surface-container-high: oklch(0.24 0.01 0);
-}
-
-/* Structural Chassis */
-.container-landing {
-  width: 100%;
-  max-width: 1400px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-}
-
-@media (min-width: 768px) {
-  .container-landing {
-    padding-left: 3rem;
-    padding-right: 3rem;
+@layer base {
+  body {
+    @apply font-sans;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
   }
 }
 
-@media (min-width: 1024px) {
+@layer utilities {
   .container-landing {
-    padding-left: 5rem;
-    padding-right: 5rem;
+    @apply w-full max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20;
   }
-}
-
-/* Accessibility: Focus Protocol */
-:focus-visible {
-  outline: 3px solid var(--md-sys-color-primary);
-  outline-offset: 4px;
-}
-
-/* High-Density Typography */
-.prose-summary h3 {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 11px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.4em;
-  opacity: 0.6;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-}
-
-.shimmer {
-  background: linear-gradient(90deg, transparent, var(--md-sys-color-outline-variant), transparent);
-  background-size: 200% 100%;
-  animation: skeleton-shimmer 1.5s infinite;
+  
+  /* Scrollbar */
+  .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+  .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+  .custom-scrollbar::-webkit-scrollbar-thumb { @apply bg-outline rounded-full; }
+  
+  /* Shimmer */
+  .shimmer {
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,0.05), transparent);
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s infinite;
+  }
+  .dark .shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+  }
 }
 
 @keyframes skeleton-shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
-
-@tailwind utilities;

@@ -84,7 +84,7 @@ export const SelectionActionBar: React.FC = () => {
               </button>
               <button 
                 onClick={handleBulkDelete}
-                className="flex items-center gap-3 h-12 px-5 rounded-2xl hover:bg-white/10 dark:hover:bg-error/10 dark:hover:text-error transition-all text-[10px] font-black uppercase tracking-widest group active:scale-95"
+                className="flex items-center gap-3 h-12 px-5 rounded-2xl hover:bg-on-primary/10 dark:hover:bg-error/10 dark:hover:text-error transition-all text-[10px] font-black uppercase tracking-widest group active:scale-95"
               >
                 <ShieldX size={18} className="icon-tactical" /> 
                 <span className="hidden md:inline">Delete</span>
@@ -108,7 +108,7 @@ export const SelectionActionBar: React.FC = () => {
               </button>
               <button 
                 onClick={handleBulkDelete}
-                className="flex items-center gap-3 h-12 px-5 rounded-2xl hover:bg-white/10 dark:hover:bg-error/10 dark:hover:text-error transition-all text-[10px] font-black uppercase tracking-widest group active:scale-95 text-on-primary dark:text-on-surface"
+                className="flex items-center gap-3 h-12 px-5 rounded-2xl hover:bg-on-primary/10 dark:hover:bg-error/10 dark:hover:text-error transition-all text-[10px] font-black uppercase tracking-widest group active:scale-95 text-on-primary dark:text-on-surface"
               >
                 <Trash2 size={18} className="icon-tactical" /> 
                 <span className="hidden md:inline">Trash</span>
@@ -119,7 +119,7 @@ export const SelectionActionBar: React.FC = () => {
 
         <button 
           onClick={() => { triggerHaptic('light'); clearSelection(); }}
-          className="w-12 h-12 mr-3 flex items-center justify-center rounded-2xl bg-on-primary/10 hover:bg-white/20 dark:hover:bg-surface-container-highest transition-all active:scale-90 text-on-primary dark:text-on-surface shrink-0"
+          className="w-12 h-12 mr-3 flex items-center justify-center rounded-2xl bg-on-primary/10 hover:bg-on-primary/20 dark:hover:bg-surface-container-highest transition-all active:scale-90 text-on-primary dark:text-on-surface shrink-0"
           title="Clear Selection"
         >
           <X size={24} strokeWidth={3} />

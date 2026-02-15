@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" class="light">
   <head>
@@ -6,31 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <title>Crispy Bacon | Professional Research Partner</title>
     
-    <!-- Performance: DNS Prefetch & Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="https://www.google.com/s2/favicons">
-    
-    <!-- Primary Meta Tags -->
-    <meta name="title" content="Crispy Bacon | Professional Research Partner" />
-    <meta name="description" content="Turn meetings and unstructured text into clear, usable knowledge. Private, secure, and bot-free research for high-performance teams." />
-    
-    <!-- PWA / Mobile Compliance -->
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#faf9f6" />
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Bacon">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none'><rect width='64' height='64' rx='16' fill='%231a1a1a'/><path d='M24 18L16 26V38L24 46' stroke='white' stroke-width='4' stroke-linecap='square'/><path d='M40 18L48 26V38L40 46' stroke='%23ef7d31' stroke-width='4' stroke-linecap='square'/><circle cx='32' cy='32' r='4' fill='white'/></svg>">
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none'><rect width='64' height='64' rx='16' fill='%231a1a1a'/><path d='M24 18L16 26V38L24 46' stroke='white' stroke-width='4' stroke-linecap='square'/><path d='M40 18L48 26V38L40 46' stroke='%23ef7d31' stroke-width='4' stroke-linecap='square'/><circle cx='32' cy='32' r='4' fill='white'/></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-mono/style.css" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="/index.css">
+
+    <style>
+      :root {
+        /* LIGHT MODE (Sandstone) */
+        --color-background: 0.98 0.01 85;      /* oklch values */
+        --color-on-background: 0.15 0.02 85;
+        
+        --color-surface: 1 0 0;                /* Pure White */
+        --color-on-surface: 0.08 0.02 85;
+        
+        --color-primary: 0.68 0.19 45;         /* The Bacon Orange */
+        --color-on-primary: 1 0 0;
+        
+        --color-surface-variant: 0.96 0.01 85;
+        --color-on-surface-variant: 0.25 0.02 85;
+        
+        --color-outline: 0 0 0;
+        --color-outline-opacity: 0.15;
+      }
+
+      .dark {
+        /* DARK MODE (Stratified Charcoal) */
+        --color-background: 0.14 0.01 0;
+        --color-on-background: 0.98 0.01 0;
+        
+        --color-surface: 0.17 0.01 0;
+        --color-on-surface: 0.98 0.01 0;
+        
+        --color-primary: 0.72 0.18 45;         /* Brighter Orange for Dark Mode */
+        --color-on-primary: 1 0 0;
+        
+        --color-surface-variant: 0.21 0.01 0;
+        --color-on-surface-variant: 0.85 0.01 0;
+        
+        --color-outline: 1 1 1;
+        --color-outline-opacity: 0.20;
+      }
+    </style>
 
     <script>
       tailwind.config = {
@@ -41,55 +60,60 @@
               sans: ['Inter', 'sans-serif'],
               serif: ['Newsreader', 'serif'],
               display: ['Newsreader', 'serif'],
-              mono: ['"JetBrains Mono"', 'monospace'],
+              slab: ['Newsreader', 'serif'],
+              // SWAPPED: JetBrains -> Geist Mono
+              mono: ['Geist Mono', 'monospace'],
             },
             colors: {
-              primary: 'var(--md-sys-color-primary)',
-              'on-primary': 'var(--md-sys-color-on-primary)',
-              surface: 'var(--md-sys-color-surface)',
-              'on-surface': 'var(--md-sys-color-on-surface)',
-              'on-surface-variant': 'var(--md-sys-color-on-surface-variant)',
-              outline: 'var(--md-sys-color-outline)',
-              background: 'var(--md-sys-color-background)',
-              error: 'var(--md-sys-color-error)',
-              success: 'var(--md-sys-color-success)',
+              // Mapped to the Variables in the <style> tag above
+              background: 'oklch(var(--color-background))',
+              'on-background': 'oklch(var(--color-on-background))',
+              
+              surface: 'oklch(var(--color-surface))',
+              'on-surface': 'oklch(var(--color-on-surface))',
+              
+              primary: 'oklch(var(--color-primary))',
+              'on-primary': 'oklch(var(--color-on-primary))',
+              
+              'surface-variant': 'oklch(var(--color-surface-variant))',
+              'on-surface-variant': 'oklch(var(--color-on-surface-variant))',
+              
+              outline: 'oklch(var(--color-outline) / var(--color-outline-opacity))',
             },
             borderRadius: {
-              'expressive': 'var(--radius-expressive)',
-              'sheet': 'var(--radius-sheet)',
-              '4xl': '2rem',
-              '5xl': '2.5rem',
+              'expressive': '1.25rem',
+              'sheet': '2.5rem',
             }
           }
         }
       }
     </script>
-  <script type="importmap">
-{
-  "imports": {
-    "zustand": "https://esm.sh/zustand@^5.0.10",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3",
-    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
-    "vite": "https://esm.sh/vite@^7.3.1",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
-    "@google/genai": "https://esm.sh/@google/genai@^1.38.0",
-    "path": "https://esm.sh/path@^0.12.7",
-    "url": "https://esm.sh/url@^0.11.4",
-    "react-markdown": "https://esm.sh/react-markdown@^10.1.0",
-    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@^2.91.1",
-    "mammoth": "https://esm.sh/mammoth@^1.11.0",
-    "stripe": "https://esm.sh/stripe@^20.2.0",
-    "uuid": "https://esm.sh/uuid@^13.0.0",
-    "@tanstack/react-query": "https://esm.sh/@tanstack/react-query@^5.90.20",
-    "fuse.js": "https://esm.sh/fuse.js@^7.1.0"
-  }
-}
-</script>
+    <script type="importmap">
+    {
+      "imports": {
+        "zustand": "https://esm.sh/zustand@^5.0.10",
+        "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+        "react/": "https://esm.sh/react@^19.2.3/",
+        "react": "https://esm.sh/react@^19.2.3",
+        "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+        "vite": "https://esm.sh/vite@^7.3.1",
+        "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
+        "@google/genai": "https://esm.sh/@google/genai@^1.38.0",
+        "path": "https://esm.sh/path@^0.12.7",
+        "url": "https://esm.sh/url@^0.11.4",
+        "react-markdown": "https://esm.sh/react-markdown@^10.1.0",
+        "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@^2.91.1",
+        "mammoth": "https://esm.sh/mammoth@^1.11.0",
+        "stripe": "https://esm.sh/stripe@^20.2.0",
+        "uuid": "https://esm.sh/uuid@^13.0.0",
+        "@tanstack/react-query": "https://esm.sh/@tanstack/react-query@^5.90.20",
+        "fuse.js": "https://esm.sh/fuse.js@^7.1.0"
+      }
+    }
+    </script>
 </head>
-  <body class="bg-background text-on-background antialiased overflow-x-hidden">
+<body class="bg-background text-on-background antialiased overflow-x-hidden transition-colors duration-300">
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
-  </body>
+</body>
 </html>
