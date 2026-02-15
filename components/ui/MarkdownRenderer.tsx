@@ -23,10 +23,10 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, className 
           h2: (props: any) => <h2 className={`${isChat ? 'text-xs font-extrabold mb-1' : 'text-lg font-extrabold mb-2'} uppercase text-on-surface`} {...props} />,
           h3: (props: any) => {
             // GRANOLA LABEL STANDARD v2: Unified across Markdown, Takeaways, and Tasks.
-            // Increased opacity to 60 for better visibility.
+            // Updated to font-serif for Humanist typography stack.
             const h3Class = isSummary 
-              ? 'font-mono text-[10px] font-black uppercase tracking-[0.35em] text-on-surface-variant/60 mt-10 mb-6 block' 
-              : 'font-mono text-[9px] font-black uppercase tracking-[0.35em] text-on-surface-variant opacity-60 mb-2';
+              ? 'font-serif text-[10px] font-black uppercase tracking-[0.35em] text-on-surface-variant/60 mt-10 mb-6 block' 
+              : 'font-serif text-[9px] font-black uppercase tracking-[0.35em] text-on-surface-variant opacity-60 mb-2';
             return <h3 className={h3Class} {...props} />;
           },
           p: (props: any) => {
