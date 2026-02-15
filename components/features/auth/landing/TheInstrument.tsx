@@ -1,82 +1,60 @@
 
 import React from 'react';
-import { Mic, Search, CheckSquare, Radio, Globe, Cpu, ArrowRight } from 'lucide-react';
+import { Search, Radio, Cpu } from 'lucide-react';
 
 export const TheInstrument: React.FC = () => {
   const signalPath = [
     {
       id: "01",
-      tag: "RECORD",
-      title: "Direct Recording",
-      desc: "Record system audio from Zoom or Meet. No bots, just pure audio.",
+      tag: "CAPTURE",
+      title: "Direct Audio",
+      desc: "Record system audio from Zoom, Teams, or Meet. No bots, no avatars, just pure signal.",
       icon: Radio,
-      specs: ["ZERO BOTS", "PRIVACY FIRST"]
     },
     {
       id: "02",
-      tag: "ANALYZE",
-      title: "Smart Notes",
-      desc: "Our engine separates fact from filler, identifying decisions automatically.",
+      tag: "REFINE",
+      title: "Fact Check",
+      desc: "Our engine separates fact from filler. Highlights are grounded in the source text, not hallucinated.",
       icon: Search,
-      specs: ["FACT CHECKED", "HIGH DENSITY"]
     },
     {
       id: "03",
-      tag: "ASK",
-      title: "Voice Assistant",
-      desc: "Don't just read notes. Interrogate them with natural voice follow-ups.",
+      tag: "QUERY",
+      title: "Voice Logic",
+      desc: "Don't just read notes. Ask them questions. Our voice assistant helps you find details instantly.",
       icon: Cpu,
-      specs: ["INSTANT ANSWERS", "PRO LOGIC"]
     }
   ];
 
   return (
-    <section id="features" className="py-24 md:py-32 bg-surface-container-lowest border-y-2 border-outline-variant relative overflow-hidden">
-      <div className="absolute inset-0 ledger-grid pointer-events-none opacity-[0.03]" />
-      
+    <section className="py-24 bg-surface-container-lowest border-y border-outline-variant/10 relative overflow-hidden">
       <div className="container-landing relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-end mb-20">
-           <div className="lg:col-span-8 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/5 border border-primary/10 text-primary rounded-full">
-                  <span className="text-[10px] font-mono font-black uppercase tracking-[0.3em]">How It Works</span>
-              </div>
-              <h2 className="text-4xl md:text-7xl font-display font-bold tracking-tighter text-on-surface uppercase leading-[0.85] italic">
-                The <span className="text-primary not-italic text-outline">Assistant.</span>
-              </h2>
-           </div>
-           <div className="lg:col-span-4 pb-2">
-              <p className="text-lg font-medium text-on-surface-variant opacity-60 leading-tight border-l-2 border-primary/20 pl-6">
-                A mechanical reasoning engine built for professional research output. No fluff, just facts.
-              </p>
-           </div>
+        <div className="mb-16 md:text-center max-w-3xl mx-auto">
+           <h2 className="text-3xl md:text-5xl font-display font-bold tracking-tighter text-on-surface uppercase leading-none mb-4">
+             The <span className="text-primary italic">Method.</span>
+           </h2>
+           <p className="text-sm font-medium text-on-surface-variant opacity-60 uppercase tracking-widest">
+             From raw noise to refined intelligence in three steps.
+           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-1 bg-outline-variant/10 rounded-[2.5rem] overflow-hidden border border-outline-variant shadow-2xl">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {signalPath.map((step) => (
-            <div key={step.id} className="bg-background p-10 space-y-10 group hover:bg-surface-container-low transition-all duration-500">
-               <div className="flex justify-between items-start">
-                  <div className="w-14 h-14 bg-surface-container-high rounded-2xl flex items-center justify-center text-primary shadow-inner group-hover:bg-primary group-hover:text-on-primary transition-all duration-500">
-                     <step.icon size={28} strokeWidth={2.5} />
+            <div key={step.id} className="p-8 border border-outline-variant/20 rounded-3xl bg-background hover:border-primary/30 transition-colors group">
+               <div className="flex items-center justify-between mb-8">
+                  <div className="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-500">
+                     <step.icon size={24} strokeWidth={2} />
                   </div>
-                  <span className="text-[10px] font-mono font-black text-on-surface-variant opacity-20 tracking-[0.4em]">{step.id}</span>
+                  <span className="text-[10px] font-mono font-black text-on-surface-variant opacity-20 tracking-[0.3em]">{step.id}</span>
                </div>
 
                <div className="space-y-4">
-                  <div className="space-y-1">
-                    <span className="text-[9px] font-mono font-black text-primary uppercase tracking-[0.3em] block">{step.tag}</span>
-                    <h3 className="text-2xl font-black uppercase tracking-tight text-on-surface leading-none">{step.title}</h3>
-                  </div>
-                  <p className="text-sm font-medium text-on-surface-variant opacity-70 leading-relaxed min-h-[4rem]">
+                  <span className="text-[8px] font-black text-primary uppercase tracking-[0.3em]">{step.tag}</span>
+                  <h3 className="text-xl font-bold uppercase tracking-tight text-on-surface">{step.title}</h3>
+                  <p className="text-sm font-medium text-on-surface-variant opacity-70 leading-relaxed">
                     {step.desc}
                   </p>
-               </div>
-
-               <div className="flex flex-wrap gap-2 pt-4 border-t border-outline-variant/10">
-                  {step.specs.map((s, i) => (
-                    <span key={i} className="text-[8px] font-mono font-bold uppercase tracking-widest text-on-surface opacity-30 group-hover:opacity-100 transition-opacity">
-                      {s}
-                    </span>
-                  ))}
                </div>
             </div>
           ))}
