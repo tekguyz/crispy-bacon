@@ -76,7 +76,10 @@ const Sidebar: React.FC<SidebarProps> = ({
 
       {/* User Profile at Bottom */}
       <div className={`mt-auto pt-4 ${isMobile ? 'px-4' : ''}`}>
-         <UserAccountPopover isExpanded={isExpanded || isMobile} />
+         <UserAccountPopover 
+            isExpanded={isExpanded || isMobile} 
+            onCloseMobile={isMobile ? onCloseMobile : undefined}
+         />
       </div>
     </div>
   );
