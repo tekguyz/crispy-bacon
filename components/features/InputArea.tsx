@@ -58,7 +58,7 @@ const InputArea: React.FC = () => {
     <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-[100] flex items-end md:items-center justify-center p-0 md:p-4 animate-fade-in" onClick={handleClose}> 
       <div 
         ref={containerRef}
-        className={`bg-background w-[calc(100%-2rem)] md:max-w-2xl rounded-[2.5rem] max-h-[90dvh] shadow-2xl overflow-hidden flex flex-col border border-outline-variant focus:outline-none transition-all duration-300 ${isClosing ? 'animate-sheet-down' : 'md:animate-slide-up-lg animate-sheet-up'}`} 
+        className={`bg-background w-full md:w-[calc(100%-2rem)] md:max-w-2xl rounded-t-[2.5rem] md:rounded-[2.5rem] max-h-[92dvh] md:max-h-[90dvh] shadow-2xl overflow-hidden flex flex-col border-t md:border border-outline-variant focus:outline-none transition-all duration-300 ${isClosing ? 'animate-sheet-down' : 'md:animate-slide-up-lg animate-sheet-up'}`} 
         onClick={(e) => e.stopPropagation()}
         role="dialog"
       >

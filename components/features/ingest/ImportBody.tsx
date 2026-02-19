@@ -39,47 +39,47 @@ export const ImportBody: React.FC<any> = ({
   }
 
   return (
-    <div className="flex-1 flex flex-col p-6 overflow-y-auto custom-scrollbar space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2.5">
+    <div className="flex-1 flex flex-col p-5 md:p-6 overflow-y-auto custom-scrollbar space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="space-y-3">
              <div className="flex items-center gap-2 px-1">
-                <LinkIcon size={12} className="text-primary opacity-40 shrink-0" />
-                <label className="text-[9px] font-mono font-black uppercase tracking-widest text-on-surface-variant/60">Web Link</label>
+                <LinkIcon size={14} className="text-primary opacity-40 shrink-0" />
+                <label className="text-[10px] font-mono font-black uppercase tracking-widest text-on-surface-variant/60">Web Link</label>
              </div>
-             <div className={`bg-surface-container-high border border-outline-variant/10 rounded-xl p-1 flex items-center shadow-inner transition-all ${urlValue ? 'ring-2 ring-primary/20 border-primary/30' : 'focus-within:border-primary/40'}`}>
-                <input type="url" className="flex-1 bg-transparent text-on-surface px-3 py-2 text-xs font-bold placeholder:text-on-surface-variant/40 focus:outline-none" placeholder="Paste URL..." value={urlValue} onChange={(e) => setUrlValue(e.target.value)} />
+             <div className={`bg-surface-container-high border border-outline-variant/10 rounded-xl p-1.5 flex items-center shadow-inner transition-all ${urlValue ? 'ring-2 ring-primary/20 border-primary/30' : 'focus-within:border-primary/40'}`}>
+                <input type="text" className="flex-1 bg-transparent text-on-surface px-3 py-2.5 text-sm font-bold placeholder:text-on-surface-variant/40 focus:outline-none" placeholder="Paste URL (e.g. https://...)" value={urlValue} onChange={(e) => setUrlValue(e.target.value)} />
              </div>
           </div>
 
-          <div className="space-y-2.5">
+          <div className="space-y-3">
              <div className="flex items-center gap-2 px-1">
-                <Upload size={12} className="text-primary opacity-40 shrink-0" />
-                <h3 className="text-[9px] font-mono font-black uppercase tracking-widest text-on-surface-variant/60">Add Files</h3>
+                <Upload size={14} className="text-primary opacity-40 shrink-0" />
+                <h3 className="text-[10px] font-mono font-black uppercase tracking-widest text-on-surface-variant/60">Add Files</h3>
              </div>
-             <div onDragOver={fileDropProps.handleDragOver} onDragLeave={fileDropProps.handleDragLeave} onDrop={fileDropProps.handleDrop} onClick={() => fileInputRef.current?.click()} className={`h-11 border-2 border-dashed rounded-xl transition-all flex flex-col items-center justify-center cursor-pointer relative overflow-hidden group ${fileDropProps.isDragging ? 'border-primary bg-primary/5' : 'border-outline-variant/10 hover:border-primary/30 hover:bg-surface-container-low'} ${fileDropProps.selectedFiles.length > 0 ? 'border-primary/40 bg-primary/5' : ''}`}>
+             <div onDragOver={fileDropProps.handleDragOver} onDragLeave={fileDropProps.handleDragLeave} onDrop={fileDropProps.handleDrop} onClick={() => fileInputRef.current?.click()} className={`h-14 md:h-11 border-2 border-dashed rounded-xl transition-all flex flex-col items-center justify-center cursor-pointer relative overflow-hidden group ${fileDropProps.isDragging ? 'border-primary bg-primary/5' : 'border-outline-variant/10 hover:border-primary/30 hover:bg-surface-container-low'} ${fileDropProps.selectedFiles.length > 0 ? 'border-primary/40 bg-primary/5' : ''}`}>
                 <input type="file" ref={fileInputRef} onChange={fileDropProps.handleFileSelect} multiple accept="audio/*,.mp3,.wav,.m4a,.webm,text/plain,.md,.txt,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document" className="opacity-0 absolute inset-0 cursor-pointer hidden" />
                 {fileDropProps.selectedFiles.length > 0 ? (
-                  <div className="flex items-center gap-2 animate-scale-in">
-                      <span className="text-[9px] font-black uppercase tracking-widest text-on-surface">{fileDropProps.selectedFiles.length} item(s)</span>
-                      <button onClick={(e) => { e.stopPropagation(); fileDropProps.setSelectedFiles([]); }} className="text-[7px] font-black uppercase text-error hover:underline">X</button>
-                  </div>
-                ) : <span className="text-[8px] font-mono font-black uppercase tracking-widest opacity-40 group-hover:opacity-100 text-on-surface-variant">Drop Audio or Text</span>}
+                   <div className="flex items-center gap-2 animate-scale-in">
+                       <span className="text-[10px] font-black uppercase tracking-widest text-on-surface">{fileDropProps.selectedFiles.length} item(s)</span>
+                       <button onClick={(e) => { e.stopPropagation(); fileDropProps.setSelectedFiles([]); }} className="text-[8px] font-black uppercase text-error hover:underline p-2">X</button>
+                   </div>
+                ) : <span className="text-[9px] font-mono font-black uppercase tracking-widest opacity-40 group-hover:opacity-100 text-on-surface-variant">Drop Audio or Text</span>}
              </div>
-             <button onClick={() => setShowDrive(true)} className="w-full py-1.5 bg-surface-container-high border border-outline-variant/5 rounded-lg text-[8px] font-mono font-black uppercase tracking-widest text-on-surface-variant hover:text-primary transition-all flex items-center justify-center gap-1.5 focus:outline-none">
-              <Cloud size={10} className="shrink-0" /> Cloud Files
+             <button onClick={() => setShowDrive(true)} className="w-full py-2.5 bg-surface-container-high border border-outline-variant/5 rounded-lg text-[9px] font-mono font-black uppercase tracking-widest text-on-surface-variant hover:text-primary transition-all flex items-center justify-center gap-2 focus:outline-none">
+              <Cloud size={12} className="shrink-0" /> Cloud Files
              </button>
           </div>
       </div>
 
       <div className="h-px bg-outline-variant/5 w-full" />
 
-      <div className="space-y-2.5">
+      <div className="space-y-3">
           <div className="flex items-center gap-2 px-1">
-             <FileText size={12} className="text-primary opacity-40 shrink-0" />
-             <label className="text-[9px] font-mono font-black uppercase tracking-widest text-on-surface-variant/60">Notes</label>
+             <FileText size={14} className="text-primary opacity-40 shrink-0" />
+             <label className="text-[10px] font-mono font-black uppercase tracking-widest text-on-surface-variant/60">Notes</label>
           </div>
           <div className={`bg-surface-container-high border border-outline-variant/10 rounded-2xl p-4 shadow-inner transition-all ${inputValue ? 'ring-2 ring-primary/10 border-primary/20' : 'focus-within:ring-2 focus-within:ring-primary/10'}`}>
-              <textarea disabled={isProcessing} className="w-full min-h-[100px] bg-transparent text-on-surface resize-none focus:outline-none text-sm font-bold placeholder:text-on-surface-variant/40 leading-relaxed font-serif" placeholder="Paste or type context here..." value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+              <textarea disabled={isProcessing} className="w-full min-h-[120px] bg-transparent text-on-surface resize-none focus:outline-none text-base font-bold placeholder:text-on-surface-variant/40 leading-relaxed font-serif" placeholder="Paste or type context here..." value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
           </div>
       </div>
 

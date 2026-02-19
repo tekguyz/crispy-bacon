@@ -114,7 +114,7 @@ const Header: React.FC<HeaderProps> = ({ onOpenSidebar }) => {
       
       <div className="flex items-center gap-3 shrink-0 h-full">
           <div 
-            className={`relative flex items-center transition-all duration-500 ease-spring ${isSearchExpanded ? 'w-56 md:w-96' : 'w-11'}`}
+            className={`relative flex items-center transition-all duration-500 ease-spring ${isSearchExpanded ? 'flex-1 md:w-96 md:flex-none' : 'w-11'}`}
             role="search"
           >
              <div className={`absolute inset-0 bg-surface-container border border-outline-variant rounded-2xl transition-all duration-500 origin-right h-11 md:h-10 ${isSearchExpanded ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}>
