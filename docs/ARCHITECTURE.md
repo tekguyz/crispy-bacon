@@ -23,11 +23,14 @@ The system uses a "Smart Selection" logic to choose the right model for the user
 - `id`: Unique Identifier.
 - `processing_status`: Tracks progress (`local` -> `uploading` -> `analyzing` -> `completed`).
 - `metadata`: Stores scores, attachment links, and analysis depth settings.
+- `processed_text`: The raw text or transcript used for analysis.
 
 ### `summaries` (The Content)
-- `summary`: The Executive Recap text.
+- `summary`: The Executive Recap text (Markdown).
 - `highlights`: List of extracted facts.
 - `action_items`: List of detected next steps.
+- `topics`: Categorical tags.
+- `sentiment`: POSITIVE, NEUTRAL, NEGATIVE, or COMPLEX.
 
 ## 4. App State & Logic
 **Hybrid Approach:**

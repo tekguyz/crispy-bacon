@@ -20,7 +20,10 @@ The Privacy Standard. How we isolate your data, secure your notes, and ensure no
 ### 4. [INTELLIGENCE.md](INTELLIGENCE.md)
 The Reasoning Engine. How we select the right AI model for the task, ground facts in reality, and handle voice interactions.
 
-### 5. [SETUP.md](SETUP.md)
+### 5. [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)
+The file-by-file map. Where logic lives and how the codebase is organized.
+
+### 6. [SETUP.md](SETUP.md)
 Configuration Guide. Environment variables, Google Cloud permissions, and billing setup for deployment.
 
 ---

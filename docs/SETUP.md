@@ -10,16 +10,18 @@ This document outlines the keys and cloud settings required to deploy the applic
 These identifiers act as the client's public passport.
 - `VITE_SUPABASE_DATABASE_URL`: Your Supabase Project URL.
 - `VITE_SUPABASE_ANON_KEY`: Your Supabase Public Key.
-- `VITE_APP_VERSION`: Current build version (e.g., 2.5.0).
+- `VITE_APP_VERSION`: Current build version (e.g., 2.6.0).
 
 ### Backend (Netlify / Serverless)
 These secure the gateway functions and must **never** be exposed to the public.
-- `API_KEY`: Google Gemini API Key.
+- `API_KEY`: Google Gemini API Key (Required for all AI features).
 - `STRIPE_SECRET_KEY`: Stripe Secret Key.
 - `STRIPE_WEBHOOK_SECRET`: Key for verifying payment events.
 - `STRIPE_PRICE_ID`: The specific ID for the "Executive" plan.
 - `SUPABASE_URL`: (Same as Frontend URL).
 - `SUPABASE_SERVICE_ROLE_KEY`: The Admin key. Required for updating user tiers securely.
+- `GOOGLE_CLIENT_ID`: Required for Google Drive/Calendar integrations.
+- `GOOGLE_CLIENT_SECRET`: Required for Google Drive/Calendar integrations.
 
 ## 2. Google Cloud Platform (GCP)
 **Project Required:** Yes
