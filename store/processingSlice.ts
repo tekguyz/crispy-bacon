@@ -1,22 +1,23 @@
 
 import { StateCreator } from 'zustand';
-import { AppState, IntelligenceSlice } from './types';
+import { AppState, AssistantSlice } from './types';
 import { ContentType, ProcessingStatus, InsightTemplate } from '../types';
 import { supabase } from '../services/supabaseClient';
-import { analyzeContent } from '../services/geminiService';
+import { analyzeContent as analyzeGeminiContent } from '../services/geminiService';
 import { v4 as uuidv4 } from 'uuid';
-import { blobToBase64, cleanPayload, getEffectiveMimeType } from '../utils/signalUtils';
+import { blobToBase64, cleanPayload, getEffectiveMimeType } from '../utils/dataUtils';
 import { getArtifactLocally, saveArtifactLocally, SyncStatus } from '../services/localDbService';
-import { archiveRefinement, uploadSignalAudio } from '../services/processingService';
+import { archiveRefinement, uploadMeetingAudio } from '../services/processingService';
+import { queryClient } from '../lib/queryClient';
 
-export const createProcessingSlice: StateCreator<AppState, [], [], Partial<IntelligenceSlice>> = (set, get) => ({
-  activeProcessCount: 0,
+export const createProcessingSlice: StateCreator<AppState, [], [], Partial<AssistantSlice>> = (set, get) => ({
+  activeAnalysisCount: 0,
 
-  retryProcessing: async (insight) => {
-    const { session, userProfile, fetchData, addToast, personaStyle } = get();
+  retryAnalysis: async (insight) => {
+    const { session, userProfile, addToast, personaStyle } = get();
     if (!session) return addToast("Sign in required.", "info");
 
-    set(s => ({ activeProcessCount: s.activeProcessCount + 1, isProcessing: true }));
+    set(s => ({ activeAnalysisCount: s.activeAnalysisCount + 1, isAnalyzing: true }));
     try {
       let audioBase64 = "";
       let mimeType = insight.metadata?.mimeType || 'audio/webm';
@@ -40,7 +41,7 @@ export const createProcessingSlice: StateCreator<AppState, [], [], Partial<Intel
       // Ensure we have a valid MIME type for Gemini
       const effectiveMime = getEffectiveMimeType(mimeType, insight.metadata?.originalName);
 
-      const recap = await analyzeContent(
+      const recap = await analyzeGeminiContent(
         insight.original_content || "", 
         insight.type, 
         insight.metadata?.customIntent || '', 
@@ -53,54 +54,51 @@ export const createProcessingSlice: StateCreator<AppState, [], [], Partial<Intel
       );
       
       await archiveRefinement(insight.id, session.user.id, recap, insight.metadata);
-      await fetchData();
+      queryClient.invalidateQueries({ queryKey: ['insights'] });
       addToast("Note updated.", "success");
 
     } catch (e: any) { 
         console.error(e);
         addToast("Retry failed. Check file compatibility.", "error"); 
     }
-    finally { set(s => ({ activeProcessCount: Math.max(0, s.activeProcessCount - 1), isProcessing: s.activeProcessCount > 1 })); }
+    finally { set(s => ({ activeAnalysisCount: Math.max(0, s.activeAnalysisCount - 1), isAnalyzing: s.activeAnalysisCount > 1 })); }
   },
 
-  processContent: async (input, type, options: { template?: InsightTemplate, refUrl?: string, autoOpen?: boolean } = {}) => {
-    const { userProfile, session, addToast, fetchData, personaStyle, fetchSingleInsight, setSelectedInsight } = get();
+  analyzeContent: async (input, type, options: { template?: InsightTemplate, refUrl?: string, autoOpen?: boolean } = {}) => {
+    const { userProfile, session, addToast, personaStyle, fetchSingleInsight, setSelectedInsight } = get();
     const itemId = uuidv4();
     
-    set(s => ({ isProcessing: true, activeProcessCount: s.activeProcessCount + 1 }));
+    set(s => ({ isAnalyzing: true, activeAnalysisCount: s.activeAnalysisCount + 1 }));
     if (!session) return addToast("Note saved to device.", "success");
 
     try {
       await supabase.from('insights').insert([{ id: itemId, user_id: session.user.id, source_type: type, processing_status: ProcessingStatus.PROCESSING }]);
-      const recap = await analyzeContent(input, type, get().currentIntent || '', options.template || get().preferredTemplate, !!userProfile?.is_pro, personaStyle);
+      const recap = await analyzeGeminiContent(input, type, get().currentIntent || '', options.template || get().preferredTemplate, !!userProfile?.is_pro, personaStyle);
       await archiveRefinement(itemId, session.user.id, recap, { template: options.template });
       
-      await fetchData();
+      queryClient.invalidateQueries({ queryKey: ['insights'] });
 
       if (options.autoOpen) {
         // Pinpoint the new insight to ensure it's selected with fresh data
         await fetchSingleInsight(itemId);
-        const freshItem = get().insights.find(i => i.id === itemId);
-        if (freshItem) {
-          setSelectedInsight(freshItem);
-        }
+        // We can't get it from store anymore, so we rely on fetchSingleInsight setting selectedInsight
       }
     } catch (e: any) { addToast(e.message, "error"); }
-    finally { set(s => ({ isProcessing: false, activeProcessCount: 0 })); }
+    finally { set(s => ({ isAnalyzing: false, activeAnalysisCount: 0 })); }
   },
 
-  processMeeting: async (audioBlob, manualNotes, options: { template?: InsightTemplate, refUrl?: string, durationSeconds?: number, intent?: string, autoOpen?: boolean } = {}) => {
-    const { userProfile, session, addToast, fetchData, personaStyle, fetchSingleInsight, setSelectedInsight } = get();
+  analyzeMeeting: async (audioBlob, manualNotes, options: { template?: InsightTemplate, refUrl?: string, durationSeconds?: number, intent?: string, autoOpen?: boolean } = {}) => {
+    const { userProfile, session, addToast, personaStyle, fetchSingleInsight, setSelectedInsight } = get();
     const itemId = uuidv4();
     
-    set(s => ({ isProcessing: true, activeProcessCount: s.activeProcessCount + 1, showCaptureLab: false }));
+    set(s => ({ isAnalyzing: true, activeAnalysisCount: s.activeAnalysisCount + 1, showRecorder: false }));
     const localArtifact = { id: itemId, blob: audioBlob, type: audioBlob.type, timestamp: Date.now(), sync_status: SyncStatus.UNSYNCED };
     await saveArtifactLocally(localArtifact);
 
     if (!session) return;
     
     try {
-      const path = await uploadSignalAudio(userProfile!.id, itemId, audioBlob);
+      const path = await uploadMeetingAudio(userProfile!.id, itemId, audioBlob);
       
       // Clean initial payload to prevent 400s
       const initialPayload = cleanPayload({ 
@@ -118,7 +116,7 @@ export const createProcessingSlice: StateCreator<AppState, [], [], Partial<Intel
       const audioBase64 = await blobToBase64(audioBlob);
       const effectiveMime = getEffectiveMimeType(audioBlob.type, (audioBlob as any).name);
 
-      const recap = await analyzeContent(
+      const recap = await analyzeGeminiContent(
           "", 
           ContentType.MEETING, 
           manualNotes, 
@@ -138,19 +136,16 @@ export const createProcessingSlice: StateCreator<AppState, [], [], Partial<Intel
       });
       
       await saveArtifactLocally({ ...localArtifact, sync_status: SyncStatus.SYNCED });
-      await fetchData();
+      queryClient.invalidateQueries({ queryKey: ['insights'] });
 
       if (options.autoOpen) {
         await fetchSingleInsight(itemId);
-        const freshItem = get().insights.find(i => i.id === itemId);
-        if (freshItem) {
-          setSelectedInsight(freshItem);
-        }
+        // We can't get it from store anymore, so we rely on fetchSingleInsight setting selectedInsight
       }
     } catch (e: any) { 
         console.error("Processing Error:", e);
         addToast("Could not summarize. Audio saved.", "error"); 
     }
-    finally { set(s => ({ isProcessing: false, activeProcessCount: 0 })); }
+    finally { set(s => ({ isAnalyzing: false, activeAnalysisCount: 0 })); }
   }
 });

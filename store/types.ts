@@ -38,24 +38,14 @@ export interface AuthSlice {
 }
 
 export interface DataSlice {
-  insights: InsightContent[];
-  collections: Collection[];
-  tags: Tag[];
-  monthlyUsageCount: number;
   publicSharedInsight: SharedLink | null;
-  calendarMeetings: CalendarEvent[];
-  isCalendarLoading: boolean;
-  driveFiles: DriveFile[];
-  isDriveLoading: boolean;
   isInitialLoading: boolean;
 
   fetchData: () => Promise<void>;
   fetchSingleInsight: (id: string) => Promise<void>;
   syncLocalQueue: (force?: boolean) => Promise<void>;
   clearLocalCache: () => Promise<void>;
-  fetchCalendarMeetings: () => Promise<void>;
-  fetchDriveFiles: () => Promise<void>;
-  ingestDriveFiles: (files: DriveFile[], options: { template: InsightTemplate }) => Promise<void>;
+  importDriveFiles: (files: DriveFile[], options: { template: InsightTemplate }) => Promise<void>;
   recoverOrphanedFiles: () => Promise<void>;
   
   deleteInsight: (id: string) => Promise<void>;
@@ -125,8 +115,8 @@ export interface UISlice {
   };
   showCollectionManagementModal: boolean;
   showTagManagementModal: boolean;
-  showCaptureLab: boolean; 
-  showInputModal: boolean;
+  showRecorder: boolean; 
+  showImportModal: boolean;
   showHelpModal: boolean;
   showShareModal: boolean;
   showUpgradeModal: boolean;
@@ -164,8 +154,8 @@ export interface UISlice {
   setDefaultExportFormat: (format: 'markdown' | 'text' | 'json') => void;
   setShowCollectionManagementModal: (show: boolean) => void;
   setShowTagManagementModal: (show: boolean) => void;
-  setShowCaptureLab: (show: boolean) => void; 
-  setShowInputModal: (show: boolean) => void;
+  setShowRecorder: (show: boolean) => void; 
+  setShowImportModal: (show: boolean) => void;
   setShowHelpModal: (show: boolean) => void;
   setShowShareModal: (show: boolean) => void;
   setShowUpgradeModal: (show: boolean) => void;
@@ -189,9 +179,9 @@ export interface UISlice {
   closeConfirmation: () => void;
 }
 
-export interface IntelligenceSlice {
-  isProcessing: boolean;
-  activeProcessCount: number; // Tracker for concurrent tasks
+export interface AssistantSlice {
+  isAnalyzing: boolean;
+  activeAnalysisCount: number; // Tracker for concurrent tasks
   importError: string | null;
   isRecording: boolean;
   isPaused: boolean;
@@ -225,9 +215,9 @@ export interface IntelligenceSlice {
   clearImportError: () => void;
   setSelectedInsight: (insight: InsightContent | null) => Promise<void>;
   hydrateAudio: (insight: InsightContent) => Promise<void>;
-  retryProcessing: (insight: InsightContent) => Promise<void>;
-  processContent: (contentInput: string, type: ContentType, options?: { template?: InsightTemplate, refUrl?: string, autoOpen?: boolean }) => Promise<void>;
-  processMeeting: (audioBlob: Blob, manualNotes: string, options?: { template?: InsightTemplate, refUrl?: string, durationSeconds?: number, intent?: string, autoOpen?: boolean }) => Promise<void>;
+  retryAnalysis: (insight: InsightContent) => Promise<void>;
+  analyzeContent: (contentInput: string, type: ContentType, options?: { template?: InsightTemplate, refUrl?: string, autoOpen?: boolean }) => Promise<void>;
+  analyzeMeeting: (audioBlob: Blob, manualNotes: string, options?: { template?: InsightTemplate, refUrl?: string, durationSeconds?: number, intent?: string, autoOpen?: boolean }) => Promise<void>;
   startLiveAssistant: (insight: InsightContent) => void;
   stopLiveAssistant: () => void;
   setLiveSession: (session: any | null) => void;
@@ -239,4 +229,4 @@ export interface IntelligenceSlice {
   clearContextAttachments: () => void;
 }
 
-export type AppState = AuthSlice & UISlice & DataSlice & IntelligenceSlice;
+export type AppState = AuthSlice & UISlice & DataSlice & AssistantSlice;

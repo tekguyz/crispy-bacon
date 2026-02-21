@@ -14,7 +14,7 @@ const InsightCard: React.FC<InsightCardProps> = ({ insight }) => {
   const isSelectionMode = useAppStore(s => s.isSelectionMode);
   const isSelected = useAppStore(s => s.selectedItemIds.includes(insight.id));
   const view = useAppStore(s => s.view);
-  const globalIsProcessing = useAppStore(s => s.isProcessing);
+  const globalIsAnalyzing = useAppStore(s => s.isAnalyzing);
   const isRecording = useAppStore(s => s.isRecording);
 
   const { 
@@ -43,7 +43,7 @@ const InsightCard: React.FC<InsightCardProps> = ({ insight }) => {
     }
     
     if (isRecording) return;
-    if (isActuallyProcessing && !hasContent && globalIsProcessing) return; 
+    if (isActuallyProcessing && !hasContent && globalIsAnalyzing) return; 
 
     if (isLocked) {
       triggerHaptic('medium');

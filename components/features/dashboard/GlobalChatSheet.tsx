@@ -2,6 +2,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Send, Loader2, MessageSquare, ArrowRight, Library, Sparkles, X } from 'lucide-react';
 import { useAppStore } from '../../../store/useAppStore';
+import { useInsightsQuery } from '../../../hooks/useQueries';
 import { triggerHaptic } from '../../../services/hapticService';
 import { ChatMessageBubble } from '../InsightDetail/ChatMessageBubble';
 import { SideSheet } from '../../ui/SideSheet';
@@ -9,8 +10,10 @@ import { SideSheet } from '../../ui/SideSheet';
 export const GlobalChatSheet: React.FC = () => {
   const { 
     chatHistory, isChatLoading, sendGlobalChatMessage, 
-    insights, clearChat, showGlobalChat, setShowGlobalChat 
+    clearChat, showGlobalChat, setShowGlobalChat 
   } = useAppStore();
+  
+  const { data: insights = [] } = useInsightsQuery();
   
   const [chatInput, setChatInput] = useState('');
   const chatEndRef = useRef<HTMLDivElement>(null);

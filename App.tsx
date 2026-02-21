@@ -15,13 +15,12 @@ import SkeletonDetail from './components/features/InsightDetail/SkeletonDetail';
 import LoginScreen from './components/features/LoginScreen';
 import { GlobalModalManager } from './components/modals/GlobalModalManager';
 import { ToastContainer } from './components/ui/Toast';
-import { DataSynchronizer } from './components/DataSynchronizer';
 import { GlobalChatSheet } from './components/features/dashboard/GlobalChatSheet';
 
 // Lazy load heavy feature components
-const CaptureLab = lazy(() => import('./components/features/CaptureLab'));
+const Recorder = lazy(() => import('./components/features/Recorder'));
 const InputArea = lazy(() => import('./components/features/InputArea'));
-const FloatingCommandCenter = lazy(() => import('./components/features/FloatingCommandCenter').then(module => ({ default: module.FloatingCommandCenter })));
+const QuickActionsMenu = lazy(() => import('./components/features/QuickActionsMenu').then(module => ({ default: module.QuickActionsMenu })));
 
 const InsightDetailView = lazy(() => import('./components/features/InsightDetailView'));
 const PublicShareView = lazy(() => import('./components/features/PublicShareView'));
@@ -97,7 +96,6 @@ function App() {
 
   return (
     <div className="flex h-screen bg-background text-foreground font-sans overflow-hidden">
-      <DataSynchronizer />
       <ToastContainer />
       <GlobalModalManager />
       <GlobalChatSheet />
@@ -132,8 +130,8 @@ function App() {
         </div>
         
         <Suspense fallback={null}>
-          <FloatingCommandCenter isSidebarOpen={isSidebarExpanded || isMobileSidebarOpen} />
-          <CaptureLab />
+          <QuickActionsMenu isSidebarOpen={isSidebarExpanded || isMobileSidebarOpen} />
+          <Recorder />
           <InputArea />
         </Suspense>
       </main>

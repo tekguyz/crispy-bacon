@@ -11,7 +11,7 @@ interface StatusProps {
 }
 
 export const FailedState: React.FC<StatusProps> = ({ insight }) => {
-  const { retryProcessing, addToast } = useAppStore();
+  const { retryAnalysis, addToast } = useAppStore();
   const [isRescuing, setIsRescuing] = useState(false);
 
   const handleRescue = async () => {
@@ -75,7 +75,7 @@ export const FailedState: React.FC<StatusProps> = ({ insight }) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <button 
-                onClick={() => retryProcessing(insight)}
+                onClick={() => retryAnalysis(insight)}
                 className="flex items-center justify-center gap-3 px-6 h-14 bg-primary text-on-primary rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-lg hover:brightness-110 active:scale-[0.98] transition-all"
             >
                 <RefreshCw size={14} strokeWidth={3} /> Try Again

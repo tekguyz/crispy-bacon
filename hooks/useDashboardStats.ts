@@ -1,11 +1,11 @@
 
 import { useMemo } from 'react';
-import { useAppStore } from '../store/useAppStore';
+import { useInsightsQuery, useCalendarQuery } from './useQueries';
 import { ContentType } from '../types';
 
 export const useDashboardStats = () => {
-  const insights = useAppStore(state => state.insights);
-  const calendarMeetings = useAppStore(state => state.calendarMeetings);
+  const { data: insights = [] } = useInsightsQuery();
+  const { data: calendarMeetings = [] } = useCalendarQuery();
 
   const stats = useMemo(() => {
     const now = Date.now();
@@ -29,7 +29,7 @@ export const useDashboardStats = () => {
 
     const incompleteActionItems = activeInsights.flatMap(i => {
       const completedIndices = i.metadata?.completedActionIndices || [];
-      return (i.action_items || []).filter((_, idx) => !completedIndices.includes(idx));
+      return (i.action_items || []).filter((_: string, idx: number) => !completedIndices.includes(idx));
     });
 
     const totalBandwidthSeconds = activeInsights.reduce<number>((acc, i) => {
@@ -61,7 +61,7 @@ export const useDashboardStats = () => {
       .flatMap(i => {
         const completedIndices = i.metadata?.completedActionIndices || [];
         return i.action_items
-          .map((action, idx) => ({ 
+          .map((action: string, idx: number) => ({ 
             action, 
             title: i.title, 
             id: i.id, 
@@ -69,7 +69,7 @@ export const useDashboardStats = () => {
             isCompleted: completedIndices.includes(idx),
             insight: i
           }))
-          .filter(task => !task.isCompleted);
+          .filter((task: any) => !task.isCompleted);
       })
       .slice(0, 6);
   }, [insights]);

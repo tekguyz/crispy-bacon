@@ -2,17 +2,19 @@
 import React, { useState, useCallback } from 'react';
 import { X, Plus, Pencil, Trash2, Loader2, Check, Folder } from 'lucide-react';
 import { useAppStore } from '../../store/useAppStore';
+import { useCollectionsQuery } from '../../hooks/useQueries';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
 
 const CollectionManagementModal: React.FC = () => {
   const { 
-    collections, 
     setShowCollectionManagementModal,
     createCollectionAction,
     updateCollectionAction,
     deleteCollectionAction,
     openConfirmation
   } = useAppStore();
+
+  const { data: collections = [] } = useCollectionsQuery();
 
   const [newCollectionName, setNewCollectionName] = useState('');
   const [editingCollectionId, setEditingCollectionId] = useState<string | null>(null);

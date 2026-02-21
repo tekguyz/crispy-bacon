@@ -28,7 +28,7 @@ export const LandingHero: React.FC<any> = ({ onSignIn }) => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
               </span>
-              <span className="text-[9px] font-mono font-black uppercase tracking-[0.3em] text-primary">System Online</span>
+              <span className="text-[9px] font-mono font-black uppercase tracking-[0.3em] text-primary">Ready</span>
             </div>
 
             <div className="space-y-6">
@@ -48,7 +48,7 @@ export const LandingHero: React.FC<any> = ({ onSignIn }) => {
                 className="w-full sm:w-auto px-10 h-16 bg-primary text-on-primary rounded-[1.25rem] font-black text-[11px] uppercase tracking-[0.25em] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.3)] hover:scale-[1.02] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.4)] active:scale-95 transition-all flex items-center justify-center gap-4 group border border-white/10"
               >
                 Start Recording 
-                <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
+                <div className="w-6 h-6 rounded-full bg-on-primary/20 flex items-center justify-center group-hover:bg-on-primary/30 transition-colors">
                    <ArrowRight size={12} strokeWidth={3} />
                 </div>
               </button>

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { FileText, Music, File as FileIcon, Clock, ChevronRight, Loader2, CloudOff, Globe, Lock, Check } from 'lucide-react';
 import { useAppStore } from '../../../store/useAppStore';
+import { useDriveFilesQuery } from '../../../hooks/useQueries';
 import { signInWithGoogle } from '../../../services/supabaseClient';
 import { DriveFile } from '../../../store/types';
 import { triggerHaptic } from '../../../services/hapticService';
@@ -12,7 +13,8 @@ interface DriveSelectorProps {
 }
 
 export const DriveSelector: React.FC<DriveSelectorProps> = ({ onSelect, disabled }) => {
-  const { driveFiles, isDriveLoading, fetchDriveFiles, session, addToast } = useAppStore();
+  const { session, addToast } = useAppStore();
+  const { data: driveFiles = [], isLoading: isDriveLoading, refetch: fetchDriveFiles } = useDriveFilesQuery();
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   
   const isGoogleUser = session?.user?.app_metadata?.provider === 'google';

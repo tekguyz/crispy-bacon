@@ -11,18 +11,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { getAllLocalArtifacts, deleteArtifactLocally, saveArtifactLocally, SyncStatus } from '../services/localDbService';
 import { queryClient } from '../lib/queryClient';
 import { getCalendarEvents, listDriveFiles, downloadDriveFile } from '../services/googleBridge';
-import { cleanPayload } from '../utils/signalUtils';
+import { cleanPayload } from '../utils/dataUtils';
 
 export const createDataSlice: StateCreator<AppState, [], [], DataSlice> = (set, get, ...rest) => ({
-  insights: [],
-  collections: [],
-  tags: [],
-  monthlyUsageCount: 0,
   publicSharedInsight: null,
-  calendarMeetings: [],
-  isCalendarLoading: false,
-  driveFiles: [],
-  isDriveLoading: false,
   isInitialLoading: true,
 
   fetchData: async () => {
@@ -44,18 +36,9 @@ export const createDataSlice: StateCreator<AppState, [], [], DataSlice> = (set, 
 
       const mapped = mapSupabaseToInsight(data);
       
-      set(state => {
-        const index = state.insights.findIndex(i => i.id === id);
-        const newInsights = [...state.insights];
-        if (index > -1) newInsights[index] = mapped;
-        else newInsights.unshift(mapped);
-
-        return {
-          insights: newInsights,
-          selectedInsight: state.selectedInsight?.id === id ? mapped : state.selectedInsight
-        };
-      });
+      set({ selectedInsight: mapped });
       
+      // Update cache
       queryClient.setQueryData(['insights', session.user.id], (oldData: any[]) => {
          if (!oldData) return [mapped];
          return oldData.map(i => i.id === id ? mapped : i);
@@ -65,7 +48,7 @@ export const createDataSlice: StateCreator<AppState, [], [], DataSlice> = (set, 
         hydrateAudio(mapped);
       }
     } catch (e) {
-        console.error(`[Hydration] Failed to fetch signal for ${id}`, e);
+        console.error(`[Hydration] Failed to fetch data for ${id}`, e);
     }
   },
 
@@ -119,36 +102,14 @@ export const createDataSlice: StateCreator<AppState, [], [], DataSlice> = (set, 
     } catch (e) { addToast("Clear failed.", "error"); }
   },
 
-  fetchCalendarMeetings: async () => {
-    const { session, userProfile, ensureValidProviderToken } = get();
-    if (!userProfile?.is_pro || !(await ensureValidProviderToken())) return;
-
-    set({ isCalendarLoading: true });
-    try {
-      const events = await getCalendarEvents((session as any).provider_token);
-      set({ calendarMeetings: events });
-    } catch (e) {} finally { set({ isCalendarLoading: false }); }
-  },
-
-  fetchDriveFiles: async () => {
-    const { session, userProfile, ensureValidProviderToken } = get();
-    if (!userProfile?.is_pro || !(await ensureValidProviderToken())) return;
-
-    set({ isDriveLoading: true });
-    try {
-      const files = await listDriveFiles((session as any).provider_token);
-      set({ driveFiles: files });
-    } catch (e) {} finally { set({ isDriveLoading: false }); }
-  },
-
-  ingestDriveFiles: async (files, options) => {
-    const { addToast, session, processContent, processMeeting, logSystemEvent, ensureValidProviderToken } = get();
+  importDriveFiles: async (files, options) => {
+    const { addToast, session, analyzeContent, analyzeMeeting, logSystemEvent, ensureValidProviderToken } = get();
     if (!(await ensureValidProviderToken()) || !session || files.length === 0) return;
 
     const filesToProcess = files.length > 5 ? files.slice(0, 5) : files;
     if (files.length > 5) addToast("Premium limit: Processing 5 files at once.", "warn");
 
-    logSystemEvent(`[IMPORT] Bulk import: ${filesToProcess.length} signals.`);
+    logSystemEvent(`[IMPORT] Bulk import: ${filesToProcess.length} items.`);
     addToast(`Importing ${filesToProcess.length} files...`, "info");
 
     const accessToken = (session as any).provider_token;
@@ -161,9 +122,9 @@ export const createDataSlice: StateCreator<AppState, [], [], DataSlice> = (set, 
         const content = await downloadDriveFile(file.id, accessToken, file.mimeType);
 
         if (content instanceof Blob) {
-           processMeeting(content, `Cloud Import: ${file.name}`, { template: options.template } as any);
+           analyzeMeeting(content, `Cloud Import: ${file.name}`, { template: options.template } as any);
         } else if (typeof content === 'string' && content.length > 0) {
-           processContent(content, ContentType.TEXT, { template: options.template });
+           analyzeContent(content, ContentType.TEXT, { template: options.template });
         }
       } catch (err: any) {
         logSystemEvent(`[IMPORT_FAILED] Individual file error: ${file.name} - ${err.message}`, "error");

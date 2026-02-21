@@ -3,7 +3,7 @@ import { AppState } from './types';
 import { createAuthSlice } from './authSlice';
 import { createUISlice } from './uiSlice';
 import { createDataSlice } from './dataSlice';
-import { createIntelligenceSlice } from './intelligenceSlice';
+import { createAssistantSlice } from './assistantSlice';
 import { createProcessingSlice } from './processingSlice';
 import { createVoicePersonaSlice } from './voicePersonaSlice';
 import { createLiveSessionSlice } from './liveSessionSlice';
@@ -23,16 +23,16 @@ export const useAppStore = create<AppState>((set, get, ...a) => {
   const wrappedSet: typeof set = (stateOrFn: any, replace?: any) => {
     const nextState = typeof stateOrFn === 'function' ? stateOrFn(get()) : stateOrFn;
     
-    if (nextState && nextState.isProcessing === true) {
+    if (nextState && nextState.isAnalyzing === true) {
       if (watchdog) window.clearTimeout(watchdog);
       watchdog = window.setTimeout(() => {
         console.warn("[Watchdog] Resetting stuck engine state.");
-        originalSet({ isProcessing: false } as any);
+        originalSet({ isAnalyzing: false } as any);
         if (get().logSystemEvent) {
-            get().logSystemEvent("Analysis timeout. Signal released.", "warn");
+            get().logSystemEvent("Analysis timeout. Data released.", "warn");
         }
       }, 45000);
-    } else if (nextState && nextState.isProcessing === false && watchdog) {
+    } else if (nextState && nextState.isAnalyzing === false && watchdog) {
       window.clearTimeout(watchdog);
       watchdog = null;
     }
@@ -44,7 +44,7 @@ export const useAppStore = create<AppState>((set, get, ...a) => {
     ...createAuthSlice(wrappedSet, get, ...a),
     ...createUISlice(wrappedSet, get, ...a),
     ...createDataSlice(wrappedSet, get, ...a),
-    ...createIntelligenceSlice(wrappedSet, get, ...a),
+    ...createAssistantSlice(wrappedSet, get, ...a),
     ...createProcessingSlice(wrappedSet, get, ...a),
     ...createVoicePersonaSlice(wrappedSet, get, ...a),
     ...createLiveSessionSlice(wrappedSet, get, ...a),

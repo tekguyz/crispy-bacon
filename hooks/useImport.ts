@@ -8,10 +8,10 @@ import mammoth from 'mammoth';
 const MAX_FILE_SIZE_MB = 19.5; // Strictly under Gemini 20MB limit for inline data
 const MAX_BATCH_COUNT = 5; 
 
-export const useIngestion = (selectedFiles: File[], clearFiles: () => void, onClose: () => void) => {
+export const useImport = (selectedFiles: File[], clearFiles: () => void, onClose: () => void) => {
   const { 
-    processContent, processMeeting, ingestDriveFiles, 
-    isProcessing, preferredTemplate, addToast, userProfile,
+    analyzeContent, analyzeMeeting, importDriveFiles, 
+    isAnalyzing, preferredTemplate, addToast, userProfile,
     setCurrentIntent
   } = useAppStore();
 
@@ -31,9 +31,9 @@ export const useIngestion = (selectedFiles: File[], clearFiles: () => void, onCl
     onClose();
     try {
       // Drive files are always treated as batch/indirect imports, so they don't auto-open
-      await ingestDriveFiles(files, { template: selectedTemplate });
+      await importDriveFiles(files, { template: selectedTemplate });
     } catch (err: any) {
-        addToast(`Ingestion issue: ${err.message}`, "error");
+        addToast(`Import issue: ${err.message}`, "error");
     }
   };
 
@@ -53,22 +53,22 @@ export const useIngestion = (selectedFiles: File[], clearFiles: () => void, onCl
   };
 
   const handleSubmit = async () => {
-    if (isProcessing) return;
+    if (isAnalyzing) return;
     const validatedFiles = validateFiles(selectedFiles);
     const hasLink = urlValue.trim().length > 0;
     const hasNotes = inputValue.trim().length > 0;
     
     if (!hasLink && validatedFiles.length === 0 && !hasNotes) return;
 
-    // Logic: Auto-open only if there is EXACTLY one signal being added
-    const signalCount = (hasLink ? 1 : 0) + validatedFiles.length + (!hasLink && validatedFiles.length === 0 && hasNotes ? 1 : 0);
-    const autoOpen = signalCount === 1;
+    // Logic: Auto-open only if there is EXACTLY one item being added
+    const itemCount = (hasLink ? 1 : 0) + validatedFiles.length + (!hasLink && validatedFiles.length === 0 && hasNotes ? 1 : 0);
+    const autoOpen = itemCount === 1;
 
     onClose();
     try {
       if (hasLink) {
         if (hasNotes) setCurrentIntent(inputValue);
-        await processContent(urlValue, ContentType.URL, { template: selectedTemplate, autoOpen });
+        await analyzeContent(urlValue, ContentType.URL, { template: selectedTemplate, autoOpen });
       }
 
       for (const f of validatedFiles) {
@@ -77,20 +77,20 @@ export const useIngestion = (selectedFiles: File[], clearFiles: () => void, onCl
         const isText = f.type === 'text/plain' || f.name.match(/\.(md|txt)$/i);
 
         if (isAudio) {
-          processMeeting(f, `Uploaded Note: ${f.name}`, { template: selectedTemplate, autoOpen } as any);
+          analyzeMeeting(f, `Uploaded Note: ${f.name}`, { template: selectedTemplate, autoOpen } as any);
         } else if (isDocx) {
           const res = await mammoth.extractRawText({ arrayBuffer: await f.arrayBuffer() });
-          processContent(res.value, ContentType.TEXT, { template: selectedTemplate, autoOpen });
+          analyzeContent(res.value, ContentType.TEXT, { template: selectedTemplate, autoOpen });
         } else if (isText) {
-          processContent(await f.text(), ContentType.TEXT, { template: selectedTemplate, autoOpen });
+          analyzeContent(await f.text(), ContentType.TEXT, { template: selectedTemplate, autoOpen });
         }
       }
 
       if (!hasLink && validatedFiles.length === 0 && hasNotes) {
-        await processContent(inputValue, ContentType.TEXT, { template: selectedTemplate, autoOpen });
+        await analyzeContent(inputValue, ContentType.TEXT, { template: selectedTemplate, autoOpen });
       }
     } catch (err: any) {
-       addToast("Ingestion deferred.", "error");
+       addToast("Import deferred.", "error");
     }
     setInputValue(''); setUrlValue(''); clearFiles();
   };

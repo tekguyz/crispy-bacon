@@ -2,10 +2,10 @@
 import { supabase } from './supabaseClient';
 import { analyzeContent } from './geminiService';
 import { ContentType, ProcessingStatus, InsightTemplate, InsightContent } from '../types';
-import { cleanPayload } from '../utils/signalUtils';
+import { cleanPayload } from '../utils/dataUtils';
 
 /**
- * SIGNAL PROCESSING SERVICE
+ * DATA PROCESSING SERVICE
  * Orchestrates the transition from Raw Input to Refined Recap.
  * Includes v2.0 Auto-Tagging Protocol.
  */
@@ -101,7 +101,7 @@ export const archiveRefinement = async (
   }
 };
 
-export const uploadSignalAudio = async (userId: string, itemId: string, blob: Blob) => {
+export const uploadMeetingAudio = async (userId: string, itemId: string, blob: Blob) => {
   const mimeType = blob.type || "audio/webm";
   const ext = mimeType.includes('mpeg') ? 'mp3' : 'webm';
   const path = `${userId}/${itemId}.${ext}`;

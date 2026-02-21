@@ -1,6 +1,6 @@
 import { ContentType } from '../types';
 
-interface IngestionResult {
+interface ImportResult {
   raw_content: string;
   processed_text: string;
   title: string;
@@ -14,7 +14,7 @@ interface IngestionResult {
  * Smart Content Import
  * URLs are passed to the model which uses web search to extract content.
  */
-async function _prepareUrlForImport(url: string): Promise<IngestionResult> {
+async function _prepareUrlForImport(url: string): Promise<ImportResult> {
   try {
     const siteName = new URL(url).hostname.replace('www.', '');
     
@@ -39,7 +39,7 @@ async function _prepareUrlForImport(url: string): Promise<IngestionResult> {
   }
 }
 
-async function _processPlainText(content: string): Promise<IngestionResult> {
+async function _processPlainText(content: string): Promise<ImportResult> {
   return {
     raw_content: content,
     processed_text: content,
@@ -48,7 +48,7 @@ async function _processPlainText(content: string): Promise<IngestionResult> {
   };
 }
 
-export async function ingestContent(content: string, type: ContentType): Promise<IngestionResult> {
+export async function importContent(content: string, type: ContentType): Promise<ImportResult> {
   switch (type) {
     case ContentType.URL:
       return _prepareUrlForImport(content);

@@ -1,15 +1,17 @@
 
 import React, { useMemo } from 'react';
 import { useAppStore } from '../../../store/useAppStore';
+import { useCollectionsQuery } from '../../../hooks/useQueries';
 import RemovableFilterChip from '../../ui/RemovableFilterChip';
 
 export const ActiveFiltersBar: React.FC = () => {
   const { 
     searchQuery, setSearchQuery,
     activeCollectionFilterId, setActiveCollectionFilterId,
-    activeTagFilterIds,
-    collections
+    activeTagFilterIds
   } = useAppStore();
+
+  const { data: collections = [] } = useCollectionsQuery();
 
   const activeCollectionName = useMemo(() => {
     if (!activeCollectionFilterId) return null;

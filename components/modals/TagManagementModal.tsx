@@ -2,17 +2,19 @@
 import React, { useState, useCallback } from 'react';
 import { X, Plus, Pencil, Trash2, Loader2, Check } from 'lucide-react';
 import { useAppStore } from '../../store/useAppStore';
+import { useTagsQuery } from '../../hooks/useQueries';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
 
 const TagManagementModal: React.FC = () => {
   const {
-    tags,
     setShowTagManagementModal,
     createTagAction,
     updateTagAction,
     deleteTagAction,
     openConfirmation
   } = useAppStore();
+
+  const { data: tags = [] } = useTagsQuery();
 
   const [newTagName, setNewTagName] = useState('');
   const [editingTagId, setEditingTagId] = useState<string | null>(null);

@@ -6,7 +6,7 @@ import { SmartConfigSection } from './SmartConfigSection';
 import { InterfaceSection } from './InterfaceSection';
 import { IntegrationsSection } from './IntegrationsSection';
 import { DataManagementSection } from './DataManagementSection';
-import { SystemLogViewer } from './SystemLogViewer';
+import { ActivityLog } from './ActivityLog';
 import { Brain, Sliders, Shield, User, HardDrive } from 'lucide-react';
 
 const SettingsScreen: React.FC = () => {
@@ -59,7 +59,7 @@ const SettingsScreen: React.FC = () => {
 
         {/* SECTION 5: ACTIVITY */}
         <section className="space-y-4 pt-8 border-t border-outline-variant/10">
-           <SystemLogViewer />
+           <ActivityLog />
         </section>
 
         <footer className="pt-12 flex flex-col items-center gap-6 text-center opacity-20">

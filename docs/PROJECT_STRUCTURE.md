@@ -1,4 +1,5 @@
 # 🥓 Crispy Bacon - Project Structure
+**Status:** Canonical :: Humanist Standard
 
 ## 📂 Root Directory
 
@@ -22,9 +23,6 @@
 
 ## 📂 /components
 
-### Core
-- `DataSynchronizer.tsx`: Bridge between React Query and Zustand store.
-
 ### /features
 #### /auth
 - `AuthPortal.tsx`: Combined Sign In / Sign Up form.
@@ -40,7 +38,7 @@
 - `ActiveFiltersBar.tsx`: Display for active search/filter tags.
 - `SelectionActionBar.tsx`: Floating bulk action bar (Delete, Archive, Pin).
 
-#### /ingest
+#### /import (Formerly /ingest)
 - `ImportBody.tsx`: Main content area for the Import modal.
 - `ImportFooter.tsx`: Action buttons for import.
 - `ImportHeader.tsx`: Title bar for import modal.
@@ -76,25 +74,25 @@
 - `InterfaceSection.tsx`: Theme and UI toggles.
 - `SmartConfigSection.tsx`: AI model and voice preferences.
 - `DataManagementSection.tsx`: Storage usage and export defaults.
-- `SystemLogViewer.tsx`: Internal activity log.
+- `ActivityLog.tsx`: Internal activity log (Formerly SystemLogViewer).
 
 #### /studio
-*The Recording Interface (Capture Lab).*
-- `CaptureHeader.tsx`: Status bar.
+*The Recording Interface.*
+- `RecorderHeader.tsx`: Status bar.
 - `MethodSelector.tsx`: Choose between Voice Memo or Meeting Recap.
 - `PreFlightCheck.tsx`: Audio permission confirmation.
 - `AudioLevels.tsx`: Real-time visualizer.
 - `MainEditor.tsx`: Live transcript/notes area.
 - `StudioControls.tsx`: Template and depth toggles.
-- `ContextDeck.tsx`: Reference material uploader.
+- `ReferenceFiles.tsx`: Reference material uploader (Formerly ContextDeck).
 - `ActionFooter.tsx`: Record controls (Pause/Stop/Finish).
 - `DepthToggle.tsx` & `GoalSelector.tsx`: Analysis configuration.
 
 #### Feature Roots
-- `CaptureLab.tsx`: Main recording modal controller.
+- `Recorder.tsx`: Main recording modal controller (Formerly CaptureLab).
 - `Dashboard.tsx`: Main overview page.
 - `EmptyState.tsx`: Reusable empty state display.
-- `FloatingCommandCenter.tsx`: FAB (Floating Action Button) menu.
+- `QuickActionsMenu.tsx`: FAB (Floating Action Button) menu.
 - `HelpScreen.tsx`: User manual.
 - `InputArea.tsx`: Main import modal controller.
 - `InsightCard.tsx`: Grid view card component.
@@ -132,18 +130,14 @@
 
 ---
 
-## 📂 /store (State Management)
+## 📂 /store (Client UI State)
+*Note: Server data is handled by React Query. Zustand is STRICTLY for ephemeral UI state.*
 - `useAppStore.ts`: Main Zustand store entry point.
 - `types.ts`: Store-specific type definitions.
 - **Slices**:
   - `authSlice.ts`: Authentication state.
-  - `dataSlice.ts`: Main data fetcher.
-  - `dataItemSlice.ts`: CRUD operations for notes.
-  - `dataCollabSlice.ts`: Sharing logic.
-  - `dataTaxonomySlice.ts`: Folders/Tags logic.
   - `uiSlice.ts`: Theme, sidebar, view state.
-  - `intelligenceSlice.ts`: AI configuration state.
-  - `processingSlice.ts`: Gemini generation logic.
+  - `assistantSlice.ts`: AI configuration state.
   - `liveSessionSlice.ts`: Voice mode state.
   - `voicePersonaSlice.ts`: TTS settings.
 
@@ -159,7 +153,7 @@
 - `processingService.ts`: Orchestrates AI result archival.
 - `repository.ts`: Data abstraction layer (Local vs Cloud merging).
 - `googleBridge.ts`: Client-side interface for Netlify functions.
-- `ingestionService.ts`: File parsing logic (Mammoth/Text).
+- `importService.ts`: File parsing logic (Mammoth/Text).
 - `analyticsService.ts`: Usage tracking.
 - `hapticService.ts`: Vibration API wrapper.
 - `dataTransformers.ts`: Data mapping utilities.
@@ -171,7 +165,7 @@
 - `useQueries.ts`: React Query hooks for data fetching.
 - `useMicrophone.ts`: Audio recording hook.
 - `useLiveSession.ts`: Voice assistant hook.
-- `useIngestion.ts`: File upload logic.
+- `useImport.ts`: File upload logic.
 - `useDashboardStats.ts`: Analytics calculation.
 - `useFilteredInsights.ts`: Search and filter logic.
 - `useInsightDetailLogic.ts`: Real-time updates for open notes.
@@ -196,7 +190,7 @@
 - `VISION.md`, `ARCHITECTURE.md`, `SECURITY.md`, `INTELLIGENCE.md`, `SETUP.md`: System documentation.
 
 ## 📂 /utils
-- `signalUtils.ts`: Pure utility functions.
+- `dataUtils.ts`: Pure utility functions.
 
 ## 📂 /constants
 - `navigation.ts`, `version.ts`: App constants.

@@ -1,12 +1,12 @@
 import { StateCreator } from 'zustand';
-import { AppState, IntelligenceSlice } from './types';
+import { AppState, AssistantSlice } from './types';
 
 /**
  * voicePersonaSlice v1.0.10
  * Refactored to remove direct client-side model generation.
  * All model interactions must flow through Netlify Functions.
  */
-export const createVoicePersonaSlice: StateCreator<AppState, [], [], Partial<IntelligenceSlice>> = (set, get) => ({
+export const createVoicePersonaSlice: StateCreator<AppState, [], [], Partial<AssistantSlice>> = (set, get) => ({
   preferredVoice: (localStorage.getItem('preferredVoice') as any) || 'Zephyr',
   isVoicePreviewLoading: false,
 

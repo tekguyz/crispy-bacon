@@ -32,7 +32,7 @@ const ViewRouter: React.FC<ViewRouterProps> = ({ onResetFilters }) => {
     isInitialLoading,
     activeSourceTypeFilter,
     setActiveSourceTypeFilter,
-    setShowInputModal
+    setShowImportModal
   } = useAppStore();
   
   const filteredInsights = useFilteredInsights();
@@ -79,7 +79,7 @@ const ViewRouter: React.FC<ViewRouterProps> = ({ onResetFilters }) => {
             description="Capture a meeting or add a link to start your library."
             action={
               <button 
-                onClick={() => setShowInputModal(true)}
+                onClick={() => setShowImportModal(true)}
                 className="px-8 py-4 bg-primary text-on-primary rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] shadow-xl hover:scale-105 transition-all flex items-center gap-3 active:scale-95"
               >
                 <Plus size={16} strokeWidth={3} className="shrink-0" /> Create First Note

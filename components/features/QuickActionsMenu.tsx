@@ -6,11 +6,11 @@ import { AppView } from '../../types';
 import { Tooltip } from '../ui/Tooltip';
 import { triggerHaptic } from '../../services/hapticService';
 
-interface FloatingCommandCenterProps {
+interface QuickActionsMenuProps {
   isSidebarOpen: boolean;
 }
 
-export const FloatingCommandCenter: React.FC<FloatingCommandCenterProps> = ({ isSidebarOpen }) => {
+export const QuickActionsMenu: React.FC<QuickActionsMenuProps> = ({ isSidebarOpen }) => {
   const store = useAppStore();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -28,9 +28,9 @@ export const FloatingCommandCenter: React.FC<FloatingCommandCenterProps> = ({ is
   const handleAction = (type: 'record' | 'import') => {
     triggerHaptic('medium');
     if (type === 'record') {
-      store.setShowCaptureLab(true);
+      store.setShowRecorder(true);
     } else {
-      store.setShowInputModal(true);
+      store.setShowImportModal(true);
     }
     setIsOpen(false);
   };
@@ -46,7 +46,7 @@ export const FloatingCommandCenter: React.FC<FloatingCommandCenterProps> = ({ is
       )}
       
       {/* Command Hub Container */}
-      <div className={`fixed bottom-6 right-6 md:bottom-8 md:right-8 flex flex-col items-center gap-3 transition-all duration-300 z-[150] ${isSidebarOpen || store.showInputModal || store.showCaptureLab ? 'opacity-0 pointer-events-none scale-90' : 'opacity-100'}`}>
+      <div className={`fixed bottom-6 right-6 md:bottom-8 md:right-8 flex flex-col items-center gap-3 transition-all duration-300 z-[150] ${isSidebarOpen || store.showImportModal || store.showRecorder ? 'opacity-0 pointer-events-none scale-90' : 'opacity-100'}`}>
           
           {/* MAIN FAB & MENU GROUP */}
           <div className="relative pointer-events-none flex flex-col items-center">

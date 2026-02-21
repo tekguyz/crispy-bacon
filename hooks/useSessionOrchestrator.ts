@@ -13,15 +13,13 @@ export const useSessionOrchestrator = () => {
   const isGuest = useAppStore(state => state.isGuest);
   const userProfile = useAppStore(state => state.userProfile);
   const authLoading = useAppStore(state => state.authLoading);
-  const isProcessing = useAppStore(state => state.isProcessing);
+  const isAnalyzing = useAppStore(state => state.isAnalyzing);
   
   const initAuth = useAppStore(state => state.initAuth);
   // Note: fetchData is no longer called here, we let the query handle it via invalidation
   const fetchSingleInsight = useAppStore(state => state.fetchSingleInsight);
   const syncLocalQueue = useAppStore(state => state.syncLocalQueue);
   const setRealtimeStatus = useAppStore(state => state.setRealtimeStatus);
-  const fetchCalendarMeetings = useAppStore(state => state.fetchCalendarMeetings);
-  const fetchDriveFiles = useAppStore(state => state.fetchDriveFiles);
   const fetchPublicInsight = useAppStore(state => state.fetchPublicInsight);
   const ensureValidProviderToken = useAppStore(state => state.ensureValidProviderToken);
 
@@ -57,8 +55,8 @@ export const useSessionOrchestrator = () => {
             if (isPro) {
                 const tokenOk = await ensureValidProviderToken();
                 if (tokenOk) {
-                    fetchCalendarMeetings();
-                    fetchDriveFiles();
+                    queryClient.invalidateQueries({ queryKey: ['calendar'] });
+                    queryClient.invalidateQueries({ queryKey: ['driveFiles'] });
                 }
             }
         }
@@ -75,7 +73,7 @@ export const useSessionOrchestrator = () => {
     return () => {
         if (heartbeatTimer.current) window.clearInterval(heartbeatTimer.current);
     };
-  }, [session?.user?.id, isGuest, userProfile?.is_pro, syncLocalQueue, fetchCalendarMeetings, fetchDriveFiles, ensureValidProviderToken]);
+  }, [session?.user?.id, isGuest, userProfile?.is_pro, syncLocalQueue, ensureValidProviderToken]);
 
   // 3. Realtime Subscription
   useEffect(() => {
@@ -93,7 +91,7 @@ export const useSessionOrchestrator = () => {
         'postgres_changes',
         { event: '*', schema: 'public', table: 'insights', filter: `user_id=eq.${userId}` },
         (payload) => {
-          console.info("[Realtime] ⚡ Signal Received:", payload.eventType);
+          console.info("[Realtime] ⚡ Data Received:", payload.eventType);
           
           // Invalidate React Query cache to fetch fresh data
           queryClient.invalidateQueries({ queryKey: ['insights'] });
@@ -111,7 +109,7 @@ export const useSessionOrchestrator = () => {
       });
 
     return () => { 
-      console.log("[Realtime] 🔴 Cleaning up signal channel");
+      console.log("[Realtime] 🔴 Cleaning up data channel");
       supabase.removeChannel(channel); 
     };
   }, [session?.user?.id, fetchSingleInsight, setRealtimeStatus]);
@@ -126,6 +124,6 @@ export const useSessionOrchestrator = () => {
   return {
     isReady: !authLoading,
     isPro: !!userProfile?.is_pro,
-    syncStatus: isProcessing ? 'syncing' : 'stable'
+    syncStatus: isAnalyzing ? 'syncing' : 'stable'
   };
 };

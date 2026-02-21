@@ -1,10 +1,10 @@
 
 import { StateCreator } from 'zustand';
-import { AppState, IntelligenceSlice } from './types';
+import { AppState, AssistantSlice } from './types';
 import { trackEvent } from '../services/analyticsService';
 import { InsightContent, ChatMessage } from '../types';
 
-export const createLiveSessionSlice: StateCreator<AppState, [], [], Partial<IntelligenceSlice>> = (set, get) => ({
+export const createLiveSessionSlice: StateCreator<AppState, [], [], Partial<AssistantSlice>> = (set, get) => ({
   isLiveAssistantActive: false,
   liveSession: null,
   chatHistory: [],

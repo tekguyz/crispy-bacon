@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
 import { useAppStore } from '../store/useAppStore';
+import { useCollectionsQuery } from './useQueries';
 import { AppView } from '../types';
 
 export const usePageTitle = () => {
-  const { view, selectedInsight, activeCollectionFilterId, collections } = useAppStore();
+  const { view, selectedInsight, activeCollectionFilterId } = useAppStore();
+  const { data: collections = [] } = useCollectionsQuery();
 
   useEffect(() => {
     let title = 'Crispy Bacon | Professional Research';

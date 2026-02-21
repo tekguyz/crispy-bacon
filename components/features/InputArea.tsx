@@ -1,58 +1,33 @@
 
-import React, { useCallback, useState } from 'react';
-import { useAppStore } from '../../store/useAppStore';
-import { useFocusTrap } from '../../hooks/useFocusTrap';
-import { useFileDrop } from '../../hooks/useFileDrop';
-import { useIngestion } from '../../hooks/useIngestion';
+import React from 'react';
+import { useInputAreaViewLogic } from '../../hooks/useInputAreaViewLogic';
 import { SummaryOverlay } from '../ui/SummaryOverlay';
-import { ImportHeader } from './ingest/ImportHeader';
-import { ImportBody } from './ingest/ImportBody';
-import { ImportFooter } from './ingest/ImportFooter';
+import { ImportHeader } from './import/ImportHeader';
+import { ImportBody } from './import/ImportBody';
+import { ImportFooter } from './import/ImportFooter';
 import { triggerHaptic } from '../../services/hapticService';
 
 const InputArea: React.FC = () => {
-  const { 
-    showInputModal, setShowInputModal, isProcessing, 
-    importError, clearImportError, addToast, isGuest, signOut
-  } = useAppStore();
-  
-  const [showDrive, setShowDrive] = useState(false);
-  const [isClosing, setIsClosing] = useState(false);
-  const { 
-    isDragging, selectedFiles, setSelectedFiles,
-    handleDragOver, handleDragLeave, handleDrop, handleFileSelect, clearFiles 
-  } = useFileDrop();
-
-  const handleClose = useCallback(() => {
-    // Immediate dismissal if processing to prevent race conditions with heavy main thread work
-    if (isProcessing) {
-      addToast("Finishing up in background.", "info");
-      setShowInputModal(false);
-      clearImportError();
-      setShowDrive(false);
-      return;
-    }
-
-    triggerHaptic('light');
-    setIsClosing(true);
-    setTimeout(() => {
-      setShowInputModal(false);
-      setIsClosing(false);
-      clearImportError();
-      setShowDrive(false);
-      clearFiles();
-    }, 300);
-  }, [isProcessing, setShowInputModal, clearImportError, addToast, clearFiles]);
+  const {
+    showDrive, setShowDrive,
+    isClosing,
+    showImportModal, isAnalyzing,
+    importError, isGuest,
+    fileDropProps,
+    importProps,
+    handleClose,
+    containerRef,
+    signOut,
+    addToast
+  } = useInputAreaViewLogic();
 
   const {
     inputValue, setInputValue, urlValue, setUrlValue,
     selectedTemplate, setSelectedTemplate,
     handleDriveSelect, handleSubmit, isPro
-  } = useIngestion(selectedFiles, clearFiles, handleClose);
+  } = importProps;
 
-  const containerRef = useFocusTrap(showInputModal, handleClose);
-
-  if (!showInputModal) return null;
+  if (!showImportModal) return null;
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-[100] flex items-end md:items-center justify-center p-0 md:p-4 animate-fade-in" onClick={handleClose}> 
@@ -70,26 +45,26 @@ const InputArea: React.FC = () => {
         <ImportHeader onClose={handleClose} />
 
         <div className="flex-1 flex flex-col bg-background relative overflow-hidden overflow-y-auto custom-scrollbar"> 
-           {isProcessing ? (
+           {isAnalyzing ? (
              <SummaryOverlay message="Reasoning..." isBackgroundable={true} onClose={handleClose} />
            ) : !importError && (
              <ImportBody 
                 showDrive={showDrive} setShowDrive={setShowDrive}
-                isPro={isPro} isProcessing={isProcessing}
+                isPro={isPro} isAnalyzing={isAnalyzing}
                 urlValue={urlValue} setUrlValue={setUrlValue}
                 inputValue={inputValue} setInputValue={setInputValue}
                 selectedTemplate={selectedTemplate} setSelectedTemplate={setSelectedTemplate}
                 handleDriveSelect={handleDriveSelect}
-                fileDropProps={{ isDragging, selectedFiles, setSelectedFiles, handleDragOver, handleDragLeave, handleDrop, handleFileSelect }}
+                fileDropProps={fileDropProps}
              />
            )}
         </div>
 
         <ImportFooter 
             isVisible={!importError && !showDrive}
-            isProcessing={isProcessing}
+            isAnalyzing={isAnalyzing}
             isGuest={isGuest}
-            hasInput={urlValue.length > 0 || selectedFiles.length > 0 || inputValue.length > 0}
+            hasInput={urlValue.length > 0 || fileDropProps.selectedFiles.length > 0 || inputValue.length > 0}
             onSubmit={() => { if (isGuest) { addToast("Authentication required.", "info"); signOut(); } else { handleSubmit(); } }}
         />
       </div>

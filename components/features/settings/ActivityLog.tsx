@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Terminal, Copy, Check, AlertCircle, Info, AlertTriangle, ChevronDown, Trash2, ZapOff } from 'lucide-react';
 import { useAppStore } from '../../../store/useAppStore';
 
-export const SystemLogViewer: React.FC = () => {
+export const ActivityLog: React.FC = () => {
   const { systemLogs, addToast, fetchData, setSelectedInsight } = useAppStore();
   const [copied, setCopied] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -18,10 +18,10 @@ export const SystemLogViewer: React.FC = () => {
 
   const handleHardReset = () => {
     useAppStore.setState({ 
-      isProcessing: false, 
-      ingestionError: null,
-      showInputModal: false,
-      showCaptureLab: false 
+      isAnalyzing: false, 
+      importError: null,
+      showImportModal: false,
+      showRecorder: false 
     } as any);
     setSelectedInsight(null);
     fetchData();

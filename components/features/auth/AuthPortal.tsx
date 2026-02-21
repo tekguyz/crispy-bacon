@@ -96,7 +96,7 @@ export const AuthPortal: React.FC<AuthPortalProps> = ({ mode, setMode, onBack })
            <button 
               onClick={handleGoogle} 
               disabled={isLoading} 
-              className="w-full h-14 bg-white dark:bg-surface-container-high text-[#3c4043] dark:text-white rounded-xl flex items-center justify-center gap-4 border border-outline-variant/20 hover:border-outline-variant/40 hover:shadow-md transition-all active:scale-[0.98] disabled:opacity-50 group mb-8"
+              className="w-full h-14 bg-surface-container-high text-on-surface rounded-xl flex items-center justify-center gap-4 border border-outline-variant/20 hover:border-outline-variant/40 hover:shadow-md transition-all active:scale-[0.98] disabled:opacity-50 group mb-8"
             >
               <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg" className="group-hover:scale-110 transition-transform">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
@@ -162,7 +162,7 @@ export const AuthPortal: React.FC<AuthPortalProps> = ({ mode, setMode, onBack })
                 disabled={isLoading}
                 className="w-full h-14 bg-primary text-on-primary rounded-xl font-black text-[11px] uppercase tracking-[0.2em] shadow-lg hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-3 disabled:opacity-70 mt-6"
               >
-                {isLoading ? <Loader2 className="animate-spin" size={18} /> : (mode === 'signin' ? 'Enter Vault' : 'Create Account')}
+                {isLoading ? <Loader2 className="animate-spin" size={18} /> : (mode === 'signin' ? 'Sign In' : 'Create Account')}
                 {!isLoading && <ArrowRight size={16} strokeWidth={3} />}
               </button>
            </form>

@@ -12,11 +12,16 @@ import { triggerHaptic } from '../../services/hapticService';
 // Performance: Lazy load the heavy detail view for Dashboard previews
 const InsightDetailView = lazy(() => import('./InsightDetailView'));
 
+import { useInsightsQuery, useCalendarQuery } from '../../hooks/useQueries';
+
 const Dashboard: React.FC = () => {
   const { 
-    userProfile, fetchCalendarMeetings, isInitialLoading, insights,
-    clearChat, setShowCaptureLab, setShowInputModal, session
+    userProfile, isInitialLoading,
+    clearChat, setShowRecorder, setShowImportModal, session
   } = useAppStore();
+
+  const { data: insights = [] } = useInsightsQuery();
+  const { data: calendarMeetings = [] } = useCalendarQuery();
 
   const { stats, activeTasks } = useDashboardStats();
   const isPro = !!userProfile?.is_pro;
@@ -24,12 +29,6 @@ const Dashboard: React.FC = () => {
   
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [previewInsight, setPreviewInsight] = useState<InsightContent | null>(null);
-
-  useEffect(() => {
-    if (hasCalendarAccess && isPro) {
-      fetchCalendarMeetings();
-    }
-  }, [hasCalendarAccess, isPro, fetchCalendarMeetings]);
 
   const handleOpenPreview = (insight: InsightContent) => {
     setPreviewInsight(insight);
@@ -84,13 +83,13 @@ const Dashboard: React.FC = () => {
 
                <div className="relative z-10 flex gap-3 mt-8">
                   <button 
-                    onClick={() => { triggerHaptic('medium'); setShowCaptureLab(true); }}
+                    onClick={() => { triggerHaptic('medium'); setShowRecorder(true); }}
                     className="flex items-center gap-3 px-6 h-12 bg-primary text-on-primary rounded-xl font-black text-[10px] uppercase tracking-[0.2em] shadow-lg interactive"
                   >
                     <Mic size={14} strokeWidth={3} /> Record Note
                   </button>
                   <button 
-                    onClick={() => { triggerHaptic('light'); setShowInputModal(true); }}
+                    onClick={() => { triggerHaptic('light'); setShowImportModal(true); }}
                     className="flex items-center gap-3 px-6 h-12 bg-surface-container-high border border-outline-variant text-on-surface rounded-xl font-black text-[10px] uppercase tracking-[0.2em] interactive hover:bg-surface-container-highest"
                   >
                     <Globe size={14} strokeWidth={3} /> Import

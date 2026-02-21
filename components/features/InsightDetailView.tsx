@@ -3,6 +3,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { X, MessageSquare, Info, CloudUpload, Layers } from 'lucide-react';
 import { useAppStore } from '../../store/useAppStore';
 import { useInsightDetailLogic } from '../../hooks/useInsightDetailLogic';
+import { useInsightDetailViewLogic } from '../../hooks/useInsightDetailViewLogic';
 import { triggerHaptic } from '../../services/hapticService';
 import LiveAssistantSession from './LiveAssistantSession';
 import DetailHeader from './InsightDetail/DetailHeader';
@@ -16,53 +17,29 @@ import { GeminiLiveIcon } from '../ui/Logo';
 
 const InsightDetailView: React.FC = () => {
   const { 
-    selectedInsight: insight, setSelectedInsight,
-    clearChat, startLiveAssistant, isLiveAssistantActive,
-    setShowShareModal, userProfile, setShowUpgradeModal, retryProcessing,
-    view
+    startLiveAssistant, isLiveAssistantActive,
+    setShowShareModal, setShowUpgradeModal, retryAnalysis,
+    userProfile
   } = useAppStore();
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
-  const isSideSheet = view === AppView.DASHBOARD;
-
-  // UX Improvement: Default to 'chat' open on desktop, 'null' on mobile
-  const [activeDrawer, setActiveDrawer] = useState<'info' | 'chat' | null>(() => {
-    if (typeof window !== 'undefined' && window.innerWidth >= 1024) {
-      return 'chat';
-    }
-    return null;
-  });
-
-  useEffect(() => {
-    const handleResize = () => {
-      const mobile = window.innerWidth < 1024;
-      setIsMobile(mobile);
-      // Auto-open chat if expanding to desktop and nothing is open
-      if (!mobile && !activeDrawer) {
-        setActiveDrawer('chat');
-      }
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [activeDrawer]);
-
-  const handleBack = useCallback(() => { setSelectedInsight(null); clearChat(); }, [setSelectedInsight, clearChat]);
-  
-  const toggleDrawer = useCallback((tab: 'info' | 'chat') => { 
-    setActiveDrawer(prev => prev === tab ? null : tab); 
-    triggerHaptic('light'); 
-  }, []);
+  const {
+    insight,
+    isMobile,
+    isSideSheet,
+    activeDrawer,
+    setActiveDrawer,
+    handleBack,
+    toggleDrawer,
+    isLocked,
+    isLocal,
+    isProcessing,
+    isFailed
+  } = useInsightDetailViewLogic();
 
   const { activeTasks, completedTasks } = useInsightDetailLogic(insight);
 
   if (!insight) return null;
-
-  const isLocked = !userProfile?.is_pro && (Date.now() - new Date(insight.created_at).getTime() > 7 * 24 * 60 * 60 * 1000);
   if (isLocked) return <LockedView />;
-
-  const isLocal = insight.processing_status === ProcessingStatus.LOCAL;
-  const isProcessing = insight.processing_status === ProcessingStatus.PENDING || insight.processing_status === ProcessingStatus.PROCESSING;
-  const isFailed = insight.processing_status === ProcessingStatus.FAILED;
 
   return (
     <div className={`flex flex-col h-full bg-background animate-fade-in relative overflow-hidden ${isSideSheet ? 'rounded-l-expressive' : ''}`}>
@@ -71,7 +48,7 @@ const InsightDetailView: React.FC = () => {
       {!isSideSheet && (
         <DetailHeader 
             title={insight.title} sentiment={insight.sentiment} siteName={insight.site_name} isPro={!!userProfile?.is_pro}
-            isLiveAssistantActive={isLiveAssistantActive} activeDrawer={activeDrawer} onBack={handleBack}
+            isLiveAssistantActive={!!isLiveAssistantActive} activeDrawer={activeDrawer} onBack={handleBack}
             onShare={() => setShowShareModal(true)} onToggleDrawer={toggleDrawer}
             onStartLive={() => startLiveAssistant(insight)} onUpgrade={() => setShowUpgradeModal(true)}
         />
@@ -124,7 +101,7 @@ const InsightDetailView: React.FC = () => {
                     insight={insight} 
                     activeTasks={activeTasks} 
                     completedTasks={completedTasks} 
-                    retryProcessing={retryProcessing} 
+                    retryProcessing={retryAnalysis} 
                   />
                 )}
             </div>

@@ -5,6 +5,8 @@ import { useAppStore } from '../../../store/useAppStore';
 import { triggerHaptic } from '../../../services/hapticService';
 import { AppView } from '../../../types';
 
+import { useCollectionsQuery } from '../../../hooks/useQueries';
+
 interface CollectionVaultProps {
   isExpanded: boolean;
   onCloseMobile: () => void;
@@ -15,12 +17,13 @@ export const CollectionVault: React.FC<CollectionVaultProps> = ({
   onCloseMobile
 }) => {
   const {
-    collections,
     activeCollectionFilterId,
     setActiveCollectionFilterId,
     setView,
     setShowCollectionManagementModal
   } = useAppStore();
+
+  const { data: collections = [] } = useCollectionsQuery();
 
   if (!isExpanded) return null;
 

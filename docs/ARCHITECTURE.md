@@ -1,7 +1,6 @@
-
 # 🏗️ System Architecture
 **Structure:** Local-First, Cloud-Secure
-**Strategy:** Reactive Synchronization
+**Strategy:** Decoupled State (No Synchronizers)
 
 ## 1. The Data Flow
 1.  **Recording:** Raw audio is captured directly from your device (Microphone or System Audio) using a high-fidelity processor.
@@ -32,11 +31,10 @@ The system uses a "Smart Selection" logic to choose the right model for the user
 - `topics`: Categorical tags.
 - `sentiment`: POSITIVE, NEUTRAL, NEGATIVE, or COMPLEX.
 
-## 4. App State & Logic
-**Hybrid Approach:**
-- **Client State (Zustand):** Manages immediate UI interactions (Modals, Alerts, Recorder status).
-- **Server State (TanStack Query):** Handles data loading, caching, and keeping notes in sync with the cloud.
-- **Synchronization:** A specialized background component connects the local UI with the cloud data, ensuring the screen always shows the latest information.
+## 4. App State & Logic (Decoupled)
+We maintain a strict boundary between "Server State" and "Client UI State" to prevent redundant rendering. **We do not use synchronizer components.**
+- **Server State (TanStack Query):** Owns all asynchronous data. It connects directly to Supabase to fetch, cache, and mutate data. UI components subscribe directly to these hooks.
+- **Client UI State (Zustand):** Owns ephemeral interface data (e.g., active filters, open modals). It does *not* cache database payloads.
 
 ## 5. Audio Implementation
 - **Web Audio:** We use standard web technologies to capture high-quality audio streams.

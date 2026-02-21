@@ -3,11 +3,14 @@ import React, { useState, useRef } from 'react';
 import { Paperclip, Link as LinkIcon, FileText, Sparkles, X, Plus, Loader2 } from 'lucide-react';
 import { useAppStore } from '../../../store/useAppStore';
 import { v4 as uuidv4 } from 'uuid';
-import { ingestContent } from '../../../services/ingestionService';
+import { importContent } from '../../../services/importService';
 import { ContentType } from '../../../types';
 
-export const ContextDeck: React.FC = () => {
-  const { contextAttachments, addContextAttachment, removeContextAttachment, insights, addToast } = useAppStore();
+import { useInsightsQuery } from '../../../hooks/useQueries';
+
+export const ReferenceFiles: React.FC = () => {
+  const { contextAttachments, addContextAttachment, removeContextAttachment, addToast } = useAppStore();
+  const { data: insights = [] } = useInsightsQuery();
   
   const [isAdding, setIsAdding] = useState(false);
   const [urlInput, setUrlInput] = useState('');
@@ -20,7 +23,7 @@ export const ContextDeck: React.FC = () => {
     if (!urlInput.trim()) return;
     setIsLoading(true);
     try {
-        const result = await ingestContent(urlInput, ContentType.URL);
+        const result = await importContent(urlInput, ContentType.URL);
         addContextAttachment({
             id: uuidv4(),
             type: 'LINK',

@@ -2,6 +2,7 @@
 import React from 'react';
 import { Folder, Check, Plus } from 'lucide-react';
 import { useAppStore } from '../../../store/useAppStore';
+import { useCollectionsQuery } from '../../../hooks/useQueries';
 import { InsightContent } from '../../../types';
 import { triggerHaptic } from '../../../services/hapticService';
 
@@ -11,11 +12,12 @@ interface FolderSelectionProps {
 
 export const FolderSelection: React.FC<FolderSelectionProps> = ({ insight }) => {
   const { 
-    collections, 
     addItemToCollectionAction, 
     removeItemFromCollectionAction, 
     setShowCollectionManagementModal 
   } = useAppStore();
+
+  const { data: collections = [] } = useCollectionsQuery();
 
   const insightCollectionIds = insight.collections?.map(c => c.id) || [];
 

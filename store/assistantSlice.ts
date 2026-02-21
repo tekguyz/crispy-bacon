@@ -1,12 +1,12 @@
 
 import { StateCreator } from 'zustand';
-import { AppState, IntelligenceSlice } from './types';
+import { AppState, AssistantSlice } from './types';
 import { InsightTemplate, AppView, ContentType, ProcessingStatus, InsightContent, VisualizerStyle } from '../types';
 import { supabase } from '../services/supabaseClient';
 import { getArtifactLocally } from '../services/localDbService';
 
-export const createIntelligenceSlice: StateCreator<AppState, [], [], Partial<IntelligenceSlice>> = (set, get) => ({
-  isProcessing: false,
+export const createAssistantSlice: StateCreator<AppState, [], [], Partial<AssistantSlice>> = (set, get) => ({
+  isAnalyzing: false,
   importError: null,
   isRecording: false,
   isPaused: false,

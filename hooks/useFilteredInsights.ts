@@ -2,11 +2,13 @@
 import { useMemo } from 'react';
 import Fuse from 'fuse.js';
 import { useAppStore } from '../store/useAppStore';
+import { useInsightsQuery } from './useQueries';
 import { AppView } from '../types';
 
 export const useFilteredInsights = () => {
+  const { data: insights = [] } = useInsightsQuery();
+  
   const {
-    insights,
     view,
     searchQuery,
     activeSourceTypeFilter,
@@ -41,13 +43,13 @@ export const useFilteredInsights = () => {
 
     // Collection Filter
     if (activeCollectionFilterId) {
-      data = data.filter(i => i.collections?.some(c => c.id === activeCollectionFilterId));
+      data = data.filter(i => i.collections?.some((c: any) => c.id === activeCollectionFilterId));
     }
 
     // Tag Filter
     if (activeTagFilterIds.length > 0) {
       data = data.filter(i => activeTagFilterIds.every(filterTagId => 
-        i.tags?.some(tag => tag.id === filterTagId)
+        i.tags?.some((tag: any) => tag.id === filterTagId)
       ));
     }
 
@@ -72,8 +74,8 @@ export const useFilteredInsights = () => {
       // Map data for Fuse to handle tags and collections as flat strings
       const fuseData = data.map(item => ({
         ...item,
-        tags_flat: item.tags?.map(t => t.name).join(' ') || '',
-        collections_flat: item.collections?.map(c => c.name).join(' ') || ''
+        tags_flat: item.tags?.map((t: any) => t.name).join(' ') || '',
+        collections_flat: item.collections?.map((c: any) => c.name).join(' ') || ''
       }));
 
       const fuseOptions = {

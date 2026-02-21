@@ -1,7 +1,7 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
 import { InsightContent, ContentType, Sentiment, InsightTemplate, PersonaStyle } from "../types";
-import { getEffectiveMimeType } from "../utils/signalUtils";
+import { getEffectiveMimeType } from "../utils/dataUtils";
 
 const analysisSchema = {
   type: Type.OBJECT,

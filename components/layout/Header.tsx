@@ -6,6 +6,8 @@ import { AppView } from '../../types';
 import { Tooltip } from '../ui/Tooltip';
 import { triggerHaptic } from '../../services/hapticService';
 
+import { useCollectionsQuery } from '../../hooks/useQueries';
+
 const RealtimeStatusIndicator = () => {
   const status = useAppStore(state => state.realtimeStatus);
   const isGuest = useAppStore(state => state.isGuest);
@@ -41,9 +43,11 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ onOpenSidebar }) => {
   const { 
     view, setView, searchQuery, setSearchQuery, 
-    activeCollectionFilterId, collections,
+    activeCollectionFilterId,
     setShowGlobalChat
   } = useAppStore();
+
+  const { data: collections = [] } = useCollectionsQuery();
   
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -148,7 +152,7 @@ const Header: React.FC<HeaderProps> = ({ onOpenSidebar }) => {
 
           <div className="w-px h-6 bg-outline-variant/20 hidden sm:block" aria-hidden="true" />
 
-          {/* GLOBAL CHAT ACTION (Formerly in FloatingCommandCenter) */}
+          {/* GLOBAL CHAT ACTION (Formerly in QuickActionsMenu) */}
           <Tooltip content="Ask Library">
             <button 
               onClick={() => { triggerHaptic('medium'); setShowGlobalChat(true); }}

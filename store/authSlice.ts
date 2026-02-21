@@ -88,7 +88,7 @@ export const createAuthSlice: StateCreator<AppState, [], [], AuthSlice> = (set, 
           }
         } else if (event === 'SIGNED_OUT') {
           localStorage.clear();
-          set({ userProfile: null, session: null, isGuest: false, insights: [], view: AppView.DASHBOARD });
+          set({ userProfile: null, session: null, isGuest: false, view: AppView.DASHBOARD });
         }
       });
 
@@ -151,7 +151,7 @@ export const createAuthSlice: StateCreator<AppState, [], [], AuthSlice> = (set, 
     const ageMins = (Date.now() - handshakeTs) / (1000 * 60);
 
     if (ageMins > 55) {
-      logSystemEvent("[BRIDGE] Signal expired. Refreshing handshake.");
+      logSystemEvent("[BRIDGE] Data expired. Refreshing handshake.");
       localStorage.setItem(HANDSHAKE_GUARD_KEY, Date.now().toString());
       
       try {
@@ -199,7 +199,7 @@ export const createAuthSlice: StateCreator<AppState, [], [], AuthSlice> = (set, 
     } catch (e) {
     } finally {
       localStorage.clear();
-      set({ session: null, userProfile: null, isGuest: false, insights: [], view: AppView.DASHBOARD });
+      set({ session: null, userProfile: null, isGuest: false, view: AppView.DASHBOARD });
       window.location.reload();
     }
   },
