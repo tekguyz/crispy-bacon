@@ -49,7 +49,7 @@ export const LandingHero: React.FC<any> = ({ onSignIn }) => {
               >
                 Start Recording 
                 <div className="w-6 h-6 rounded-full bg-on-primary/20 flex items-center justify-center group-hover:bg-on-primary/30 transition-colors">
-                   <ArrowRight size={12} strokeWidth={3} />
+                   <ArrowRight size={12} strokeWidth={3} aria-hidden="true" />
                 </div>
               </button>
               
@@ -58,7 +58,7 @@ export const LandingHero: React.FC<any> = ({ onSignIn }) => {
                 className="flex items-center gap-4 text-[10px] font-black text-on-surface uppercase tracking-widest hover:text-primary transition-colors group px-6 h-16"
               >
                 <div className="w-10 h-10 rounded-full border border-outline-variant/30 flex items-center justify-center group-hover:border-primary/50 transition-colors bg-surface-container-low shadow-sm">
-                   <Play size={12} fill="currentColor" className="ml-0.5" />
+                   <Play size={12} fill="currentColor" className="ml-0.5" aria-hidden="true" />
                 </div>
                 See How It Works
               </button>

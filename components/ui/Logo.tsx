@@ -5,7 +5,7 @@ import React from 'react';
  */
 export const FocusMark = ({ className = "w-8 h-8" }: { className?: string }) => (
   <div className={`${className} text-primary relative flex items-center justify-center shrink-0`}>
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" aria-hidden="true">
       {/* Left Shard */}
       <path 
         d="M8 5L4 9V15L8 19" 
@@ -47,7 +47,7 @@ export const BaconLogo = ({ className = "w-8 h-8" }: { className?: string }) => 
 );
 
 export const GeminiLiveIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-hidden="true">
     <path 
       d="M12 3C12 3 13 10.5 21 12C13 13.5 12 21 12 21C12 21 11 13.5 3 12C11 10.5 12 3 12 3Z" 
       fill="currentColor"

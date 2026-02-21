@@ -61,7 +61,7 @@ export const LandingFeatures: React.FC = () => {
                 
                 <div className="relative z-10 flex flex-col h-full">
                     <div className="w-12 h-12 rounded-2xl bg-surface-container-high border border-outline-variant/10 flex items-center justify-center text-on-surface-variant group-hover:text-on-primary group-hover:bg-primary transition-colors shadow-inner mb-6">
-                       <feat.icon size={20} strokeWidth={2} />
+                       <feat.icon size={20} strokeWidth={2} aria-hidden="true" />
                     </div>
                     
                     <h3 className="text-xl font-slab font-bold uppercase tracking-tight text-on-surface mb-3 group-hover:text-primary transition-colors">{feat.title}</h3>
@@ -70,7 +70,7 @@ export const LandingFeatures: React.FC = () => {
                     </p>
                     
                     <div className="mt-auto pt-6 flex items-center gap-2 text-[9px] font-mono font-black uppercase tracking-widest text-primary opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0">
-                       <ArrowRight size={12} strokeWidth={3} /> Learn More
+                       <ArrowRight size={12} strokeWidth={3} aria-hidden="true" /> Learn More
                     </div>
                 </div>
              </div>

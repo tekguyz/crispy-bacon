@@ -102,6 +102,55 @@ export const createDataSlice: StateCreator<AppState, [], [], DataSlice> = (set, 
     } catch (e) { addToast("Clear failed.", "error"); }
   },
 
+  recoverOrphanedFiles: async () => {
+    const { session, addToast, logSystemEvent } = get();
+    if (!session?.user) return;
+
+    try {
+        const { data: files, error } = await supabase.storage.from('meetings').list(session.user.id);
+        if (error) throw error;
+        if (!files || files.length === 0) {
+            addToast("No orphaned files found.", "info");
+            return;
+        }
+
+        let recoveredCount = 0;
+        for (const file of files) {
+            // Check if insight exists for this file
+            const insightId = file.name.replace('.webm', '');
+            const { data: existing } = await supabase.from('insights').select('id').eq('id', insightId).single();
+            
+            if (!existing) {
+                // It's an orphan, create a placeholder insight
+                const now = new Date().toISOString();
+                const payload = {
+                    id: insightId,
+                    user_id: session.user.id,
+                    title: `Recovered Recording ${new Date(file.created_at).toLocaleDateString()}`,
+                    source_type: ContentType.MEETING,
+                    storage_path: `${session.user.id}/${file.name}`,
+                    processing_status: ProcessingStatus.COMPLETED, // Assume completed if file exists
+                    created_at: file.created_at,
+                    updated_at: now
+                };
+                
+                const { error: insertError } = await supabase.from('insights').insert(payload);
+                if (!insertError) recoveredCount++;
+            }
+        }
+        
+        if (recoveredCount > 0) {
+            addToast(`Recovered ${recoveredCount} orphaned recordings.`, "success");
+            queryClient.invalidateQueries({ queryKey: ['insights'] });
+        } else {
+            addToast("All files are linked.", "info");
+        }
+    } catch (e: any) {
+        logSystemEvent(`[Recovery] Failed: ${e.message}`, "error");
+        addToast("Recovery failed.", "error");
+    }
+  },
+
   importDriveFiles: async (files, options) => {
     const { addToast, session, analyzeContent, analyzeMeeting, logSystemEvent, ensureValidProviderToken } = get();
     if (!(await ensureValidProviderToken()) || !session || files.length === 0) return;

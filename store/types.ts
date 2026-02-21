@@ -45,6 +45,7 @@ export interface DataSlice {
   fetchSingleInsight: (id: string) => Promise<void>;
   syncLocalQueue: (force?: boolean) => Promise<void>;
   clearLocalCache: () => Promise<void>;
+  recoverOrphanedFiles: () => Promise<void>;
   importDriveFiles: (files: DriveFile[], options: { template: InsightTemplate }) => Promise<void>;
   
   deleteInsight: (id: string) => Promise<void>;
