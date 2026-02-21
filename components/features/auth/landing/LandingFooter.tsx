@@ -36,36 +36,36 @@ export const LandingFooter: React.FC<any> = ({ onPrivacy, onTerms, onEthics, onS
                     
                     {/* Product */}
                     <div className="space-y-6">
-                        <h4 className="text-[10px] font-mono font-black uppercase tracking-[0.3em] text-primary">Product</h4>
+                        <h3 className="text-[10px] font-mono font-black uppercase tracking-[0.3em] text-primary">Product</h3>
                         <ul className="space-y-3">
-                            <li><button onClick={() => document.getElementById('process')?.scrollIntoView({behavior: 'smooth'})} className="text-xs font-bold text-on-surface hover:text-primary transition-colors uppercase tracking-wide">Process</button></li>
-                            <li><button onClick={() => document.getElementById('features')?.scrollIntoView({behavior: 'smooth'})} className="text-xs font-bold text-on-surface hover:text-primary transition-colors uppercase tracking-wide">Capabilities</button></li>
-                            <li><button onClick={() => document.getElementById('pricing')?.scrollIntoView({behavior: 'smooth'})} className="text-xs font-bold text-on-surface hover:text-primary transition-colors uppercase tracking-wide">Pricing</button></li>
-                            <li><button onClick={onSignIn} className="text-xs font-bold text-on-surface hover:text-primary transition-colors uppercase tracking-wide">Login</button></li>
+                            <li><button onClick={() => document.getElementById('process')?.scrollIntoView({behavior: 'smooth'})} className="text-xs font-bold text-on-surface hover:text-primary transition-colors uppercase tracking-wide py-2">Process</button></li>
+                            <li><button onClick={() => document.getElementById('features')?.scrollIntoView({behavior: 'smooth'})} className="text-xs font-bold text-on-surface hover:text-primary transition-colors uppercase tracking-wide py-2">Capabilities</button></li>
+                            <li><button onClick={() => document.getElementById('pricing')?.scrollIntoView({behavior: 'smooth'})} className="text-xs font-bold text-on-surface hover:text-primary transition-colors uppercase tracking-wide py-2">Pricing</button></li>
+                            <li><button onClick={onSignIn} className="text-xs font-bold text-on-surface hover:text-primary transition-colors uppercase tracking-wide py-2">Login</button></li>
                         </ul>
                     </div>
 
                     {/* Legal */}
                     <div className="space-y-6">
-                        <h4 className="text-[10px] font-mono font-black uppercase tracking-[0.3em] text-primary">Legal</h4>
+                        <h3 className="text-[10px] font-mono font-black uppercase tracking-[0.3em] text-primary">Legal</h3>
                         <ul className="space-y-3">
-                            <li><button onClick={onPrivacy} className="text-xs font-bold text-on-surface hover:text-primary transition-colors uppercase tracking-wide">Privacy Policy</button></li>
-                            <li><button onClick={onTerms} className="text-xs font-bold text-on-surface hover:text-primary transition-colors uppercase tracking-wide">Terms of Service</button></li>
-                            <li><button onClick={onEthics} className="text-xs font-bold text-on-surface hover:text-primary transition-colors uppercase tracking-wide">AI Ethics</button></li>
+                            <li><button onClick={onPrivacy} className="text-xs font-bold text-on-surface hover:text-primary transition-colors uppercase tracking-wide py-2">Privacy Policy</button></li>
+                            <li><button onClick={onTerms} className="text-xs font-bold text-on-surface hover:text-primary transition-colors uppercase tracking-wide py-2">Terms of Service</button></li>
+                            <li><button onClick={onEthics} className="text-xs font-bold text-on-surface hover:text-primary transition-colors uppercase tracking-wide py-2">AI Ethics</button></li>
                         </ul>
                     </div>
 
                     {/* Connect */}
                     <div className="space-y-6">
-                        <h4 className="text-[10px] font-mono font-black uppercase tracking-[0.3em] text-primary">Connect</h4>
+                        <h3 className="text-[10px] font-mono font-black uppercase tracking-[0.3em] text-primary">Connect</h3>
                         <ul className="space-y-3">
                             <li>
-                                <a href="mailto:hello@crispybacon.ai" className="text-xs font-bold text-on-surface hover:text-primary transition-colors uppercase tracking-wide flex items-center gap-1 group">
+                                <a href="mailto:hello@crispybacon.ai" className="text-xs font-bold text-on-surface hover:text-primary transition-colors uppercase tracking-wide flex items-center gap-1 group py-2">
                                     Contact Sales <ArrowUpRight size={10} className="opacity-0 group-hover:opacity-100 transition-opacity" />
                                 </a>
                             </li>
                             <li>
-                                <button onClick={onSignIn} className="text-xs font-bold text-on-surface hover:text-primary transition-colors uppercase tracking-wide flex items-center gap-1 group">
+                                <button onClick={onSignIn} className="text-xs font-bold text-on-surface hover:text-primary transition-colors uppercase tracking-wide flex items-center gap-1 group py-2">
                                     Support <ArrowUpRight size={10} className="opacity-0 group-hover:opacity-100 transition-opacity" />
                                 </button>
                             </li>

@@ -78,6 +78,7 @@ export const LandingNav: React.FC<LandingNavProps> = ({ isScrolled, session, use
           <button 
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
             className="hover:opacity-80 transition-opacity shrink-0 py-2"
+            aria-label="Scroll to top"
           >
             <BaconBrand className="scale-75 origin-left md:scale-90" />
           </button>
@@ -101,6 +102,7 @@ export const LandingNav: React.FC<LandingNavProps> = ({ isScrolled, session, use
                   <button 
                     onClick={() => setShowAvatarMenu(!showAvatarMenu)} 
                     className="w-10 h-10 rounded-full overflow-hidden border-2 border-outline-variant hover:border-primary/40 transition-all active:scale-90 shrink-0 flex items-center justify-center shadow-sm"
+                    aria-label="User menu"
                   >
                     {avatarUrl ? (
                       <img src={avatarUrl} alt="User" className="w-full h-full object-cover" />
@@ -152,6 +154,7 @@ export const LandingNav: React.FC<LandingNavProps> = ({ isScrolled, session, use
             <button 
               onClick={toggleMobileMenu}
               className="w-10 h-10 flex items-center justify-center rounded-xl bg-on-surface/5 text-on-surface"
+              aria-label="Close menu"
             >
               <X size={20} strokeWidth={2.5} />
             </button>

@@ -134,26 +134,6 @@ export const createDataSlice: StateCreator<AppState, [], [], DataSlice> = (set, 
     addToast("Files added.", "success");
   },
 
-  recoverOrphanedFiles: async () => {
-    const { session } = get();
-    if (!session?.user) return;
-    try {
-      const { data: files } = await supabase.storage.from('meetings').list(session.user.id);
-      const { data: dbItems } = await supabase.from('insights').select('id, storage_path').eq('user_id', session.user.id);
-      const knownPaths = new Set(dbItems?.map(i => i.storage_path) || []);
-      const orphans = (files || []).filter(f => !knownPaths.has(`${session.user.id}/${f.name}`));
-      for (const orphan of orphans) {
-        const now = new Date().toISOString();
-        await supabase.from('insights').insert({
-          id: uuidv4(), user_id: session.user.id, title: `Recovered: ${orphan.name}`,
-          source_type: ContentType.MEETING, storage_path: `${session.user.id}/${orphan.name}`,
-          processing_status: ProcessingStatus.FAILED, error_message: "Restored.", created_at: orphan.created_at, updated_at: now
-        });
-      }
-      queryClient.invalidateQueries({ queryKey: ['insights'] });
-    } catch (err: any) {}
-  },
-
   ...createDataItemSlice(set, get, ...rest),
   ...createDataTaxonomySlice(set, get, ...rest),
   ...createDataCollabSlice(set, get, ...rest),
