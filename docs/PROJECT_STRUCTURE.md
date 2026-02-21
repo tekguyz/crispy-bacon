@@ -151,7 +151,6 @@
 - `audioProcessing.ts`: Binary encoding/decoding utilities.
 - `liveEngine.ts`: WebSocket handler for Gemini Live.
 - `processingService.ts`: Orchestrates AI result archival.
-- `repository.ts`: Data abstraction layer (Local vs Cloud merging).
 - `googleBridge.ts`: Client-side interface for Netlify functions.
 - `importService.ts`: File parsing logic (Mammoth/Text).
 - `analyticsService.ts`: Usage tracking.
