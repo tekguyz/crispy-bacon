@@ -12,8 +12,8 @@ Crispy Bacon is a "Time-to-Think" engine. It transforms raw information—meetin
 
 ## 🚀 Key Features
 
-*   **Capture Lab:** High-fidelity audio recording with real-time visualization.
-*   **Import:** Ingest web links, text notes, and Google Drive files.
+*   **Recorder:** High-fidelity audio recording with real-time visualization.
+*   **Import:** Import web links, text notes, and Google Drive files.
 *   **The Assistant:**
     *   **Standard Tier:** Rapid skeletal recaps using **Gemini 3 Flash**.
     *   **Executive Tier:** Deep narrative analysis using **Gemini 3 Pro**.

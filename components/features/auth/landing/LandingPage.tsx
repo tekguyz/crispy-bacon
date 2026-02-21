@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { LandingNav } from './LandingNav';
 import { LandingHero } from './LandingHero';
-import { TheInstrument } from './TheInstrument';
 import { LandingFeatures } from './LandingFeatures';
 import { FAQSection } from './FAQSection';
 import { PricingTier } from './PricingTier';
@@ -26,8 +25,6 @@ const LandingPage: React.FC<any> = ({ onSignIn, onPrivacy, onTerms, onEthics }) 
       
       <main className="overflow-x-hidden">
         <LandingHero onSignIn={onSignIn} />
-        
-        <TheInstrument />
         
         <LandingFeatures />
 
