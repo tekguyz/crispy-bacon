@@ -1,7 +1,7 @@
 {
-  "name": "Crispy Bacon - Prod",
-  "description": "High-density research library for high-performance teams. Premium, low-strain design for clear thinking.",
-  "version": "2.5.1",
+  "name": "Crispy Bacon",
+  "description": "The Organic Standard for strategic notes. A quiet place for deep thought, transforming raw information into high-clarity intelligence. v3.0.0 - The Organic Architecture: Decoupled State & Semantic UI.",
+  "version": "3.0.0",
   "requestFramePermissions": [
     "microphone"
   ]

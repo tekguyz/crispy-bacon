@@ -15,7 +15,7 @@ export default defineConfig({
     },
   },
   define: {
-    'process.env.VITE_APP_VERSION': JSON.stringify('2.6.0'),
+    'process.env.VITE_APP_VERSION': JSON.stringify('3.0.0'),
     'process.env.NODE_ENV': JSON.stringify(env.NODE_ENV || 'development'),
     'process.env.API_KEY': JSON.stringify(env.API_KEY),
   },
@@ -41,7 +41,7 @@ export default defineConfig({
             }
             // Level 3: Heavy Duty (Deferred)
             if (id.includes('mammoth') || id.includes('react-markdown')) {
-              return 'vendor-ingestion';
+              return 'vendor-import';
             }
             // Level 4: AI Infrastructure
             if (id.includes('@google/genai')) {

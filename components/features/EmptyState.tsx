@@ -23,7 +23,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
 }) => {
   // Granola Standard: Direct, no jargon.
   const displayTitle = (title === "Awaiting strategic signals." || title === "Ready for your first summary.") ? "Ready for notes." : title;
-  const displayDescription = (description === "Initialize ingestion to begin distillation." || description === "Capture a meeting, upload a document, or paste a link to get started.")
+  const displayDescription = (description === "Initialize import to begin analysis." || description === "Capture a meeting, upload a document, or paste a link to get started.")
     ? "Start a recording or add a link to begin." 
     : description;
 

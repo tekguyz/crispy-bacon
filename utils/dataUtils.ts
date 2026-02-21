@@ -5,7 +5,7 @@
  */
 
 /**
- * Converts a Blob to a Base64 string for model ingestion.
+ * Converts a Blob to a Base64 string for model analysis.
  */
 export const blobToBase64 = (blob: Blob): Promise<string> => {
   return new Promise((resolve, reject) => {
