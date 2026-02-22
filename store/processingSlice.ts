@@ -5,7 +5,6 @@ import { ContentType, ProcessingStatus, InsightTemplate } from '../types';
 import { supabase } from '../services/supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
 import { blobToBase64, cleanPayload, getEffectiveMimeType } from '../utils/dataUtils';
-import { getArtifactLocally, saveArtifactLocally, SyncStatus } from '../services/localDbService';
 import { queryClient } from '../lib/queryClient';
 
 export const createProcessingSlice: StateCreator<AppState, [], [], Partial<AssistantSlice>> = (set, get) => ({
@@ -19,6 +18,7 @@ export const createProcessingSlice: StateCreator<AppState, [], [], Partial<Assis
     try {
       const { analyzeContent: analyzeGeminiContent } = await import('../services/geminiService');
       const { archiveRefinement } = await import('../services/processingService');
+      const { getArtifactLocally } = await import('../services/localDbService');
 
       let audioBase64 = "";
       let mimeType = insight.metadata?.mimeType || 'audio/webm';
@@ -97,6 +97,8 @@ export const createProcessingSlice: StateCreator<AppState, [], [], Partial<Assis
     const itemId = uuidv4();
     
     set(s => ({ isAnalyzing: true, activeAnalysisCount: s.activeAnalysisCount + 1, showRecorder: false }));
+    
+    const { saveArtifactLocally, SyncStatus } = await import('../services/localDbService');
     const localArtifact = { id: itemId, blob: audioBlob, type: audioBlob.type, timestamp: Date.now(), sync_status: SyncStatus.UNSYNCED };
     await saveArtifactLocally(localArtifact);
 

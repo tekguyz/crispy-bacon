@@ -7,7 +7,6 @@ import { createDataTaxonomySlice } from './dataTaxonomySlice';
 import { createDataCollabSlice } from './dataCollabSlice';
 import { ProcessingStatus, ContentType } from '../types';
 import { v4 as uuidv4 } from 'uuid';
-import { getAllLocalArtifacts, deleteArtifactLocally, saveArtifactLocally, SyncStatus } from '../services/localDbService';
 import { queryClient } from '../lib/queryClient';
 import { cleanPayload } from '../utils/dataUtils';
 
@@ -55,6 +54,7 @@ export const createDataSlice: StateCreator<AppState, [], [], DataSlice> = (set, 
     const { session, userProfile, updateStorageUsage } = get();
     if (!session?.user || !userProfile) return;
     
+    const { getAllLocalArtifacts, saveArtifactLocally, SyncStatus } = await import('../services/localDbService');
     const pending = await getAllLocalArtifacts(true, SyncStatus.UNSYNCED);
     if (pending.length === 0) return;
     
@@ -93,6 +93,7 @@ export const createDataSlice: StateCreator<AppState, [], [], DataSlice> = (set, 
   clearLocalCache: async () => {
     const { addToast, updateStorageUsage } = get();
     try {
+        const { getAllLocalArtifacts, deleteArtifactLocally } = await import('../services/localDbService');
         const localArtifacts = await getAllLocalArtifacts(false);
         for (const art of localArtifacts) await deleteArtifactLocally(art.id);
         await updateStorageUsage();
