@@ -1,7 +1,6 @@
 import React from 'react';
 import { Copy, Check, FileText, Hash } from 'lucide-react';
 import { InsightContent } from '../../../types';
-import { generateInsightMarkdownReport } from '../../../services/dataTransformers';
 import { useAppStore } from '../../../store/useAppStore';
 import { triggerHaptic } from '../../../services/hapticService';
 
@@ -15,6 +14,7 @@ export const ExportActions: React.FC<ExportActionsProps> = ({ insight }) => {
 
   const copyToClipboard = async (type: 'notion' | 'obsidian') => {
     triggerHaptic('light');
+    const { generateInsightMarkdownReport } = await import('../../../services/dataTransformers');
     const text = generateInsightMarkdownReport(insight, type);
     try {
       await navigator.clipboard.writeText(text);

@@ -2,7 +2,6 @@
 import { StateCreator } from 'zustand';
 import { AppState, DataSlice } from './types';
 import { supabase } from '../services/supabaseClient';
-import { deleteArtifactLocally } from '../services/localDbService';
 import { queryClient } from '../lib/queryClient';
 
 export const createDataItemSlice: StateCreator<AppState, [], [], Partial<DataSlice>> = (set, get) => ({
@@ -17,7 +16,10 @@ export const createDataItemSlice: StateCreator<AppState, [], [], Partial<DataSli
     
     // CRITICAL FIX: Kill local artifact immediately.
     // If this item was failing to sync (Zombie), this stops the background loop.
-    try { await deleteArtifactLocally(id); } catch(e) { console.warn("Local kill drift:", e); }
+    try { 
+      const { deleteArtifactLocally } = await import('../services/localDbService');
+      await deleteArtifactLocally(id); 
+    } catch(e) { console.warn("Local kill drift:", e); }
 
     try {
       await supabase.from('insights').update({ deleted_at: now, updated_at: now }).eq('id', id);
@@ -48,6 +50,7 @@ export const createDataItemSlice: StateCreator<AppState, [], [], Partial<DataSli
       }
       
       // 2. Purge from local IndexedDB
+      const { deleteArtifactLocally } = await import('../services/localDbService');
       await deleteArtifactLocally(id);
 
       // 3. Purge from database
@@ -78,6 +81,7 @@ export const createDataItemSlice: StateCreator<AppState, [], [], Partial<DataSli
     clearSelection();
 
     // Kill all selected locals to stop any sync storms
+    const { deleteArtifactLocally } = await import('../services/localDbService');
     for (const id of ids) {
        try { await deleteArtifactLocally(id); } catch(e) {}
     }
@@ -136,6 +140,7 @@ export const createDataItemSlice: StateCreator<AppState, [], [], Partial<DataSli
         await supabase.storage.from('meetings').remove(paths);
       }
 
+      const { deleteArtifactLocally } = await import('../services/localDbService');
       for (const id of ids) {
         await deleteArtifactLocally(id);
       }

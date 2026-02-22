@@ -1,9 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAppStore } from '../store/useAppStore';
 import { supabase } from '../services/supabaseClient';
-import { mapSupabaseToInsight } from '../services/dataTransformers';
-import { getCalendarEvents, listDriveFiles } from '../services/googleBridge';
-import { getAllLocalArtifacts } from '../services/localDbService';
 import { InsightContent, ContentType, ProcessingStatus } from '../types';
 
 const fetchHybridInsights = async (userId?: string, isSupabaseActive?: boolean): Promise<InsightContent[]> => {
@@ -19,11 +16,13 @@ const fetchHybridInsights = async (userId?: string, isSupabaseActive?: boolean):
       .order('created_at', { ascending: false });
 
     if (!error && data) {
+      const { mapSupabaseToInsight } = await import('../services/dataTransformers');
       remoteInsights = data.map(mapSupabaseToInsight);
     }
   }
 
   // Merge with local artifacts (offline/unsynced)
+  const { getAllLocalArtifacts } = await import('../services/localDbService');
   const localArtifacts = await getAllLocalArtifacts();
   const localInsights: InsightContent[] = localArtifacts.map(art => ({
       id: art.id,
@@ -110,6 +109,7 @@ export const useCalendarQuery = () => {
     queryKey: ['calendar', session?.user?.id],
     queryFn: async () => {
       if (!userProfile?.is_pro || !(await ensureValidProviderToken())) return [];
+      const { getCalendarEvents } = await import('../services/googleBridge');
       return getCalendarEvents((session as any).provider_token);
     },
     enabled: !!session?.user?.id && !!userProfile?.is_pro,
@@ -126,6 +126,7 @@ export const useDriveFilesQuery = () => {
     queryKey: ['driveFiles', session?.user?.id],
     queryFn: async () => {
       if (!userProfile?.is_pro || !(await ensureValidProviderToken())) return [];
+      const { listDriveFiles } = await import('../services/googleBridge');
       return listDriveFiles((session as any).provider_token);
     },
     enabled: !!session?.user?.id && !!userProfile?.is_pro,

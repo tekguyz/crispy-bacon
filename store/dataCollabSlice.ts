@@ -3,7 +3,6 @@ import { StateCreator } from 'zustand';
 import { AppState, DataSlice } from './types';
 import { v4 as uuidv4 } from 'uuid';
 import { supabase, handleSupabaseError } from '../services/supabaseClient';
-import { trackEvent } from '../services/analyticsService';
 import { AppView, ContentType, ProcessingStatus } from '../types';
 import { queryClient } from '../lib/queryClient';
 
@@ -100,6 +99,7 @@ export const createDataCollabSlice: StateCreator<AppState, [], [], Partial<DataS
         throw error;
     }
     
+    const { trackEvent } = await import('../services/analyticsService');
     trackEvent('share_link_created', { is_collaborative: options.isCollaborative });
     return `${window.location.origin}?share=${slug}`;
   },

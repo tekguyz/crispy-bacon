@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { InsightContent, AppView } from '../types';
-import { formatTranscript } from '../services/dataTransformers';
 import { supabase } from '../services/supabaseClient';
 import { useAppStore } from '../store/useAppStore';
 import { triggerHaptic } from '../services/hapticService';
@@ -94,9 +93,18 @@ export const useInsightDetailLogic = (insight: InsightContent | null) => {
    * v1.3.1 Strategic Trace Protocol:
    * Maps 'insights.processed_text' to the detailed summary layer.
    */
-  const strategicTraceText = useMemo(() => 
-    formatTranscript(insight?.processed_text || ''), 
-  [insight?.processed_text]);
+  const [strategicTraceText, setStrategicTraceText] = useState('');
+  
+  useEffect(() => {
+    if (!insight?.processed_text) {
+      setStrategicTraceText('');
+      return;
+    }
+    
+    import('../services/dataTransformers').then(({ formatTranscript }) => {
+      setStrategicTraceText(formatTranscript(insight.processed_text || ''));
+    });
+  }, [insight?.processed_text]);
 
   return {
     isMobile,
