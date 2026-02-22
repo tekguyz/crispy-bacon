@@ -41,6 +41,12 @@ Detailed documentation is located in the `/docs` directory:
 *   [**SECURITY.md**](/docs/SECURITY.md): Privacy standards and data isolation.
 *   [**SETUP.md**](/docs/SETUP.md): Environment variables and deployment guide.
 
+## ⚡️ Performance
+
+*   **Code Splitting:** Route-level lazy loading for Dashboard, Recorder, and Settings.
+*   **Dynamic Imports:** Heavy AI and parsing services are loaded on-demand to reduce initial bundle size.
+*   **Optimized Assets:** Preconnected fonts and efficient caching strategies.
+
 ## ⚡️ Quick Start
 
 1.  **Install Dependencies:**

@@ -59,7 +59,7 @@ export const GlobalChatSheet: React.FC = () => {
 
   return (
     <SideSheet isOpen={showGlobalChat} onClose={handleClose} title="Ask your notes">
-      <div className="flex flex-col h-full bg-background relative overflow-hidden" onClick={(e) => e.stopPropagation()}>
+      <div className="flex flex-col h-full bg-surface-container-lowest relative overflow-hidden" onClick={(e) => e.stopPropagation()}>
         <div className="absolute inset-0 ledger-grid opacity-[0.02] pointer-events-none" />
 
         <div className="flex-1 overflow-y-auto p-6 custom-scrollbar relative z-0">

@@ -39,7 +39,7 @@ export const SideSheet: React.FC<SideSheetProps> = ({ isOpen, onClose, title, ch
         aria-modal="true"
         aria-label={title}
         className={`
-          fixed z-[150] bg-background shadow-2xl
+          fixed z-[150] bg-surface-container-lowest shadow-2xl
           transition-transform duration-500 ease-[cubic-bezier(0.2,0.0,0,1.0)]
           
           /* Mobile: Bottom Sheet */

@@ -3,11 +3,9 @@ import { StateCreator } from 'zustand';
 import { AppState, AssistantSlice } from './types';
 import { ContentType, ProcessingStatus, InsightTemplate } from '../types';
 import { supabase } from '../services/supabaseClient';
-import { analyzeContent as analyzeGeminiContent } from '../services/geminiService';
 import { v4 as uuidv4 } from 'uuid';
 import { blobToBase64, cleanPayload, getEffectiveMimeType } from '../utils/dataUtils';
 import { getArtifactLocally, saveArtifactLocally, SyncStatus } from '../services/localDbService';
-import { archiveRefinement, uploadMeetingAudio } from '../services/processingService';
 import { queryClient } from '../lib/queryClient';
 
 export const createProcessingSlice: StateCreator<AppState, [], [], Partial<AssistantSlice>> = (set, get) => ({
@@ -19,6 +17,9 @@ export const createProcessingSlice: StateCreator<AppState, [], [], Partial<Assis
 
     set(s => ({ activeAnalysisCount: s.activeAnalysisCount + 1, isAnalyzing: true }));
     try {
+      const { analyzeContent: analyzeGeminiContent } = await import('../services/geminiService');
+      const { archiveRefinement } = await import('../services/processingService');
+
       let audioBase64 = "";
       let mimeType = insight.metadata?.mimeType || 'audio/webm';
 
@@ -73,6 +74,10 @@ export const createProcessingSlice: StateCreator<AppState, [], [], Partial<Assis
 
     try {
       await supabase.from('insights').insert([{ id: itemId, user_id: session.user.id, source_type: type, processing_status: ProcessingStatus.PROCESSING }]);
+      
+      const { analyzeContent: analyzeGeminiContent } = await import('../services/geminiService');
+      const { archiveRefinement } = await import('../services/processingService');
+
       const recap = await analyzeGeminiContent(input, type, get().currentIntent || '', options.template || get().preferredTemplate, !!userProfile?.is_pro, personaStyle);
       await archiveRefinement(itemId, session.user.id, recap, { template: options.template });
       
@@ -98,6 +103,9 @@ export const createProcessingSlice: StateCreator<AppState, [], [], Partial<Assis
     if (!session) return;
     
     try {
+      const { uploadMeetingAudio, archiveRefinement } = await import('../services/processingService');
+      const { analyzeContent: analyzeGeminiContent } = await import('../services/geminiService');
+
       const path = await uploadMeetingAudio(userProfile!.id, itemId, audioBlob);
       
       // Clean initial payload to prevent 400s

@@ -2,7 +2,6 @@
 import { StateCreator } from 'zustand';
 import { AppState, DataSlice } from './types';
 import { supabase } from '../services/supabaseClient';
-import { mapSupabaseToInsight } from '../services/dataTransformers';
 import { createDataItemSlice } from './dataItemSlice';
 import { createDataTaxonomySlice } from './dataTaxonomySlice';
 import { createDataCollabSlice } from './dataCollabSlice';
@@ -10,7 +9,6 @@ import { ProcessingStatus, ContentType } from '../types';
 import { v4 as uuidv4 } from 'uuid';
 import { getAllLocalArtifacts, deleteArtifactLocally, saveArtifactLocally, SyncStatus } from '../services/localDbService';
 import { queryClient } from '../lib/queryClient';
-import { getCalendarEvents, listDriveFiles, downloadDriveFile } from '../services/googleBridge';
 import { cleanPayload } from '../utils/dataUtils';
 
 export const createDataSlice: StateCreator<AppState, [], [], DataSlice> = (set, get, ...rest) => ({
@@ -34,6 +32,7 @@ export const createDataSlice: StateCreator<AppState, [], [], DataSlice> = (set, 
 
       if (error || !data) return;
 
+      const { mapSupabaseToInsight } = await import('../services/dataTransformers');
       const mapped = mapSupabaseToInsight(data);
       
       set({ selectedInsight: mapped });
@@ -168,6 +167,7 @@ export const createDataSlice: StateCreator<AppState, [], [], DataSlice> = (set, 
         await new Promise(r => setTimeout(r, 250));
         
         // Use Bridge for download
+        const { downloadDriveFile } = await import('../services/googleBridge');
         const content = await downloadDriveFile(file.id, accessToken, file.mimeType);
 
         if (content instanceof Blob) {

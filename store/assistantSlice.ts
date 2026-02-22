@@ -3,7 +3,6 @@ import { StateCreator } from 'zustand';
 import { AppState, AssistantSlice } from './types';
 import { InsightTemplate, AppView, ContentType, ProcessingStatus, InsightContent, VisualizerStyle } from '../types';
 import { supabase } from '../services/supabaseClient';
-import { getArtifactLocally } from '../services/localDbService';
 
 export const createAssistantSlice: StateCreator<AppState, [], [], Partial<AssistantSlice>> = (set, get) => ({
   isAnalyzing: false,
@@ -48,6 +47,7 @@ export const createAssistantSlice: StateCreator<AppState, [], [], Partial<Assist
 
     if (isLocalSource || !insight.storage_path) {
         try {
+            const { getArtifactLocally } = await import('../services/localDbService');
             const artifact = await getArtifactLocally(insight.id);
             if (artifact && artifact.blob) {
                 const localUrl = URL.createObjectURL(artifact.blob);

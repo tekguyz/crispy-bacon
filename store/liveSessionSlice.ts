@@ -1,7 +1,6 @@
 
 import { StateCreator } from 'zustand';
 import { AppState, AssistantSlice } from './types';
-import { trackEvent } from '../services/analyticsService';
 import { InsightContent, ChatMessage } from '../types';
 
 export const createLiveSessionSlice: StateCreator<AppState, [], [], Partial<AssistantSlice>> = (set, get) => ({
@@ -11,8 +10,9 @@ export const createLiveSessionSlice: StateCreator<AppState, [], [], Partial<Assi
   isChatLoading: false,
   isWarmingUp: false,
 
-  startLiveAssistant: (insight: InsightContent) => {
+  startLiveAssistant: async (insight: InsightContent) => {
     if (get().liveSession) get().stopLiveAssistant();
+    const { trackEvent } = await import('../services/analyticsService');
     trackEvent('voice_assistant_started', { insight_type: insight.type });
     set({ isLiveAssistantActive: true });
   },
