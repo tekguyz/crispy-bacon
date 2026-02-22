@@ -31,12 +31,12 @@ const TaskItem: React.FC<TaskItemProps> = ({ insightId, item, index, isCompleted
     >
       <div className={`
         w-5 h-5 rounded-lg flex items-center justify-center transition-all shrink-0 mt-0.5
-        ${isCompleted ? 'bg-success' : 'border-2 border-outline-variant group-hover:border-primary/50 bg-surface-container-low'}
+        ${isCompleted ? 'bg-success' : 'border-2 border-outline/40 group-hover:border-primary bg-surface-container-low group-hover:bg-primary/5'}
       `}>
         {isCompleted ? (
           <Check size={10} className="text-white" strokeWidth={5} />
         ) : (
-          <div className="w-1.5 h-1.5 rounded-sm bg-primary opacity-0 group-hover:opacity-20 transition-opacity" />
+          <div className="w-2 h-2 rounded-sm bg-primary opacity-0 group-hover:opacity-100 transition-all scale-50 group-hover:scale-100" />
         )}
       </div>
       

@@ -86,7 +86,7 @@ const ChatDrawer: React.FC<ChatDrawerProps> = ({ insight }) => {
   }, [insight.topics, insight.metadata?.template, insight.action_items]);
 
   return (
-    <div className="flex flex-col h-full bg-surface-container-lowest relative overflow-hidden">
+    <div className="flex flex-col h-full bg-background relative overflow-hidden">
       {/* HEADER: Cleaned up. Removed Word Count Pill. */}
       <div className="px-4 py-3 border-b border-outline-variant/10 flex items-center justify-between shrink-0 bg-background/80 backdrop-blur-md z-10 h-14">
          <div className="flex items-center gap-3">

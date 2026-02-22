@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ListTodo, Check, Sparkles } from 'lucide-react';
 import { useAppStore } from '../../../store/useAppStore';
 import { triggerHaptic } from '../../../services/hapticService';
@@ -13,10 +13,28 @@ interface DashboardTasksProps {
 
 export const DashboardTasks: React.FC<DashboardTasksProps> = ({ activeTasks, isLoading, onSelectInsight }) => {
   const { toggleActionItemComplete } = useAppStore();
+  const [completing, setCompleting] = useState<Set<string>>(new Set());
 
-  const handleToggle = (id: string, idx: number) => {
+  const handleToggle = async (id: string, idx: number) => {
+    // Prevent double clicks
+    if (completing.has(`${id}-${idx}`)) return;
+
     triggerHaptic('medium');
-    toggleActionItemComplete(id, idx);
+    
+    // Optimistic UI update
+    setCompleting(prev => new Set(prev).add(`${id}-${idx}`));
+
+    // Small delay to show the animation
+    await new Promise(resolve => setTimeout(resolve, 400));
+    
+    await toggleActionItemComplete(id, idx);
+    
+    // Cleanup (though item will likely disappear)
+    setCompleting(prev => {
+      const next = new Set(prev);
+      next.delete(`${id}-${idx}`);
+      return next;
+    });
   };
 
   return (
@@ -51,22 +69,47 @@ export const DashboardTasks: React.FC<DashboardTasksProps> = ({ activeTasks, isL
               </div>
             ) : (
               <div className="divide-y divide-outline-variant/5">
-                {activeTasks.map((item) => (
-                  <div 
-                    key={`${item.id}-${item.idx}`} 
-                    className="flex items-start gap-4 p-4 hover:bg-background rounded-xl transition-all group cursor-pointer active:scale-[0.99] animate-hydrate"
-                    onClick={() => { triggerHaptic('light'); onSelectInsight(item.insight); }}
-                  >
-                    <button 
-                      onClick={(e) => { e.stopPropagation(); handleToggle(item.id, item.idx); }}
-                      className="mt-1 w-5 h-5 rounded-lg border-2 border-outline-variant flex items-center justify-center shrink-0 group-hover:border-primary transition-all bg-background shadow-inner"
-                    />
-                    <div className="min-w-0 flex-1">
-                      <p className="text-sm font-bold text-on-surface leading-tight mb-1 group-hover:text-primary transition-colors line-clamp-2">{item.action}</p>
-                      <p className="text-[8px] font-black text-on-surface-variant/40 uppercase tracking-widest truncate">{item.title}</p>
+                {activeTasks.map((item) => {
+                  const isCompleting = completing.has(`${item.id}-${item.idx}`);
+                  return (
+                    <div 
+                      key={`${item.id}-${item.idx}`} 
+                      className={`
+                        flex items-start gap-4 p-4 hover:bg-background rounded-xl transition-all group cursor-pointer active:scale-[0.99] animate-hydrate
+                        ${isCompleting ? 'opacity-50 bg-background' : ''}
+                      `}
+                      onClick={() => { 
+                        if (!isCompleting) {
+                          triggerHaptic('light'); 
+                          onSelectInsight(item.insight); 
+                        }
+                      }}
+                    >
+                      <button 
+                        onClick={(e) => { e.stopPropagation(); handleToggle(item.id, item.idx); }}
+                        className={`
+                          mt-1 w-5 h-5 rounded-lg border-2 flex items-center justify-center shrink-0 transition-all shadow-inner
+                          ${isCompleting 
+                            ? 'bg-success border-success scale-110' 
+                            : 'bg-background border-outline-variant group-hover:border-primary'
+                          }
+                        `}
+                      >
+                        <Check 
+                          size={12} 
+                          className={`text-white transition-all duration-300 ${isCompleting ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} 
+                          strokeWidth={4} 
+                        />
+                      </button>
+                      <div className="min-w-0 flex-1">
+                        <p className={`text-sm font-bold text-on-surface leading-tight mb-1 transition-colors line-clamp-2 ${isCompleting ? 'line-through text-on-surface-variant' : 'group-hover:text-primary'}`}>
+                          {item.action}
+                        </p>
+                        <p className="text-[8px] font-black text-on-surface-variant/40 uppercase tracking-widest truncate">{item.title}</p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
