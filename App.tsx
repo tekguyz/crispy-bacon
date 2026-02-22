@@ -1,5 +1,5 @@
 
-import React, { Suspense, lazy, useCallback, useState, useMemo } from 'react';
+import React, { Suspense, lazy, useCallback, useState, useMemo, useEffect } from 'react';
 import { Loader2 } from 'lucide-react'; 
 import { AppView } from './types';
 import { useAppStore } from './store/useAppStore';
@@ -32,10 +32,22 @@ function App() {
   const store = useAppStore();
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [mountHeavyComponents, setMountHeavyComponents] = useState(false);
 
   const { isReady } = useSessionOrchestrator();
   useTheme();
   usePageTitle();
+
+  useEffect(() => {
+    const timer = 'requestIdleCallback' in window 
+      ? requestIdleCallback(() => setMountHeavyComponents(true))
+      : setTimeout(() => setMountHeavyComponents(true), 100);
+
+    return () => {
+      if ('cancelIdleCallback' in window) cancelIdleCallback(timer as number);
+      else clearTimeout(timer as number);
+    };
+  }, []);
 
   const isDetailView = store.view === AppView.INSIGHT;
   const isPublicView = store.view === AppView.PUBLIC_SHARE;
@@ -131,11 +143,13 @@ function App() {
             )}
         </div>
         
-        <Suspense fallback={null}>
-          <QuickActionsMenu isSidebarOpen={isSidebarExpanded || isMobileSidebarOpen} />
-          <Recorder />
-          <InputArea />
-        </Suspense>
+        {mountHeavyComponents && (
+          <Suspense fallback={null}>
+            <QuickActionsMenu isSidebarOpen={isSidebarExpanded || isMobileSidebarOpen} />
+            <Recorder />
+            <InputArea />
+          </Suspense>
+        )}
       </main>
     </div>
   );
