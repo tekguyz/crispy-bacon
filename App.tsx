@@ -22,8 +22,10 @@ const Recorder = lazy(() => import('./components/features/Recorder'));
 const InputArea = lazy(() => import('./components/features/InputArea'));
 const QuickActionsMenu = lazy(() => import('./components/features/QuickActionsMenu').then(module => ({ default: module.QuickActionsMenu })));
 
+const Dashboard = lazy(() => import('./components/features/dashboard/DashboardHistory'));
 const InsightDetailView = lazy(() => import('./components/features/InsightDetailView'));
 const PublicShareView = lazy(() => import('./components/features/PublicShareView'));
+const SettingsScreen = lazy(() => import('./components/features/settings/SettingsScreen'));
 const TermsPage = lazy(() => import('./components/features/legal/TermsPage'));
 const PrivacyPage = lazy(() => import('./components/features/legal/PrivacyPage'));
 const EthicsPage = lazy(() => import('./components/features/legal/EthicsPage'));
