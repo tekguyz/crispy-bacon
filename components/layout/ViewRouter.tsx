@@ -6,7 +6,7 @@ import { useFilteredInsights } from '../../hooks/useFilteredInsights';
 import { SearchX, Inbox, Star, Sparkles, LayoutGrid, List, Layers, Trash2, Video, Globe, FileText, ChevronRight, Plus } from 'lucide-react';
 
 // Common Components
-import Dashboard from '../features/Dashboard';
+const Dashboard = lazy(() => import('../features/Dashboard'));
 import EmptyState from '../features/EmptyState';
 import SkeletonCard from '../features/SkeletonCard';
 import InsightCard from '../features/InsightCard';

@@ -118,15 +118,17 @@ function App() {
         )}
 
         <div className="flex-1 overflow-y-auto bg-background custom-scrollbar">
-          <Suspense fallback={<SkeletonDetail />}>
             {isDetailView ? (
-              <InsightDetailView />
+              <Suspense fallback={<SkeletonDetail />}>
+                <InsightDetailView />
+              </Suspense>
             ) : (
               <div className="container-fluid pt-4 pb-40">
-                 <ViewRouter onResetFilters={resetFilters} />
+                 <Suspense fallback={<div className="flex items-center justify-center h-full min-h-[50vh]"><Loader2 className="animate-spin text-primary opacity-20" size={48} /></div>}>
+                   <ViewRouter onResetFilters={resetFilters} />
+                 </Suspense>
               </div>
             )}
-          </Suspense>
         </div>
         
         <Suspense fallback={null}>
