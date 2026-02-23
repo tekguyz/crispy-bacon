@@ -52,7 +52,7 @@ export const QuickActionsMenu: React.FC<QuickActionsMenuProps> = ({ isSidebarOpe
           <div className="relative pointer-events-none flex flex-col items-center">
             {/* Side Menu (Mobile: Vertical, Desktop: Horizontal) */}
             <div 
-                className={`absolute bottom-full mb-4 md:bottom-0 md:right-full md:mr-4 flex flex-col md:flex-row items-center gap-3 transition-all duration-400 ease-spring ${isOpen ? 'opacity-100 translate-y-0 md:translate-x-0 pointer-events-auto' : 'opacity-0 translate-y-8 md:translate-x-8 pointer-events-none'}`}
+                className={`absolute bottom-full mb-4 md:bottom-0 md:right-full md:mr-4 flex flex-col md:flex-row items-end md:items-center gap-3 transition-all duration-400 ease-spring ${isOpen ? 'opacity-100 translate-y-0 md:translate-x-0 pointer-events-auto' : 'opacity-0 translate-y-8 md:translate-x-8 pointer-events-none'}`}
                 role="menu"
                 onClick={(e) => e.stopPropagation()}
             >
@@ -80,7 +80,7 @@ export const QuickActionsMenu: React.FC<QuickActionsMenuProps> = ({ isSidebarOpe
                     onClick={handleToggle} 
                     className={`
                     rounded-2xl shadow-2xl flex items-center justify-center pointer-events-auto border-2 transition-all active:scale-90
-                    w-14 h-14 md:w-12 md:h-12
+                    w-12 h-12 md:w-14 md:h-14
                     ${isOpen ? 'bg-background text-primary border-primary' : 'bg-primary text-on-primary border-background'}
                     `}
                     aria-expanded={isOpen}
