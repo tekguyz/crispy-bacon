@@ -10,9 +10,101 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-  </head>
-  <body class="bg-background text-on-background antialiased overflow-x-hidden transition-colors duration-300">
+    
+
+    <link rel="stylesheet" href="/index.css">
+
+    <style>
+      :root {
+        /* LIGHT MODE (Sandstone) */
+        --color-background: 0.98 0.01 85;      /* oklch values */
+        --color-on-background: 0.15 0.02 85;
+        
+        --color-surface: 1 0 0;                /* Pure White */
+        --color-on-surface: 0.08 0.02 85;
+        
+        --color-primary: 0.68 0.19 45;         /* The Bacon Orange */
+        --color-on-primary: 1 0 0;
+        
+        --color-secondary: 0.96 0.01 85;
+        --color-on-secondary: 0.20 0.02 85;
+
+        --color-error: 0.62 0.19 25;           /* Semantic Error (Red) */
+        --color-on-error: 1 0 0;
+
+        --color-surface-variant: 0.96 0.01 85;
+        --color-on-surface-variant: 0.25 0.02 85;
+        
+        --color-outline: 0 0 0;
+        --color-outline-opacity: 0.15;
+
+        /* Surface Containers (Elevation) */
+        --color-surface-container-lowest: 1 0 0;
+        --color-surface-container-low: 0.97 0.01 85;
+        --color-surface-container: 0.95 0.01 85;
+        --color-surface-container-high: 0.93 0.01 85;
+        --color-surface-container-highest: 0.91 0.01 85;
+      }
+
+      .dark {
+        /* DARK MODE (Stratified Charcoal) */
+        --color-background: 0.14 0.01 0;
+        --color-on-background: 0.98 0.01 0;
+        
+        --color-surface: 0.17 0.01 0;
+        --color-on-surface: 0.98 0.01 0;
+        
+        --color-primary: 0.72 0.18 45;         /* Brighter Orange for Dark Mode */
+        --color-on-primary: 1 0 0;
+
+        --color-secondary: 0.25 0.01 0;
+        --color-on-secondary: 0.90 0.01 0;
+
+        --color-error: 0.55 0.22 25;           /* Error in Dark Mode */
+        --color-on-error: 1 0 0; /* White on Error */
+        
+        --color-surface-variant: 0.21 0.01 0;
+        --color-on-surface-variant: 0.85 0.01 0;
+        
+        --color-outline: 1 1 1;
+        --color-outline-opacity: 0.20;
+
+        /* Surface Containers (Elevation) - Dark */
+        --color-surface-container-lowest: 0.12 0.01 0;
+        --color-surface-container-low: 0.17 0.01 0;
+        --color-surface-container: 0.21 0.01 0;
+        --color-surface-container-high: 0.26 0.01 0;
+        --color-surface-container-highest: 0.31 0.01 0;
+      }
+    </style>
+
+
+    <script type="importmap">
+    {
+      "imports": {
+        "zustand": "https://esm.sh/zustand@^5.0.10",
+        "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+        "react/": "https://esm.sh/react@^19.2.3/",
+        "react": "https://esm.sh/react@^19.2.3",
+        "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+        "vite": "https://esm.sh/vite@^7.3.1",
+        "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
+        "@google/genai": "https://esm.sh/@google/genai@^1.38.0",
+        "path": "https://esm.sh/path@^0.12.7",
+        "url": "https://esm.sh/url@^0.11.4",
+        "react-markdown": "https://esm.sh/react-markdown@^10.1.0",
+        "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@^2.91.1",
+        "mammoth": "https://esm.sh/mammoth@^1.11.0",
+        "stripe": "https://esm.sh/stripe@^20.2.0",
+        "uuid": "https://esm.sh/uuid@^13.0.0",
+        "@tanstack/react-query": "https://esm.sh/@tanstack/react-query@^5.90.20",
+        "fuse.js": "https://esm.sh/fuse.js@^7.1.0"
+      }
+    }
+    </script>
+</head>
+<body class="bg-background text-on-background antialiased overflow-x-hidden transition-colors duration-300">
     <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
-  </body>
+    <script type="module" src="./index.tsx"></script>
+</body>
 </html>
