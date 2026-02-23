@@ -51,7 +51,7 @@ export const PricingTier: React.FC<PricingTierProps> = ({
       <div className="flex-1 mb-10">
          <ul className="space-y-4">
            {features.map((f, i) => (
-             <li key={i} className={`flex items-start gap-3 text-[11px] font-bold ${!f.included ? 'opacity-30' : ''}`}>
+             <li key={i} className={`flex items-start gap-3 text-[11px] font-bold ${!f.included ? 'text-on-surface-variant' : ''}`}>
                <div className={`mt-0.5 w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${isPro ? 'bg-primary text-on-primary' : 'bg-surface-container-highest text-on-surface-variant'}`}>
                   <Check size={10} strokeWidth={4} />
                </div>
