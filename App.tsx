@@ -135,7 +135,7 @@ function App() {
                 <InsightDetailView />
               </Suspense>
             ) : (
-              <div className="w-full max-w-7xl mx-auto pt-4 pb-40 px-4 md:px-8 transition-all duration-300 ease-in-out">
+              <div className="w-full max-w-[1600px] mx-auto pt-4 pb-40 px-4 md:px-8 lg:px-12 transition-all duration-300 ease-in-out">
                  <Suspense fallback={<div className="flex items-center justify-center h-full min-h-[50vh]"><Loader2 className="animate-spin text-primary opacity-20" size={48} /></div>}>
                    <ViewRouter onResetFilters={resetFilters} />
                  </Suspense>
@@ -145,7 +145,7 @@ function App() {
         
         {mountHeavyComponents && (
           <Suspense fallback={null}>
-            <QuickActionsMenu isSidebarOpen={isSidebarExpanded || isMobileSidebarOpen} />
+            <QuickActionsMenu isSidebarOpen={isMobileSidebarOpen} />
             <Recorder />
             <InputArea />
           </Suspense>

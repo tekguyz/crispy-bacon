@@ -63,7 +63,7 @@ const Dashboard: React.FC = () => {
       <div className="absolute inset-0 ledger-grid opacity-[0.03] pointer-events-none" aria-hidden="true" />
       
       <div className="relative z-10 animate-fade-in w-full">
-        <div className="container-fluid pt-4 pb-40 space-y-6">
+        <div className="space-y-6">
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 bg-surface-container-low p-8 rounded-4xl border border-outline-variant shadow-sm relative overflow-hidden flex flex-col justify-between min-h-[220px]">

@@ -162,9 +162,9 @@ const ViewRouter: React.FC<ViewRouterProps> = ({ onResetFilters }) => {
           <SelectionActionBar />
 
           {filteredInsights.length === 0 && !showSkeleton ? renderEmptyState() : (
-            <div className="space-y-16 pb-40">
+            <div className="space-y-16">
               {showSkeleton && (
-                <div className={feedViewMode === 'grid' ? "grid grid-cols-1 md:grid-cols-2 gap-8" : "flex flex-col gap-6"}>
+                <div className={feedViewMode === 'grid' ? "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8" : "flex flex-col gap-6"}>
                   <SkeletonCard />
                   <SkeletonCard />
                 </div>
@@ -179,7 +179,7 @@ const ViewRouter: React.FC<ViewRouterProps> = ({ onResetFilters }) => {
                   </div>
                   
                   {feedViewMode === 'grid' ? (
-                    <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
+                    <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
                       {items.map((insight) => (
                         <InsightCard key={insight.id} insight={insight} />
                       ))}
