@@ -16,11 +16,11 @@ import { useInsightsQuery, useCalendarQuery } from '../../hooks/useQueries';
 
 const Dashboard: React.FC = () => {
   const { 
-    userProfile, isInitialLoading,
+    userProfile,
     clearChat, setShowRecorder, setShowImportModal, session
   } = useAppStore();
 
-  const { data: insights = [] } = useInsightsQuery();
+  const { data: insights = [], isLoading } = useInsightsQuery();
   const { data: calendarMeetings = [] } = useCalendarQuery();
 
   const { stats, activeTasks } = useDashboardStats();
@@ -123,7 +123,7 @@ const Dashboard: React.FC = () => {
             <div className="lg:col-span-8">
               <DashboardHistory 
                 insights={activeInsights} 
-                isLoading={isInitialLoading} 
+                isLoading={isLoading} 
                 onSelectInsight={handleOpenPreview}
               />
             </div>
@@ -131,7 +131,7 @@ const Dashboard: React.FC = () => {
             <aside className="lg:col-span-4 space-y-8">
               <DashboardTasks 
                 activeTasks={activeTasks} 
-                isLoading={isInitialLoading} 
+                isLoading={isLoading} 
                 onSelectInsight={handleOpenPreview}
               />
             </aside>

@@ -6,7 +6,7 @@ import { useInsightsQuery } from './useQueries';
 import { AppView } from '../types';
 
 export const useFilteredInsights = () => {
-  const { data: insights = [] } = useInsightsQuery();
+  const { data: insights = [], isLoading } = useInsightsQuery();
   
   const {
     view,
@@ -20,7 +20,7 @@ export const useFilteredInsights = () => {
     sortOrder
   } = useAppStore();
 
-  return useMemo(() => {
+  const filteredData = useMemo(() => {
     let data = insights;
 
     // View Filtering - Synchronized with new DB Schema
@@ -114,4 +114,6 @@ export const useFilteredInsights = () => {
     activeCollectionFilterId, activeTagFilterIds, sortOrder,
     activeDomainFilter, startDateFilter, endDateFilter
   ]);
+
+  return { data: filteredData, isLoading };
 };

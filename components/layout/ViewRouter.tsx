@@ -29,13 +29,12 @@ const ViewRouter: React.FC<ViewRouterProps> = ({ onResetFilters }) => {
     activeTagFilterIds, 
     feedViewMode,
     setFeedViewMode,
-    isInitialLoading,
     activeSourceTypeFilter,
     setActiveSourceTypeFilter,
     setShowImportModal
   } = useAppStore();
   
-  const filteredInsights = useFilteredInsights();
+  const { data: filteredInsights, isLoading } = useFilteredInsights();
 
   const groupedInsights = useMemo<Record<string, InsightContent[]>>(() => {
     return filteredInsights.reduce<Record<string, InsightContent[]>>((acc, insight) => {
@@ -90,7 +89,7 @@ const ViewRouter: React.FC<ViewRouterProps> = ({ onResetFilters }) => {
     }
   };
 
-  const showSkeleton = isInitialLoading && filteredInsights.length === 0;
+  const showSkeleton = isLoading && filteredInsights.length === 0;
 
   const filterModes: { id: ContentType | 'all'; label: string; icon: React.ElementType }[] = [
     { id: 'all', label: 'All', icon: Layers },
