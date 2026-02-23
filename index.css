@@ -1,11 +1,56 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* LIGHT MODE */
+    --color-background: 0.98 0.01 85;
+    --color-on-background: 0.15 0.02 85;
+    --color-surface: 1 0 0;
+    --color-on-surface: 0.08 0.02 85;
+    --color-primary: 0.68 0.19 45;
+    --color-on-primary: 1 0 0;
+    --color-secondary: 0.96 0.01 85;
+    --color-on-secondary: 0.20 0.02 85;
+    --color-error: 0.62 0.19 25;
+    --color-on-error: 1 0 0;
+    --color-surface-variant: 0.96 0.01 85;
+    --color-on-surface-variant: 0.25 0.02 85;
+    --color-outline: 0 0 0;
+    --color-outline-opacity: 0.15;
+    --color-surface-container-lowest: 1 0 0;
+    --color-surface-container-low: 0.97 0.01 85;
+    --color-surface-container: 0.95 0.01 85;
+    --color-surface-container-high: 0.93 0.01 85;
+    --color-surface-container-highest: 0.91 0.01 85;
+  }
+
+  .dark {
+    /* DARK MODE */
+    --color-background: 0.14 0.01 0;
+    --color-on-background: 0.98 0.01 0;
+    --color-surface: 0.17 0.01 0;
+    --color-on-surface: 0.98 0.01 0;
+    --color-primary: 0.72 0.18 45;
+    --color-on-primary: 1 0 0;
+    --color-secondary: 0.25 0.01 0;
+    --color-on-secondary: 0.90 0.01 0;
+    --color-error: 0.55 0.22 25;
+    --color-on-error: 1 0 0;
+    --color-surface-variant: 0.21 0.01 0;
+    --color-on-surface-variant: 0.85 0.01 0;
+    --color-outline: 1 1 1;
+    --color-outline-opacity: 0.20;
+    --color-surface-container-lowest: 0.12 0.01 0;
+    --color-surface-container-low: 0.17 0.01 0;
+    --color-surface-container: 0.21 0.01 0;
+    --color-surface-container-high: 0.26 0.01 0;
+    --color-surface-container-highest: 0.31 0.01 0;
+  }
+
   body {
-    @apply font-sans;
+    @apply font-sans bg-background text-on-background antialiased transition-colors duration-300;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-serif;
@@ -13,21 +58,16 @@
 }
 
 @layer utilities {
-  /* Updated Container with generous breathing room to prevent edge collisions */
   .container-landing {
     @apply w-full max-w-[1280px] mx-auto px-6 md:px-16 lg:px-24 xl:px-32;
   }
-
   .container-fluid {
     @apply w-full max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12;
   }
-  
-  /* Scrollbar */
   .custom-scrollbar::-webkit-scrollbar { width: 4px; }
   .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
   .custom-scrollbar::-webkit-scrollbar-thumb { @apply bg-outline rounded-full; }
-  
-  /* Shimmer */
+
   .shimmer {
     background: linear-gradient(90deg, transparent, rgba(0,0,0,0.05), transparent);
     background-size: 200% 100%;
@@ -35,28 +75,6 @@
   }
   .dark .shimmer {
     background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-  }
-
-  /* Paper Grain Texture */
-  .bg-grain {
-    position: relative;
-  }
-  .bg-grain::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* Ledger Grid Pattern for Hero */
-  .ledger-grid {
-    background-image: linear-gradient(to right, currentColor 1px, transparent 1px),
-                      linear-gradient(to bottom, currentColor 1px, transparent 1px);
-    background-size: 40px 40px;
   }
 }
 
