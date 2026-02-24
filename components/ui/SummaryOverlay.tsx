@@ -24,32 +24,14 @@ export const SummaryOverlay: React.FC<SummaryOverlayProps> = ({
   }, []);
 
   return (
-    <div 
-      className="absolute inset-0 z-50 bg-surface-container-lowest flex flex-col animate-fade-in overflow-hidden h-full pointer-events-auto"
-      role="dialog"
-      aria-modal="true"
-      ref={containerRef as any}
-      onClick={(e) => e.stopPropagation()}
-    >
-      {/* Header */}
-      <div className="w-full px-6 py-4 border-b border-outline-variant/10 bg-surface-container-low shrink-0 z-20">
-          <div className="max-w-2xl mx-auto flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center border border-primary/20 shadow-inner">
-                     <Activity size={18} strokeWidth={3} className="animate-pulse" />
-                  </div>
-                  <div className="flex flex-col">
-                     <h2 className="text-base font-black uppercase tracking-tight text-on-surface leading-none">Working</h2>
-                     <span className="text-[8px] font-black uppercase tracking-widest text-on-surface-variant opacity-60 mt-1">Processing Audio</span>
-                  </div>
-              </div>
-              <div className="text-right">
-                  <span className="text-2xl font-mono font-black text-primary tabular-nums tracking-tighter leading-none">{seconds}s</span>
-              </div>
-          </div>
-      </div>
-
-      {/* Main Content */}
+      <div 
+        className="absolute inset-0 z-50 bg-surface-container-lowest flex flex-col animate-fade-in overflow-hidden h-full pointer-events-auto"
+        role="dialog"
+        aria-modal="true"
+        ref={containerRef as any}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Main Content */}
       <div className="flex-1 flex flex-col items-center justify-center min-h-0">
           <div className="w-full max-w-2xl flex flex-col items-center gap-6 py-2">
              <div className="relative p-4">

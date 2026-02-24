@@ -42,7 +42,11 @@ const InputArea: React.FC = () => {
            <div className="w-12 h-1 bg-outline-variant rounded-full" />
         </div>
 
-        <ImportHeader onClose={handleClose} />
+        <ImportHeader 
+          onClose={handleClose} 
+          title={isAnalyzing ? "Analyzing" : "Import Content"}
+          subtitle={isAnalyzing ? "Writing Summary..." : "Add to your library"}
+        />
 
         <div className="flex-1 flex flex-col bg-background relative overflow-hidden overflow-y-auto custom-scrollbar"> 
            {isAnalyzing ? (

@@ -86,7 +86,11 @@ export const DashboardTasks: React.FC<DashboardTasksProps> = ({ activeTasks, isL
                       }}
                     >
                       <button 
-                        onClick={(e) => { e.stopPropagation(); handleToggle(item.id, item.idx); }}
+                        onClick={(e) => { 
+                          e.stopPropagation(); 
+                          e.nativeEvent.stopImmediatePropagation();
+                          handleToggle(item.id, item.idx); 
+                        }}
                         className={`
                           mt-1 w-5 h-5 rounded-lg border-2 flex items-center justify-center shrink-0 transition-all shadow-inner
                           ${isCompleting 
