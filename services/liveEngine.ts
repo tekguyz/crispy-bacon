@@ -147,7 +147,7 @@ export class LiveEngine {
       // Send to Gemini
       const pcmBlob = createBlob(inputData);
       sessionPromise.then((session) => {
-        session.sendRealtimeInput({ media: pcmBlob });
+        session.sendRealtimeInput({ audio: pcmBlob });
       });
     };
   }
