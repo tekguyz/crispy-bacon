@@ -33,11 +33,18 @@ export const analyzeContent = async (
   durationSeconds?: number
 ): Promise<Partial<InsightContent>> => {
   
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = new GoogleGenAI({ 
+    apiKey: process.env.GEMINI_API_KEY || process.env.API_KEY,
+    httpOptions: {
+      headers: {
+        'User-Agent': 'aistudio-build',
+      }
+    }
+  });
   
-  // Logic: Pro users can choose "Deep Research". Everyone else (including Pro choosing "Concise") gets Flash.
+  // Logic: Pro users can choose "Deep Research" (uses high-intelligence 3.5 Flash). Concise mode utilizes rapid, cheap, and audio-transcript friendly 3.1 Flash Lite.
   const isDeep = isPro && persona === PersonaStyle.DEEP_RESEARCH;
-  const modelName = isDeep ? 'gemini-3-pro-preview' : 'gemini-3-flash-preview';
+  const modelName = isDeep ? 'gemini-3.5-flash' : 'gemini-3.1-flash-lite';
 
   let instructions = "";
 

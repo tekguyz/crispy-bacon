@@ -9,12 +9,20 @@ export const handler = async (event: any) => {
   try {
     const { message, transcript, rawContent, analysis, history, contextType, globalContext } = JSON.parse(event.body);
     
-    if (!process.env.API_KEY) {
+    const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
+    if (!apiKey) {
       throw new Error("Missing API configuration.");
     }
 
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-    const modelName = 'gemini-3-flash-preview';
+    const ai = new GoogleGenAI({ 
+      apiKey,
+      httpOptions: {
+        headers: {
+          'User-Agent': 'aistudio-build',
+        }
+      }
+    });
+    const modelName = 'gemini-3.5-flash';
 
     let systemInstructionText = "";
 

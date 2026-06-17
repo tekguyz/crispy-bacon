@@ -58,7 +58,14 @@ export class LiveEngine {
     this.setStatus('connecting');
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const ai = new GoogleGenAI({ 
+        apiKey: process.env.GEMINI_API_KEY || process.env.API_KEY,
+        httpOptions: {
+          headers: {
+            'User-Agent': 'aistudio-build',
+          }
+        }
+      });
       
       // 1. Audio Output Setup
       const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
@@ -87,7 +94,7 @@ export class LiveEngine {
 
       // 4. Gemini Session
       const sessionPromise = ai.live.connect({
-        model: 'gemini-2.5-flash-native-audio-preview-12-2025',
+        model: 'gemini-3.1-flash-live-preview',
         config: {
           responseModalities: [Modality.AUDIO],
           systemInstruction,

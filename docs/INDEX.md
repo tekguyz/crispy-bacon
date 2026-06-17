@@ -23,7 +23,10 @@ The Reasoning Engine. How we select the right AI model for the task, ground fact
 ### 5. [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)
 The file-by-file map. Where logic lives and how the codebase is organized.
 
-### 6. [SETUP.md](SETUP.md)
+### 6. [DATABASE_SCHEMA.md](DATABASE_SCHEMA.md)
+Database Structure. Detailed schema mapping, triggers, indexes, and RLS policies for Supabase.
+
+### 7. [SETUP.md](SETUP.md)
 Configuration Guide. Environment variables, Google Cloud permissions, and billing setup for deployment.
 
 ---
