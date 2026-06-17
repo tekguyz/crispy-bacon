@@ -101,7 +101,7 @@ export const createDataCollabSlice: StateCreator<AppState, [], [], Partial<DataS
     
     const { trackEvent } = await import('../services/analyticsService');
     trackEvent('share_link_created', { is_collaborative: options.isCollaborative });
-    return `${window.location.origin}?share=${slug}`;
+    return `${window.location.origin}/share/${slug}`;
   },
 
   toggleSharedActionItem: async () => {

@@ -118,7 +118,14 @@ export const useSessionOrchestrator = () => {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const shareSlug = params.get('share');
-    if (shareSlug) fetchPublicInsight(shareSlug);
+    if (shareSlug) {
+      fetchPublicInsight(shareSlug);
+    } else {
+      const pathParts = window.location.pathname.split('/');
+      if (pathParts[1] === 'share' && pathParts[2]) {
+        fetchPublicInsight(pathParts[2]);
+      }
+    }
   }, [fetchPublicInsight]);
 
   return {

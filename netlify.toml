@@ -2,11 +2,26 @@
   command = "npm run build"
   publish = "dist"
 
+[functions]
+  included_files = ["dist/index.html"]
+
 [build.environment]
   # This tells Netlify to stop blocking the build because it sees the API_KEY
   SECRETS_SCAN_OMIT_KEYS = "API_KEY"
   # This prevents the dependency conflict error from stopping the install
   NPM_FLAGS = "--legacy-peer-deps"
+
+# Dynamic Shared Link Social Previews Page
+[[redirects]]
+  from = "/share/:slug"
+  to = "/.netlify/functions/share-preview?slug=:slug"
+  status = 200
+
+# Metadata JSON API Node
+[[redirects]]
+  from = "/api/share-metadata"
+  to = "/.netlify/functions/share-metadata"
+  status = 200
 
 # This block fixes "Page Not Found" errors on refresh
 [[redirects]]
