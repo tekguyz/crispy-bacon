@@ -35,7 +35,14 @@ export const useLiveSession = () => {
         setIsSpeaking(speaking);
         if (speaking) lastActivityRef.current = Date.now();
       },
-      onError: () => addToast("Assistant connection deferred.", "error")
+      onError: (err: any) => {
+        logSystemEvent(`[ASSISTANT] Error: ${err?.message || err}`, "error");
+        if (err?.name === 'NotAllowedError' || err?.message?.includes('Permission') || err?.message?.includes('Allowed')) {
+          addToast("Microphone Blocked. Please grant microphone access in browser settings.", "error");
+        } else {
+          addToast(err?.message || "Assistant connection deferred.", "error");
+        }
+      }
     });
 
     return () => {

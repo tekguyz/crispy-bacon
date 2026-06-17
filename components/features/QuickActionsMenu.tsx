@@ -46,7 +46,7 @@ export const QuickActionsMenu: React.FC<QuickActionsMenuProps> = ({ isSidebarOpe
       )}
       
       {/* Command Hub Container */}
-      <div className={`fixed bottom-6 right-6 md:bottom-8 md:right-8 flex flex-col items-center gap-3 transition-all duration-300 z-[150] ${isSidebarOpen || store.showImportModal || store.showRecorder ? 'opacity-0 pointer-events-none scale-90' : 'opacity-100'}`}>
+      <div className={`fixed bottom-6 right-6 md:bottom-8 md:right-8 flex flex-col items-center gap-3 transition-all duration-300 z-[150] ${isSidebarOpen || store.showImportModal || store.showRecorder || store.isAnalyzing ? 'opacity-0 pointer-events-none scale-90' : 'opacity-100'}`}>
           
           {/* MAIN FAB & MENU GROUP */}
           <div className="relative pointer-events-none flex flex-col items-center">
