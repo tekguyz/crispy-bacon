@@ -99,7 +99,7 @@ export const createProcessingSlice: StateCreator<AppState, [], [], Partial<Assis
     set(s => ({ isAnalyzing: true, activeAnalysisCount: s.activeAnalysisCount + 1, showRecorder: false }));
     
     const { saveArtifactLocally, SyncStatus } = await import('../services/localDbService');
-    const localArtifact = { id: itemId, blob: audioBlob, type: audioBlob.type, timestamp: Date.now(), sync_status: SyncStatus.UNSYNCED };
+    const localArtifact = { id: itemId, blob: audioBlob, type: audioBlob.type, timestamp: Date.now(), sync_status: SyncStatus.IN_PROGRESS };
     await saveArtifactLocally(localArtifact);
 
     if (!session) return;
@@ -157,6 +157,11 @@ export const createProcessingSlice: StateCreator<AppState, [], [], Partial<Assis
     } catch (e: any) { 
         console.error("Processing Error:", e);
         addToast("Could not summarize. Audio saved.", "error"); 
+        try {
+          await saveArtifactLocally({ ...localArtifact, sync_status: SyncStatus.UNSYNCED });
+        } catch (dbErr) {
+          console.error("Failed to mark local artifact as unsynced:", dbErr);
+        }
     }
     finally { set(s => ({ isAnalyzing: false, activeAnalysisCount: 0 })); }
   }
