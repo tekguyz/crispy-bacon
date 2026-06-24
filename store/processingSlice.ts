@@ -104,16 +104,18 @@ export const createProcessingSlice: StateCreator<AppState, [], [], Partial<Assis
 
     if (!session) return;
     
+    const userId = session.user.id;
+    
     try {
       const { uploadMeetingAudio, archiveRefinement } = await import('../services/processingService');
       const { analyzeContent: analyzeGeminiContent } = await import('../services/geminiService');
 
-      const path = await uploadMeetingAudio(userProfile!.id, itemId, audioBlob);
+      const path = await uploadMeetingAudio(userId, itemId, audioBlob);
       
       // Clean initial payload to prevent 400s
       const initialPayload = cleanPayload({ 
           id: itemId, 
-          user_id: userProfile!.id, 
+          user_id: userId, 
           source_type: ContentType.MEETING, 
           storage_path: path, 
           processing_status: ProcessingStatus.PROCESSING,
