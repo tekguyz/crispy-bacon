@@ -96,7 +96,7 @@ export const handler = async (event: any) => {
   const cleanDescription = (baseSummary + dynamicDetails).replace(/[\r\n]+/g, ' ').substring(0, 280).trim() + '...';
 
   // Social Preview Images
-  const ogImage = `https://crispybacon.ai/og-default.png`; 
+  const ogImage = `https://crispy-bacon.netlify.app/favicon.svg`; 
 
   // Dynamically substitute metadata tags
   html = html.replace(/<title>.*?<\/title>/gi, `<title>${pageTitle}</title>`);
